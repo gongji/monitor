@@ -34,7 +34,7 @@ public class WebSocket
 		return Encoding.UTF8.GetString (retval);
 	}
 
-#if UNITY_WEBGL || UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
 	[DllImport("__Internal")]
 	private static extern int SocketCreate (string url);
 
