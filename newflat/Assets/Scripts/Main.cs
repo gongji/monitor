@@ -14,7 +14,7 @@ public class Main : MonoBehaviour {
        
     }
 	void Start () {
-		///update
+		///updateupdate
         gameObject.AddComponent<DownLoader>();
         gameObject.AddComponent<MouseCheck>();
         gameObject.AddComponent<CameraViewManager>();
