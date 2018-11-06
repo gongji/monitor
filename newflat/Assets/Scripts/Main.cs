@@ -35,6 +35,8 @@ public class Main : MonoBehaviour {
                 {
                     stateMachineManager.SetAppState<EditStatus>();
                 }
+                StartCoroutine(WebsocjetService.Instance.StartWebSocket());
+               
               
 
             });

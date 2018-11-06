@@ -121,7 +121,7 @@ static public class Config
             return dictionary[key];
 
         }
-       return "find no result";
+       return "";
     }
 
     //public void parse(string key, Action<string> callback)
