@@ -163,10 +163,17 @@ namespace State
         protected virtual void OnNoTransitionExit(IState nextState, string nextid) { }
 
 
-        protected BaseEquipmentControl baseEquipmentControl = null;
+        public BaseEquipmentControl baseEquipmentControl = null;
         public virtual  void LocateEquipment(string id)
         {
             log.Debug("定位设备"+id);
+
+            if(AppInfo.currentView == ViewType.View2D)
+            {
+
+                return;
+            }
+
 
             if(baseEquipmentControl!=null)
             {

@@ -38,6 +38,13 @@ public class BrowserToolBar : MonoBehaviour {
     //视角复位
     public void ViewReset()
     {
+
+        BaseState bs = AppInfo.GetCurrentState as BaseState;
+
+        if(bs!=null && bs!=null)
+        {
+            bs.baseEquipmentControl.CancelEquipment();
+        }
         CameraInitSet.ResetCameraPostion();
     }
 

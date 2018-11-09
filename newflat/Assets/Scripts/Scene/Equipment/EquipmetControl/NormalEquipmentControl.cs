@@ -28,7 +28,8 @@ public class NormalEquipmentControl :BaseEquipmentControl {
     private IState istate;
 	void Update () {
 
-     
+
+        return;
         if (!isShowTips)
         {
             equipmentTips.SetActive(false);
@@ -75,28 +76,28 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         return result;
     }
 
-    private void OnEnable()
-    {
-        if(equipmentTips!=null && IsRoomState())
-        {
-            equipmentTips.SetActive(true);
-        }
+    //private void OnEnable()
+    //{
+    //    if(equipmentTips!=null && IsRoomState())
+    //    {
+    //        equipmentTips.SetActive(true);
+    //    }
         
-    }
+    //}
 
-    private void OnDisable()
-    {
-        if (equipmentTips != null)
-        {
-            equipmentTips.SetActive(false);
-        }
-    }
+    //private void OnDisable()
+    //{
+    //    if (equipmentTips != null)
+    //    {
+    //        equipmentTips.SetActive(false);
+    //    }
+    //}
 
    
 
     public void OnMouseEnter()
     {
-      
+
         // Debug.Log("OnMouseEnter");
         //string equipmentid = ViewEquipmentInfo.Instance.GetCurrentSelectDeive();
         //if(equipmentid.Equals(equipmentItem.id))
@@ -109,17 +110,20 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         //{
         //    equipmentTips.SetActive(true);
         //}
+        equipmentTips.SetActive(true);
+        equipmentTips.transform.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(GetBoxTopPostion(), Camera.main);
     }
 
     public void OnMouseExit()
     {
-       
+
         // Debug.Log("OnMouseExit");
         //EffectionUtility.StopFlashingEffect(transform);
         //if (!IsRoomState())
         //{
         //    equipmentTips.SetActive(false);
         //}
+        equipmentTips.SetActive(false);
     }
 
     public override void Locate()

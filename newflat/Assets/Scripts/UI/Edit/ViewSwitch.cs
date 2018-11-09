@@ -26,6 +26,7 @@ public class ViewSwitch : MonoBehaviour {
         if(!is3D)
         {
             AppInfo.currentView = ViewType.View2D;
+            Camera.main.GetComponent<CameraObjectController>().isRotation = false;
             GetComponentInChildren<Text>().text = "3D视角";
             Switch2D(null);
         }
@@ -33,6 +34,7 @@ public class ViewSwitch : MonoBehaviour {
         {
            
             AppInfo.currentView = ViewType.View3D;
+            Camera.main.GetComponent<CameraObjectController>().isRotation = true;
             GetComponentInChildren<Text>().text = "2D视角";
             Switch3D();
         }

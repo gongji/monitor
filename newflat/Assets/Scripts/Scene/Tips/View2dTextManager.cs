@@ -33,7 +33,11 @@ public class View2dTextManager : MonoSingleton<View2dTextManager>
         GameObject text = GameObject.Instantiate(Resources.Load<GameObject>("Text"));
         text.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
         textList.Add(text);
-        dic.Add(object3dItem.id, bounds);
+        if(!dic.ContainsKey(object3dItem.id))
+        {
+            dic.Add(object3dItem.id, bounds);
+        }
+      
         
         text.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = object3dItem.name;
         text.GetComponentInChildren<TMPro.TextMeshProUGUI>().fontSize = 12;

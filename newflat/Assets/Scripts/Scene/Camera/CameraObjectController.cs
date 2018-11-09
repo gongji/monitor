@@ -8,6 +8,7 @@ using System.Threading;
 using UnityEngine.EventSystems;
 
 
+[RequireComponent(typeof(Camera))]
 public class CameraObjectController : MonoBehaviour
 {
     [Serializable]
@@ -521,14 +522,16 @@ public class CameraObjectController : MonoBehaviour
 
         m_nFlags &= ~(MOVEMENT | ROTATION);
     }
-
+    //是否旋转
+    public bool isRotation = true;
     /// <summary>
     /// 拖动鼠标
     /// </summary>
 
     protected void HandleNormalMouse()
     {
-        if ((m_nFlags & MOUSE_RIGHT_DOWN) != 0)
+        //鼠标右键
+        if ((m_nFlags & MOUSE_RIGHT_DOWN) != 0 && isRotation)
         {
             float dx = Input.GetAxis("Mouse X"), dy = Input.GetAxis("Mouse Y");
             if (dx == 0.0f && dy == 0.0f)
@@ -560,6 +563,7 @@ public class CameraObjectController : MonoBehaviour
             transform.rotation = Quaternion.Euler(vEulerAngles);
         }
 
+        //鼠标左键
         if ((m_nFlags & MOUSE_LEFT_DOWN) != 0)
         {
             float dx = Input.GetAxis("Mouse X"), dy = Input.GetAxis("Mouse Y");
@@ -579,6 +583,7 @@ public class CameraObjectController : MonoBehaviour
             m_nFlags |= MOVEMENT;
         }
 
+        //滚轴
         if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0)
         {
             float ScrollWheelValue = Input.GetAxis("Mouse ScrollWheel");
