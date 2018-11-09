@@ -24,20 +24,21 @@ public class Main : MonoBehaviour {
 
                 SceneData.Init3dObjectData(() => {
                     //Main.instance.stateMachineManager.SwitchStatus<RoomState>("juliusuo_sn_f1_fj1");
+                    BRPlatform bRPlatform = AppInfo.Platform;
+                    if (bRPlatform == BRPlatform.Browser)
+                    {
+                        stateMachineManager.SetAppState<BrowseStatus>();
+                    }
+                    else
+                    {
+                        stateMachineManager.SetAppState<EditStatus>();
+                    }
                 });
 
-                BRPlatform bRPlatform = AppInfo.Platform;
-                if(bRPlatform == BRPlatform.Browser)
-                {
-                    stateMachineManager.SetAppState<BrowseStatus>();
-                }
-                else
-                {
-                    stateMachineManager.SetAppState<EditStatus>();
-                }
+
                 StartCoroutine(WebsocjetService.Instance.StartWebSocket());
-               
-              
+
+
 
             });
 

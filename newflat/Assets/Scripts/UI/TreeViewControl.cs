@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Battlehub.UIControls
@@ -22,11 +23,16 @@ namespace Battlehub.UIControls
         private void Awake()
         {
             Instance = this;
+            AppFacade.GetInstance().RegisterMediator(new TreeNavigationMeditor(gameObject));
+
         }
+
+
 
         private List<Object3dItem> datas = null;
         public void Init()
         {
+            
             if (!TreeView)
             {
                 Debug.LogError("Set TreeView field");
@@ -49,14 +55,14 @@ namespace Battlehub.UIControls
           
         }
 
-        public void SetBrowserData()
-        {
-            EquipmentData.GetEquipmentListByParentId("", (list) => {
-                SetEquipmentData(datas);
-                TreeView.Items = datas;
-            });
-        }
+        public System.Action callBack;
 
+        public void SetBrowserData()
+        {    
+            SetEquipmentData(datas);
+            TreeView.Items = datas;
+
+        }
         public void SetEditData()
         {
             EquipmentData.GetEquipmentListByParentId("", (list) => {
@@ -71,9 +77,9 @@ namespace Battlehub.UIControls
         /// <param name="datas"></param>
         private void SetEquipmentData(List<Object3dItem>  datas)
         {
-
             foreach(Object3dItem item in datas)
             {
+               // Debug.Log(item.name);
                 if (item.type != DataModel.Type.Equipment && item.type != DataModel.Type.None)
                 {
                     EquipmentData.GetEquipmentListByParentId(item.id, (list) =>
