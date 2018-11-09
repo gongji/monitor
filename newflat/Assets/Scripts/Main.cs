@@ -35,10 +35,10 @@ public class Main : MonoBehaviour {
                     }
                 });
 
-
+               
                 StartCoroutine(WebsocjetService.Instance.StartWebSocket());
-
-
+               
+              
 
             });
 

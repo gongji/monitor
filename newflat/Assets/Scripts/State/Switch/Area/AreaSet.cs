@@ -4,7 +4,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.Rendering.PostProcessing;
 
 public class AreaSet:BaseSet
 {
