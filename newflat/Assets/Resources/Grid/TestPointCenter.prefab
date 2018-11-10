@@ -316,14 +316,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColumnPanelPrefab: {fileID: 100004, guid: 10be6d3ec75a5cd40a2fdb637c23a7d1, type: 2}
   ItemButtonPrefab: {fileID: 100000, guid: 22ce7c3f9efdf184392c18eef7c0d22c, type: 2}
-  DefaultHeadingBackgroundColor: {r: 0.14901961, g: 0.17254902, b: 0.33333334, a: 1}
+  DefaultHeadingBackgroundColor: {r: 0.101960786, g: 0.13333334, b: 0.14117648, a: 1}
   DefaultHeadingTextColor: {r: 0.9487807, g: 0.9506905, b: 0.9716981, a: 1}
   DefaultHeadingFont: {fileID: 12800000, guid: 9ad499c407c098f42b4df43e4eecb084, type: 3}
   DefaultHeadingFontSize: 12
   DefaultHeadingFontStyle: 1
   DefaultShowColumnHeaders: 1
   DefaultColumnHeaderHeight: 40
-  DefaultItemBackgroundColor: {r: 0.14901961, g: 0.17254902, b: 0.33333334, a: 1}
+  DefaultItemBackgroundColor: {r: 0.101960786, g: 0.13333334, b: 0.14117648, a: 1}
   DefaultItemTextColor: {r: 1, g: 1, b: 1, a: 1}
   DefaultSelectedItemColor: {r: 0.6509804, g: 0.6156863, b: 0.6156863, a: 1}
   DefaultChangeTextColorOnSelection: 0
@@ -333,11 +333,12 @@ MonoBehaviour:
   DefaultItemFontStyle: 0
   DefaultItemButtonHeight: 30
   DefaultControlBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  DefaultScrollBarBackgroundColor: {r: 0.19607843, g: 0.19607843, b: 0.39215687, a: 1}
-  DefaultScrollBarThumbColor: {r: 0.47058824, g: 0.5019608, b: 0.84705883, a: 1}
+  DefaultScrollBarBackgroundColor: {r: 0.101960786, g: 0.13333334, b: 0.14117648,
+    a: 1}
+  DefaultScrollBarThumbColor: {r: 0.1882353, g: 0.58431375, b: 0.20784314, a: 1}
   DefaultHorizontalGridLineSize: 1
   DefaultVerticalGridLineSize: 0
-  DefaultGridLineColor: {r: 0.19607843, g: 0.19607843, b: 0.39215687, a: 1}
+  DefaultGridLineColor: {r: 0.101960786, g: 0.13333334, b: 0.14117648, a: 1}
   DefaultColumnHeaderGridLines: 1
 --- !u!114 &114279889465759864
 MonoBehaviour:
@@ -461,7 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5176471, g: 0.5568628, b: 0.6509804, a: 1}
+  m_Color: {r: 0.1882353, g: 0.58431375, b: 0.20784314, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -734,7 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14901961, g: 0.17254902, b: 0.33333334, a: 1}
+  m_Color: {r: 0.101960786, g: 0.13333334, b: 0.14117648, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -906,8 +907,8 @@ RectTransform:
   m_Father: {fileID: 224998904878479208}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.8}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

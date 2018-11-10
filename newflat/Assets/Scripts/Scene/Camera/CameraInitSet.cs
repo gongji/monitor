@@ -27,7 +27,8 @@ public static class CameraInitSet {
         {
 
             ViewSwitch.instance.Switch2D(box);
-            if(callBack!=null)
+            SetIsEnbaleCamera(box.gameObject, true);
+            if (callBack!=null)
             {
                 callBack.Invoke();
             }
@@ -108,7 +109,6 @@ public static class CameraInitSet {
             rot = Quaternion.LookRotation(-1 * box.right, Vector3.up);
             vCamera.transform.localRotation = rot;
             vCamera.transform.RotateAround(box.position, Vector3.forward, 30f);
-
         }
         cameraRoation = vCamera.transform.rotation;
         cameraPostion = vCamera.transform.position;
@@ -166,7 +166,7 @@ public static class CameraInitSet {
                 SceneContext.sceneBox = box.transform;
             }
         }
-        coc.SetEnable(isEnable);
+        //coc.SetEnable(isEnable);
 
     }
 

@@ -12,30 +12,13 @@ public static class UIUtility
     /// <param name="data"></param>
     /// <param name="image"></param>
     /// <param name="m_Pivot"></param>
-    public static void GetSpring(IDictionary<string, object> data, Image image, Vector2 m_Pivot)
+    public static void CreateSprite(Texture2D picv, Image image, Vector2 m_Pivot)
     {
         try
         {
-            Texture2D picTemp = (Texture2D)data["obj"];
-            // Debug.Log("M_sourceImage:" + picTemp.name);
-            Texture2D pic = GameObject.Instantiate(picTemp) as Texture2D;
-
-            string name = data["fname"].ToString();
-
-            // Debug.Log(name);
-            string numbs = System.Text.RegularExpressions.Regex.Match(name, @"(?<=__)[\d_]+(?=\.png$)").Value;
-            // Debug.Log(numbs);
-
-            string[] num = numbs.Split('_');
-
-            Vector4 tempborder = new Vector4((float)int.Parse(num[2]), (float)int.Parse(num[1]), (float)int.Parse(num[3]), (float)int.Parse(num[0]));
-            //  Debug.Log(tempborder);
-
-            Sprite spr = Sprite.Create(pic, new Rect(0, 0, pic.width, pic.height), new Vector2(m_Pivot.x, m_Pivot.y), 100.0f, 0, SpriteMeshType.Tight, tempborder);//后面Vector2就是你Anchors的Pivot的x/y属性值
-
+            Vector4 tempborder = Vector4.zero;
+            Sprite spr = Sprite.Create(picv, new Rect(0, 0, picv.width, picv.height), new Vector2(m_Pivot.x, m_Pivot.y), 100.0f, 0, SpriteMeshType.Tight, tempborder);//后面Vector2就是你Anchors的Pivot的x/y属性值
             image.sprite = spr;
-
-            image.type = Image.Type.Sliced;
         }
         catch (Exception e)
         {

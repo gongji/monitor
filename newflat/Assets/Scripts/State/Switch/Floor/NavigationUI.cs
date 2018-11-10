@@ -106,7 +106,7 @@ public  class NavigationUI:MonoBehaviour
             //cb.disabledColor = button.colors.disabledColor;
             //cb.colorMultiplier = 1;
             //button.colors = cb;
-            button.GetComponent<Image>().color = new Color32(38, 44, 85, 255);
+            button.GetComponent<Image>().color = new Color32(94, 98, 99, 255);
         }
     }
    
@@ -119,7 +119,7 @@ public  class NavigationUI:MonoBehaviour
         //cb.disabledColor = button.colors.disabledColor;
         //cb.colorMultiplier = 1;
         //button.colors = cb;
-        button.GetComponent<Image>().color = new Color32(132, 142, 166, 255); 
+        button.GetComponent<Image>().color = new Color32(6, 148, 255, 255); 
     }
 
     /// <summary>

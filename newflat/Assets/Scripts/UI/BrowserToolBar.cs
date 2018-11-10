@@ -41,7 +41,7 @@ public class BrowserToolBar : MonoBehaviour {
 
         BaseState bs = AppInfo.GetCurrentState as BaseState;
 
-        if(bs!=null && bs!=null)
+        if(bs!=null && bs.baseEquipmentControl != null)
         {
             bs.baseEquipmentControl.CancelEquipment();
         }
