@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using DigitalSalmon.Fade;
 
 public class FadeManager : MonoBehaviour {
 
@@ -19,13 +20,49 @@ public class FadeManager : MonoBehaviour {
 
     private void Start()
     {
-        string path = Application.streamingAssetsPath + "/UI/fadebg.png";
-        ResourceUtility.Instance.GetHttpTexture(path, (result) => {
+        //string path = Application.streamingAssetsPath + "/UI/fadebg.png";
+        //ResourceUtility.Instance.GetHttpTexture(path, (result) => {
 
-            GetComponent<Transform>().localScale = Vector3.zero;
-            UIUtility.CreateSprite((Texture2D)result, GetComponent<Image>(), Vector2.zero);
+        //    GetComponent<Transform>().localScale = Vector3.zero;
+        //    UIUtility.CreateSprite((Texture2D)result, GetComponent<Image>(), Vector2.zero);
+        //});
+
+        DOVirtual.DelayedCall(8f, () =>
+        {
+            effects = new System.Collections.Generic.List<FadeEffect>();
+            string path = Application.streamingAssetsPath + "/prefeb/fade";
+            ResourceUtility.Instance.GetHttpAssetBundle(path, (bundle) => {
+
+                string[] names = bundle.GetAllAssetNames();
+                // Debug.Log(a.GetAllAssetBundles().Length);
+                foreach (string name in names)
+                {
+
+                    FadeEffect item = bundle.LoadAsset<FadeEffect>(name);
+                    effects.Add(item);
+
+                }
+            });
         });
+            
+
     }
+
+    [SerializeField]
+    protected FadePostProcess fadePostProcess;
+
+    [SerializeField]
+    protected List<FadeEffect> effects;
+
+    private int effectIndex = 0;
+    private void SwitchFadeEffect()
+    {
+        effectIndex++;
+        if (effectIndex >= effects.Count) effectIndex = 0;
+
+        fadePostProcess.AssignEffect(effects[effectIndex]);
+    }
+
 
     private void Update()
     {
@@ -38,22 +75,20 @@ public class FadeManager : MonoBehaviour {
    /// </summary>
     public void FadeIn()
     {
-        transform.SetAsLastSibling();
-        //Fader.Instance.StopAllFadings();
-        //int count = System.Enum.GetNames(typeof(ScrreenFade)).Length;
-        //int randomValue = UnityEngine.Random.Range(1, count + 1);
-        //InitFadeEffection(randomValue);
-        //Fader.Instance.FadeIn(fadeInTime);
-        isFadeInState = true;
         UIUtility.HideShowAllUI(false);
+        SwitchFadeEffect();
+        fadePostProcess.FadeDown(false, null);
+        isFadeInState = true;
+       
     }
     /// <summary>
     /// 退出切屏
     /// </summary>
     public void FadeOut(System.Action callBack)
     {
-		if(!isFadeInState)
+        if (!isFadeInState)
 		{
+           
             if (callBack != null)
             {
                 UIUtility.HideShowAllUI(true);
@@ -61,49 +96,39 @@ public class FadeManager : MonoBehaviour {
             }
             return;
 		}
-        //Fader.Instance.FadeOut(fadeOutTime);
-        
-		isFadeInState = false;
-        DOVirtual.DelayedCall(fadeOutTime,()=> {
-            if(callBack!=null)
-            {
-                UIUtility.HideShowAllUI(true);
-                callBack.Invoke();
-            }
+        isFadeInState = false;
+        DOVirtual.DelayedCall(1.0f, () => {
+            SwitchFadeEffect();
+            fadePostProcess.FadeUp(false, null);
+            DOVirtual.DelayedCall(1.0f, () => {
+
+               
+                if (callBack != null)
+                {
+                 
+                    callBack.Invoke();
+                }
+
+                DOVirtual.DelayedCall(1.5f, () => {
+              
+            
+                     UIUtility.HideShowAllUI(true);
+
+                });
+
+            });
+
 
         });
+
+
+
+       
+
+       
       
     }
-     private void InitFadeEffection(int randomValue)
-     {
-         
-        //if (randomValue == 1)
-        //{
-        //   // Debug.Log("SetupAsDefaultFader=");
-        //    Fader.SetupAsDefaultFader();
-        //}
-        //else if (randomValue == 2)
-        //{
-        //   // Debug.Log("SetupAsSquaredFader=");
-        //    Fader.SetupAsSquaredFader(10);
-        //    Fader.Instance.SetColor(Color.red);
-        //}
-        //else if (randomValue == 3)
-        //{
-        //   // Debug.Log("SetupAsStripesFader=");
-        //    Fader.SetupAsStripesFader(10, StripeScreenFader.Direction.HORIZONTAL_IN);
-        //}
-        //else if (randomValue == 4)
-        //{
-        //  //  Debug.Log("LinesScreenFader.Direction.IN_UP_DOWN");
-        //    Fader.SetupAsLinesFader(LinesScreenFader.Direction.IN_UP_DOWN, linesImages);
-        //}
-        //else if (randomValue == 5)
-        //{
-        //   // Debug.Log("damageImage");
-        //    Fader.SetupAsImageFader(damageImage);
-       // }
-     }
+
 
 }
 

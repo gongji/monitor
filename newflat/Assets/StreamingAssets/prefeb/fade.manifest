@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 2267716663
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 17450bb5b2fde7f31f265b758223a643
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 092f5433f496435f3172defb25c8bcce
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6d4bba11b84cd2a4d93f7cceca864c63, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Fade/Effects/Pentagon.asset
+- Assets/Fade/Effects/Star7.asset
+- Assets/Fade/Effects/Hexagon.asset
+- Assets/Fade/Effects/RubicksVertical.asset
+- Assets/Fade/Effects/CentreWipeHorizontal.asset
+- Assets/Fade/Effects/BlindsHorizontal.asset
+- Assets/Fade/Effects/Clock.asset
+- Assets/Fade/Effects/StarInverted.asset
+- Assets/Fade/Effects/BarnDoor.asset
+- Assets/Fade/Effects/BandWipeVertical.asset
+- Assets/Fade/Effects/Radial.asset
+- Assets/Fade/Effects/Blur.asset
+Dependencies: []

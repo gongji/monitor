@@ -31,33 +31,32 @@ namespace Equipment
             GameObject[] gs = scene.GetRootGameObjects();
 
             //打包的时候增加碰撞器
-            foreach (GameObject g in gs)
-            {
-                MeshRenderer[] mrs = g.GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer mr in mrs)
-                {
-                    Collider collider = mr.GetComponent<Collider>();
-                    if (collider == null)
-                    {
-                        if (mr.name.ToLower().Contains("Collider".ToLower()))
-                        {
-                            mr.gameObject.AddComponent<BoxCollider>();
-                        }
-                        else
-                        {
-                            mr.gameObject.AddComponent<MeshCollider>();
-                        }
+            //foreach (GameObject g in gs)
+            //{
+            //    MeshRenderer[] mrs = g.GetComponentsInChildren<MeshRenderer>();
+            //    foreach (MeshRenderer mr in mrs)
+            //    {
+            //        Collider collider = mr.GetComponent<Collider>();
+            //        if (collider == null)
+            //        {
+            //            if (mr.name.ToLower().Contains("Collider".ToLower()))
+            //            {
+            //                mr.gameObject.AddComponent<BoxCollider>();
+            //            }
+            //            else
+            //            {
+            //                mr.gameObject.AddComponent<MeshCollider>();
+            //            }
 
-                    }
+            //        }
 
-                }
+            //    }
                
 
-            }
+            //}
             //将环境光数据添加到资源文件中
-            if (scene.name.ToLower().Contains("mainscene".ToLower()))
+            if (scene.name.ToLower().Contains("skybox".ToLower()))
             {
-                
                 AudioListener al = GameObject.FindObjectOfType<AudioListener>();
                 if (al!=null)
                 {
@@ -69,7 +68,7 @@ namespace Equipment
                 GameObject _g;
                 foreach (GameObject g in gs)
                 {
-                    if (g.name.Contains("_RenderSettings"))
+                    if (g.name.Contains("main"))
                     {
                         rsv = g.GetComponent<RenderSettingsValue>();
                         if (!rsv)
@@ -174,7 +173,7 @@ namespace Equipment
             string[] levels = { levesName };
             string _path = path + "/" + saveFileName + ".unity3d";
             //打包场景  
-            BuildPipeline.BuildPlayer(levels, _path, BuildTarget.StandaloneWindows, BuildOptions.BuildAdditionalStreamedScenes);
+            BuildPipeline.BuildPlayer(levels, _path, BuildTarget.WebGL, BuildOptions.BuildAdditionalStreamedScenes);
         }
 
         /// 将选定的多个对象进行打包, 同时包含依赖项, 不指定 AssetBundle 的 main 属性获取.
@@ -199,7 +198,7 @@ namespace Equipment
                     }
 
                     //这里注意第二个参数就行  
-                    if (BuildPipeline.BuildAssetBundle(null, SelectedAsset, path, BuildAssetBundleOptions.CollectDependencies, BuildTarget.StandaloneWindows))
+                    if (BuildPipeline.BuildAssetBundle(null, SelectedAsset, path, BuildAssetBundleOptions.CollectDependencies, BuildTarget.WebGL))
                     {
                         AssetDatabase.Refresh();
                     }
@@ -247,7 +246,7 @@ namespace Equipment
                         string newfolderPath = arrStrAudioPath[i].Substring(assetLocation);
                         fileName = fileName + "3d";
                         SetAssetImporterName(newfolderPath, fileName);
-                        BuildPipeline.BuildAssetBundles(savePath, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
+                        BuildPipeline.BuildAssetBundles(savePath, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.WebGL);
                     }
                 }
             }
@@ -266,7 +265,7 @@ namespace Equipment
                 string objectPath = AssetDatabase.GetAssetPath(o);
                 AddCollider(objectPath);
                 SetAssetImporterName(objectPath, name);
-                BuildPipeline.BuildAssetBundles(savePath, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
+                BuildPipeline.BuildAssetBundles(savePath, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.WebGL);
             }
 
         }
@@ -277,6 +276,7 @@ namespace Equipment
             UnityEngine.SceneManagement.Scene scene = EditorSceneManager.OpenScene(path);
             RenderSettings.skybox = null;
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
+
             AudioListener audioListener = GameObject.FindObjectOfType<AudioListener>();
             if (audioListener)
             {
