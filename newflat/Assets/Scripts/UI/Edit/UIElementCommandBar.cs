@@ -111,6 +111,11 @@ public sealed class UIElementCommandBar : MonoBehaviour
     private void DeleteClick(GameObject g)
     {
         Hide();
+        if(selectingObjectTransform!=null)
+        {
+            GameObject.Destroy(selectingObjectTransform.gameObject);
+        }
+       
     }
 
     public void Init()

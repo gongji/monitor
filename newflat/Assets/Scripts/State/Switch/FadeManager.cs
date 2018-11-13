@@ -15,7 +15,7 @@ public class FadeManager : MonoBehaviour {
     void Awake()
     {
         Instance = this;
-     
+
     }
 
     private void Start()
@@ -44,7 +44,7 @@ public class FadeManager : MonoBehaviour {
                 }
             });
         });
-            
+
 
     }
 
@@ -57,6 +57,11 @@ public class FadeManager : MonoBehaviour {
     private int effectIndex = 0;
     private void SwitchFadeEffect()
     {
+        if (effects == null  || effects.Count == 0 )
+        {
+
+            return;
+        }
         effectIndex++;
         if (effectIndex >= effects.Count) effectIndex = 0;
 

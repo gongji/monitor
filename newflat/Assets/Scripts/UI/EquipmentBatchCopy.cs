@@ -10,7 +10,7 @@ public class EquipmentBatchCopy : MonoBehaviour {
     float equipmnetWidth = 0.0f;
 
     //间隙宽度
-    private float spaceWidth = 0.002f;
+    private float spaceWidth = 0.001f;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class EquipmentBatchCopy : MonoBehaviour {
 
     void Start () {
 
-        equipmnetWidth = target.GetComponent<BoxCollider>().bounds.size.z;
+        equipmnetWidth = target.GetComponent<BoxCollider>().bounds.size.x;
 	}
     public bool isCreate = false;
 
@@ -89,11 +89,14 @@ public class EquipmentBatchCopy : MonoBehaviour {
         Vector3 relative = mouseTargetPostion - target.position;
 
         target.forward = relative;
+        target.transform.localRotation = target.transform.localRotation * Quaternion.Euler(0, 90, 0);
+      
 
         float equipmentSpace = equipmnetWidth + spaceWidth;
         float distance = Vector3.Distance(target.position, mouseTargetPostion);
 
         int num = (int)(distance / (equipmentSpace));
+        //Debug.Log(num);
 
         for (int i = 0; i < num-1; i++)
         {
@@ -103,15 +106,15 @@ public class EquipmentBatchCopy : MonoBehaviour {
             coloneEquipment.transform.localScale = target.transform.localScale;
             if (gs.Count == 0)
             {
-                coloneEquipment.transform.localPosition = target.localPosition + target.forward * (equipmentSpace);
+                coloneEquipment.transform.position = target.position - target.right * (equipmentSpace);
             }
             else
             {
-                coloneEquipment.transform.localPosition = gs[gs.Count - 1].transform.localPosition + target.forward * (equipmentSpace);
+                coloneEquipment.transform.position = gs[gs.Count - 1].transform.position - target.right * (equipmentSpace);
             }
 
             float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-            coloneEquipment.transform.localEulerAngles = new Vector3(0, angle, 0);
+            coloneEquipment.transform.localEulerAngles = new Vector3(0, angle+90, 0);
             gs.Add(coloneEquipment);
 
         }
