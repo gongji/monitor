@@ -584,7 +584,7 @@ public class CameraObjectController : MonoBehaviour
         }
 
         //滚轴
-        if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0)
+        if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.LeftControl))
         {
             float ScrollWheelValue = Input.GetAxis("Mouse ScrollWheel");
             Vector3 vForward = new Vector3(0.0f, 0.0f, ScrollWheelValue);

@@ -36,10 +36,11 @@ public class EditStatus : AppBaseState
             return;
         }
        
-        //双击隐藏菜单
+        //双击隐藏菜单,操作模式复位
         if(MouseCheck.DOUBLE_CLICK)
         {
             UIElementCommandBar.instance.Hide();
+            OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.None;
             return;
         }
 

@@ -10,25 +10,22 @@ public class EquipmentBatchCopy : MonoBehaviour {
     float equipmnetWidth = 0.0f;
 
     //间隙宽度
-    private float spaceWidth = 0.04f;
+    private float spaceWidth = 0.002f;
+
+    private void Awake()
+    {
+        target = gameObject.transform;
+    }
 
     void Start () {
 
         equipmnetWidth = target.GetComponent<BoxCollider>().bounds.size.z;
 	}
-    private bool isCreate = false;
+    public bool isCreate = false;
+
+   
     void Update() {
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            isCreate = true;
-        }
-
-        if(Input.GetMouseButtonUp(1))
-        {
-
-            isCreate = false;
-        }
-      
+       
         if (isCreate)
         {
             StartCreate();
@@ -41,11 +38,11 @@ public class EquipmentBatchCopy : MonoBehaviour {
             //Debug.Log(offest);
             if (offest >= 0.01f)
             {
-                spaceWidth = spaceWidth + 0.01f;
+                spaceWidth = spaceWidth + spaceWidth/4.0f;
             }
             else if (offest <= -0.01f)
             {
-                spaceWidth = spaceWidth - 0.01f;
+                spaceWidth = spaceWidth - spaceWidth / 4.0f;
             }
             Vector3 mouseTargetPostion = GetDrawPoint();
             Create(mouseTargetPostion);
@@ -98,17 +95,19 @@ public class EquipmentBatchCopy : MonoBehaviour {
 
         int num = (int)(distance / (equipmentSpace));
 
-        for (int i = 0; i < num-2; i++)
+        for (int i = 0; i < num-1; i++)
         {
             GameObject coloneEquipment = GameObject.Instantiate(target.gameObject);
+            GameObject.Destroy(coloneEquipment.GetComponent<EquipmentBatchCopy>());
+            coloneEquipment.transform.parent = transform.parent;
             coloneEquipment.transform.localScale = target.transform.localScale;
             if (gs.Count == 0)
             {
-                coloneEquipment.transform.position = target.position + target.forward * (equipmentSpace);
+                coloneEquipment.transform.localPosition = target.localPosition + target.forward * (equipmentSpace);
             }
             else
             {
-                coloneEquipment.transform.position = gs[gs.Count - 1].transform.position + target.forward * (equipmentSpace);
+                coloneEquipment.transform.localPosition = gs[gs.Count - 1].transform.localPosition + target.forward * (equipmentSpace);
             }
 
             float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;

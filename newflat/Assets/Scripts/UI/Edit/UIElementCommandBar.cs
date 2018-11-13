@@ -77,18 +77,25 @@ public sealed class UIElementCommandBar : MonoBehaviour
     public void CopyClick(GameObject g)
     {
         Hide();
+        
     }
+    //批量复制
     public void MulkCopyClick(GameObject g)
     {
+        OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.BulkCopy;
+        OperateControlManager.Instance.BatchCopyEquipment(selectingObjectTransform);
         Hide();
+       
+       
     }
 
 
 
-
+    //高级编辑器
     public void EditClick(GameObject g)
     {
         Hide();
+        OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.Edit;
     }
 
 
@@ -126,7 +133,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
 
     public void Hide()
     {
-        // Debug.Log("hide");
+       
         EquipmentUIControl.instance.ShowModelList(true);
         transform.DOScale(0.0f, showTime);
         selectingObjectTransform = null;
