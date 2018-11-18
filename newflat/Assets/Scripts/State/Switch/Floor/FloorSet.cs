@@ -52,7 +52,7 @@ public class FloorSet : FloorRoomSet {
         DeleteNavigation();
         //DeleteTips();
         DestryPlane();
-        GameObject root = SceneUtility.GetGameByRootName(currentObject.code, currentObject.code);
+        GameObject root = SceneUtility.GetGameByRootName(currentObject.number, currentObject.number);
         if (root != null)
         {
             root.SetActive(false);

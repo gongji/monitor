@@ -22,29 +22,46 @@ public class Main : MonoBehaviour {
         Config.Startload(this,
             ()=>{
 
-                SceneData.Init3dObjectData(() => {
-                    //Main.instance.stateMachineManager.SwitchStatus<RoomState>("juliusuo_sn_f1_fj1");
-                    BRPlatform bRPlatform = AppInfo.Platform;
-                    if (bRPlatform == BRPlatform.Browser)
+                //查询场景是否有变化
+                SceneData.IsExistNewScene((result) => {
+
+                    //无新的场景
+                    if(!result)
                     {
-                        stateMachineManager.SetAppState<BrowseStatus>();
+                        //初始化场景数据
+                        Init();
                     }
+
                     else
                     {
-                        stateMachineManager.SetAppState<EditStatus>();
+                        SceneData.UpdateSceneData(() => {
+                            Init();
+                        });
                     }
+                    
                 });
-
-               
-                StartCoroutine(WebsocjetService.Instance.StartWebSocket());
-               
-              
-
             });
 
 	}
-	
-	// Update is called once per frame
+
+    private void Init()
+    {
+        SceneData.Init3dAllObjectData(() => {
+            BRPlatform bRPlatform = AppInfo.Platform;
+            if (bRPlatform == BRPlatform.Browser)
+            {
+                stateMachineManager.SetAppState<BrowseStatus>();
+            }
+            else
+            {
+                stateMachineManager.SetAppState<EditStatus>();
+            }
+            StartCoroutine(WebsocjetService.Instance.StartWebSocket());
+            Battlehub.UIControls.TreeViewControl.Instance.Init();
+
+        });
+    }
+
 	void Update () {
 		 stateMachineManager.OnUpdate();
 	}

@@ -158,7 +158,7 @@ public sealed class EquipmentData {
             object3dItem.name = item.name;
             object3dItem.id = item.id;
             object3dItem.type = Type.Equipment;
-            object3dItem.parentid = item.parentid;
+            object3dItem.parentsId = item.parentid;
             objList.Add(object3dItem);
         }
 

@@ -17,7 +17,7 @@ public static class Object3dProxy
     /// <param name="callBack"></param>
     public static void GetAll3dObjectData(System.Action<string> callBack)
     {
-        string url = Config.parse("downPath") + "/data3d.bat";
+        string url = Config.parse("requestAddress") + "/GetSceneFileList";
 
         HttpRequestSingle.Instance.StartCoroutine(
 
@@ -31,6 +31,43 @@ public static class Object3dProxy
           }));
 
     }
+
+    public static void PostUpdateScene(System.Action<string> sucesscallBack, Dictionary<string, string> postData)
+    {
+        string url = Config.parse("requestAddress") + "/saveSceneData";
+
+        HttpRequestSingle.Instance.StartCoroutine(
+
+          HttpRequest.WWWPostRequest(url, postData,sucesscallBack, (a) =>
+          {
+
+              log.Error("http reqeust error saveSceneData:url=" + url);
+
+              log.Error("http reqeust error saveSceneData:" + a.ToString());
+
+          }));
+
+    }
+
+    public static void IsExistNewScene(System.Action<string> callBack)
+    {
+        string url = Config.parse("requestAddress") + "/checkNewSceneFile";
+
+        HttpRequestSingle.Instance.StartCoroutine(
+
+          HttpRequest.GetRequest(url, callBack, (a) =>
+          {
+
+              log.Error("http reqeust error checkNewSceneFile:url=" + url);
+
+              log.Error("http reqeust error checkNewSceneFile:" + a.ToString());
+
+          }));
+
+    }
+
+
+    
 
     /// <summary>
     /// 通过场景id获取房间下设备信息

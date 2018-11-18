@@ -5,6 +5,7 @@ using UnityEngine;
 using Utils;
 using System.Linq;
 using State;
+using System.Text.RegularExpressions;
 
 public static class SceneData  {
 
@@ -19,21 +20,22 @@ public static class SceneData  {
     /// <summary>
     /// 初始化所有的3d对象数据
     /// </summary>
-    public static void Init3dObjectData(System.Action callBack)
+    public static void Init3dAllObjectData(System.Action callBack)
     {
-        Object3dProxy.GetAll3dObjectData((a) =>
+        Object3dProxy.GetAll3dObjectData((result) =>
         {
 
-            object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(a);
+            object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
             objectDataDic.Clear();
             ParseDataToDic(object3dList);
-            Battlehub.UIControls.TreeViewControl.Instance.Init();
+           
             if(callBack!=null)
             {
                 callBack.Invoke();
             }
         });
     }
+    
 
     /// <summary>
     /// 形成id对象的字典，方便查找
@@ -46,7 +48,7 @@ public static class SceneData  {
         {
             if (object3dItem.id == null)
             {
-                objectDataDic.Add(object3dItem.code, object3dItem);
+                objectDataDic.Add(object3dItem.number, object3dItem);
             }
             else
             {
@@ -146,7 +148,7 @@ public static class SceneData  {
     {
         IEnumerable<Object3dItem> result =
             from object3dItem in object3dList
-            where object3dItem.code.EndsWith(Constant.WQName)
+            where object3dItem.number.EndsWith(Constant.WQName)
             select object3dItem;
 
 
@@ -207,4 +209,114 @@ public static class SceneData  {
             return typeof(RoomState);
         }
     }
+
+
+    #region  sceneUpdate
+    /// <summary>
+    /// 更新场景数据
+    /// </summary>
+    public static void UpdateSceneData(System.Action callBack)
+    {
+        Object3dProxy.GetAll3dObjectData((result) =>
+        {
+            List<Object3dItem> object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
+            SetRoomParent(object3dList);
+            SetFloorParent(object3dList);
+            SetType(object3dList);
+            Dictionary<string, string> saveDic = new Dictionary<string, string>();
+            saveDic.Add("result", CollectionsConvert.ToJSON(object3dList));
+            Object3dProxy.PostUpdateScene((postResult) => {
+
+                callBack.Invoke();
+
+            }, saveDic);
+
+        });
+    }
+
+    private static void SetType(List<Object3dItem> object3dList)
+    {
+        foreach (Object3dItem item in object3dList)
+        {
+            if (item.number.EndsWith(Constant.WQName.ToLower()))
+            {
+                item.type = Type.Builder;
+            }
+        }
+    }
+
+    private static void SetRoomParent(List<Object3dItem> object3dList)
+    {
+
+
+        Regex fjRegex = new Regex("fj\\d");
+        IEnumerable<Object3dItem> roomList =
+            from object3dItem in object3dList
+            where fjRegex.IsMatch(object3dItem.number)
+            select object3dItem;
+
+        foreach (Object3dItem item in roomList)
+        {
+            string[] str = item.number.Split('_');
+            string floorPrefix = str[0] + "_" + str[1] + "_" + str[2];
+
+            IEnumerable<Object3dItem> floorList =
+            from object3dItem in object3dList
+            where object3dItem.number.ToString().Equals(floorPrefix)
+            select object3dItem;
+
+            if (floorList.Count() == 1)
+            {
+                item.parentsId = floorList.ToArray<Object3dItem>()[0].id;
+                item.type = Type.Room;
+
+            }
+        }
+    }
+
+    private static void SetFloorParent(List<Object3dItem> object3dList)
+    {
+        Regex flooRegex = new Regex("f\\d");
+        IEnumerable<Object3dItem> floorList =
+            from object3dItem in object3dList
+            where flooRegex.IsMatch(object3dItem.number) && !object3dItem.number.Contains(Constant.FJ.ToLower())
+            select object3dItem;
+
+        //Debug.Log(floorList.Count());
+        foreach (Object3dItem item in floorList)
+        {
+            string[] str = item.number.Split('_');
+            string floorPrefix = str[0] + "_wq";
+
+            IEnumerable<Object3dItem> wqList =
+            from object3dItem in object3dList
+            where object3dItem.number.ToString().Equals(floorPrefix)
+            select object3dItem;
+
+            if (wqList.Count() == 1)
+            {
+                item.parentsId = wqList.ToArray<Object3dItem>()[0].id;
+                item.type = Type.Floor;
+            }
+        }
+    }
+
+
+    public static void IsExistNewScene(System.Action<bool> callBack)
+    {
+        Object3dProxy.IsExistNewScene((result) =>
+        {
+            //有新的场景
+            if (result.Equals("1"))
+            {
+                callBack.Invoke(true);
+            }
+            else
+            {
+                callBack.Invoke(false);
+            }
+        });
+    }
+
+    #endregion
 }

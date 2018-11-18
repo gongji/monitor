@@ -67,7 +67,7 @@ public class BuilderSet: BaseSet
         float length = 0f;
         foreach (Object3dItem object3dItem in currentData)
         {
-            GameObject collider = SceneUtility.GetSceneCollider(object3dItem.code);
+            GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
            // Debug.Log(collider.GetComponent<MeshRenderer>().bounds.size);
 
             if (collider != null && collider.GetComponent<BoxCollider>().bounds.size.x > length)
@@ -90,7 +90,7 @@ public class BuilderSet: BaseSet
         float width = 0f;
         foreach (Object3dItem object3dItem in currentData)
         {
-            GameObject collider = SceneUtility.GetSceneCollider(object3dItem.code);
+            GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
             //Debug.Log(collider.GetComponent<MeshRenderer>().bounds.size);
 
             if (collider != null && collider.GetComponent<BoxCollider>().bounds.size.z > width)
@@ -114,7 +114,7 @@ public class BuilderSet: BaseSet
 
         Object3dItem object3dItem = currentData[index - 1];
 
-        GameObject collider = SceneUtility.GetSceneCollider(object3dItem.code);
+        GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
         if (collider != null)
         {
             return collider.GetComponent<BoxCollider>().bounds.center;
@@ -160,7 +160,7 @@ public class BuilderSet: BaseSet
         {
             for (int i = 0; i < currentData.Count; i++)
             {
-                GameObject root = SceneUtility.GetGameByRootName(currentData[i].code, currentData[i].code);
+                GameObject root = SceneUtility.GetGameByRootName(currentData[i].number, currentData[i].number);
                 Vector3 tartPostion = root.transform.position - Vector3.up * (index - 1 - i) * yoffest *2;
                 root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
                 root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
@@ -212,7 +212,7 @@ public class BuilderSet: BaseSet
         //上边向上移动
        foreach(Object3dItem o in topList)
         {
-            GameObject g =  SceneUtility.GetGameByRootName(o.code, o.code);
+            GameObject g =  SceneUtility.GetGameByRootName(o.number, o.number);
             Vector3 newPostion = g.transform.position + Vector3.up * 10;
             g.transform.DOLocalMove(newPostion, duringTime).OnComplete(()=> {
                // g.SetActive(false);
@@ -221,14 +221,14 @@ public class BuilderSet: BaseSet
        //下边向下移动
         foreach (Object3dItem o in downList)
         {
-            GameObject g = SceneUtility.GetGameByRootName(o.code, o.code);
+            GameObject g = SceneUtility.GetGameByRootName(o.number, o.number);
             Vector3 newPostion = g.transform.position - Vector3.up * 10;
             g.transform.DOLocalMove(newPostion, duringTime).OnComplete(() => {
                 //g.SetActive(false);
             });
         }
 
-        GameObject currentSelect = SceneUtility.GetGameByRootName(currentData[index].code, currentData[index].code);
+        GameObject currentSelect = SceneUtility.GetGameByRootName(currentData[index].number, currentData[index].number);
         currentSelect.transform.DOLocalRotate(Vector3.zero, duringTime);
 
         DOVirtual.DelayedCall(duringTime * 1.2f, () =>
@@ -251,7 +251,7 @@ public class BuilderSet: BaseSet
         BuiderNavigationUI.DeleteAllUI();
         foreach (Object3dItem item  in currentData)
         {
-            GameObject root = SceneUtility.GetGameByRootName(item.code, item.code);
+            GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);
             root.SetActive(false);
         }
        // SwitchCameraMode(false);
@@ -263,7 +263,7 @@ public class BuilderSet: BaseSet
     {
         foreach (Object3dItem object3dItem in currentData)
         {
-            GameObject root = SceneUtility.GetGameByRootName(object3dItem.code, object3dItem.code);
+            GameObject root = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
             root.SetActive(true);
             FoorObject fo = root.GetComponent<FoorObject>();
             if (fo)

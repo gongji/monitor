@@ -31,9 +31,9 @@ public class NavigationTitle : MonoBehaviour {
         List<string> names = new List<string>();
         string parentid = string.Empty;
         names.Add(item.name);
-        while (!string.IsNullOrEmpty(item.parentid))
+        while (!string.IsNullOrEmpty(item.parentsId))
         {
-            parentid = item.parentid;
+            parentid = item.parentsId;
             item = SceneData.FindObjUtilityect3dItemById(parentid);
             names.Add(item.name);
 

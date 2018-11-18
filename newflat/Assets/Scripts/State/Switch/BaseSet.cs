@@ -33,7 +33,7 @@ public abstract class BaseSet
     {
         foreach (Object3dItem temp in items)
         {
-            GameObject root = SceneUtility.GetGameByRootName(temp.code, temp.code);
+            GameObject root = SceneUtility.GetGameByRootName(temp.number, temp.number);
             root.SetActive(isShow);
         }
     }

@@ -145,7 +145,7 @@ public sealed class EquipmentSet  {
             //楼层或者房间
             if (parent!=null &&(parent.type == Type.Floor || (parent.type == Type.Room && istate is RoomState)))
             {
-                GameObject root = SceneUtility.GetGameByRootName(parent.code, parent.code);
+                GameObject root = SceneUtility.GetGameByRootName(parent.number, parent.number);
                 GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
                 SetParent(equipment, box.transform, equipmentItem);
             }
@@ -159,10 +159,10 @@ public sealed class EquipmentSet  {
                 //设置大楼下的房间
                 else
                 {
-                    string parentparentid = parent.parentid;
+                    string parentparentid = parent.parentsId;
                     Object3dItem parentparentObject = SceneData.FindObjUtilityect3dItemById(parentparentid);
-                    GameObject parentparentRoot = SceneUtility.GetGameByRootName(parentparentObject.code, parentparentObject.code);
-                    GameObject root = FindObjUtility.GetTransformChildByName(parentparentRoot.transform, parent.code);
+                    GameObject parentparentRoot = SceneUtility.GetGameByRootName(parentparentObject.number, parentparentObject.number);
+                    GameObject root = FindObjUtility.GetTransformChildByName(parentparentRoot.transform, parent.number);
 
                     GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
                     SetParent(equipment, box.transform, equipmentItem);

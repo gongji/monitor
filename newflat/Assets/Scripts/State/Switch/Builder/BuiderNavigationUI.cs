@@ -14,7 +14,7 @@ public sealed  class BuiderNavigationUI
         Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         foreach (Object3dItem object3dItem in currentData)
         {
-            GameObject collider = SceneUtility.GetSceneCollider(object3dItem.code);
+            GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
             //计算4个顶点
             Vector3[] vs = Object3dUtility.GetBoxColliderVertex(collider.GetComponent<BoxCollider>());
 
@@ -22,7 +22,7 @@ public sealed  class BuiderNavigationUI
             GameObject navaUI = TransformControlUtility.CreateItem("Text", canvas.transform);
             navaUIList.Add(navaUI);
 
-            navaUI.name = "L" + object3dItem.code.Substring(object3dItem.code.Length - 1, 1);
+            navaUI.name = "L" + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
             navaUI.GetComponentInChildren<TextMeshProUGUI>().text = navaUI.name;
 
             MouseFloorText floorText = navaUI.gameObject.AddComponent<MouseFloorText>();

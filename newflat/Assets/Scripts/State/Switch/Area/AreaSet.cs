@@ -72,7 +72,7 @@ public class AreaSet:BaseSet
         {
             foreach (Object3dItem object3dItem in wqList)
             {
-                GameObject rootGameObjerct = SceneUtility.GetGameByRootName(object3dItem.code, object3dItem.code);
+                GameObject rootGameObjerct = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
                 if (rootGameObjerct != null)
                 {
 
@@ -116,7 +116,7 @@ public class AreaSet:BaseSet
         foreach(Object3dItem object3dItem in list)
         {
            
-            SceneUtility.SetRootGameObjects(object3dItem.code, isVisible);
+            SceneUtility.SetRootGameObjects(object3dItem.number, isVisible);
         }
 
     }

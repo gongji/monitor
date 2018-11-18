@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadePostProcess: {fileID: 1481498082}
-  demoEffects: []
+  effects: []
 --- !u!4 &58644061
 Transform:
   m_ObjectHideFlags: 0
@@ -655,11 +655,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000015258789
+      value: -0.000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 22450892, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchorMax.x

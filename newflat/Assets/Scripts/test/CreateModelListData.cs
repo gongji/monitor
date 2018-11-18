@@ -49,7 +49,7 @@ public class CreateModelListData : MonoBehaviour {
                     }
                    
                     threemodelCategory.type = ModelCategoryType.Model;
-                    threemodelCategory.modelid = "jigui";
+                    threemodelCategory.path = "jigui";
                     threemodelCategory.name = twomodelCategory.name + "_" + j;
                     threeList.Add(threemodelCategory);
                 }

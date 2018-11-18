@@ -46,7 +46,7 @@ namespace Battlehub.UIControls
             object3dItem.childs = SceneData.GetAllWq();
             datas = new List<Object3dItem>();
             datas.Add(object3dItem);
-
+            TreeView.Items = datas;
             //subscribe to events
             TreeView.ItemDataBinding += OnItemDataBinding;
             TreeView.SelectionChanged += OnSelectionChanged;
@@ -59,51 +59,51 @@ namespace Battlehub.UIControls
 
         public void SetBrowserData()
         {    
-            SetEquipmentData(datas);
+            //SetEquipmentData(datas);
             TreeView.Items = datas;
 
         }
         public void SetEditData()
         {
-            EquipmentData.GetEquipmentListByParentId("", (list) => {
+            //EquipmentData.GetEquipmentListByParentId("", (list) => {
 
-                TreeView.Items = datas;
-            });
+            //    TreeView.Items = datas;
+            //});
         }
 
         /// <summary>
         /// 绑定设备的数据
         /// </summary>
         /// <param name="datas"></param>
-        private void SetEquipmentData(List<Object3dItem>  datas)
-        {
-            foreach(Object3dItem item in datas)
-            {
-               // Debug.Log(item.name);
-                if (item.type != DataModel.Type.Equipment && item.type != DataModel.Type.None)
-                {
-                    EquipmentData.GetEquipmentListByParentId(item.id, (list) =>
-                    {
+        //private void SetEquipmentData(List<Object3dItem>  datas)
+        //{
+        //    foreach(Object3dItem item in datas)
+        //    {
+        //       // Debug.Log(item.name);
+        //        if (item.type != DataModel.Type.Equipment && item.type != DataModel.Type.None)
+        //        {
+        //            EquipmentData.GetEquipmentListByParentId(item.id, (list) =>
+        //            {
 
-                       // Debug.Log(list.Count);
-                       if(list==null)
-                        {
-                            list = new List<Object3dItem>();
-                        }
-                        if(item.childs!=null && item.childs.Count > 0)
-                        {
-                            list.AddRange(item.childs);
-                        }
-                        item.childs = list;
+        //               // Debug.Log(list.Count);
+        //               if(list==null)
+        //                {
+        //                    list = new List<Object3dItem>();
+        //                }
+        //                if(item.childs!=null && item.childs.Count > 0)
+        //                {
+        //                    list.AddRange(item.childs);
+        //                }
+        //                item.childs = list;
 
-                        if(item.childs!=null && item.childs.Count>0)
-                        {
-                            SetEquipmentData(item.childs);
-                        }
-                    });
-                }
-            }
-        }
+        //                if(item.childs!=null && item.childs.Count>0)
+        //                {
+        //                    SetEquipmentData(item.childs);
+        //                }
+        //            });
+        //        }
+        //    }
+        //}
 
      
         private void OnDestroy()
@@ -187,14 +187,12 @@ namespace Battlehub.UIControls
                 case (DataModel.Type.Equipment):
                 {
 
-                    Main.instance.stateMachineManager.LocateEquipment(object3dItem.id, object3dItem.parentid);
+                    Main.instance.stateMachineManager.LocateEquipment(object3dItem.id, object3dItem.parentsId);
                     break;
                 }
 
             }
         }
-
-     
 
         /// <summary>
         /// This method called for each data item during databinding operation

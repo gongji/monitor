@@ -9,13 +9,15 @@ namespace DataModel
     {
         public string id;
         public string name;
-        public string code;
+        public string number;
         public Type type;
         public bool isDownFinish = false;
 
         public List<Object3dItem> childs;
 
-        public string parentid;
+        public string parentsId;
+
+        public string path;
     }
 
     public enum Type

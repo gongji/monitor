@@ -23,10 +23,10 @@ public class FloorRoomSet : BaseSet
             Object3dItem currentData = currentDataList[0];
             this.currentObject = currentData;
             ShowHideScene(currentData);
-            Transform box = SceneUtility.GetSceneCollider(currentObject.code).transform;
+            Transform box = SceneUtility.GetSceneCollider(currentObject.number).transform;
 
             PlaneManger(box,true);
-            CameraInitSet.StartSet(currentObject.code, box.transform, 0.5f, ()=> {
+            CameraInitSet.StartSet(currentObject.number, box.transform, 0.5f, ()=> {
                 CreateTips(currentData);
                 if (AppInfo.Platform == BRPlatform.Browser)
                 {
@@ -41,7 +41,7 @@ public class FloorRoomSet : BaseSet
     }
     protected void CreateTips(Object3dItem object3dItem)
     {
-        GameObject g = SceneUtility.GetGameByRootName(object3dItem.code, object3dItem.code);
+        GameObject g = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
         //if (g.GetComponentsInChildren<MouseTips>().Length > 0)
         //{
         //    return;
@@ -102,7 +102,7 @@ public class FloorRoomSet : BaseSet
         {
             foreach (Object3dItem roomObject in floorObject3dItem.childs)
             {
-                if (!string.IsNullOrEmpty(roomObject.code) &&  roomObject.code.ToLower().Equals(code.ToLower()))
+                if (!string.IsNullOrEmpty(roomObject.number) &&  roomObject.number.ToLower().Equals(code.ToLower()))
                 {
                     return roomObject;
 
@@ -130,7 +130,7 @@ public class FloorRoomSet : BaseSet
         navigationUI = TransformControlUtility.CreateItem("TextNavigation", GameObject.Find("Canvas").transform);
         navigationUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         NavigationUI fnu = navigationUI.GetComponent<NavigationUI>();
-        string parentid = currentData.parentid;
+        string parentid = currentData.parentsId;
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
         if (object3dItem.childs != null && (object3dItem.childs.Count > 0))
         {
@@ -154,13 +154,13 @@ public class FloorRoomSet : BaseSet
     protected void ShowHideScene(Object3dItem currentData)
     {
 
-        string parentid = currentData.parentid;
+        string parentid = currentData.parentsId;
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
         if (object3dItem.childs != null && object3dItem.childs.Count > 0)
         {
             foreach (Object3dItem temp in object3dItem.childs)
             {
-                GameObject g = SceneUtility.GetGameByRootName(temp.code, temp.code);
+                GameObject g = SceneUtility.GetGameByRootName(temp.number, temp.number);
                 if (g != null)
                 {
                     if (temp.id.Equals(currentData.id))
@@ -195,14 +195,14 @@ public class FloorRoomSet : BaseSet
         }
         GameObject box = null;
         float duringTime = 1.0f;
-        GameObject root = SceneUtility.GetGameByRootName(currentObject.code, currentObject.code);
+        GameObject root = SceneUtility.GetGameByRootName(currentObject.number, currentObject.number);
         if(isRoom)
         {
             box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
         }
         else
         {
-            GameObject fj = FindObjUtility.GetTransformChildByName(root.transform, object3dItem.code);
+            GameObject fj = FindObjUtility.GetTransformChildByName(root.transform, object3dItem.number);
             if(fj)
             {
                 box = FindObjUtility.GetTransformChildByName(fj.transform, Constant.ColliderName);

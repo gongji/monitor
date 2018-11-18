@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class ModelCategory  {
 
+    public string id;
 
     public string icon;
 
-    public string id;
-
     public string name;
 
-    public string modelid;
+    public string path;
 
     public ModelCategoryType type;
 
     public List<ModelCategory> childs;
-
     
 }
 

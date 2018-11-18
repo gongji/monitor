@@ -46,7 +46,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
         //下载场景
         foreach (Object3dItem object3dItem in scenelist)
         {
-            string path= downscenePath + object3dItem.code + Constant.ExtendName;
+            string path= downscenePath + object3dItem.number + Constant.ExtendName;
 
             SceneDownloadTask sceneDownloadTask3 = new SceneDownloadTask(path, path);
 

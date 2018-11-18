@@ -10,7 +10,8 @@ public sealed class EditModelListData
 
     public static void GetModelListData(System.Action<List<ModelCategory>> callBack)
     {
-        string url = Config.parse("downPath") + "/modelData.bat";
+        
+        string url = Config.parse("requestAddress") + "/getModelTree";
 
         HttpRequestSingle.Instance.StartCoroutine(
 
@@ -23,9 +24,9 @@ public sealed class EditModelListData
           }, (a) =>
           {
 
-              log.Error("http reqeust error GetModelListData:url=" + url);
+              log.Error("http reqeust error getModelTree:url=" + url);
 
-              log.Error("http reqeust error GetModelListData:" + a.ToString());
+              log.Error("http reqeust error getModelTree:" + a.ToString());
 
           }));
 

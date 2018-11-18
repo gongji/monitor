@@ -17,6 +17,7 @@ public class ShowModelList : MonoBehaviour {
         instance = this;
     }
     void Start () {
+        //查询出所有的树状结构数据，由3d客户端完成数据的分级处理
         EditModelListData.GetModelListData((list) => {
             this.list = list;
             CreateModelList(list);
@@ -48,7 +49,7 @@ public class ShowModelList : MonoBehaviour {
             {
                 TopLevelClick(clone);
             }
-            string url = Config.parse("downPath") + "/icon/"+ list[i].icon;
+            string url =  list[i].icon;
             ResourceUtility.Instance.GetHttpTexture(url, (texture) => {
                 Sprite sprite = UIUtility.GetSpriteByTexture((Texture2D)texture);
                 clone.GetComponent<Image>().sprite = sprite;
@@ -150,9 +151,9 @@ public class ShowModelList : MonoBehaviour {
             coloneItem.SetActive(true);
             coloneItem.transform.SetParent(modelItem.parent);
             coloneItem.transform.localScale = Vector3.one;
-            coloneItem.name = itemData.modelid;
+            coloneItem.name = itemData.path;
             coloneItem.GetComponent<Button>().onClick.AddListener(delegate () { OnThreeClick(coloneItem); });
-            string url = Config.parse("downPath") + "/icon/" + itemData.icon;
+            string url =  itemData.icon;
             ResourceUtility.Instance.GetHttpTexture(url, (texture) => {
                 Sprite sprite = UIUtility.GetSpriteByTexture((Texture2D)texture);
                 coloneItem.GetComponent<Image>().sprite = sprite;
@@ -246,7 +247,7 @@ public class ShowModelList : MonoBehaviour {
     {
         TaskQueue taskQueue = new TaskQueue(this);
 
-        string downequipmentPath = Config.parse("downPath") + "model/";
+        string downequipmentPath =   "model/";
         string path = downequipmentPath + modelid;
 
         ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(path, path, modelid);

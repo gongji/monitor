@@ -21,7 +21,7 @@ public class RoomSet : FloorRoomSet
     /// </summary>
     public void CameraLocateEquipment()
     {
-        GameObject cameraGameObject = SceneUtility.GetSceneCameraObject(currentObject.code, "EquipmentCamera");
+        GameObject cameraGameObject = SceneUtility.GetSceneCameraObject(currentObject.number, "EquipmentCamera");
         CameraAnimation.CameraMove(Camera.main, cameraGameObject.transform.position, cameraGameObject.transform.eulerAngles, cameraMoveTime, () => {
 
         });
@@ -65,9 +65,9 @@ public class RoomSet : FloorRoomSet
         if(currentDataList.Count ==1)
         {
             Object3dItem currentData = currentDataList[0];
-            GameObject root = SceneUtility.GetGameByRootName(currentData.code, currentData.code);
+            GameObject root = SceneUtility.GetGameByRootName(currentData.number, currentData.number);
             //没考虑到多层
-            int index =  int.Parse( currentData.code.Substring(currentData.code.Length - 1, 1));
+            int index =  int.Parse( currentData.number.Substring(currentData.number.Length - 1, 1));
             root.transform.position =new  Vector3(root.transform.position.x, index *100, root.transform.position.z);
         }
         
@@ -77,7 +77,7 @@ public class RoomSet : FloorRoomSet
     {
         if (currentObject != null)
         {
-            GameObject root = SceneUtility.GetGameByRootName(currentObject.code, currentObject.code);
+            GameObject root = SceneUtility.GetGameByRootName(currentObject.number, currentObject.number);
             root.SetActive(false);
         }
 

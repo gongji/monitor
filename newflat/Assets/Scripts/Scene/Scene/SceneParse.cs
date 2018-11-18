@@ -21,7 +21,7 @@ public static class SceneParse  {
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(id.Trim());
         if (object3dItem != null)
         {
-            GameObject rootGameObjerct = SceneUtility.GetGameByRootName(object3dItem.code, object3dItem.code);
+            GameObject rootGameObjerct = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
             if (rootGameObjerct != null)
             {
 

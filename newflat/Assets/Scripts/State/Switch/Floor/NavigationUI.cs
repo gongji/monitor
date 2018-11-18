@@ -46,7 +46,7 @@ public  class NavigationUI:MonoBehaviour
             GameObject cloneObject = GameObject.Instantiate(item);
             cloneObject.SetActive(true);
             cloneObject.transform.parent = parent.GetComponentInChildren<VerticalLayoutGroup>().transform;
-            cloneObject.GetComponentInChildren<Text>().text = frontname + object3dItem.code.Substring(object3dItem.code.Length - 1, 1);
+            cloneObject.GetComponentInChildren<Text>().text = frontname + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
             cloneObject.GetComponentInChildren<Text>().fontSize = 15;
             cloneObject.name = object3dItem.id;
             if(object3dItem.id.Equals(currentData.id))
@@ -128,7 +128,7 @@ public  class NavigationUI:MonoBehaviour
     private void ClickBuiding()
     {
         Object3dItem curentdata = SceneData.FindObjUtilityect3dItemById(id);
-        Object3dItem parentObject = SceneData.FindObjUtilityect3dItemById(curentdata.parentid);
+        Object3dItem parentObject = SceneData.FindObjUtilityect3dItemById(curentdata.parentsId);
 
         IState currentstate = Main.instance.stateMachineManager.mCurrentState;
         if (currentstate is FloorState)
