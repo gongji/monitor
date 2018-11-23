@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class BaseSet
 {
+
+    protected List<Object3dItem> currentlist;
     protected void SwitchBG(bool isArea)
     {
             GameObject renderGameObjerct = SceneUtility.GetGameByRootName(Constant.SkyboxName, "main");
@@ -29,12 +31,26 @@ public abstract class BaseSet
        
     }
 
-    protected void ShowOrHideScene(List<Object3dItem> items, bool isShow)
+    protected void ShowOrHideScene( bool isShow)
     {
-        foreach (Object3dItem temp in items)
+        Debug.Log("isShow="+ isShow.ToString());
+
+        foreach (Object3dItem item in currentlist)
         {
-            GameObject root = SceneUtility.GetGameByRootName(temp.number, temp.number);
-            root.SetActive(isShow);
+            Debug.Log("item.number="+ item.number);
+            if(!item.number.EndsWith(Constant.DX))
+            {
+                GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);
+                if (root != null)
+                {
+                    root.SetActive(isShow);
+                }
+            }
+            else
+            {
+                SceneUtility.SetRootGameObjects(item.number, isShow);
+            }
+           
         }
     }
 
@@ -62,10 +78,12 @@ public abstract class BaseSet
 
 
     public virtual void Enter(List<Object3dItem> currentData, System.Action callBack) {
-        if(AppInfo.Platform == BRPlatform.Browser )
+        this.currentlist = currentData;
+        if (AppInfo.Platform == BRPlatform.Browser )
         {
             BrowserToolBar.instance.SetToolBarState();
         }
+        ShowOrHideScene(true);
     }
     //带动画的退出
     public virtual void Exit(string nextid, System.Action callBack) {
@@ -76,6 +94,7 @@ public abstract class BaseSet
     public virtual void Exit(string nextid) {
         //EnableOrDisableCamera(false);
         TipsMgr.Instance.DeleteTips();
+        ShowOrHideScene(false);
     }
 
 

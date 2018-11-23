@@ -15,30 +15,28 @@ public class FloorRoomSet : BaseSet
     private static ILog log = LogManagers.GetLogger("FloorRoomSet");
 
     private GameObject plane;
-    protected void OnInit(List<Object3dItem> currentDataList, Action callBack,string frontname,string backName)
+    protected void OnInit(List<Object3dItem> currentDataList, Action callBack, string frontname, string backName)
     {
         SwitchBG(false);
-        if (currentDataList.Count == 1)
+        this.currentObject = SceneData.currentScene;
+        Transform box = SceneUtility.GetSceneCollider(currentObject.number).transform;
+        PlaneManger(box, true);
+        CameraInitSet.StartSet(currentObject.number, box.transform, 0.5f, () =>
         {
-            Object3dItem currentData = currentDataList[0];
-            this.currentObject = currentData;
-            ShowHideScene(currentData);
-            Transform box = SceneUtility.GetSceneCollider(currentObject.number).transform;
-
-            PlaneManger(box,true);
-            CameraInitSet.StartSet(currentObject.number, box.transform, 0.5f, ()=> {
-                CreateTips(currentData);
-                if (AppInfo.Platform == BRPlatform.Browser)
-                {
-                    CreateNavigation(currentData, frontname, backName);
-                }
-                if(callBack!=null)
-                {
-                    callBack.Invoke();
-                }
-            });
-        }
+            CreateTips(currentObject);
+            if (AppInfo.Platform == BRPlatform.Browser)
+            {
+                CreateNavigation(currentObject, frontname, backName);
+            }
+            if (callBack != null)
+            {
+                callBack.Invoke();
+            }
+        });
     }
+  
+
+    
     protected void CreateTips(Object3dItem object3dItem)
     {
         GameObject g = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);

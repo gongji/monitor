@@ -3,26 +3,58 @@ using DataModel;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 public class BuilderSet: BaseSet
 {
     private static ILog log = LogManagers.GetLogger("BuilderSet");
 
     private List<Object3dItem> currentData;
+
+    private List<Object3dItem> originalData;
     private float yoffest = 0.6f;
    
     #region 进入 逻辑
     public override void Enter(List<Object3dItem> currentData,System.Action callBack)
     {
         base.Enter(currentData, callBack);
-        ShowOrHideScene(currentData, true);
-        this.currentData = currentData;
+    
+        this.currentData = GetAllFloor(currentData);
         SaveOrResetFloorPostion();
         SwitchBG(false);
         InitCamera(()=> { });
         SetFloorSplitAnimation(callBack);
+
+    }
+
+    private List<Object3dItem> GetAllFloor(List<Object3dItem> currentData)
+    {
+        List<Object3dItem> result = new List<Object3dItem>();
+        Regex flooRegex = new Regex("f\\d");
+        foreach (Object3dItem item in currentData)
+        {
+            if (flooRegex.IsMatch(item.number) && item.number.Split('_').Length == 3)
+            {
+                
+                result.Add(item);
+            }
+        }
+
+        IEnumerable<Object3dItem> sortresult =
+            from object3dItem in result
+            orderby object3dItem.number
+            select object3dItem;
+
+
+        //foreach(Object3dItem aa in sortresult)
+        //{
+        //    Debug.Log(aa.number);
+        //}
+        //Debug.Log("result="+ result.Count);
+        return sortresult.ToList<Object3dItem>();
 
     }
 
@@ -184,7 +216,7 @@ public class BuilderSet: BaseSet
      public override void Exit(string currentid,System.Action callBack)
     {
         base.Exit(currentid, callBack);
-        BuiderNavigationUI.DeleteAllUI();
+       
         List<Object3dItem> topList = new List<Object3dItem>();
         List<Object3dItem> downList = new List<Object3dItem>();
         int index = 0;
@@ -233,15 +265,17 @@ public class BuilderSet: BaseSet
 
         DOVirtual.DelayedCall(duringTime * 1.2f, () =>
         {
-            if(callBack!=null)
+            Exit(currentid);
+
+            if (callBack!=null)
             {
                 
                 callBack.Invoke();
-               // SwitchCameraMode(false);
+               
             }
+           
+
         });
-
-
 
     }
 
@@ -249,12 +283,7 @@ public class BuilderSet: BaseSet
     {
         base.Exit(nextid);
         BuiderNavigationUI.DeleteAllUI();
-        foreach (Object3dItem item  in currentData)
-        {
-            GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);
-            root.SetActive(false);
-        }
-       // SwitchCameraMode(false);
+
     }
     #endregion
     
@@ -264,16 +293,20 @@ public class BuilderSet: BaseSet
         foreach (Object3dItem object3dItem in currentData)
         {
             GameObject root = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
-            root.SetActive(true);
-            FoorObject fo = root.GetComponent<FoorObject>();
-            if (fo)
+            if(root!=null)
             {
-                fo.Reset();
+                root.SetActive(true);
+                FoorObject fo = root.GetComponent<FoorObject>();
+                if (fo)
+                {
+                    fo.Reset();
+                }
+                else
+                {
+                    fo = root.AddComponent<FoorObject>();
+                }
             }
-            else
-            {
-                fo = root.AddComponent<FoorObject>();
-            }
+            
 
         }
            

@@ -14,7 +14,7 @@ public class BrowseStatus : AppBaseState
     public override void Init()
     {
         BrowserUI.Create();
-        TreeViewControl.Instance.SetBrowserData();
+        //TreeViewControl.Instance.SetBrowserData();
     }
 
     public override void Update()

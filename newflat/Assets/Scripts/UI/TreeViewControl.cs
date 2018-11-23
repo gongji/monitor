@@ -43,69 +43,23 @@ namespace Battlehub.UIControls
             object3dItem.name = "园区";
             object3dItem.id = "";
             object3dItem.type = DataModel.Type.Area;
-            object3dItem.childs = SceneData.GetAllWq();
+            List<Object3dItem> wqList = SceneData.GetAllWq();
+            SceneData.SetTreeParent(wqList);
+            object3dItem.childs = wqList;
             datas = new List<Object3dItem>();
             datas.Add(object3dItem);
-            TreeView.Items = datas;
+           
             //subscribe to events
             TreeView.ItemDataBinding += OnItemDataBinding;
             TreeView.SelectionChanged += OnSelectionChanged;
             TreeView.ItemExpanding += OnItemExpanding;
             //Bind data items
-          
-        }
 
-        public System.Action callBack;
-
-        public void SetBrowserData()
-        {    
-            //SetEquipmentData(datas);
             TreeView.Items = datas;
 
         }
-        public void SetEditData()
-        {
-            //EquipmentData.GetEquipmentListByParentId("", (list) => {
 
-            //    TreeView.Items = datas;
-            //});
-        }
-
-        /// <summary>
-        /// 绑定设备的数据
-        /// </summary>
-        /// <param name="datas"></param>
-        //private void SetEquipmentData(List<Object3dItem>  datas)
-        //{
-        //    foreach(Object3dItem item in datas)
-        //    {
-        //       // Debug.Log(item.name);
-        //        if (item.type != DataModel.Type.Equipment && item.type != DataModel.Type.None)
-        //        {
-        //            EquipmentData.GetEquipmentListByParentId(item.id, (list) =>
-        //            {
-
-        //               // Debug.Log(list.Count);
-        //               if(list==null)
-        //                {
-        //                    list = new List<Object3dItem>();
-        //                }
-        //                if(item.childs!=null && item.childs.Count > 0)
-        //                {
-        //                    list.AddRange(item.childs);
-        //                }
-        //                item.childs = list;
-
-        //                if(item.childs!=null && item.childs.Count>0)
-        //                {
-        //                    SetEquipmentData(item.childs);
-        //                }
-        //            });
-        //        }
-        //    }
-        //}
-
-     
+        public System.Action callBack;
         private void OnDestroy()
         {
             if (!TreeView)
@@ -116,8 +70,7 @@ namespace Battlehub.UIControls
             TreeView.ItemDataBinding -= OnItemDataBinding;
             TreeView.SelectionChanged -= OnSelectionChanged;
             TreeView.ItemExpanding -= OnItemExpanding;
-        
-           
+       
         }
 
         private void OnItemExpanding(object sender, ItemExpandingArgs e)
@@ -213,11 +166,7 @@ namespace Battlehub.UIControls
 
                 //Load icon from resources
                 Image icon = e.ItemPresenter.GetComponentsInChildren<Image>()[4];
-                if(dataItem.type == DataModel.Type.Equipment)
-                {
-                    icon.sprite = Resources.Load<Sprite>("equipment");
-                    
-                }else if (dataItem.type == DataModel.Type.Area)
+                if(dataItem.type == DataModel.Type.Area)
                 {
                     icon.sprite = Resources.Load<Sprite>("cube");
 

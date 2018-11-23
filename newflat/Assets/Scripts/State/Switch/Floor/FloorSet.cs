@@ -57,7 +57,6 @@ public class FloorSet : FloorRoomSet {
         {
             root.SetActive(false);
         }
-       
-
+      
     }
 }

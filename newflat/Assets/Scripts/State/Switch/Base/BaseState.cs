@@ -58,22 +58,22 @@ namespace State
             curentDataList = SceneData.GetCurrentData();
             SceneContext.sceneData = curentDataList;
             var result = from o in curentDataList where o.isDownFinish == false select o;
-            EquipmentData.GetCurrentEquipmentData(currentId, (list) => {
+         //  EquipmentData.GetCurrentEquipmentData(currentId, (list) => {
 
-                if ((result!=null && result.Count() > 0) || (list!=null && list.Length > 0))
-                {
-                    DownLoader.Instance.StartDownLoad(result.ToList<Object3dItem>(), list, () =>
-                    {
-                        OnLoadResouceFinish();
-                    });
-                }
-                //不加载资源
-                else
+            if ((result!=null && result.Count() > 0))
+            {
+                DownLoader.Instance.StartDownLoad(result.ToList<Object3dItem>(), null, () =>
                 {
                     OnLoadResouceFinish();
-                }
+                });
+            }
+            //不加载资源
+            else
+            {
+                OnLoadResouceFinish();
+            }
 
-            });
+          // });
 
 
 
@@ -148,7 +148,7 @@ namespace State
 				});
 			} else {
 				//OnHide ();
-				OnFadeIn();
+				//OnFadeIn();
                 OnNoTransitionExit(nextState, nextid);
 
                 if (callBack!=null)

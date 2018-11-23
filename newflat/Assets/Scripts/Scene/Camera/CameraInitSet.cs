@@ -48,23 +48,33 @@ public static class CameraInitSet {
                 // Debug.Log("本地拉取");
                 CalculateCameraPostionRoation(box);
             }
-            
 
+            CameraMove(cameraMoveTime, callBack);
 
-            CameraAnimation.CameraMove(Camera.main, cameraPostion, cameraRoation.eulerAngles, cameraMoveTime, () =>
-            {
-               // Debug.Log(box.name);
-                SetIsEnbaleCamera(box.gameObject, true);
-                if (callBack != null)
-                {
-                    callBack.Invoke();
-                }
+        },()=>{
 
+            //Debug.Log("123456");
+            CalculateCameraPostionRoation(box);
+            CameraMove(cameraMoveTime, callBack);
 
-            });
 
         });
 
+    }
+
+    private static void CameraMove(float cameraMoveTime, System.Action callBack)
+    {
+        CameraAnimation.CameraMove(Camera.main, cameraPostion, cameraRoation.eulerAngles, cameraMoveTime, () =>
+        {
+            // Debug.Log(box.name);
+            SetIsEnbaleCamera(_box.gameObject, true);
+            if (callBack != null)
+            {
+                callBack.Invoke();
+            }
+
+
+        });
     }
 
 

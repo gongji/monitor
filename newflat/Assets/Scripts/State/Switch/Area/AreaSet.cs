@@ -7,15 +7,13 @@ using UnityEngine;
 
 public class AreaSet:BaseSet
 {
-    private List<Object3dItem> list;
+   
 
     private static ILog log = LogManagers.GetLogger("AreaSet");
     #region 设置全员场景初始化
-    public override void Enter(List<Object3dItem> list, System. Action callBack)
+    public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
-        base.Enter(list, callBack);
-        this.list = list;
-        ShowOrHideScene(true);
+        base.Enter(currentlist, callBack);
         SetSkyEffection();
         SetCameraProccessEffection();
         InitCameraPostion(callBack);
@@ -48,7 +46,7 @@ public class AreaSet:BaseSet
 
     public void InitCameraPostion(System.Action callBack)
     {
-        GameObject box =  SceneUtility.GetGameByRootName("main_dx",Constant.ColliderName,true);
+        GameObject box =  SceneUtility.GetGameByRootName(Constant.Main_dxName,Constant.ColliderName,true);
         if(box!=null)
         {
             CameraInitSet.StartSet(Constant.AreaViewName, box.transform, 0.2f, callBack);
@@ -104,27 +102,18 @@ public class AreaSet:BaseSet
                     {
                         callBack.Invoke();
                     }
-                    ShowOrHideScene(false);
-                    RenderSettingsValue.SetNoAreaEffction();
+                    Exit(nextid);
                 });
 
             });
         }
     }
-    public void ShowOrHideScene(bool isVisible)
-    {
-        foreach(Object3dItem object3dItem in list)
-        {
-           
-            SceneUtility.SetRootGameObjects(object3dItem.number, isVisible);
-        }
-
-    }
+   
 
    public override void Exit(string nextid)
     {
         base.Exit(nextid);
-        ShowOrHideScene(false);
+        
         RenderSettingsValue.SetNoAreaEffction();
     }
     #endregion

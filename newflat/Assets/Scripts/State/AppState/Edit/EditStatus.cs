@@ -15,7 +15,6 @@ public class EditStatus : AppBaseState
     public override void Init()
     {
         EditUI.Create();
-        TreeViewControl.Instance.SetEditData();
     }
     
     public override void Update()

@@ -76,26 +76,30 @@ public static class Object3dProxy
     /// <param name="callBack"></param>
     public static void GetEquipmentData(string currentid,System.Action<List<EquipmentItem>> callBack)
     {
-        string url = Config.parse("downPath") + "/equipment.bat";
-
-        HttpRequestSingle.Instance.StartCoroutine(
-
-          HttpRequest.GetRequest(url, (result)=> {
-              //对结果进行过滤
-              List<EquipmentItem> list = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
-              
-              callBack(list);
-              //log.Debug("list=" + list.Count);
 
 
-          }, (a) =>
-          {
+        callBack.Invoke(null);
+        //string url = Config.parse("downPath") + "/equipment.bat";
 
-              log.Error("http reqeust error currentid=:" + currentid);
+        //HttpRequestSingle.Instance.StartCoroutine(
 
-             // log.Error("http reqeust error GetAll3dObjectData:" + a.ToString());
+        //  HttpRequest.GetRequest(url, (result) =>
+        //  {
+        //      //对结果进行过滤
+        //      List<EquipmentItem> list = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
 
-          }));
+        //      callBack(list);
+        //      log.Debug("list=" + list.Count);
+
+
+        //  }, (a) =>
+        //  {
+
+        //      log.Error("http reqeust error currentid=:" + currentid);
+
+        //      log.Error("http reqeust error GetAll3dObjectData:" + a.ToString());
+
+        //  }));
     }
 
 

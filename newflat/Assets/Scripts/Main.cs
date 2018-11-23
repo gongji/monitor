@@ -56,7 +56,7 @@ public class Main : MonoBehaviour {
             {
                 stateMachineManager.SetAppState<EditStatus>();
             }
-            StartCoroutine(WebsocjetService.Instance.StartWebSocket());
+            //StartCoroutine(WebsocjetService.Instance.StartWebSocket());
             Battlehub.UIControls.TreeViewControl.Instance.Init();
 
         });

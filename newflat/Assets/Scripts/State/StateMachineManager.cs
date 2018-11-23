@@ -96,15 +96,15 @@ namespace State
             SceneData.SetCurrentData<T>(nextSceneid);
             //显示标题
             NavigationTitle.instance.ShowTitle(nextSceneid);
-            if (nextState == mCurrentState)
-            {
-                log.Debug("Switch");
-                nextState.Switch(nextSceneid);
-                mCurrentState = nextState;
-                this.currentSceneId = nextSceneid;
+            //if (nextState == mCurrentState)
+            //{
+            //    log.Debug("Switch");
+            //    nextState.Switch(nextSceneid);
+            //    mCurrentState = nextState;
+            //    this.currentSceneId = nextSceneid;
                 
-                return;
-            }
+            //    return;
+            //}
             List<Object3dItem> list = SceneData.GetCurrentData();
             if (list == null || list.Count==0)
             {
@@ -130,7 +130,7 @@ namespace State
 
         }
         /// <summary>
-        /// 当前的设备id
+        /// 定位设备
         /// </summary>
         private string currentEquipmentid = "-1";
         public void LocateEquipment(string id,string parentid)

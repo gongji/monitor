@@ -50,19 +50,22 @@ namespace State
             {
                 OnExit<RoomState>(nextState, nextid, () => {
 
+                    OnFadeIn();
                     if (callBack != null)
                     {
                         callBack.Invoke();
                     }
                     EquipmentSet.HideCurrentEquipment();
                 }, true);
-
-
             }
-            else
+            else 
             {
+                if (nextState is BuilderState)
+                {
+                    OnFadeIn();
+                }
                 OnExitFront();
-                OnFadeIn();
+            
                 EquipmentSet.HideCurrentEquipment();
                 OnNoTransitionExit(nextState, nextid);
                 if (callBack != null)
@@ -70,6 +73,7 @@ namespace State
                     callBack.Invoke();
                 }
             }
+            
         }
         protected override void OnExitFront()
         {
@@ -103,7 +107,7 @@ namespace State
             {
                 return;
             }
-            DisableCamera();
+            ///DisableCamera();
             this.currentId = id;
             OnEnter();
 

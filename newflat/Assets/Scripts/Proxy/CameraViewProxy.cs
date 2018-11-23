@@ -13,7 +13,7 @@ public sealed class CameraViewProxy  {
     /// </summary>
     /// <param name="id"></param>
     /// <param name="callBack"></param>
-    public static void GetCameraView(string id,System.Action<Vector3,Vector3,bool> callBack)
+    public static void GetCameraView(string id,System.Action<Vector3,Vector3,bool> callBack,System.Action ErrorCallBack)
     {
         string url = Config.parse("downPath") + "/cameraview.bat";
 
@@ -35,7 +35,6 @@ public sealed class CameraViewProxy  {
                       postion = item.postion;
                       angle = item.angel;
                       break;
-
                   }
 
               }
@@ -45,9 +44,10 @@ public sealed class CameraViewProxy  {
           }, (a) =>
           {
 
-              log.Error("http reqeust error GetAll3dObjectData:url=" + url);
+              log.Error("http reqeust error cameraview:url=" + url);
 
-              log.Error("http reqeust error GetAll3dObjectData:" + a.ToString());
+              log.Error("http reqeust error cameraview:" + a.ToString());
+              ErrorCallBack.Invoke();
 
           }));
 

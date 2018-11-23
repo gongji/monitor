@@ -5,9 +5,6 @@ using TMPro;
 using DataModel;
 
 public class NavigationTitle : MonoBehaviour {
-
- 
-
     public static NavigationTitle instance;
     void Start () {
         instance = this;
@@ -21,6 +18,7 @@ public class NavigationTitle : MonoBehaviour {
 
     private string GetName(string id)
     {
+        
         string result = "当前位置：园区";
         if(string.IsNullOrEmpty(id))
         {
@@ -31,7 +29,7 @@ public class NavigationTitle : MonoBehaviour {
         List<string> names = new List<string>();
         string parentid = string.Empty;
         names.Add(item.name);
-        while (!string.IsNullOrEmpty(item.parentsId))
+        while (!string.IsNullOrEmpty(item.parentsId) && !item.parentsId.Equals("0"))
         {
             parentid = item.parentsId;
             item = SceneData.FindObjUtilityect3dItemById(parentid);

@@ -64,11 +64,15 @@ namespace State
             }
             else
             {
+                if (nextState is BuilderState)
+                {
+                    OnFadeIn();
+                }
+              
                 OnExitFront();
                 EquipmentSet.HideCurrentEquipment();
-                //OnHide ();
                 OnNoTransitionExit(nextState, nextid);
-                OnFadeIn();
+              
                 if (callBack != null)
                 {
                     callBack.Invoke();

@@ -26,17 +26,20 @@ namespace State
     	protected override void OnInit()
     	{
             base.OnInit();
-			Debug.Log ("area OnInit");
-            CameraViewProxy.GetCameraView(Constant.AreaViewName,(postion,angel,isExsits) =>
-            {
-                if(isExsits)
-                {
-                    Camera.main.transform.position = postion;
-                    Camera.main.transform.eulerAngles = angel;
-                }
+            log.Debug ("area OnInit");
+            //CameraViewProxy.GetCameraView(Constant.AreaViewName,(postion,angel,isExsits) =>
+            //{
+            //    if(isExsits)
+            //    {
+            //        Camera.main.transform.position = postion;
+            //        Camera.main.transform.eulerAngles = angel;
+            //    }
 
 
-            });
+            //},()=> {
+
+            //    log.Debug("GetCameraView  isError");
+            //});
         }
         protected override void OnLoadResouceFinish()
 		{
