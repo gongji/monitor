@@ -168,7 +168,7 @@ public static class SceneData  {
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="id"></param>
-    public static void SetCurrentData<T>(string id)
+    public static void SetCurrentData<T>(string id, int FloorGroup,string buiderId)
     {
 
         currentScene = FindObjUtilityect3dItemById(id);
@@ -189,9 +189,15 @@ public static class SceneData  {
         {
             currentobject3dList = GetFloorObject3dItem(id);
         }
+        //建筑
         else if(type.Name.Equals(typeof(BuilderState).Name))
         {
-            currentobject3dList = GetBuilderObject3dItem(id);
+            currentobject3dList = GetBuilderObject3dItem(id, FloorGroup);
+        }
+        //全景
+        else if(type.Name.Equals(typeof(FullArea).Name))
+        {
+            GetFullAreaObject3dItem(id, buiderId);
         }
 
         //打印输出的场景信息
@@ -275,8 +281,27 @@ public static class SceneData  {
     /// 建筑
     /// </summary>
     /// <param name="currentid"></param>
+    /// <param name="FloorGroup">当前楼层的组编号</param>
     /// <returns></returns>
-    public static List<Object3dItem> GetBuilderObject3dItem(string currentid)
+    public static List<Object3dItem> GetFullAreaObject3dItem(string currentid, string buiderId)
+    {
+        IEnumerable<Object3dItem> floorResult =
+             from object3dItem in object3dList
+                 //不包含管网
+              where object3dItem.parentsId.Equals(buiderId) && !object3dItem.number.Contains(Constant.GuanDao)
+             select object3dItem;
+
+
+        return floorResult.ToList<Object3dItem>();
+    }
+
+        /// <summary>
+        /// 建筑
+        /// </summary>
+        /// <param name="currentid"></param>
+        /// <param name="FloorGroup">当前楼层的组编号</param>
+        /// <returns></returns>
+        public static List<Object3dItem> GetBuilderObject3dItem(string currentid,int FloorGroup)
     {
 
         //楼层
@@ -286,6 +311,16 @@ public static class SceneData  {
               where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.GuanDao)
               select object3dItem;
 
+        //按照范围过滤
+
+        List<Object3dItem> floorFiter = new List<Object3dItem>();
+        for(int i=0;i< floorResult.Count();i++)
+        {
+            if(i>= FloorGroup * 3 && i<(FloorGroup+1) * 3)
+            {
+                floorFiter.Add(floorResult.ToList<Object3dItem>()[i]);
+            }
+        }
 
         //楼层下的门禁和管网
         List<Object3dItem> result = new List<Object3dItem>();
@@ -301,7 +336,7 @@ public static class SceneData  {
             result.AddRange(roomList);
 
         }
-        result.AddRange(floorResult);
+        result.AddRange(floorFiter);
 
         return result;
     }
@@ -324,8 +359,6 @@ public static class SceneData  {
         return roomResult.ToList<Object3dItem>();
 
     }
-
-
         public static List<Object3dItem> GetCurrentData()
     {
         return currentobject3dList;

@@ -69,12 +69,13 @@ namespace State
 
 
         /// <summary>
-        /// 建筑之间的切换
+        /// 场景之间的切换
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="nextSceneid"></param>
         /// <param name="enterCallBack"></param>
-        public void SwitchStatus<T>(string nextSceneid,System.Action enterCallBack =null) where T : IState, new()
+        /// <param name="FloorGroup">切换楼层的时候，组编号</param>
+        public void SwitchStatus<T>(string nextSceneid,System.Action enterCallBack =null, int FloorGroup = 0,string buiderid = "") where T : IState, new()
         {
            System.Type type = typeof(T);
 
@@ -93,7 +94,7 @@ namespace State
                 log.Debug("switch object is same");
                 return;
             }
-            SceneData.SetCurrentData<T>(nextSceneid);
+            SceneData.SetCurrentData<T>(nextSceneid, FloorGroup, buiderid);
             //显示标题
             NavigationTitle.instance.ShowTitle(nextSceneid);
             //if (nextState == mCurrentState)
