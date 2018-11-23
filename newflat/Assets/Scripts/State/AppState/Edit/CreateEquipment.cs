@@ -31,7 +31,7 @@ public sealed class CreateEquipment  {
         //  object3DElement.equipmentData.id = Guid.NewGuid().ToString();
         object3DElement.equipmentData.name = "设备";
         
-        object3DElement.equipmentData.modelid = modelPrefeb.name;
+        object3DElement.equipmentData.modelId = modelPrefeb.name;
 
         ShowModelList.instance.RemoveReset();
         UIElementCommandBar.instance.SelectEquipment(Equipmentinstance);
@@ -52,11 +52,11 @@ public sealed class CreateEquipment  {
         Debug.Log(parent);
         if (parent == null)
         {
-            object3DElement.equipmentData.parentid = null;
+            object3DElement.equipmentData.parentsId = null;
         }
         else
         {
-            object3DElement.equipmentData.parentid = parent.name;
+            object3DElement.equipmentData.parentsId = parent.name;
 
         }
 

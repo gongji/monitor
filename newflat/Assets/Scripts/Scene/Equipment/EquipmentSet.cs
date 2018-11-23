@@ -30,9 +30,9 @@ public sealed class EquipmentSet  {
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
         {
             //避免重复创建
-            if (!string.IsNullOrEmpty(equipmentItem.modelid) &&  modelPrefebDic.ContainsKey(equipmentItem.modelid) && !equipmentDic.ContainsKey(equipmentItem.id))
+            if (!string.IsNullOrEmpty(equipmentItem.modelId) &&  modelPrefebDic.ContainsKey(equipmentItem.modelId) && !equipmentDic.ContainsKey(equipmentItem.id))
             {
-                GameObject equipment = GameObject.Instantiate(modelPrefebDic[equipmentItem.modelid]);
+                GameObject equipment = GameObject.Instantiate(modelPrefebDic[equipmentItem.modelId]);
                 Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), equipment);
                 equipment.SetActive(false);
 
@@ -140,7 +140,7 @@ public sealed class EquipmentSet  {
             //if (string.IsNullOrEmpty(equipmentItem.parentid))
             //{
             //查找父对象
-            Object3dItem parent = SceneData.FindObjUtilityect3dItemById(equipmentItem.parentid);
+            Object3dItem parent = SceneData.FindObjUtilityect3dItemById(equipmentItem.parentsId);
 
             //楼层或者房间
             if (parent!=null &&(parent.type == Type.Floor || (parent.type == Type.Room && istate is RoomState)))
@@ -190,9 +190,9 @@ public sealed class EquipmentSet  {
             return;
         }
         equipment.transform.SetParent(rootParent);
-        equipment.transform.localScale = equipmentItem.scale;
-        equipment.transform.localPosition = equipmentItem.postion;
-        equipment.transform.localEulerAngles = equipmentItem.eulerAngles;
+        equipment.transform.localScale = new Vector3( equipmentItem.scaleX, equipmentItem.scaleY, equipmentItem.scaleZ);
+        equipment.transform.localPosition = new Vector3(equipmentItem.x, equipmentItem.y, equipmentItem.z);
+        equipment.transform.localEulerAngles = new Vector3( equipmentItem.rotationX, equipmentItem.rotationY, equipmentItem.rotationZ);
         if(rootParent!=null)
         {
             BoxCollider collider = rootParent.GetComponent<BoxCollider>();

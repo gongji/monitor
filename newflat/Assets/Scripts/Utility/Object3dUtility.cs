@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
+using System.Reflection;
+using DataModel;
 
 public static  class Object3dUtility
 {
@@ -364,6 +366,55 @@ public static  class Object3dUtility
         return Vector3.zero;             
     }
 
+
+    /// <summary>
+    /// 比较对象的属性是否相同。
+    /// </summary>
+    /// <param name="item1"></param>
+    /// <param name="item2"></param>
+    /// <returns></returns>
+    public static bool IsCompareObjectProperty(EquipmentItem item1, EquipmentItem item2)
+    {
+        
+        System.Type type1 = item1.GetType();
+        FieldInfo[] fieldInfos1 = type1.GetFields();
+
+        System.Type type2 = item2.GetType();
+
+        foreach (var f in fieldInfos1)
+        {
+            //字段名称
+            string fieldName = f.Name;
+
+            FieldInfo fieldInfo2 = type2.GetField(fieldName);
+            //字段类型
+           // string fieldType = f.FieldType.ToString();
+
+            object fieldValue1 = f.GetValue(item1);
+
+            object fieldValue2 = fieldInfo2.GetValue(item2);
+
+            bool isSame = true;
+            if (f.FieldType  == typeof(System.Single))
+            {
+                isSame = Mathf.Approximately((float)fieldValue1, (float)fieldValue2);
+                //Debug.Log(fieldName + ":" + isSame.ToString());
+            }
+            else
+            {
+                isSame = fieldValue1.Equals(fieldValue2);
+
+               // Debug.Log(fieldName + ":" + isSame.ToString());
+            }
+
+            if(!isSame)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
    
 }

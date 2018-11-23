@@ -13,40 +13,57 @@ namespace DataModel
     [Serializable]
     public class EquipmentItem
     {
-        public string id;
-        public string name;
+        public string id = "";
+        public string name = "";
 
-        public Vector3 postion;
+        public float x =  0.0f;
+        public float y = 0.0f;
+        public float z = 0.0f;
 
-        public Vector3 eulerAngles;
+        public float rotationX = 0.0f;
 
-        public Vector3 scale = Vector3.one;
+        public float rotationY = 0.0f;
 
-        public string parentid;
+        public float rotationZ = 0.0f;
 
-        public string modelid;
+        public float scaleX = 0.0f;
 
-        public void UpdatePostion(Vector3 postion)
+        public float scaleY = 0.0f;
+
+        public float scaleZ = 0.0f;
+
+        public string parentsId = "";
+
+        public string modelId="";
+
+        public void UpdatePostion(float x,float y, float z)
         {
-            this.postion = postion;
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
 
-        public void UpdateScale(Vector3 scale)
+        public void UpdateScale(float scaleX, float scaleY, float scaleZ)
         {
-            this.scale = scale;
-        }
-        public void UpdateRotation(Vector3 eulerAngles)
-        {
-            this.eulerAngles = eulerAngles;
-        }
-
-        public void Update(Vector3 postion, Vector3 scale, Vector3 eulerAngles)
-        {
-            this.postion = postion;
-            this.scale = scale;
-            this.eulerAngles = eulerAngles;
+            this.scaleX = scaleX;
+            this.scaleY = scaleY;
+            this.scaleZ = scaleZ;
 
         }
+        public void UpdateRotation(float rotationX,float rotationY, float  rotationZ)
+        {
+            this.rotationX = rotationX;
+            this.rotationY = rotationY;
+            this.rotationZ = rotationZ;
+        }
+
+        //public void Update(Vector3 postion, Vector3 scale, Vector3 eulerAngles)
+        //{
+        //    this.postion = postion;
+        //    this.scale = scale;
+        //    this.eulerAngles = eulerAngles;
+
+        //}
 
     }
 }

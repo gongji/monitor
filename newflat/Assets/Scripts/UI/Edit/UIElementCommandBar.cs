@@ -108,11 +108,18 @@ public sealed class UIElementCommandBar : MonoBehaviour
     {
         Hide();
     }
+    //删除
     private void DeleteClick(GameObject g)
     {
         Hide();
+        Object3DElement equipmentItem = selectingObjectTransform.GetComponent<Object3DElement>();
         if(selectingObjectTransform!=null)
         {
+            //不为空的话，保存数据库
+            if(!string.IsNullOrEmpty(equipmentItem.id))
+            {
+                Object3DElement.AddDeleteItem(equipmentItem.id);
+            }
             GameObject.Destroy(selectingObjectTransform.gameObject);
         }
        

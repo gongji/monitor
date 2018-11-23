@@ -140,13 +140,13 @@ public sealed class EquipmentData {
         if(!string.IsNullOrEmpty(parentid))
         {
             equipmentList = from item in equipmentItemList
-                            where  !string.IsNullOrEmpty(item.parentid) &&  item.parentid.Equals(parentid)
+                            where  !string.IsNullOrEmpty(item.parentsId) &&  item.parentsId.Equals(parentid)
                             select item;
         }
         else
         {
             equipmentList = from item in equipmentItemList
-                            where string.IsNullOrEmpty(item.parentid)
+                            where string.IsNullOrEmpty(item.parentsId)
                             select item;
         }
        
@@ -158,7 +158,7 @@ public sealed class EquipmentData {
             object3dItem.name = item.name;
             object3dItem.id = item.id;
             object3dItem.type = Type.Equipment;
-            object3dItem.parentsId = item.parentid;
+            object3dItem.parentsId = item.parentsId;
             objList.Add(object3dItem);
         }
 
@@ -193,7 +193,7 @@ public sealed class EquipmentData {
         {
             IEnumerable<EquipmentItem> equipmentList =
                from item in eList
-               where ids.Contains(item.parentid)
+               where ids.Contains(item.parentsId)
                select item;
 
             return equipmentList;
@@ -209,16 +209,16 @@ public sealed class EquipmentData {
     {
 
         List<string> modelist = new List<string>();
-        var list = equipmentDataList.GroupBy(x => new { x.modelid }).Select(group => new
+        var list = equipmentDataList.GroupBy(x => new { x.modelId }).Select(group => new
         {
-            group.Key.modelid
+            group.Key.modelId
         }).ToList();
 
         foreach (var a in list)
         {
-            if(!string.IsNullOrEmpty(a.modelid) && !modelPrefebDic.ContainsKey(a.modelid))
+            if(!string.IsNullOrEmpty(a.modelId) && !modelPrefebDic.ContainsKey(a.modelId))
             {
-                modelist.Add(a.modelid);
+                modelist.Add(a.modelId);
             }
            
         }
