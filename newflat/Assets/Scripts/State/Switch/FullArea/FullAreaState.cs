@@ -77,7 +77,7 @@ namespace State
 
         protected override void OnTransitionExit(IState  nextState,string nextid,System.Action callBack)
 		{
-            Debug.Log(" area OnTransitionAnimation");
+            Debug.Log(" fullarea OnTransitionAnimation");
             
            if(baseSet != null)
             {

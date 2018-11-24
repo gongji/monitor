@@ -23,7 +23,7 @@ public class BuilderSet: BaseSet
         base.Enter(currentData, callBack);
     
         this.currentData = GetAllFloor(currentData);
-        SaveOrResetFloorPostion();
+        SaveOrResetFloorPostion(currentData);
         SwitchBG(false);
         InitCamera(()=> { });
         SetFloorSplitAnimation(callBack);
@@ -308,27 +308,7 @@ public class BuilderSet: BaseSet
     #endregion
     
 
-    private void SaveOrResetFloorPostion()
-    {
-        foreach (Object3dItem object3dItem in currentData)
-        {
-            GameObject root = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
-            if(root!=null)
-            {
-                root.SetActive(true);
-                TransformObject fo = root.GetComponent<TransformObject>();
-                if (fo)
-                {
-                    fo.Reset();
-                }
-                
-            }
-            
 
-        }
-           
-            
-    }
 
     
 

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public abstract class BaseSet
 {
-
     protected List<Object3dItem> currentlist;
     protected void SwitchBG(bool isArea)
     {
@@ -102,10 +101,26 @@ public abstract class BaseSet
 
     protected Quaternion cameraRoation = Quaternion.identity;
     protected Vector3 cameraPostion = Vector3.zero;
-    /// <summary>
-    /// 计算相机的位置
-    /// </summary>
-   
-       
 
- }
+    protected void SaveOrResetFloorPostion(List<Object3dItem> currentDataList)
+    {
+        foreach (Object3dItem object3dItem in currentDataList)
+        {
+            GameObject root = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
+            if (root != null)
+            { 
+                TransformObject fo = root.GetComponent<TransformObject>();
+                if (fo)
+                {
+                    fo.Reset();
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+}

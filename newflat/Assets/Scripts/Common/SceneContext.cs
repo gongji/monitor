@@ -12,4 +12,8 @@ public sealed class SceneContext {
 
     public static int offestIndex = 0;
 
+    public static string buiderId = "";
+
+    public static int FloorGroup = 0;
+
 }

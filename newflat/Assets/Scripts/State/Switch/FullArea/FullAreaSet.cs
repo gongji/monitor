@@ -7,17 +7,14 @@ using UnityEngine;
 
 public class FullAreaSet : BaseSet
 {
-   
-
     private static ILog log = LogManagers.GetLogger("FullAreaSet");
     #region 设置全员场景初始化
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
         base.Enter(currentlist, callBack);
-      //  SetSkyEffection();
-       // SetCameraProccessEffection();
-        InitCameraPostion(callBack);
-     
+        SaveOrResetFloorPostion(currentlist);
+        CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, callBack);
+
 
     }
     /// <summary>
@@ -40,48 +37,21 @@ public class FullAreaSet : BaseSet
 
     }
 
-    public void InitCameraPostion(System.Action callBack)
-    {
-        GameObject box =  SceneUtility.GetGameByRootName(Constant.Main_dxName,Constant.ColliderName,true);
-        if(box!=null)
-        {
-            CameraInitSet.StartSet(Constant.AreaViewName, box.transform, 0.2f, callBack);
-
-        }
-        else
-        {
-            log.Error("box not find");
-        }
-       
-    }
-  
-
-
     #endregion
-
-
 
     #region 退出场景的逻辑处理
     public override void Exit(string nextid, System.Action callBack)
     {
 
         base.Exit(nextid, callBack);
-        GameObject cameraObject = SceneParse.FindWQMoveCamera(nextid);
-        if (cameraObject != null)
+        
+        Exit(nextid);
+        if (callBack != null)
         {
-
-            CameraAnimation.CameraMove(Camera.main, cameraObject.transform.position, cameraObject.transform.eulerAngles, 0.5f, () => {
-                DOVirtual.DelayedCall(1.5f, () =>
-                {
-                    if (callBack != null)
-                    {
-                        callBack.Invoke();
-                    }
-                    Exit(nextid);
-                });
-
-            });
+            callBack.Invoke();
         }
+
+
     }
    
 

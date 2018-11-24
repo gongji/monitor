@@ -16,6 +16,7 @@ public static class UIUtility
     {
         try
         {
+           
             Vector4 tempborder = Vector4.zero;
             Sprite spr = Sprite.Create(picv, new Rect(0, 0, picv.width, picv.height), new Vector2(m_Pivot.x, m_Pivot.y), 100.0f, 0, SpriteMeshType.Tight, tempborder);//后面Vector2就是你Anchors的Pivot的x/y属性值
             image.sprite = spr;

@@ -7,7 +7,7 @@ using System.Linq;
 using State;
 using System.Text.RegularExpressions;
 
-public static class SceneData  {
+public static class SceneData {
 
     //所有的数据列表
     private static List<Object3dItem> object3dList = null;
@@ -28,17 +28,17 @@ public static class SceneData  {
             //Debug.Log(result);
             object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
 
-           // Debug.Log(object3dList.Count);
+            // Debug.Log(object3dList.Count);
             objectDataDic.Clear();
             ParseDataToDic(object3dList);
-           
-            if(callBack!=null)
+
+            if (callBack != null)
             {
                 callBack.Invoke();
             }
         });
     }
-    
+
 
     /// <summary>
     /// 形成id对象的字典，方便查找
@@ -72,7 +72,7 @@ public static class SceneData  {
     public static Object3dItem FindObjUtilityect3dItemById(string id)
     {
 
-        if(string.IsNullOrEmpty(id))
+        if (string.IsNullOrEmpty(id))
         {
             return null;
         }
@@ -82,14 +82,14 @@ public static class SceneData  {
         }
         return null;
     }
-    
 
- 
+
+
     private static List<Object3dItem> GetChildObject3dItemByCode(List<Object3dItem> list, string parentid)
     {
         foreach (Object3dItem object3dItem in list)
         {
-            if (object3dItem.id!=null && object3dItem.id.Equals(parentid))
+            if (object3dItem.id != null && object3dItem.id.Equals(parentid))
             {
                 return object3dItem.childs;
             }
@@ -104,7 +104,7 @@ public static class SceneData  {
     }
 
 
-    
+
     /// <summary>
     /// 得到园区所有的外构的名称列表
     /// </summary>
@@ -135,14 +135,14 @@ public static class SceneData  {
             string wqNumber = wq.number.Split('_')[0];
             IEnumerable<Object3dItem> floorResult =
             from object3dItem in object3dList
-            where flooRegex.IsMatch(object3dItem.number) && object3dItem.number.StartsWith(wqNumber) && object3dItem.number.Split('_').Length==3
+            where flooRegex.IsMatch(object3dItem.number) && object3dItem.number.StartsWith(wqNumber) && object3dItem.number.Split('_').Length == 3
             select object3dItem;
 
             //外构下的楼层
             List<Object3dItem> floorList = floorResult.ToList<Object3dItem>();
             wq.childs = floorList;
 
-            foreach(Object3dItem floor in floorList)
+            foreach (Object3dItem floor in floorList)
             {
                 IEnumerable<Object3dItem> roomResult =
                from object3dItem in object3dList
@@ -168,10 +168,12 @@ public static class SceneData  {
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="id"></param>
-    public static void SetCurrentData<T>(string id, int FloorGroup,string buiderId)
+    public static void SetCurrentData<T>(string id, int FloorGroup, string buiderId)
     {
 
-        SceneContext.currentSceneData  = FindObjUtilityect3dItemById(id);
+        SceneContext.currentSceneData = FindObjUtilityect3dItemById(id);
+        SceneContext.FloorGroup = FloorGroup;
+        SceneContext.buiderId = buiderId;
         System.Type type = typeof(T);
 
         //园区
@@ -180,30 +182,30 @@ public static class SceneData  {
             currentobject3dList = GetObject3dItemByParent("0");
         }
         //房间
-        else if ( type.Name.Equals(typeof(RoomState).Name))
+        else if (type.Name.Equals(typeof(RoomState).Name))
         {
             currentobject3dList = GetRoomObject3dItem(id);
         }
         //楼层
-        else if(type.Name.Equals(typeof(FloorState).Name))
+        else if (type.Name.Equals(typeof(FloorState).Name))
         {
             currentobject3dList = GetFloorObject3dItem(id);
         }
         //建筑
-        else if(type.Name.Equals(typeof(BuilderState).Name))
+        else if (type.Name.Equals(typeof(BuilderState).Name))
         {
             currentobject3dList = GetBuilderObject3dItem(id, FloorGroup);
         }
         //全景
-        else if(type.Name.Equals(typeof(FullAreaState).Name))
+        else if (type.Name.Equals(typeof(FullAreaState).Name))
         {
-            GetFullAreaObject3dItem(id, buiderId);
+            currentobject3dList  = GetFullAreaObject3dItem(id, buiderId);
         }
 
         //打印输出的场景信息
         foreach (Object3dItem temp in currentobject3dList)
         {
-            Debug.Log(temp.number);
+            //Debug.Log(temp.number);
         }
     }
 
@@ -278,7 +280,7 @@ public static class SceneData  {
 
 
     /// <summary>
-    /// 建筑
+    /// 全景
     /// </summary>
     /// <param name="currentid"></param>
     /// <param name="FloorGroup">当前楼层的组编号</param>
@@ -288,7 +290,7 @@ public static class SceneData  {
         IEnumerable<Object3dItem> floorResult =
              from object3dItem in object3dList
                  //不包含管网
-              where object3dItem.parentsId.Equals(buiderId) && !object3dItem.number.Contains(Constant.GuanDao)
+             where ((object3dItem.parentsId.Equals(buiderId) && !object3dItem.number.Contains(Constant.GuanDao))|| object3dItem.number.Equals(Constant.Main_dxName))
              select object3dItem;
 
 

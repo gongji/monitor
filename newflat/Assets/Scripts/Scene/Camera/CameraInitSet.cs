@@ -12,14 +12,14 @@ public static class CameraInitSet {
     private static Vector3 cameraPostion = Vector3.zero;
     private static Quaternion cameraRoation = Quaternion.identity;
 
-    private static string _code = string.Empty;
+    private static string _id = string.Empty;
 
     private static Transform _box = null;
 
     private static float _cameraMoveTime = 0.5f;
-    public static void StartSet(string code,Transform box, float cameraMoveTime,System.Action callBack)
+    public static void StartSet(string id,Transform box, float cameraMoveTime,System.Action callBack)
     {
-        _code = code;
+        _id = id;
         _box = box;
         _cameraMoveTime = cameraMoveTime;
 
@@ -27,7 +27,11 @@ public static class CameraInitSet {
         {
 
             ViewSwitch.instance.Switch2D(box);
-            SetIsEnbaleCamera(box.gameObject, true);
+            if(box!=null)
+            {
+                SetIsEnbaleCamera(box.gameObject, true);
+            }
+            
             if (callBack!=null)
             {
                 callBack.Invoke();
@@ -35,7 +39,7 @@ public static class CameraInitSet {
             return;
         }
 
-        CameraViewProxy.GetCameraView(code, (postion, angel, isExsits) =>
+        CameraViewProxy.GetCameraView(id, (postion, angel, isExsits) =>
         {
             if (isExsits)
             {
@@ -46,6 +50,7 @@ public static class CameraInitSet {
             else
             {
                 // Debug.Log("本地拉取");
+               
                 CalculateCameraPostionRoation(box);
             }
 
@@ -67,7 +72,11 @@ public static class CameraInitSet {
         CameraAnimation.CameraMove(Camera.main, cameraPostion, cameraRoation.eulerAngles, cameraMoveTime, () =>
         {
             // Debug.Log(box.name);
-            SetIsEnbaleCamera(_box.gameObject, true);
+            if(_box!=null)
+            {
+                SetIsEnbaleCamera(_box.gameObject, true);
+            }
+            
             if (callBack != null)
             {
                 callBack.Invoke();
@@ -80,6 +89,10 @@ public static class CameraInitSet {
 
     private static void CalculateCameraPostionRoation(Transform box)
     {
+        if(!box)
+        {
+            return;
+        }
         bool isEnable = box.GetComponent<BoxCollider>().enabled;
         box.GetComponent<BoxCollider>().enabled = true;
         Vector3 size = box.GetComponent<BoxCollider>().bounds.size;
@@ -182,6 +195,6 @@ public static class CameraInitSet {
 
     public static void ResetCameraPostion()
     {
-        StartSet(_code, _box, _cameraMoveTime, null);
+        StartSet(_id, _box, _cameraMoveTime, null);
     }
 }

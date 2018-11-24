@@ -6,13 +6,19 @@ using DataModel;
 
 public class NavigationTitle : MonoBehaviour {
     public static NavigationTitle instance;
-    void Start () {
+    void Start() {
         instance = this;
         GetComponent<TextMeshProUGUI>().text = "";
     }
-	
+
     public void ShowTitle(string id)
-    {
+
+    { 
+
+        if(id.Equals("-1"))
+        {
+            id = string.Empty;
+        }
         GetComponent<TextMeshProUGUI>().text = GetName(id);
     }
 

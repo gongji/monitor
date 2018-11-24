@@ -19,6 +19,8 @@ public class BrowserToolBar : MonoBehaviour {
 
     private Transform fullArea;
 
+    private Transform tips;
+
     public static BrowserToolBar instance;
 
     private void Awake()
@@ -34,6 +36,7 @@ public class BrowserToolBar : MonoBehaviour {
         qiangti = transform.Find("qiangti");
         guanxian = transform.Find("guanxian");
         fullArea = transform.Find("fullArea");
+        tips = transform.Find("tips");
 
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
 
@@ -56,12 +59,13 @@ public class BrowserToolBar : MonoBehaviour {
         if (value)
         {
             GuanWangMsg.ShowGuanWangShow();
+           
         }
         else
         {
             GuanWangMsg.AllGuanWangHide();
         }
-        Debug.Log("toggle change " + (value ? "On" : "Off"));
+       // Debug.Log("toggle change " + (value ? "On" : "Off"));
     }
 
 
@@ -85,10 +89,13 @@ public class BrowserToolBar : MonoBehaviour {
         if(!isFullModeAreaMode)
         {
             fullArea.GetComponentInChildren<Text>().text = "退出全景";
+            //外构的id暂时写死
+            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1",null,0,"147");
         }
         else
         {
             fullArea.GetComponentInChildren<Text>().text = "全景模式";
+            Main.instance.stateMachineManager.SwitchStatus<AreaState>(string.Empty);
         }
 
         isFullModeAreaMode = !isFullModeAreaMode;
@@ -105,12 +112,14 @@ public class BrowserToolBar : MonoBehaviour {
         qiangti.gameObject.SetActive(true);
         guanxian.gameObject.SetActive(true);
         fullArea.gameObject.SetActive(true);
+        tips.gameObject.SetActive(true);
 
         IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
         if (mCurrentState is AreaState)
         {
             qiangti.gameObject.SetActive(false);
             guanxian.gameObject.SetActive(false);
+            tips.gameObject.SetActive(false);
         }
         else if(mCurrentState is RoomState)
         {
@@ -126,8 +135,10 @@ public class BrowserToolBar : MonoBehaviour {
             qiangti.gameObject.SetActive(false);
             guanxian.gameObject.SetActive(false);
             fullArea.gameObject.SetActive(false);
-
+            tips.gameObject.SetActive(false);
         }
+
+    
         else if(mCurrentState is FloorState)
         {
             fullArea.gameObject.SetActive(false);
@@ -139,11 +150,13 @@ public class BrowserToolBar : MonoBehaviour {
             viewSwitch.gameObject.SetActive(false);
             qiangti.gameObject.SetActive(false);
             guanxian.gameObject.SetActive(false);
+            tips.gameObject.SetActive(false);
         }
-
-        
     }
+    
 
+    #region wangwang
+    /// <param name="isShow"></param>
     public void HideShowGuwang(bool isShow)
     {
         guanxian.gameObject.SetActive(isShow);
@@ -153,5 +166,6 @@ public class BrowserToolBar : MonoBehaviour {
     {
         return guanxianSelect3d;
     }
-    
+    #endregion
+
 }
