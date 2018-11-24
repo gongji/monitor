@@ -56,13 +56,13 @@ namespace State
         {
             log.Debug("strat load resouce");
             curentDataList = SceneData.GetCurrentData();
-            SceneContext.sceneData = curentDataList;
+            SceneContext.sceneDataList = curentDataList;
             var result = from o in curentDataList where o.isDownFinish == false select o;
          //  EquipmentData.GetCurrentEquipmentData(currentId, (list) => {
 
             if ((result!=null && result.Count() > 0))
             {
-                DownLoader.Instance.StartDownLoad(result.ToList<Object3dItem>(), null, () =>
+                DownLoader.Instance.StartSceneDownLoad(result.ToList<Object3dItem>(), () =>
                 {
                     OnLoadResouceFinish();
                 });

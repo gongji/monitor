@@ -48,8 +48,14 @@ public static class SceneParse  {
             {
                 GameObject.Destroy(item);
             }
+            if (sceneName.Equals(item.name))
+            {
+                item.AddComponent<TransformObject>();
+            }
         }
-            string[] names = sceneName.ToLower().Split('_');
+
+       
+        string[] names = sceneName.ToLower().Split('_');
         string endStr = names[names.Length - 1].ToLower().Trim();
 
         Regex flooRegex = new Regex("f\\d");

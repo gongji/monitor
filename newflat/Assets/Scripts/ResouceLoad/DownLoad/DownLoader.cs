@@ -16,66 +16,30 @@ public class DownLoader:MonoSingleton<DownLoader> {
     private GameObject loader = null;
     private TaskQueue taskQueue = null;
     /// <summary>
-    /// 下载资源，包括场景资源,不下载模型
+    /// 下载场景资源
     /// </summary>
     /// <param name="scenelist"></param>
     /// <param name="equipmentPaths"></param>
     /// <param name="callBack"></param>
 
-    public void StartDownLoad(List<Object3dItem> scenelist ,string[] modelids, System.Action callBack)
+    public void StartSceneDownLoad(List<Object3dItem> scenelist , System.Action callBack,bool isGuanWang =false)
     {
 
-        //if(equipmentPaths==null || equipmentPaths.Length == 0)
-        //{
-
-        //}
-       // log.Debug("下载模型列表："+ equipmentPaths.Length);
         LoadLoader();
         if (scenelist == null)
         {
             throw new System.Exception();
             
         }
-       // string downscenePath = Config.parse("downPath") + "scene/";
-       // string downequipmentPath = Config.parse("downPath") + "model/";
-
-
         taskQueue = new TaskQueue(this);
-
-       
         //下载场景
         foreach (Object3dItem object3dItem in scenelist)
         {
-           // string path= object3dItem.path;
-
+        
             SceneDownloadTask sceneDownloadTask3 = new SceneDownloadTask(object3dItem.id, object3dItem.path);
 
             taskQueue.Add(sceneDownloadTask3);
         }
-
-       // Dictionary<string, ABModelDownloadTask> abTask = new Dictionary<string, ABModelDownloadTask>();
-        //下载设备模型和资源包
-        //if(modelids != null && modelids.Length>0)
-        //{
-        //    foreach (string modelid in modelids)
-        //    {
-        //        //避免下载重复
-        //        if(!EquipmentData.modelPrefebDic.ContainsKey(modelid))
-        //        {
-        //            string path = downequipmentPath + modelid;
-
-        //            ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(path, path, modelid);
-
-        //            abTask.Add(modelid, abDownloadTask);
-
-        //            taskQueue.Add(abDownloadTask);
-        //        }
-               
-
-        //    }
-        //}
-        
-       
         taskQueue.StartTask();
         //下载完成
         taskQueue.OnFinish = () => {
@@ -86,13 +50,59 @@ public class DownLoader:MonoSingleton<DownLoader> {
             //更新场景状态
 
             UpdateDownState(scenelist);
-           // EquipmentData.UpdateModelDic(abTask);
+          
             if (callBack != null)
             {
                 callBack();
             }
 
         };
+    }
+
+    /// <summary>
+    /// 下载模型
+    /// </summary>
+    /// <param name="models"></param>
+    /// <param name="callBack"></param>
+    public void StartModelDownLoad(List<ModelItem> modelList, System.Action callBack)
+    {
+
+        Dictionary<string, ABModelDownloadTask> abTask = new Dictionary<string, ABModelDownloadTask>();
+      // 下载设备模型和资源包
+        if (modelList != null && modelList.Count > 0)
+        {
+            foreach (ModelItem modelItem in modelList)
+            {
+                //避免下载重复
+                if (!EquipmentData.modelPrefebDic.ContainsKey(modelItem.id))
+                {
+                  
+                    ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(modelItem.id, modelItem.icon, modelItem.name);
+
+                    abTask.Add(modelItem.id, abDownloadTask);
+
+                    taskQueue.Add(abDownloadTask);
+                }
+            }
+        }
+        taskQueue.StartTask();
+        //下载完成
+        taskQueue.OnFinish = () => {
+
+            GameObject.Destroy(loader);
+            loader = null;
+            taskQueue = null;
+            //更新场景状态
+
+            EquipmentData.UpdateModelDic(abTask);
+
+            if (callBack != null)
+            {
+                callBack();
+            }
+
+        };
+
     }
 
     private void Update()
@@ -125,6 +135,8 @@ public class DownLoader:MonoSingleton<DownLoader> {
             o.isDownFinish = true;
         }
     }
+
+
 
 
 

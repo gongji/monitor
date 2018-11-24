@@ -8,9 +8,9 @@ using Core.Common.Logging;
 
 namespace State
 {
-	public class FullArea : BaseState,IState {
+	public class FullAreaState : BaseState,IState {
 
-        private ILog log = LogManagers.GetLogger("FullArea");
+        private ILog log = LogManagers.GetLogger("FullAreaState");
 
         #region enter
         public void Enter(string id, System.Action callBack)

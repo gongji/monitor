@@ -33,11 +33,12 @@ public abstract class BaseSet
 
     protected void ShowOrHideScene( bool isShow)
     {
-        Debug.Log("isShow="+ isShow.ToString());
+        //  Debug.Log("isShow="+ isShow.ToString());
 
+       // Debug.Log("退出场景");
         foreach (Object3dItem item in currentlist)
         {
-            Debug.Log("item.number="+ item.number);
+           // Debug.Log("item.number="+ item.number);
             if(!item.number.EndsWith(Constant.DX))
             {
                 GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);

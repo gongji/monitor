@@ -33,7 +33,7 @@ public  class NavigationUI:MonoBehaviour
     /// <param name="currentData"></param>
     /// <param name="frontname">下边按钮的前缀</param>
     /// <param name="backName">第一个按钮的名字</param>
-    public void CreateNavagitionList(List<Object3dItem> DataSouce,Transform parent, Object3dItem currentData, string frontname,string backName)
+    public void CreateFloorRoomNavagitionList(List<Object3dItem> DataSouce,Transform parent, Object3dItem currentData, string frontname,string backName)
     {
         this.id = currentData.id;
         backButton.GetComponentInChildren<Text>().text = backName;
@@ -62,6 +62,32 @@ public  class NavigationUI:MonoBehaviour
         }
     }
 
+
+    private void CreateBuiderNavagitionList(Object3dItem currentData,List<int> floorIndexs,int currentIndex, Transform parent)
+    {
+        this.id = currentData.id;
+        backButton.GetComponentInChildren<Text>().text = "返回";
+        foreach (int  floorIndex in floorIndexs)
+        {
+          
+            GameObject cloneObject = GameObject.Instantiate(item);
+            cloneObject.SetActive(true);
+            cloneObject.transform.parent = parent.GetComponentInChildren<VerticalLayoutGroup>().transform;
+            cloneObject.GetComponentInChildren<Text>().text = floorIndex.ToString();
+            cloneObject.GetComponentInChildren<Text>().fontSize = 15;
+            cloneObject.name = floorIndex.ToString();
+            if (floorIndex == currentIndex)
+            {
+                SetSelect(cloneObject.GetComponentInChildren<Button>());
+            }
+            cloneObject.GetComponentInChildren<Button>().onClick.AddListener(() => {
+
+               // OnClickFloor(cloneObject);
+            });
+
+
+        }
+    }
     /// <summary>
     /// 楼层的ui切换
     /// </summary>

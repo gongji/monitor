@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoorObject : MonoBehaviour {
+public class TransformObject : MonoBehaviour {
 
     public Vector3 defaultPostion = Vector3.one;
     public Vector3 defaultRotaion = Vector3.one;
+    
      void Awake()
     {
         defaultRotaion = transform.eulerAngles;

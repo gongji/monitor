@@ -15,10 +15,11 @@ public class FloorRoomSet : BaseSet
     private static ILog log = LogManagers.GetLogger("FloorRoomSet");
 
     private GameObject plane;
+    private int offestIndex = 1;
     protected void OnInit(List<Object3dItem> currentDataList, Action callBack, string frontname, string backName)
     {
         SwitchBG(false);
-        this.currentObject = SceneData.currentScene;
+        this.currentObject = SceneContext.currentSceneData;
         Transform box = SceneUtility.GetSceneCollider(currentObject.number).transform;
         PlaneManger(box, true);
         CameraInitSet.StartSet(currentObject.number, box.transform, 0.5f, () =>
@@ -132,7 +133,7 @@ public class FloorRoomSet : BaseSet
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
         if (object3dItem.childs != null && (object3dItem.childs.Count > 0))
         {
-            fnu.CreateNavagitionList(object3dItem.childs, navigationUI.transform, currentData, frontname, backName);
+            fnu.CreateFloorRoomNavagitionList(object3dItem.childs, navigationUI.transform, currentData, frontname, backName);
         }
     }
 
@@ -264,5 +265,24 @@ public class FloorRoomSet : BaseSet
         }
     }
 
-   
+    /// <summary>
+    /// 设置偏移位置，
+    /// </summary>
+    /// <param name="currentDataList"></param>
+    protected void SetFloorRoomOffestPostion(List<Object3dItem> currentDataList)
+    {
+
+        foreach (Object3dItem  item in currentDataList)
+        {
+           GameObject root =  SceneUtility.GetGameByRootName(item.number, item.number);
+            if(root!=null && root.GetComponent<TransformObject>()!=null)
+            {
+                root.GetComponent<TransformObject>().Reset();
+                root.transform.position = root.GetComponent<TransformObject>().defaultPostion + Vector3.up * offestIndex * 100;
+            }
+        }
+        offestIndex++;
+        SceneContext.offestIndex = offestIndex;
+    }
+
 }

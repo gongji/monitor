@@ -12,7 +12,8 @@ public class RoomSet : FloorRoomSet
     public override void Enter(List<Object3dItem> currentData, Action callBack)
     {
         base.Enter(currentData, callBack);
-        SetCurrentYValue(currentData);
+        SetFloorRoomOffestPostion(currentData);
+        //SetCurrentYValue(currentData);
         OnInit(currentData, callBack,"R","返回");
     }
 
@@ -60,18 +61,18 @@ public class RoomSet : FloorRoomSet
     /// <summary>
     /// 设置当前的房间的高度值，在切换的时候看到动画效果
     /// </summary>
-    private void SetCurrentYValue(List<Object3dItem> currentDataList)
-    {
-        if(currentDataList.Count ==1)
-        {
-            Object3dItem currentData = currentDataList[0];
-            GameObject root = SceneUtility.GetGameByRootName(currentData.number, currentData.number);
-            //没考虑到多层
-            int index =  int.Parse( currentData.number.Substring(currentData.number.Length - 1, 1));
-            root.transform.position =new  Vector3(root.transform.position.x, index *100, root.transform.position.z);
-        }
+    //private void SetCurrentYValue(List<Object3dItem> currentDataList)
+    //{
+    //    if(currentDataList.Count ==1)
+    //    {
+    //        Object3dItem currentData = currentDataList[0];
+    //        GameObject root = SceneUtility.GetGameByRootName(currentData.number, currentData.number);
+    //        //没考虑到多层
+    //        int index =  int.Parse( currentData.number.Substring(currentData.number.Length - 1, 1));
+    //        root.transform.position =new  Vector3(root.transform.position.x, index *100, root.transform.position.z);
+    //    }
         
-    }
+    //}
 
     private void ShowOrHide(bool isShow)
     {

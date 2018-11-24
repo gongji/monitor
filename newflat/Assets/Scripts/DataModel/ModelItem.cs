@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModeItem  {
+public class ModelItem  {
 
     public string icon;
 

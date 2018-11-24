@@ -162,7 +162,7 @@ public static class SceneData  {
 
     #region SetCurentData
 
-    public static Object3dItem currentScene;
+    //public static Object3dItem currentScene;
     /// <summary>
     /// 设置当前加载的数据
     /// </summary>
@@ -171,7 +171,7 @@ public static class SceneData  {
     public static void SetCurrentData<T>(string id, int FloorGroup,string buiderId)
     {
 
-        currentScene = FindObjUtilityect3dItemById(id);
+        SceneContext.currentSceneData  = FindObjUtilityect3dItemById(id);
         System.Type type = typeof(T);
 
         //园区
@@ -195,7 +195,7 @@ public static class SceneData  {
             currentobject3dList = GetBuilderObject3dItem(id, FloorGroup);
         }
         //全景
-        else if(type.Name.Equals(typeof(FullArea).Name))
+        else if(type.Name.Equals(typeof(FullAreaState).Name))
         {
             GetFullAreaObject3dItem(id, buiderId);
         }
@@ -513,4 +513,34 @@ public static class SceneData  {
     }
 
     #endregion
+
+
+    /// <summary>
+    /// 获取当前层下边是否有管网
+    /// </summary>
+    /// <returns></returns>
+    public static List<Object3dItem> GetCurrentGuangWang()
+    {
+       
+        if (SceneContext.currentSceneData != null)
+        {
+            string[] strs = SceneContext.currentSceneData.number.Split('_');
+            string endNumber = strs[strs.Length - 1];
+            string parentid = SceneContext.currentSceneData.parentsId;
+
+            IEnumerable<Object3dItem> result =
+             from object3dItem in object3dList
+             where object3dItem.parentsId.Equals(parentid) && object3dItem.number.Contains(Constant.GuanDao) && object3dItem.number.EndsWith(endNumber)
+             select object3dItem;
+
+            //foreach(Object3dItem temp in result)
+            //{
+            //    Debug.Log(temp.number);
+            //}
+
+            return result.ToList<Object3dItem>();
+
+        }
+        return null;
+    }
 }

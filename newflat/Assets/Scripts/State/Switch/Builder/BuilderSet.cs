@@ -30,6 +30,26 @@ public class BuilderSet: BaseSet
 
     }
 
+
+    protected void CreateNavigation(Object3dItem currentData, string frontname, string backName)
+    {
+        //Transform canvas = GameObject.Find("Canvas").transform;
+        //NavigationUI fnui = canvas.GetComponentInChildren<NavigationUI>();
+        //if (fnui != null)
+        //{
+        //    return;
+        //}
+        //navigationUI = TransformControlUtility.CreateItem("TextNavigation", GameObject.Find("Canvas").transform);
+        //navigationUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        //NavigationUI fnu = navigationUI.GetComponent<NavigationUI>();
+        //string parentid = currentData.parentsId;
+        //Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
+        //if (object3dItem.childs != null && (object3dItem.childs.Count > 0))
+        //{
+        //    fnu.CreateFloorRoomNavagitionList(object3dItem.childs, navigationUI.transform, currentData, frontname, backName);
+        //}
+    }
+
     private List<Object3dItem> GetAllFloor(List<Object3dItem> currentData)
     {
         List<Object3dItem> result = new List<Object3dItem>();
@@ -296,15 +316,12 @@ public class BuilderSet: BaseSet
             if(root!=null)
             {
                 root.SetActive(true);
-                FoorObject fo = root.GetComponent<FoorObject>();
+                TransformObject fo = root.GetComponent<TransformObject>();
                 if (fo)
                 {
                     fo.Reset();
                 }
-                else
-                {
-                    fo = root.AddComponent<FoorObject>();
-                }
+                
             }
             
 
