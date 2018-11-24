@@ -12,43 +12,30 @@ public class BuilderSet: BaseSet
 {
     private static ILog log = LogManagers.GetLogger("BuilderSet");
 
-    private List<Object3dItem> currentData;
+    private List<Object3dItem> currentfloorData;
 
     private List<Object3dItem> originalData;
     private float yoffest = 0.6f;
-   
+
+    private GameObject navigationUI;
+
     #region 进入 逻辑
     public override void Enter(List<Object3dItem> currentData,System.Action callBack)
     {
         base.Enter(currentData, callBack);
-    
-        this.currentData = GetAllFloor(currentData);
+        
+        this.currentfloorData = GetAllFloor(currentData);
+        CreateNavigation();
         SaveOrResetFloorPostion(currentData);
         SwitchBG(false);
         InitCamera(()=> { });
+       
         SetFloorSplitAnimation(callBack);
 
+       
+
     }
 
-
-    protected void CreateNavigation(Object3dItem currentData, string frontname, string backName)
-    {
-        //Transform canvas = GameObject.Find("Canvas").transform;
-        //NavigationUI fnui = canvas.GetComponentInChildren<NavigationUI>();
-        //if (fnui != null)
-        //{
-        //    return;
-        //}
-        //navigationUI = TransformControlUtility.CreateItem("TextNavigation", GameObject.Find("Canvas").transform);
-        //navigationUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        //NavigationUI fnu = navigationUI.GetComponent<NavigationUI>();
-        //string parentid = currentData.parentsId;
-        //Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
-        //if (object3dItem.childs != null && (object3dItem.childs.Count > 0))
-        //{
-        //    fnu.CreateFloorRoomNavagitionList(object3dItem.childs, navigationUI.transform, currentData, frontname, backName);
-        //}
-    }
 
     private List<Object3dItem> GetAllFloor(List<Object3dItem> currentData)
     {
@@ -117,7 +104,7 @@ public class BuilderSet: BaseSet
     {
 
         float length = 0f;
-        foreach (Object3dItem object3dItem in currentData)
+        foreach (Object3dItem object3dItem in currentfloorData)
         {
             GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
            // Debug.Log(collider.GetComponent<MeshRenderer>().bounds.size);
@@ -140,7 +127,7 @@ public class BuilderSet: BaseSet
     {
 
         float width = 0f;
-        foreach (Object3dItem object3dItem in currentData)
+        foreach (Object3dItem object3dItem in currentfloorData)
         {
             GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
             //Debug.Log(collider.GetComponent<MeshRenderer>().bounds.size);
@@ -162,9 +149,9 @@ public class BuilderSet: BaseSet
     /// <returns></returns>
     public Vector3 CalculateCameraPostion()
     {
-        int index = Mathf.CeilToInt(currentData.Count / 2.0f);
+        int index = Mathf.CeilToInt(currentfloorData.Count / 2.0f);
 
-        Object3dItem object3dItem = currentData[index - 1];
+        Object3dItem object3dItem = currentfloorData[index - 1];
 
         GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
         if (collider != null)
@@ -203,61 +190,120 @@ public class BuilderSet: BaseSet
     /// </summary>
     private void SetFloorSplitAnimation(System.Action callBack)
     {
-        int index = Mathf.CeilToInt(currentData.Count / 2.0f);
+        if(currentfloorData.Count ==1)
+        {
+            return;
+        }
+        int index = Mathf.CeilToInt(currentfloorData.Count / 2.0f);
 
-        Object3dItem object3dItem = currentData[index - 1];
+        Object3dItem object3dItem = currentfloorData[index - 1];
 
         ///奇数,偶数后边考虑
-        if (currentData.Count % 2 != 0)
+        if (currentfloorData.Count % 2 != 0)
         {
-            for (int i = 0; i < currentData.Count; i++)
+            for (int i = 0; i < currentfloorData.Count; i++)
             {
-                GameObject root = SceneUtility.GetGameByRootName(currentData[i].number, currentData[i].number);
+                GameObject root = SceneUtility.GetGameByRootName(currentfloorData[i].number, currentfloorData[i].number);
                 Vector3 tartPostion = root.transform.position - Vector3.up * (index - 1 - i) * yoffest *2;
                 root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
                 root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
             }
 
         }
+        //偶数
+        else
+        {
+            for (int i = 0; i < currentfloorData.Count; i++)
+            {
+                GameObject root = SceneUtility.GetGameByRootName(currentfloorData[i].number, currentfloorData[i].number);
+                Vector3 tartPostion = Vector3.zero;
+                if (i==0)
+                {
+                    tartPostion = root.transform.position - Vector3.up  * yoffest * 2;
+                }
+                else
+                {
+                    tartPostion = root.transform.position + Vector3.up * yoffest * 2;
+                }
+                
+                root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
+                root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
+            }
+        }
         DOVirtual.DelayedCall(2.0f, () =>
         {
-            BuiderNavigationUI.CreateNavigateUI(currentData);
+            BuiderNavigationUI.CreateNavigateUI(currentfloorData);
             if(callBack!=null)
             {
                 callBack.Invoke();
             }
         });
     }
-    
+
+
+    protected void CreateNavigation()
+    {
+        Transform canvas = GameObject.Find("Canvas").transform;
+        NavigationUI fnui = canvas.GetComponentInChildren<NavigationUI>();
+        if (fnui != null)
+        {
+            Debug.Log(fnui.transform.name);
+            return;
+        }
+        //创建导航
+       
+        navigationUI = TransformControlUtility.CreateItem("TextNavigation", GameObject.Find("Canvas").transform);
+        navigationUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        NavigationUI fnu = navigationUI.GetComponent<NavigationUI>();
+       
+
+        int totalCount = SceneData.GetBuilderIndexCount(SceneContext.currentSceneData.id);
+   
+        fnu.CreateBuiderNavagitionList(SceneContext.currentSceneData, totalCount,SceneContext.FloorGroup, navigationUI.transform);
+        
+    }
+
+    protected void DeleteNavigation()
+    {
+       
+        if (navigationUI != null)
+        {
+           
+            //GameObject.Destroy(navigationUI);
+
+            Object.DestroyImmediate(navigationUI);
+        }
+    }
+
     #endregion
 
     #region 退出 逻辑
-     
-     public override void Exit(string currentid,System.Action callBack)
+
+    public override void Exit(string currentid,System.Action callBack)
     {
-        base.Exit(currentid, callBack);
        
+        base.Exit(currentid, callBack);
         List<Object3dItem> topList = new List<Object3dItem>();
         List<Object3dItem> downList = new List<Object3dItem>();
         int index = 0;
-        for(int i =0;i< currentData.Count;i++)
+        for(int i =0;i< currentfloorData.Count;i++)
         {
-            if(currentData[i].id.Equals(currentid))
+            if(currentfloorData[i].id.Equals(currentid))
             {
                 index = i;
                 break;
             }
         }
 
-        for (int i = 0; i < currentData.Count; i++)
+        for (int i = 0; i < currentfloorData.Count; i++)
         {
             if(i>index)
             {
-                topList.Add(currentData[i]);
+                topList.Add(currentfloorData[i]);
             }
             else if(i < index)
             {
-                downList.Add(currentData[i]);
+                downList.Add(currentfloorData[i]);
             }
         }
         float duringTime = 0.5f;
@@ -280,11 +326,13 @@ public class BuilderSet: BaseSet
             });
         }
 
-        GameObject currentSelect = SceneUtility.GetGameByRootName(currentData[index].number, currentData[index].number);
+        GameObject currentSelect = SceneUtility.GetGameByRootName(currentfloorData[index].number, currentfloorData[index].number);
         currentSelect.transform.DOLocalRotate(Vector3.zero, duringTime);
 
         DOVirtual.DelayedCall(duringTime * 1.2f, () =>
         {
+
+          //  Debug.Log("回调退出");
             Exit(currentid);
 
             if (callBack!=null)
@@ -301,8 +349,10 @@ public class BuilderSet: BaseSet
 
     public override void Exit(string nextid)
     {
+       // Debug.Log("直接退出");
         base.Exit(nextid);
         BuiderNavigationUI.DeleteAllUI();
+        DeleteNavigation();
 
     }
     #endregion

@@ -280,10 +280,10 @@ public static class SceneData {
 
 
     /// <summary>
-    /// 全景
+    /// 全景模式
     /// </summary>
-    /// <param name="currentid"></param>
-    /// <param name="FloorGroup">当前楼层的组编号</param>
+    /// <param name="currentid">当前为-1</param>
+    /// <param name="buiderId">建筑id</param>
     /// <returns></returns>
     public static List<Object3dItem> GetFullAreaObject3dItem(string currentid, string buiderId)
     {
@@ -544,5 +544,24 @@ public static class SceneData {
 
         }
         return null;
+    }
+
+
+    /// <summary>
+    /// 得到建筑的索引组的数量
+    /// </summary>
+    /// <param name="builderid"></param>
+    /// <returns></returns>
+
+    public static int GetBuilderIndexCount(string builderid)
+    {
+        IEnumerable<Object3dItem> floorResult =
+             from object3dItem in object3dList
+                 //不包含管网
+             where ((object3dItem.parentsId.Equals(builderid) && !object3dItem.number.Contains(Constant.GuanDao)))
+             select object3dItem;
+
+
+        return Mathf.CeilToInt(floorResult.Count()/3.0f);
     }
 }

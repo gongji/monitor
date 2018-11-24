@@ -145,39 +145,6 @@ public class FloorRoomSet : BaseSet
         }
     }
 
-
-    /// <summary>
-    /// 显示当前层，其他层隐藏掉
-    /// </summary>
-    /// <param name="currentData"></param>
-    protected void ShowHideScene(Object3dItem currentData)
-    {
-
-        string parentid = currentData.parentsId;
-        Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
-        if (object3dItem.childs != null && object3dItem.childs.Count > 0)
-        {
-            foreach (Object3dItem temp in object3dItem.childs)
-            {
-                GameObject g = SceneUtility.GetGameByRootName(temp.number, temp.number);
-                if (g != null)
-                {
-                    if (temp.id.Equals(currentData.id))
-                    {
-
-                        g.SetActive(true);
-                    }
-                    else
-                    {
-                        g.SetActive(false);
-                    }
-                }
-
-
-            }
-        }
-    }
-
     /// <summary>
     /// 退出前，将下一个对象的目标点拉到屏幕中心
     /// </summary>

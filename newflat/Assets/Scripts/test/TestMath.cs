@@ -11,15 +11,15 @@ public class TestMath : MonoBehaviour {
 	void Start () {
         // int length = (int)c;
 
-        // float a = 5 / 2.0f;
-        // Debug.Log(a);
-        // Debug.Log(Mathf.CeilToInt(a));
-        // Debug.Log(Mathf.Round(2.6f));
-        // Debug.Log(Mathf.Floor(a));
+         float a = 8 / 3.0f;
+       // Debug.Log(a);
+        Debug.Log(Mathf.CeilToInt(a));
+       // Debug.Log(Mathf.Round(a));
+        //Debug.Log(Mathf.Floor(a));
 
-        bounds = target. GetComponent<BoxCollider>().bounds;
+        // bounds = target. GetComponent<BoxCollider>().bounds;
 
-        
+
     }
 	
 	// Update is called once per frame

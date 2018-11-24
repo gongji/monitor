@@ -20,13 +20,13 @@ public  class NavigationUI:MonoBehaviour
 
 	void Start () {
         backButton.onClick.AddListener(()=> {
-            ClickBuiding();
+            ClickBack();
         });
 	}
 	
     private string id  =string.Empty;
     /// <summary>
-    /// 
+    /// 楼层和房间
     /// </summary>
     /// <param name="DataSouce"></param>
     /// <param name="parent"></param>
@@ -51,39 +51,55 @@ public  class NavigationUI:MonoBehaviour
             cloneObject.name = object3dItem.id;
             if(object3dItem.id.Equals(currentData.id))
             {
-                SetSelect(cloneObject.GetComponentInChildren<Button>());
+                SetSelectEffection(cloneObject.GetComponentInChildren<Button>());
             }
-            cloneObject.GetComponentInChildren<Button>().onClick.AddListener(()=> {
+            else
+            {
+                cloneObject.GetComponentInChildren<Button>().onClick.AddListener(() => {
 
-                OnClickFloor(cloneObject);
-            });
+                    OnClickSelected(cloneObject);
+                });
+            }
+            
 
            
         }
     }
 
 
-    private void CreateBuiderNavagitionList(Object3dItem currentData,List<int> floorIndexs,int currentIndex, Transform parent)
+   /// <summary>
+   /// 生成建筑的组索引
+   /// </summary>
+   /// <param name="currentData"></param>
+   /// <param name="floorIndexs"></param>
+   /// <param name="currentIndex"></param>
+   /// <param name="parent"></param>
+    public void CreateBuiderNavagitionList(Object3dItem builderCurrentData,int floorIndexCount,int currentIndex, Transform parent)
     {
-        this.id = currentData.id;
+        this.id = builderCurrentData.id;
         backButton.GetComponentInChildren<Text>().text = "返回";
-        foreach (int  floorIndex in floorIndexs)
+        for (int i=0;i< floorIndexCount;i++)
         {
           
             GameObject cloneObject = GameObject.Instantiate(item);
             cloneObject.SetActive(true);
             cloneObject.transform.parent = parent.GetComponentInChildren<VerticalLayoutGroup>().transform;
-            cloneObject.GetComponentInChildren<Text>().text = floorIndex.ToString();
+            cloneObject.GetComponentInChildren<Text>().text = (i + 1).ToString();
             cloneObject.GetComponentInChildren<Text>().fontSize = 15;
-            cloneObject.name = floorIndex.ToString();
-            if (floorIndex == currentIndex)
+            cloneObject.name = i.ToString();
+            //选中颜色
+            if (i == currentIndex)
             {
-                SetSelect(cloneObject.GetComponentInChildren<Button>());
+                SetSelectEffection(cloneObject.GetComponentInChildren<Button>());
             }
-            cloneObject.GetComponentInChildren<Button>().onClick.AddListener(() => {
+            else
+            {
+                cloneObject.GetComponentInChildren<Button>().onClick.AddListener(() => {
 
-               // OnClickFloor(cloneObject);
-            });
+                    OnClickSelected(cloneObject);
+                });
+            }
+            
 
 
         }
@@ -92,19 +108,18 @@ public  class NavigationUI:MonoBehaviour
     /// 楼层的ui切换
     /// </summary>
     /// <param name="sender"></param>
-    private void OnClickFloor(GameObject sender)
+    private void OnClickSelected(GameObject sender)
     {
         //log.Debug(sender.name);
         //log.Debug(currentData.id);
-        
+
         //if ( sender.name.Equals(id))
         //{
         //    log.Debug(sender.name +  "is same ");
         //    return;
         //}
-        ClearAllSelect();
-        SetSelect(sender.GetComponentInChildren<Button>());
-        id = sender.name;
+        SelectReset();
+        SetSelectEffection(sender.GetComponentInChildren<Button>());
         IState currentstate = Main.instance.stateMachineManager.mCurrentState;
         if(currentstate is FloorState)
         {
@@ -114,13 +129,17 @@ public  class NavigationUI:MonoBehaviour
         {
             Main.instance.stateMachineManager.SwitchStatus<RoomState>(sender.name);
         }
+        else if(currentstate is BuilderState)
+        {
+            Main.instance.stateMachineManager.SwitchStatus<BuilderState>(this.id,null, int.Parse(sender.name));
+        }
 
         
     }
        
 
 
-    private void ClearAllSelect()
+    private void SelectReset()
     {
         Button[] buttons = GetComponentsInChildren<Button>();
         foreach(Button button in buttons)
@@ -136,7 +155,7 @@ public  class NavigationUI:MonoBehaviour
         }
     }
    
-    private void SetSelect(Button button)
+    private void SetSelectEffection(Button button)
     {
         //ColorBlock cb = new ColorBlock();
         //cb.normalColor = new Color32(132, 142, 166, 255);
@@ -151,7 +170,7 @@ public  class NavigationUI:MonoBehaviour
     /// <summary>
     /// 返回的上一级
     /// </summary>
-    private void ClickBuiding()
+    private void ClickBack()
     {
         Object3dItem curentdata = SceneData.FindObjUtilityect3dItemById(id);
         Object3dItem parentObject = SceneData.FindObjUtilityect3dItemById(curentdata.parentsId);
@@ -164,6 +183,10 @@ public  class NavigationUI:MonoBehaviour
         else if (currentstate is RoomState)
         {
             Main.instance.stateMachineManager.SwitchStatus<FloorState>(parentObject.id);
+        }
+        else if(currentstate is BuilderState)
+        {
+            Main.instance.stateMachineManager.SwitchStatus<AreaState>("");
         }
 
         

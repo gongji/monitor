@@ -37,7 +37,9 @@ namespace State
 
         public AppBaseState appCurrentState;
         public string currentSceneId = "-1";
-		public StateMachineManager() // 构造函数初始化
+        public int currentBuilderFloorGroup =0;
+
+        public StateMachineManager() // 构造函数初始化
 		{
 			
 			mCurrentState = null;
@@ -75,7 +77,7 @@ namespace State
         /// <param name="nextSceneid"></param>
         /// <param name="enterCallBack"></param>
         /// <param name="FloorGroup">切换楼层的时候，组编号</param>
-        public void SwitchStatus<T>(string nextSceneid,System.Action enterCallBack =null, int FloorGroup = 0,string buiderid = "") where T : IState, new()
+        public void SwitchStatus<T>(string nextSceneid,System.Action enterCallBack =null, int builderFloorGroup = 0,string fullAreaBuiderId = "") where T : IState, new()
         {
            System.Type type = typeof(T);
 
@@ -89,12 +91,12 @@ namespace State
                 nextState = new T();
                 switchStateDictionary.Add(type.Name, nextState);
             }
-            if(this.currentSceneId.Equals(nextSceneid) && !(nextState is RoomState))
+            if(this.currentSceneId.Equals(nextSceneid) && this.currentBuilderFloorGroup == builderFloorGroup &&  !(nextState is RoomState))
             {
                 log.Debug("switch object is same");
                 return;
             }
-            SceneData.SetCurrentData<T>(nextSceneid, FloorGroup, buiderid);
+            SceneData.SetCurrentData<T>(nextSceneid, builderFloorGroup, fullAreaBuiderId);
             //显示标题
             NavigationTitle.instance.ShowTitle(nextSceneid);
             //if (nextState == mCurrentState)
@@ -127,7 +129,9 @@ namespace State
 	        	   });
 	        }
             this.currentSceneId = nextSceneid;
-            
+            this.currentBuilderFloorGroup = builderFloorGroup;
+
+
 
         }
         /// <summary>
