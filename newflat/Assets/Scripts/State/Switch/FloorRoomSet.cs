@@ -151,7 +151,7 @@ public class FloorRoomSet : BaseSet
     /// <param name="nextid"></param>
     /// <param name="callBack"></param>
     /// <param name="isRoom"></param>
-    protected void ExeRotaionAnimation(string nextid,System.Action<Vector3,float> callBack,bool isRoom = false)
+    protected void PullScreenCenter(string nextid,System.Action<Vector3,float> callBack,bool isRoom = false)
     {
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(nextid);
         if (object3dItem == null)
@@ -187,17 +187,8 @@ public class FloorRoomSet : BaseSet
             return;
         }
         Vector3 center = box.GetComponent<BoxCollider>().bounds.center;
-
-        Vector3 relativePos = center - Camera.main.transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos);
-
-        Camera.main.transform.DORotate(rotation.eulerAngles, duringTime).OnComplete(() => {
-            if(callBack!=null)
-            {
-                callBack.Invoke(center, duringTime);
-            }
-
-        });
+        CameraAnimation.RotationScreenCenter(center, duringTime, callBack);
+      
     }
     /// <summary>
     /// 创建楼层或者房间下边的地面
@@ -217,9 +208,6 @@ public class FloorRoomSet : BaseSet
             plane.transform.position = new Vector3(center.x, center.y-0.01f, center.z);
             plane.transform.localScale = new Vector3(bc.size.x  * 1.3f, 0.1f,  bc.size.z * 1.3f);
             box.GetComponent<BoxCollider>().enabled = isEnable;
-
-
-
         }
         
     }

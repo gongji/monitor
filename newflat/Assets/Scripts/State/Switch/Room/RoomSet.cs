@@ -28,15 +28,15 @@ public class RoomSet : FloorRoomSet
         });
     }
     /// <summary>
-    /// 动画退出
+    /// 动画退出,退到上一级层
     /// </summary>
     /// <param name="nextid"></param>
     /// <param name="callBack"></param>
     public override void Exit(string nextid, Action callBack)
     {
-        ExeRotaionAnimation(nextid, (centerPostion, duringTime) => {
+        PullScreenCenter(nextid, (centerPostion, duringTime) => {
 
-            Vector3 tartPostion = centerPostion - Camera.main.transform.forward * 100;
+            Vector3 tartPostion = centerPostion - Camera.main.transform.forward * 5;
             Camera.main.transform.DOMove(tartPostion, duringTime).OnComplete(() =>
             {
                 Exit(nextid);
@@ -45,9 +45,16 @@ public class RoomSet : FloorRoomSet
                 {
                     callBack.Invoke();
                 }
+
             });
+
+            
+            Main.instance.StartCoroutine(EffectionUtility.BlurEffection(duringTime,0,10));
         },true);
     }
+
+
+ 
 
     public override void Exit(string nextid)
     {

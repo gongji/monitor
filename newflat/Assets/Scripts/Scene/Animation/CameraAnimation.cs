@@ -45,4 +45,25 @@ public static class CameraAnimation
 
         });
     }
+
+
+    /// <summary>
+    /// 将centerPostion拉到屏幕中心点，相机移动过去
+    /// </summary>
+    /// <param name="centerPostion">拉取得点</param>
+    /// <param name="duringTime"></param>
+    /// <param name="callBack"></param>
+    public static void RotationScreenCenter(Vector3 centerPostion,float duringTime,System.Action<Vector3,float> callBack)
+    {
+        Vector3 relativePos = centerPostion - Camera.main.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos);
+
+        Camera.main.transform.DORotate(rotation.eulerAngles, duringTime).OnComplete(() => {
+            if (callBack != null)
+            {
+                callBack.Invoke(centerPostion, duringTime);
+            }
+
+        });
+    }
 }

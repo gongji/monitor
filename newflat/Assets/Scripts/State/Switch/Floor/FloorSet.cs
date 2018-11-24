@@ -30,7 +30,7 @@ public class FloorSet : FloorRoomSet {
         Debug.Log("exit动画");
         base.Exit(nextid, callBack);
         //GuanWangMsg.AllGuanWangHide();
-        ExeRotaionAnimation(nextid, (centerPostion, duringTime) => {
+        PullScreenCenter(nextid, (centerPostion, duringTime) => {
 
             Camera.main.transform.DOMove(centerPostion, duringTime).OnComplete(() =>
             {

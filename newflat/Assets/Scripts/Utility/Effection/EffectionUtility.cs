@@ -68,4 +68,28 @@ public sealed  class EffectionUtility  {
        
 
     }
+    /// <summary>
+    /// 模糊效果
+    /// </summary>
+    /// <param name="duringTime"></param>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns></returns>
+    public static IEnumerator BlurEffection(float duringTime,int from,int to)
+    {
+        float passedTime = 0;
+        UnityStandardAssets.ImageEffects.Blur blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.Blur>();
+
+        blur.iterations = from;
+        blur.enabled = true;
+        while ((passedTime += Time.deltaTime) < duringTime)
+        {
+
+            float result = Mathf.Lerp(from*1.0f, to * 1.0f, passedTime / duringTime);
+
+            blur.iterations = (int)result;
+            yield return 0;
+        }
+        blur.enabled = false;
+    }
 }

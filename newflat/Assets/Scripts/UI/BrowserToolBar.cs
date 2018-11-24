@@ -21,6 +21,8 @@ public class BrowserToolBar : MonoBehaviour {
 
     private Transform tips;
 
+    private Transform cameraMode;
+
     public static BrowserToolBar instance;
 
     private void Awake()
@@ -37,14 +39,77 @@ public class BrowserToolBar : MonoBehaviour {
         guanxian = transform.Find("guanxian");
         fullArea = transform.Find("fullArea");
         tips = transform.Find("tips");
+        cameraMode = transform.Find("cameraMode");
 
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
 
         TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
 
+        TransformControlUtility.AddEventToBtn(cameraMode.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CameraModeSwitch(); });
+
+
         guanxian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(guanxian.GetComponent<Toggle>(), value));
 
     }
+
+
+    /// <summary>
+    /// 设置工具条的显示隐藏
+    /// </summary>
+    public void SetToolBarState()
+    {
+        transform.localScale = Vector3.one;
+        reset.gameObject.SetActive(true);
+        viewSwitch.gameObject.SetActive(true);
+        qiangti.gameObject.SetActive(true);
+        guanxian.gameObject.SetActive(true);
+        fullArea.gameObject.SetActive(true);
+        tips.gameObject.SetActive(true);
+        cameraMode.gameObject.SetActive(true);
+
+
+        IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
+        if (mCurrentState is AreaState)
+        {
+            qiangti.gameObject.SetActive(false);
+            guanxian.gameObject.SetActive(false);
+            tips.gameObject.SetActive(false);
+        }
+        else if (mCurrentState is RoomState)
+        {
+            fullArea.gameObject.SetActive(false);
+            qiangti.gameObject.SetActive(false);
+            guanxian.gameObject.SetActive(false);
+        }
+
+        else if (mCurrentState is BuilderState)
+        {
+            reset.gameObject.SetActive(false);
+            viewSwitch.gameObject.SetActive(false);
+            qiangti.gameObject.SetActive(false);
+            guanxian.gameObject.SetActive(false);
+            fullArea.gameObject.SetActive(false);
+            tips.gameObject.SetActive(false);
+            cameraMode.gameObject.SetActive(false);
+        }
+
+
+        else if (mCurrentState is FloorState)
+        {
+            fullArea.gameObject.SetActive(false);
+
+        }
+        else if (mCurrentState is FullAreaState)
+        {
+            reset.gameObject.SetActive(false);
+            viewSwitch.gameObject.SetActive(false);
+            qiangti.gameObject.SetActive(false);
+            guanxian.gameObject.SetActive(false);
+            tips.gameObject.SetActive(false);
+            cameraMode.gameObject.SetActive(false);
+        }
+    }
+
 
     private bool guanxianSelect3d = false;
 
@@ -101,58 +166,24 @@ public class BrowserToolBar : MonoBehaviour {
         isFullModeAreaMode = !isFullModeAreaMode;
     }
 
-    /// <summary>
-    /// 设置工具条的显示隐藏
-    /// </summary>
-    public void SetToolBarState()
-    {
-        transform.localScale = Vector3.one;
-        reset.gameObject.SetActive(true);
-        viewSwitch.gameObject.SetActive(true);
-        qiangti.gameObject.SetActive(true);
-        guanxian.gameObject.SetActive(true);
-        fullArea.gameObject.SetActive(true);
-        tips.gameObject.SetActive(true);
 
-        IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
-        if (mCurrentState is AreaState)
+    private bool isFlyCameraMode = false;
+    private void CameraModeSwitch()
+    {
+        if (!isFlyCameraMode)
         {
-            qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
-            tips.gameObject.SetActive(false);
+            cameraMode.GetComponentInChildren<Text>().text = "人物模式";
         }
-        else if(mCurrentState is RoomState)
+        else
         {
-            fullArea.gameObject.SetActive(false);
-            qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
+            cameraMode.GetComponentInChildren<Text>().text = "飞行模式";
         }
-       
-        else if(mCurrentState is BuilderState)
-        {
-            reset.gameObject.SetActive(false);
-            viewSwitch.gameObject.SetActive(false);
-            qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
-            fullArea.gameObject.SetActive(false);
-            tips.gameObject.SetActive(false);
-        }
+
+        isFlyCameraMode = !isFlyCameraMode;
+    }
+
 
     
-        else if(mCurrentState is FloorState)
-        {
-            fullArea.gameObject.SetActive(false);
-
-        }
-        else if(mCurrentState is FullAreaState)
-        {
-            reset.gameObject.SetActive(false);
-            viewSwitch.gameObject.SetActive(false);
-            qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
-            tips.gameObject.SetActive(false);
-        }
-    }
     
 
     #region wangwang
