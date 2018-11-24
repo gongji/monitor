@@ -79,7 +79,10 @@ public sealed  class EffectionUtility  {
     {
         float passedTime = 0;
         UnityStandardAssets.ImageEffects.Blur blur = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.Blur>();
-
+        if(blur==null)
+        {
+            yield break;
+        }
         blur.iterations = from;
         blur.enabled = true;
         while ((passedTime += Time.deltaTime) < duringTime)

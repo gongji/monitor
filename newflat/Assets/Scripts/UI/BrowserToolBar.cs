@@ -25,6 +25,10 @@ public class BrowserToolBar : MonoBehaviour {
 
     public static BrowserToolBar instance;
 
+    private Transform mainCamera;
+    private Transform firstFPSController;
+    private Camera firstCamera;
+
     private void Awake()
     {
 
@@ -49,6 +53,11 @@ public class BrowserToolBar : MonoBehaviour {
 
 
         guanxian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(guanxian.GetComponent<Toggle>(), value));
+        mainCamera = Camera.main.transform;
+        firstFPSController = GameObject.Find("FPSController").transform;
+        firstCamera = firstFPSController.GetComponentInChildren<Camera>(true);
+        firstFPSController.gameObject.SetActive(false);
+
 
     }
 
@@ -173,27 +182,44 @@ public class BrowserToolBar : MonoBehaviour {
         if (!isFlyCameraMode)
         {
             cameraMode.GetComponentInChildren<Text>().text = "人物模式";
+            mainCamera.gameObject.SetActive(false);
+
+            firstFPSController.transform.position = mainCamera.transform.position - Vector3.up * 0.6f;
+            firstFPSController.transform.rotation = mainCamera.transform.rotation;
+            firstFPSController.gameObject.SetActive(true);
+            firstCamera.enabled = true;
+            UIUtility.ShowTips("当前进入人物模式，按Q键切换键飞行模式。");
         }
         else
         {
             cameraMode.GetComponentInChildren<Text>().text = "飞行模式";
+            mainCamera.transform.position = firstCamera.transform.position;
+            mainCamera.transform.rotation = firstCamera.transform.rotation;
+            mainCamera.gameObject.SetActive(true);
+            firstFPSController.gameObject.SetActive(false);
         }
 
         isFlyCameraMode = !isFlyCameraMode;
     }
 
 
-    
-    
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Q) && isFlyCameraMode)
+        {
+            CameraModeSwitch();
+        }
+    }
+
 
     #region wangwang
     /// <param name="isShow"></param>
-    public void HideShowGuwang(bool isShow)
+    public void HideShowGuanwang(bool isShow)
     {
         guanxian.gameObject.SetActive(isShow);
     }
 
-    public bool GetWangWangToggleState()
+    public bool GetGuanWangToggleState()
     {
         return guanxianSelect3d;
     }

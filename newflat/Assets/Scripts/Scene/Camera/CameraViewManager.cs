@@ -9,7 +9,13 @@ using UnityEngine;
 public class CameraViewManager : MonoBehaviour {
 
 	void Update () {
+      
+        if(Camera.main.gameObject.GetComponent<CameraObjectController>()==null)
+        {
+            return;
+        }
         Camera.main.nearClipPlane = 0.01f;
+        
         if (AppInfo.GetCurrentState is BuilderState)
         {
 

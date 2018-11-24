@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+/// <summary>
+/// 设备操作提示
+/// </summary>
 public class OperateTips : MonoBehaviour {
 
   

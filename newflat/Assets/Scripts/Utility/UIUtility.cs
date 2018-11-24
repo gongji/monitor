@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public static class UIUtility
 {
@@ -181,6 +182,27 @@ public static class UIUtility
 
         return new Vector2(a.x / offect, a.y / offect);
         ;
+    }
+
+    public static void ShowTips(string tipText)
+    {
+       GameObject item =  GameObject.Instantiate(Resources.Load<GameObject>("UI/MessageTips"));
+       item.transform.SetParent(GetRootCanvas());
+        item.GetComponentInChildren<Text>().text = tipText;
+        item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        item.GetComponent<CanvasGroup>().alpha = 0;
+        item.GetComponent<CanvasGroup>().DOFade(1, 1.5f);
+        DOVirtual.DelayedCall(5.0f, () =>
+        {
+            item.GetComponent<CanvasGroup>().DOFade(0, 1.5f);
+
+            DOVirtual.DelayedCall(1.5f, () =>
+            {
+                UnityEngine.GameObject.DestroyImmediate(item);
+            });
+                
+        });
+
     }
 
 

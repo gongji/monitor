@@ -56,9 +56,9 @@ public class FloorSet : FloorRoomSet {
         List<Object3dItem> list = SceneData.GetCurrentGuangWang();
         if(list.Count>0)
         {
-            BrowserToolBar.instance.HideShowGuwang(true);
+            BrowserToolBar.instance.HideShowGuanwang(true);
             //显示管网的模型
-            if(BrowserToolBar.instance.GetWangWangToggleState())
+            if(BrowserToolBar.instance.GetGuanWangToggleState())
             {
                 GuanWangMsg.ShowGuanWangShow();
             }
@@ -66,7 +66,7 @@ public class FloorSet : FloorRoomSet {
         }
         else
         {
-            BrowserToolBar.instance.HideShowGuwang(false);
+            BrowserToolBar.instance.HideShowGuanwang(false);
         }
         
     }
