@@ -22,7 +22,7 @@ public static class SceneData {
     /// </summary>
     public static void Init3dAllObjectData(System.Action callBack)
     {
-        Object3dProxy.GetAll3dObjectData((result) =>
+        Scene3dProxy.GetAll3dObjectData((result) =>
         {
 
             //Debug.Log(result);
@@ -396,7 +396,7 @@ public static class SceneData {
     /// </summary>
     public static void UpdateSceneData(System.Action callBack)
     {
-        Object3dProxy.GetAll3dObjectData((result) =>
+        Scene3dProxy.GetAll3dObjectData((result) =>
         {
             List<Object3dItem> object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
             SetRoomParent(object3dList);
@@ -406,7 +406,7 @@ public static class SceneData {
             //  CollectionsConvert.ToJSON(object3dList);
             Dictionary<string, string> saveDic = new Dictionary<string, string>();
             saveDic.Add("result", CollectionsConvert.ToJSON(object3dList));
-            Object3dProxy.PostUpdateScene((postResult) =>
+            Scene3dProxy.PostUpdateScene((postResult) =>
             {
 
                 callBack.Invoke();
@@ -500,7 +500,7 @@ public static class SceneData {
     /// <param name="callBack"></param>
     public static void IsExistNewScene(System.Action<bool> callBack)
     {
-        Object3dProxy.IsExistNewScene((result) =>
+        Scene3dProxy.IsExistNewScene((result) =>
         {
             //有新的场景
             if (result.Equals("1"))

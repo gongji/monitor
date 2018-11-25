@@ -39,26 +39,32 @@ public static class CameraInitSet {
             return;
         }
 
-        CameraViewProxy.GetCameraView(id, (postion, angel, isExsits) =>
+        string sql = "sceneId = 12";
+
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+        dic.Add("result", sql); ;
+
+
+        CameraViewProxy.GetCameraView(dic, (result) =>
         {
-            if (isExsits)
+            CameraViewItem cameraView = Utils.CollectionsConvert.ToObject<CameraViewItem>(result);
+            if (cameraView != null)
             {
                 // Debug.Log("数据库读取");
-                cameraPostion = postion;
-                cameraRoation = Quaternion.Euler(angel.x, angel.y, angel.z);
+                cameraPostion = new Vector3(cameraView.x, cameraView.y, cameraView.z);
+                cameraRoation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
             }
             else
             {
                 // Debug.Log("本地拉取");
-               
+
                 CalculateCameraPostionRoation(box);
             }
 
             CameraMove(cameraMoveTime, callBack);
 
-        },()=>{
-
-            //Debug.Log("123456");
+        }, (error) =>
+        {
             CalculateCameraPostionRoation(box);
             CameraMove(cameraMoveTime, callBack);
 

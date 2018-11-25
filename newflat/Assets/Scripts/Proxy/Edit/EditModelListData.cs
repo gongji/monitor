@@ -11,12 +11,11 @@ public sealed class EditModelListData
     public static void GetModelListData(System.Action<List<ModelCategory>> callBack)
     {
         
-        string url = Config.parse("requestAddress") + "/getModelTree";
+        string url = Config.parse("requestAddress") + "/getModelTreeNew";
 
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.GetRequest(url, (result)=> {
-
               List<ModelCategory> modelList = CollectionsConvert.ToObject<List<ModelCategory>>(result);
 
               callBack.Invoke(modelList);

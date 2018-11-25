@@ -4,35 +4,41 @@ using System.Collections.Generic;
 using DataModel;
 using System.Linq;
 using System;
+using Utils;
 
 public class CreateView : MonoBehaviour {
 
 	void Start () {
-		List<CameraView>  cameraviewList = new List<CameraView> ();
 
 
-        CameraView area = new CameraView();
-        area.id = "root";
-        area.postion = new Vector3(12.7664f, 8.354657f, -6.289821f);
-        area.angel = new Vector3(25.3f, -46.142f,0);
-        cameraviewList.Add(area);
+        // CameraView cameraView = new CameraView();
+        //cameraView.equipId = "12";
+        //cameraView.x = 512.0f;
 
-        CameraView room = new CameraView();
-        room.id = "juliusuo_sn_f1_fj1";
-        room.postion = new Vector3(0.9552342f, 101.0509f, -0.001728173f);
-        room.angel = new Vector3(42.52f, -89.896f, 0);
-        cameraviewList.Add(room);
+        //Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        //dic.Add("result", CollectionsConvert.ToJSON(cameraView));
+        //CameraViewProxy.SaveCameraview((rersult) => {
+        //    Debug.Log(rersult);
+        //}, dic);
+
+        //string sql = "equipId = 123";
+
+        //Dictionary<string, string> dic = new Dictionary<string, string>();
+        //dic.Add("result", sql); ;
+
+        //CameraViewProxy.GetCameraView(dic, (result) =>
+        //{
+        //    Debug.Log(result);
+        //}, (error) => { });
+
+        //CameraView cameraView = Utils.CollectionsConvert.ToObject<CameraView>("");
+        //Debug.Log(cameraView);
 
 
-        room = new CameraView();
-        room.id = "juliusuo_sn_f1_fj2";
-        room.postion = new Vector3(0.5140118f, 201.0653f, -0.005112677f);
-        room.angel = new Vector3(60, -90.57001f, 0);
-        cameraviewList.Add(room);
 
-        FileUtils.WriteContent(Application.streamingAssetsPath + "/cameraview.bat", FileUtils.WriteType.Write,Utils.CollectionsConvert.ToJSON(cameraviewList));
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {

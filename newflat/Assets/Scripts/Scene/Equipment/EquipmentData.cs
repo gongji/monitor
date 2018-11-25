@@ -105,7 +105,7 @@ public sealed class EquipmentData {
     {
         if (equipmentItemList == null)
         {
-            Object3dProxy.GetEquipmentData(string.Empty, (list) =>
+            Scene3dProxy.GetEquipmentData(string.Empty, (list) =>
             {
                 equipmentItemList = list;
                 GetEquipmentByParent(parentid, callBack);

@@ -11,43 +11,45 @@ public sealed class CameraViewProxy  {
     /// <summary>
     /// 查询相机的视角
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="sql">"equipId = 12"</param>
     /// <param name="callBack"></param>
-    public static void GetCameraView(string id,System.Action<Vector3,Vector3,bool> callBack,System.Action ErrorCallBack)
+    public static void GetCameraView(Dictionary<string,string> sqlPostData, System.Action<string> sucesscallBack, System.Action<string> ErrorCallBack)
     {
-        string url = Config.parse("downPath") + "/cameraview.bat";
+        string url = Config.parse("requestAddress") + "/queryWatch";
 
+        url = "http://192.168.1.116:8080/3dServer/queryWatch";
         HttpRequestSingle.Instance.StartCoroutine(
 
-          HttpRequest.GetRequest(url, (result)=> {
-
-              List<CameraView> cameraViewList = CollectionsConvert.ToObject<List<CameraView>>(result);
-
-              bool isExsits = false;
-              Vector3 postion = Vector3.zero;
-              Vector3 angle = Vector3.zero;
-
-              foreach (CameraView item in cameraViewList)
-              {
-                  if(item.id.ToLower().Equals(id.ToLower()))
-                  {
-                      isExsits = true;
-                      postion = item.postion;
-                      angle = item.angel;
-                      break;
-                  }
-
-              }
-
-              callBack.Invoke(postion, angle, isExsits);
-
-          }, (a) =>
+          HttpRequest.WWWPostRequest(url, sqlPostData, sucesscallBack, (error) =>
           {
 
-              log.Error("http reqeust error cameraview:url=" + url);
+              log.Error("http reqeust error queryWatch:url =" + url);
 
-              log.Error("http reqeust error cameraview:" + a.ToString());
-              ErrorCallBack.Invoke();
+              log.Error("http reqeust error queryWatch:" + error.ToString());
+
+          }));
+
+    }
+
+
+    /// <summary>
+    /// 保存观察点
+    /// </summary>
+    /// <param name="sucesscallBack"></param>
+    /// <param name="postData"></param>
+    public static void SaveCameraview(System.Action<string> sucesscallBack, Dictionary<string, string> postData)
+    {
+        string url = Config.parse("requestAddress") + "/saveWatch";
+
+        url = "http://192.168.1.116:8080/3dServer/saveWatch";
+        HttpRequestSingle.Instance.StartCoroutine(
+
+          HttpRequest.WWWPostRequest(url, postData, sucesscallBack, (error) =>
+          {
+
+              log.Error("http reqeust error saveWatch:url=" + url);
+
+              log.Error("http reqeust error saveWatch:" + error.ToString());
 
           }));
 

@@ -36,6 +36,12 @@ namespace DataModel
 
         public string modelId="";
 
+        public string sceneId = "";
+
+        public string number = "";
+
+        public string type = "";
+
         public void UpdatePostion(float x,float y, float z)
         {
             this.x = x;

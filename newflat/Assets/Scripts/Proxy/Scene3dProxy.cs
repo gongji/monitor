@@ -6,10 +6,10 @@ using SystemCore.Task;
 using UnityEngine;
 using Utils;
 
-public static class Object3dProxy
+public static class Scene3dProxy
 {
 
-    private static ILog log = LogManagers.GetLogger("Object3dProxy");
+    private static ILog log = LogManagers.GetLogger("Scene3dProxy");
     /// <summary>
     /// 获取所有的3d对象场景的数据
     /// 
