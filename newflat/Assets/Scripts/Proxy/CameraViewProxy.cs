@@ -17,7 +17,7 @@ public sealed class CameraViewProxy  {
     {
         string url = Config.parse("requestAddress") + "/queryWatch";
 
-        url = "http://192.168.1.116:8080/3dServer/queryWatch";
+       // url = "http://192.168.1.116:8080/3dServer/queryWatch";
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, sqlPostData, sucesscallBack, (error) =>
@@ -41,7 +41,7 @@ public sealed class CameraViewProxy  {
     {
         string url = Config.parse("requestAddress") + "/saveWatch";
 
-        url = "http://192.168.1.116:8080/3dServer/saveWatch";
+       // url = "http://192.168.1.116:8080/3dServer/saveWatch";
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, postData, sucesscallBack, (error) =>

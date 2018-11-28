@@ -35,10 +35,8 @@ public static class SceneParse  {
         return null;
     }
 
-    public static void DoSceneGameObject(string sceneName)
+    public static void DoSceneGameObject(string sceneName,string id)
     {
-
-       
         List<GameObject> gs = SceneUtility.GetRootGameObjects(sceneName);
 
         //移除隐藏的节点
@@ -62,27 +60,31 @@ public static class SceneParse  {
         Regex fjRegex = new Regex("fj\\d");
         Regex wqRegex = new Regex("wq");
 
-
+        Object3DElement object3DElement = null;
         //楼层
         if (flooRegex.IsMatch(endStr) && gs.Count == 1)
         {
-            Object3DElement object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Floor;
 
         }
         //房间
         else if(fjRegex.IsMatch(endStr)  && gs.Count == 1)
         {
-            Object3DElement object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Room;
         }
+        //建筑外构
         else if(wqRegex.IsMatch(endStr) && gs.Count == 1)
         {
-            Object3DElement object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Builder;
         }
+        if(object3DElement!=null)
+        {
+            object3DElement.sceneId = id;
 
-        //return;
+        }
 
         foreach (GameObject item in gs)
         {
@@ -110,8 +112,10 @@ public static class SceneParse  {
             {
                 foreach(Transform roomt in roomts)
                 {
-                    Object3DElement object3DElement = roomt.gameObject.AddComponent<Object3DElement>();
+                    object3DElement = roomt.gameObject.AddComponent<Object3DElement>();
                     object3DElement.type = Type.Room;
+                    string sceneid = SceneData.GetIdByNumber(roomt.transform.name);
+                    object3DElement.sceneId = sceneid;
 
                     GameObject roomcolliderGameObject = FindObjUtility.GetTransformChildByName(roomt.transform, Constant.ColliderName);
                     if (roomcolliderGameObject != null)

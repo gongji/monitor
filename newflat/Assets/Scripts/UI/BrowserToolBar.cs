@@ -54,9 +54,14 @@ public class BrowserToolBar : MonoBehaviour {
 
         guanxian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(guanxian.GetComponent<Toggle>(), value));
         mainCamera = Camera.main.transform;
-        firstFPSController = GameObject.Find("FPSController").transform;
-        firstCamera = firstFPSController.GetComponentInChildren<Camera>(true);
-        firstFPSController.gameObject.SetActive(false);
+        if(GameObject.Find("FPSController")!=null)
+        {
+            firstFPSController = GameObject.Find("FPSController").transform;
+            firstCamera = firstFPSController.GetComponentInChildren<Camera>(true);
+            firstFPSController.gameObject.SetActive(false);
+        }
+        
+        
 
 
     }

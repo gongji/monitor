@@ -230,9 +230,8 @@ public class ShowModelList : MonoBehaviour {
 
     private void CreatePrefeb(ModelCategory mc)
     {
-        
         prefebGameObject = GameObject.Instantiate(EquipmentData.modelPrefebDic[mc.id]);
-        prefebGameObject.name = mc.name;
+        prefebGameObject.name = mc.id+","+ mc.name;
         prefebGameObject.transform.localScale = Vector3.one * 0.1f;
     }
 
@@ -241,7 +240,6 @@ public class ShowModelList : MonoBehaviour {
     {
         TaskQueue taskQueue = new TaskQueue(this);
 
-      
         ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(mc.id, mc.path, mc.name);
         taskQueue.Add(abDownloadTask);
         taskQueue.StartTask();

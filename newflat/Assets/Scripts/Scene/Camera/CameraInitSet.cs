@@ -12,14 +12,14 @@ public static class CameraInitSet {
     private static Vector3 cameraPostion = Vector3.zero;
     private static Quaternion cameraRoation = Quaternion.identity;
 
-    private static string _id = string.Empty;
+    private static string _sceneid = string.Empty;
 
     private static Transform _box = null;
 
     private static float _cameraMoveTime = 0.5f;
-    public static void StartSet(string id,Transform box, float cameraMoveTime,System.Action callBack)
+    public static void StartSet(string sceneid, Transform box, float cameraMoveTime,System.Action callBack)
     {
-        _id = id;
+        _sceneid = sceneid;
         _box = box;
         _cameraMoveTime = cameraMoveTime;
 
@@ -39,7 +39,7 @@ public static class CameraInitSet {
             return;
         }
 
-        string sql = "sceneId = 12";
+        string sql = "sceneId = "+ sceneid;
 
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("result", sql); ;
@@ -201,6 +201,6 @@ public static class CameraInitSet {
 
     public static void ResetCameraPostion()
     {
-        StartSet(_id, _box, _cameraMoveTime, null);
+        StartSet(_sceneid, _box, _cameraMoveTime, null);
     }
 }

@@ -90,7 +90,7 @@ namespace SystemCore.Task
                     if (asyncOperation.isDone)
                     {
 
-                        SceneParse.DoSceneGameObject(sceneName);
+                        SceneParse.DoSceneGameObject(sceneName, _id);
                         _loadProgress = 1;
                         if (OnFinish != null)
                         {

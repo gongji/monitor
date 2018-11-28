@@ -19,19 +19,23 @@ public sealed class CreateEquipment  {
             return;
         }
         GameObject Equipmentinstance = GameObject.Instantiate(modelPrefeb);
-        Object3DElement object3DElement = Equipmentinstance.AddComponent<Object3DElement>();
-        object3DElement.type = DataModel.Type.Equipment;
+        Object3DElement equipment3DElement = Equipmentinstance.AddComponent<Object3DElement>();
+        Object3DElement.AddNewItem(equipment3DElement);
+        equipment3DElement.type = DataModel.Type.Equipment;
         Equipmentinstance.transform.position = hitpostion;
+        Equipmentinstance.name = modelPrefeb.name;
         Equipmentinstance.transform.localRotation = Quaternion.identity;
 
         //设置父对象
-        SetParent(hitTransform, hitpostion, Equipmentinstance, object3DElement);
+        SetParent(hitTransform, hitpostion, Equipmentinstance, equipment3DElement);
         Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), Equipmentinstance);
 
         //  object3DElement.equipmentData.id = Guid.NewGuid().ToString();
-        object3DElement.equipmentData.name = "设备";
-        
-        object3DElement.equipmentData.modelId = modelPrefeb.name;
+        string[] str = modelPrefeb.name.Split(',');
+        equipment3DElement.equipmentData.name = str[1];
+
+        equipment3DElement.equipmentData.modelId = str[0];
+        Equipmentinstance.transform.name = str[1];
 
         ShowModelList.instance.RemoveReset();
         UIElementCommandBar.instance.SelectEquipment(Equipmentinstance);
@@ -56,7 +60,7 @@ public sealed class CreateEquipment  {
         }
         else
         {
-            object3DElement.equipmentData.parentsId = parent.name;
+            object3DElement.equipmentData.sceneId = parent.GetComponent<Object3DElement>().sceneId;
 
         }
 

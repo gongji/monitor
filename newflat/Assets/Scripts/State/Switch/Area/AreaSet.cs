@@ -25,6 +25,8 @@ public class AreaSet:BaseSet
     /// </summary>
     public  void SetSkyEffection()
     {
+
+        
         GameObject renderGameObjerct = SceneUtility.GetGameByRootName(Constant.SkyboxName, "main");
         if (renderGameObjerct != null)
         {
@@ -46,15 +48,23 @@ public class AreaSet:BaseSet
 
     public void InitCameraPostion(System.Action callBack)
     {
+        string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
+
+       // Debug.Log("sceneid="+ sceneid);
         GameObject box =  SceneUtility.GetGameByRootName(Constant.Main_dxName,Constant.ColliderName,true);
         if(box!=null)
         {
-            CameraInitSet.StartSet(Constant.AreaViewName, box.transform, 0.2f, callBack);
+            CameraInitSet.StartSet(sceneid, box.transform, 0.2f, callBack);
 
         }
         else
         {
             log.Error("box not find");
+
+            if(callBack!=null)
+            {
+                callBack.Invoke();
+            }
         }
        
     }

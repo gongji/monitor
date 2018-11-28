@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Object3DElement : MonoBehaviour {
 
-    public string id;
     private void Awake()
     {
     }
@@ -20,6 +19,8 @@ public class Object3DElement : MonoBehaviour {
     {
         this.equipmentData = _equipmentData;
     }
+
+    public string sceneId = string.Empty;
 
     private void Update()
     {
@@ -53,6 +54,34 @@ public class Object3DElement : MonoBehaviour {
     public static List<string> GetDeleteList()
     {
         return delete3dObjects;
+    }
+
+    #endregion
+
+
+    #region add 
+    private static List<Object3DElement> add3dObjects = new List<Object3DElement>();
+
+    public static void AddNewItem(Object3DElement newtem)
+    {
+        add3dObjects.Add(newtem);
+    }
+    public static List<Object3DElement> GetNewList()
+    {
+        return add3dObjects;
+    }
+
+    public static void DeleteNewItem(Object3DElement item)
+    {
+        
+        for(int i=0;i< add3dObjects.Count;i++)
+        {
+            if(add3dObjects[i].Equals(item))
+            {
+                add3dObjects.Remove(item);
+                break;
+            }
+        }
     }
 
     #endregion

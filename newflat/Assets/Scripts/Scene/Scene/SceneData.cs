@@ -564,4 +564,25 @@ public static class SceneData {
 
         return Mathf.CeilToInt(floorResult.Count()/3.0f);
     }
+
+
+    /// <summary>
+    /// 得到number的数据库id
+    /// </summary>
+    /// <returns></returns>
+    public static string GetIdByNumber(string number)
+    {
+        IEnumerable<Object3dItem> result =
+           from object3dItem in object3dList
+           where object3dItem.number.Equals(number)
+           select object3dItem;
+
+        if(result.Count()==1)
+        {
+            return result.ToList<Object3dItem>()[0].id;
+
+        }
+
+        return "";
+    }
 }

@@ -116,9 +116,13 @@ public sealed class UIElementCommandBar : MonoBehaviour
         if(selectingObjectTransform!=null)
         {
             //不为空的话，保存数据库
-            if(!string.IsNullOrEmpty(equipmentItem.id))
+            if(!string.IsNullOrEmpty(equipmentItem.equipmentData.id))
             {
-                Object3DElement.AddDeleteItem(equipmentItem.id);
+                Object3DElement.AddDeleteItem(equipmentItem.equipmentData.id);
+            }
+            else
+            {
+                Object3DElement.DeleteNewItem(equipmentItem);
             }
             GameObject.Destroy(selectingObjectTransform.gameObject);
         }

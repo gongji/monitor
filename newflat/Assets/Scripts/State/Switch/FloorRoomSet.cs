@@ -22,7 +22,7 @@ public class FloorRoomSet : BaseSet
         this.currentObject = SceneContext.currentSceneData;
         Transform box = SceneUtility.GetSceneCollider(currentObject.number).transform;
         PlaneManger(box, true);
-        CameraInitSet.StartSet(currentObject.number, box.transform, 0.5f, () =>
+        CameraInitSet.StartSet(currentObject.id, box.transform, 0.5f, () =>
         {
             CreateTips(currentObject);
             if (AppInfo.Platform == BRPlatform.Browser)

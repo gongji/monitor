@@ -53,6 +53,11 @@ public class FloorSet : FloorRoomSet {
     /// </summary>
     private void SetGuanwamgButttonVisible()
     {
+        if(BrowserToolBar.instance==null)
+        {
+            return;
+        }
+        
         List<Object3dItem> list = SceneData.GetCurrentGuangWang();
         if(list.Count>0)
         {
