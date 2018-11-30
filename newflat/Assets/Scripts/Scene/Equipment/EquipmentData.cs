@@ -12,7 +12,7 @@ public sealed class EquipmentData {
 
     private static ILog log = LogManagers.GetLogger("EquipmentData");
     /// <summary>
-    /// 模型路径，和模型的字典
+    /// 模型id，和模型的字典
     /// </summary>
     public static Dictionary<string, GameObject> modelPrefebDic = new Dictionary<string, GameObject>();
 
@@ -23,6 +23,11 @@ public sealed class EquipmentData {
             return modelPrefebDic;
         }
     }
+
+
+
+
+
     /// 当前场景对象的设备数据
 
     private static List<EquipmentItem> currentEquipmentData = null;
@@ -34,66 +39,7 @@ public sealed class EquipmentData {
             return currentEquipmentData;
         }
     }
-    /// <summary>
-    /// 根据当前的场景ID获取模型的列表
-    /// </summary>
-    /// <param name="curentid"></param>
-    /// <param name="currentState"></param>
-    /// <returns></returns>
-    public static void GetCurrentEquipmentModelData(string parentid, System.Action<string[]> callBack)
-    {
-        //Object3dProxy.GetEquipmentData(parentid, (list) => {
-        //    Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
-        //    IState currentState = Main.instance.stateMachineManager.mCurrentState;
-
-        //    if(list==null|| list.Count==0)
-        //    {
-        //        callBack.Invoke(null);
-        //        return;
-        //    }
-        //    IEnumerable<EquipmentItem> equipmentList = null;
-        //    //园区或者房间
-        //    if (currentState is AreaState)
-        //    {
-        //        equipmentList = from item in list
-        //                        where  string.IsNullOrEmpty( item.parentid)
-        //                        select item;
-        //    }
-        //    else if (currentState is RoomState)
-        //    {
-        //        equipmentList = from item in list
-        //                        where item.parentid != null && item.parentid.Equals(parentid)
-        //                        select item;
-        //    }
-        //    //建筑
-        //    else if (currentState is BuilderState)
-        //    {
-
-        //        if (object3dItem.childs != null && object3dItem.childs.Count > 0)
-        //        {
-        //            equipmentList = GetFoorEquipmentList(list, object3dItem.childs);
-
-        //        }
-        //    }
-        //    //楼层
-        //    else if (currentState is FloorState)
-        //    {
-        //        List<Object3dItem> floorlist = new List<Object3dItem>();
-        //        floorlist.Add(object3dItem);
-        //        equipmentList = GetFoorEquipmentList(list, floorlist);
-        //    }
-
-        //    ///通过设备数据获取下载模型
-        //    if (equipmentList != null)
-        //    {
-        //        currentEquipmentData = equipmentList.ToList<EquipmentItem>();
-        //        string[] modelList = GetModelList(currentEquipmentData);
-        //        callBack.Invoke(modelList);
-        //    }
-
-
-        //});
-    }
+   
 
     private static List<EquipmentItem> equipmentItemList;
     /// <summary>

@@ -11,8 +11,6 @@ public class Object3DElement : MonoBehaviour {
     }
     public DataModel.Type type;
 
- 
-    
     public EquipmentItem equipmentData = new EquipmentItem();
 
     public void SetEquipmentData(EquipmentItem _equipmentData)
