@@ -27,25 +27,7 @@ public class EditToolBar : MonoBehaviour {
     /// <param name="g"></param>
     private void Save(GameObject g)
     {
-        List<EquipmentItem> equipmentItemList = new List<EquipmentItem>();
-        Object3DElement[] object3DElements = GameObject.FindObjectsOfType<Object3DElement>();
-      
-        foreach(Object3DElement item in object3DElements)
-        {
-            if(item.type == DataModel.Type.Equipment)
-            {
-
-                if(string.IsNullOrEmpty(item.equipmentData.id))
-                {
-                    item.equipmentData.id = Guid.NewGuid().ToString();
-                }
-               
-                equipmentItemList.Add(item.equipmentData);
-            }
-            
-        }
-        //Debug.Log(equipmentItemList.Count);
-        FileUtils.WriteContent(Application.streamingAssetsPath + "/equipment1.bat", FileUtils.WriteType.Write, Utils.CollectionsConvert.ToJSON(equipmentItemList));
+        SaveEquipmentData.StartSave();
 
 
     }

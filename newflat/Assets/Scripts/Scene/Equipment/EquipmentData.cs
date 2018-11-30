@@ -24,7 +24,8 @@ public sealed class EquipmentData {
         }
     }
 
-
+    //保存所有的设备数据
+    public static Dictionary<string, Object3DElement> equipmentDataDic = new Dictionary<string, Object3DElement>();
 
 
 
