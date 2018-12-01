@@ -13,6 +13,7 @@ public class FloorRoomSceneAlarm : SceneAlarmBase
         Init();
     }
 
+
     private GameObject alarmEffection = null;
     public override void Alarm()
     {
@@ -20,28 +21,21 @@ public class FloorRoomSceneAlarm : SceneAlarmBase
         {
             return;
         }
-        if (alarmEffection == null)
-        {
-            string url = Application.streamingAssetsPath + "/R/"+ PlatformMsg.instance.currentPlatform.ToString()+ "/alarmeffection";
-
-            ResourceUtility.Instance.GetHttpAssetBundle(url, (result) =>
-            {
-                alarmEffection = GameObject.Instantiate(result.LoadAsset<GameObject>("alarmeffection"));
-                alarmEffection.transform.localEulerAngles = new Vector3(0, -90, 270);
-                SetAlarmPosition();
-
-            });
-        }
-
+       
+       SetAlarm();
+            
         isAlarm = true;
+    }
 
-
-        //throw new System.NotImplementedException();
+    private  void  SetAlarm()
+    {
+        alarmEffection = GameObject.Instantiate(EffectionResouceLoader.instance.effection);
+        alarmEffection.transform.localEulerAngles = new Vector3(0, -90, 270);
+        SetAlarmPosition();
     }
 
     public override void Restore()
     {
-        // throw new System.NotImplementedException();
 
         if (!isAlarm)
         {

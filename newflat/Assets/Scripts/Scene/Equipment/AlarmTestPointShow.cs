@@ -19,14 +19,15 @@ public class AlarmTestPointShow : MonoBehaviour {
                     Debug.Log(equipmentid  +":alarm testPoint data is null" );
                     return;
                 }
-                List<EquipmentTestPoint> list = Utils.CollectionsConvert.ToObject<List<EquipmentTestPoint>>(result);
+                List<TestPointItem> list = Utils.CollectionsConvert.ToObject<List<TestPointItem>>(result);
 
+              //  List<TestPointItem> _dataList = list[0].data;
                 string url = "Grid/TestPointCenter";
                 int[] colums = new int[] { 100, 250, 247 };
                 string[] titles = new string[] { "测点", "名称", "状态" };
 
                 List<List<string>> resultData = new List<List<string>>();
-                foreach(EquipmentTestPoint item in list)
+                foreach (TestPointItem item in list)
                 {
                     List<string> dataItem = new List<string>();
                     dataItem.Add(item.number);
@@ -34,8 +35,8 @@ public class AlarmTestPointShow : MonoBehaviour {
                     dataItem.Add(item.state);
                     resultData.Add(dataItem);
                 }
-              
-               
+
+
                 GridMsg.Instance.Show<NormalGrid>(url, 600, 290, equipmentName + "报警详细信息", "Title/close", colums, titles, resultData);
             }, equipmentid);
         }

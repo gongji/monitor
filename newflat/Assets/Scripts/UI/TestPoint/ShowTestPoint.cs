@@ -60,6 +60,11 @@ public  class ShowTestPoint:MonoSingleton<ShowTestPoint>,IEventListener
 
     private  void Create(string equipmentName,List<EquipmentTestPoint> dataSource)
     {
+        if(dataSource==null || dataSource.Count==0)
+        {
+            Debug.Log("test point is null");
+            return;
+        }
         EventMgr.Instance.AddListener(this, EventName.DeleteObject);
         MaskManager.Instance.Show();
         //实例化
@@ -77,8 +82,9 @@ public  class ShowTestPoint:MonoSingleton<ShowTestPoint>,IEventListener
         //    listView.Items.Clear();
         //}
         //listView.ResumeLayout();
+        List<TestPointItem> _dataSource = dataSource[0].data;
         //设置值
-        foreach (EquipmentTestPoint item in dataSource)
+        foreach (TestPointItem item in _dataSource)
         {
             string[] subItemTexts = new string[] { item.name, item.value, item.unit };
             ListViewItem _item = new ListViewItem(subItemTexts);

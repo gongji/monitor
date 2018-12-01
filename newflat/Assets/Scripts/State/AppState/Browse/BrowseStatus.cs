@@ -16,11 +16,12 @@ public class BrowseStatus : AppBaseState
     public override void Init()
     {
         BrowserUI.Create();
-        WebsocjetService.Instance.ConnetWebsokcet();
+        
         
         WenshiduTimer.Instance.StartTimer();
+        WebsocjetService.Instance.ConnetWebsokcet();
 
-      //  SceneAlarmTimer.Instance.StartTimer();
+        //  SceneAlarmTimer.Instance.StartTimer();
 
         //TreeViewControl.Instance.SetBrowserData();
     }

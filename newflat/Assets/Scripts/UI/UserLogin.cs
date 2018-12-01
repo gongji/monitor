@@ -27,8 +27,31 @@ public class UserLogin : MonoBehaviour {
 	
     public void Submit()
     {
-        Debug.Log("Submit");
-        GameObject.Destroy(gameObject);
+        //  Debug.Log("Submit");
+        string _userName = userName.text.Trim();
+        string _password = password.text.Trim();
+        UserProxy.UserLogin((result) => {
+            UserItem userItem = Utils.CollectionsConvert.ToObject<UserItem>(result);
+            //成功
+            if(userItem!=null)
+            {
+                GameObject.Destroy(gameObject);
+            }
+            else
+            {
+                messge.enabled = true;
+            }
+
+        },(error)=> {
+            GameObject.Destroy(gameObject);
+
+        }, _userName, _password);
+       
+    }
+
+    private void ShowErrorMessage(string content)
+    {
+
     }
 
     public void Reset()
@@ -36,11 +59,16 @@ public class UserLogin : MonoBehaviour {
         
         userName.text = "";
         password.text = "";
-        Debug.Log("Reset");
+       // Debug.Log("Reset");
     }
 
     private void Update()
     {
        transform.SetAsLastSibling();
+
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            Submit();
+        }
     }
 }

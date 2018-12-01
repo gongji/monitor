@@ -46,7 +46,7 @@ public class WenshiduTimer : MonoSingleton<WenshiduTimer>,ITimer {
         if(wenshidus.Length>0)
         {
             //接口未定暂时这样写
-            WenshiDuProxy.GetWenShiduList(null, (successCallBack) => {
+            RealTimeDataProxy.GetWenShiduList(null, (successCallBack) => {
 
                List<WenShiduItemData>  list =  Utils.CollectionsConvert.ToObject<List<WenShiduItemData>>(successCallBack);
                 foreach(WenShiduItemData itemData in list)

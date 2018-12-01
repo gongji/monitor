@@ -16,15 +16,15 @@ public sealed class TestPointProxy
    /// <param name="callBack"></param>
     public static void GetTestPointData(string id,System.Action<List<EquipmentTestPoint>> callBack, System.Action failCallBack)
     {
-        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getPushEquipmentDataList?id="+ id;
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getPushEquipmentDataList?ids="+ id;
 
+        Debug.Log(url);
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.GetRequest(url, (result)=> {
 
-              //Debug.Log(result);
+              Debug.Log(result);
               List<EquipmentTestPoint> equipmentTestPointList = CollectionsConvert.ToObject<List<EquipmentTestPoint>>(result);
-
               callBack.Invoke(equipmentTestPointList);
 
           }, (a) =>

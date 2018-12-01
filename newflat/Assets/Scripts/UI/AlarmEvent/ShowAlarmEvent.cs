@@ -199,6 +199,7 @@ public  class ShowAlarmEvent :MonoBehaviour
         string sendData = Utils.StrUtil.ConnetString(list, "|");
         Debug.Log("sendData="+ sendData);
         WebsocjetService.Instance.SendData(sendData);
+        UIUtility.ShowTips("确认成功");
 
     }
 

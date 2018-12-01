@@ -27,12 +27,15 @@ namespace Br.Core.Server
 
         public void Exec(MessageContent messageContent) {
 
-            //Debug.Log(Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Name);
-            
+            if(string.IsNullOrEmpty(messageContent.action))
+            {
+                return;
+            }
+
             ICommand command = null;
             if (!commandsMap.TryGetValue(messageContent.action, out command)) {
                 
-               // command = new UndefinedCommand();
+                command = new UndefinedCommand();
             }
             try
             {

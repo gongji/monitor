@@ -33,7 +33,10 @@ namespace DataModel
         De_Camera,
         De_LouShui,
         De_WenShidu,
-        De_Door
+        De_Door,
+        De_JiGui,
+        De_ItEquipment
+
     }
 }
 

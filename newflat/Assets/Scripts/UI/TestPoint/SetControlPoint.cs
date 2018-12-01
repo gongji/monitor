@@ -50,8 +50,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     {
         TestPointProxy.GetControlPointList(id, (result) =>
         {
-           // Debug.Log(result);
-
+             Debug.Log(result);
             List<EquipmentControlPointItem> ecps = Utils.CollectionsConvert.ToObject<List<EquipmentControlPointItem>>(result);
             SetDataSouce(ecps, equipmentName);
         },()=> {
@@ -255,12 +254,10 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
                     {
                         continue;
                     }
-
-
                 }
 
                
-                string str = ecp.number + "|" + ecp.unnumber + "&" + inputValue + "& " + ecp.unit + "&" + "admin" + "&" + TimeUtility.FormatCurrentDate();
+                string str = ecp.unnumber + "|" + ecp.number + "&" + inputValue + "& " + ecp.unit + "&" + "admin" + "&" + TimeUtility.FormatCurrentDate();
                 Debug.Log(str);
                 result.Add(str);
             }
@@ -268,6 +265,9 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
 
         ///Debug.Log(FormatUtil.ConnetString(result,","));
         WebsocjetService.Instance.SendData(FormatUtil.ConnetString(result, ","));
+        UIUtility.ShowTips("下发成功");
+        CloseWindow();
+       
     }
 
 

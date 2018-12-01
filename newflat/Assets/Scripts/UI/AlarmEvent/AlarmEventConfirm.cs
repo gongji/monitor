@@ -66,9 +66,6 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
         }
         if(callBack!=null && aei!=null)
         {
-            
-
-
             callBack.Invoke(aei, GetComponentInChildren<DropDonwListUI>().SelectId, eventContent);
             Hide();
         }

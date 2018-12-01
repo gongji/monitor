@@ -40,7 +40,7 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
         Debug.Log(websoketurl);
         ws = new WebSocket(new Uri(websoketurl));
         yield return StartCoroutine(ws.Connect());
-        // w.SendString("Hi there");
+        ws.SendString("Hi");
         int i = 0;
         while (true)
         {
@@ -88,6 +88,7 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
         //Debug.Log(messageContent);
         if(messageContent!=null)
         {
+           // Debug.Log(data);
             commandsUtils.Exec(messageContent);
         }
         

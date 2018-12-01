@@ -17,7 +17,6 @@ public class AlarmCommand : ICommand
     {
         get
         {
-
             return "alarm";
         }
     }
@@ -48,13 +47,15 @@ public class AlarmCommand : ICommand
     public static void  StartDoAlarmEquipment(EquipmentAlarmItem equipmentAlarm, GameObject equipmentObject)
     {
 
-       // Debug.Log("开始处理报警："+ equipmentAlarm.state + ":"+ equipmentAlarm.id);
+        Debug.Log("开始处理报警："+ equipmentAlarm.state + ":"+ equipmentAlarm.id);
         if (equipmentAlarm.state == 4)
         {
+            Debug.Log("报警恢复");
             equipmentObject.GetComponent<BaseEquipmentControl>().CancleAlarm();
         }
         else
         {
+            Debug.Log("开始报警");
             if(equipmentObject.GetComponent<Object3DElement>().type == DataModel.Type.De_LouShui)
             {
                 equipmentObject.GetComponent<LouShuiControl>().LouShuiAlarm(equipmentAlarm.state, equipmentAlarm.segments);

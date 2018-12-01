@@ -184,10 +184,7 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
            
     }
 
- 
     public virtual void OnMouseClick() { }
-
-   
 
     private void UpdateShow()
     {

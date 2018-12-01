@@ -42,12 +42,12 @@ public sealed class EquipmentServiceInit
                     Debug.Log("equipment Alarm State is null");
                     return;
                 }
-                Debug.Log("equipment Alarm State"+result);
+                Debug.Log("equipment init Alarm State"+result);
                 List<EquipmentAlarmItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAlarmItem>>(result);
                 if (list == null || list.Count == 0)
                 {
 
-                   // Debug.Log("equipmentState is data is null=" + resultPostData);
+                    Debug.Log("equipmentState is data is null=" + resultPostData);
                     return;
                 }
                 foreach (EquipmentAlarmItem dataItem in list)
@@ -75,7 +75,11 @@ public sealed class EquipmentServiceInit
         {
             EquipmentAnimationProxy.GetAlarmEquipmentList((result) => {
 
-                //Debug.Log(result);
+                Debug.Log("animation init:"+result);
+                if(string.IsNullOrEmpty(result))
+                {
+                    return;
+                }
                 List<EquipmentAnimationItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAnimationItem>>(result);
                 foreach(EquipmentAnimationItem item in list)
                 {

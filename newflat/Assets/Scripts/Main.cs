@@ -19,6 +19,7 @@ public class Main : MonoBehaviour {
         gameObject.AddComponent<MouseCheck>();
         gameObject.AddComponent<CameraViewChangeManager>();
         gameObject.AddComponent<PlatformMsg>();
+        gameObject.AddComponent<EffectionResouceLoader>();
         //加载配置文件
         Config.Startload(this,
             ()=>{
