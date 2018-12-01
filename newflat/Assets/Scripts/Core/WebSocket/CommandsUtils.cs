@@ -30,7 +30,7 @@ namespace Br.Core.Server
             //Debug.Log(Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Name);
             
             ICommand command = null;
-            if (!commandsMap.TryGetValue(messageContent.methodName, out command)) {
+            if (!commandsMap.TryGetValue(messageContent.action, out command)) {
                 
                // command = new UndefinedCommand();
             }
@@ -40,7 +40,7 @@ namespace Br.Core.Server
                 {
                     try
                     {
-                        object data = command.ExecuteCommand(messageContent.data);
+                        object data = command.ExecuteCommand(messageContent.data.ToString());
                         //server.Response(serverRequstData.RequestInfo, data);
                     }
                     catch {
@@ -49,7 +49,7 @@ namespace Br.Core.Server
                 }
                 else
                 {
-                    log.Warn("未找到命令[" + messageContent.methodName + "]");
+                    log.Warn("未找到命令[" + messageContent.action + "]");
                 }
             }
             catch (CommandExecException commandExecException)

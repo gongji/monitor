@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
+public  class ShowAlarmEvent :MonoBehaviour
 {
 
     class EventItemData
@@ -14,12 +14,14 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
         public AlarmEventItem id;
     }
 
+    public static ShowAlarmEvent instance;
 
     public Transform horScrollBar;
-    //private void Start()
-    //{
-    //    Show();
-    //}
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private  void SetStyle(ListView listView)
     {
@@ -28,11 +30,14 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
 
     private void Start()
     {
+       // Debug.Log("Start");
         Init();
     }
+   
     private  bool isInit = false;
     private   void Init()
     {
+        
         CreateTitle(name);
         ListView listView = transform.GetComponentInChildren<ListView>();
         listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(605, 290);
@@ -47,25 +52,11 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
         listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
     }
     
-    public  void Show(List<AlarmEventItem> ecs)
+    public  void Show(AlarmEventItem aei)
     {
-        if(!isInit)
-        {
-           
-            isInit = true;
+        transform.GetComponentInChildren<ListView>().Items.Insert(0, CreateItem(aei));
 
-            for (int i=0;i< ecs.Count;i++)
-            {
 
-                transform.GetComponentInChildren<ListView>().Items.Add(CreateItem(ecs[i]));
-            }
-        }
-        else
-        {
-
-            AddEvent(ecs[0]);
-        }
-        
         //listView.SuspendLayout();
         //{
         //    listView.Items.Clear();
@@ -83,17 +74,9 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
         //    _item.Tag = item;
         //    listView.Items.Add(_item);
         //}
-       
+
     }
 
-    /// <summary>
-    /// 插入事件到表格最前列
-    /// </summary>
-    /// <param name="aei"></param>
-    private void AddEvent(AlarmEventItem aei)
-    {
-        transform.GetComponentInChildren<ListView>().Items.Insert(0, CreateItem(aei));
-    }
 
     /// <summary>
     /// 创建行数据
@@ -102,7 +85,7 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
     /// <returns></returns>
     private ListViewItem CreateItem(AlarmEventItem aei)
     {
-        string[] subItemTexts = new string[] { aei.name, aei.content, aei.dateTime, aei.station};
+        string[] subItemTexts = new string[] { aei.name, aei.content, aei.dateTime, aei.stationName};
         ListViewItem _item = new ListViewItem(subItemTexts);
         EventItemData item = new EventItemData();
         item.equipmentid = aei.id;
@@ -119,6 +102,7 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
     /// <param name="item"></param>
     private void OnItemBecameVisible(ListViewItem item)
     {
+        Debug.Log("增加确认按钮");
         EventItemData itemData = item.Tag as EventItemData;
         var confirmItem = item.SubItems[4];
         GameObject confirmButton = GameObject.Instantiate(Resources.Load("UI/Alarm/confirm")) as GameObject;
@@ -144,7 +128,7 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
     /// <param name="locateid"></param>
     private void LocateEquipment(string locateid)
     {
-        Debug.Log(locateid);
+       // Debug.Log(locateid);
     }
 
     /// <summary>
@@ -158,6 +142,7 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
         Dictionary<string, string> sendDic = new Dictionary<string, string>();
         sendDic.Add("eventId", confirmId);
         sendDic.Add("userName", "admin");
+        sendDic.Add("time",TimeUtility.GetCurrenDate());
         string json = Utils.CollectionsConvert.ToJSON(sendDic);
         WebsocjetService.Instance.SendData(json);
     }

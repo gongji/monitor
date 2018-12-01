@@ -13,9 +13,23 @@ public class AlarmEventItem  {
 
     public string dateTime;
 
-    public string station;
+    public string stationName;
 
-    public int level = 0;
+    public string level = "0";
 
-    public string eventId = ""; 
+    public string eventId = "";
+
+    public string pointName;
+
+    public string sceneName;
+
+    //通道名字
+    public string channelName;
+
+    public string type;
+
+    //动环原来的名称,在详情中显示
+    public string eventSource;
+
+    public string key;
 }

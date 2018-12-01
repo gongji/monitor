@@ -9,7 +9,7 @@ using Utils;
 public class WebsocjetService : MonoSingleton<WebsocjetService> {
 
     private string url = "ws://echo.websocket.org";
-    private  WebSocket ws = null;
+    private WebSocket ws = null;
     private CommandsUtils commandsUtils;
 
     private void Start()
@@ -22,24 +22,24 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
     public IEnumerator StartWebSocket()
     {
         string websoketurl = Config.parse("websoketurl");
-        if(string.IsNullOrEmpty(websoketurl))
+        if (string.IsNullOrEmpty(websoketurl))
         {
             websoketurl = url;
         }
         Debug.Log(websoketurl);
         ws = new WebSocket(new Uri(websoketurl));
         yield return StartCoroutine(ws.Connect());
-       // w.SendString("Hi there");
+        // w.SendString("Hi there");
         int i = 0;
         while (true)
         {
-           
+
             string reply = ws.RecvString();
             if (reply != null)
             {
                 Debug.Log("Received: " + reply);
                 OnMessage(reply);
-              //  w.SendString( "Hi there" + i++);
+                //  w.SendString( "Hi there" + i++);
             }
             if (ws.error != null)
             {
@@ -54,17 +54,24 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
 
     public void SendData(string sendData)
     {
-        if(ws!=null)
+        if (ws != null)
         {
             Debug.Log(sendData);
             ws.SendString(sendData);
         }
-        
+
     }
 
     private void OnMessage(string data)
     {
+        Debug.Log(data);
+        if (data.Equals("|")  || string.IsNullOrEmpty(data.Trim()))
+        {
+            return;
+        }
+       // Debug.Log("11111111111");
         MessageContent messageContent = CollectionsConvert.ToObject<MessageContent>(data);
+        Debug.Log(messageContent);
         commandsUtils.Exec(messageContent);
     }
 

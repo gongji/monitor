@@ -13,18 +13,23 @@ public class EventCommand : ICommand
     {
         get
         {
-
             return "alarmEvent";
         }
     }
 
     public object ExecuteCommand(string data)
     {
-        
-        List<AlarmEventItem> list = Utils.CollectionsConvert.ToObject<List<AlarmEventItem>>(data);
-        if(list.Count>0)
+
+        Debug.Log("执行："+ data);
+        AlarmEventItem alarmEventItem = Utils.CollectionsConvert.ToObject<AlarmEventItem>(data);
+        if(alarmEventItem!=null)
         {
-            ShowAlarmEvent.Instance.Show(list);
+            Debug.Log("执行1");
+            ShowAlarmEvent.instance.Show(alarmEventItem);
+        }
+        else
+        {
+            Debug.Log("result i null"+ data);
         }
 
         return null;

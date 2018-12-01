@@ -6,7 +6,6 @@ using UnityEngine;
 
      void StartTimer();
 
-
      void StopTimer();
 
     int Time
