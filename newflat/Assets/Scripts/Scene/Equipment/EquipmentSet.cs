@@ -16,21 +16,27 @@ public sealed class EquipmentSet  {
     /// </summary>
     public static void CreateEquipment()
     {
+        EquipmentData.SearchCurrentEquipmentData(() => {
+            StartCreateEquipment();
+        });
        
-        List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
-        if(currentEquipmentData==null || currentEquipmentData.Count==0)
-        {
+    }
 
+    private static void StartCreateEquipment()
+    {
+        List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
+        if (currentEquipmentData == null || currentEquipmentData.Count == 0)
+        {
             return;
         }
-        log.Debug("创建设备"+ currentEquipmentData.Count);
+        log.Debug("创建设备" + currentEquipmentData.Count);
         Dictionary<string, GameObject> modelPrefebDic = EquipmentData.GetmodelPrefebDic;
         Dictionary<string, GameObject> equipmentDic = EquipmentData.GetEquipmentDic;
 
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
         {
             //避免重复创建
-            if (!string.IsNullOrEmpty(equipmentItem.modelId) &&  modelPrefebDic.ContainsKey(equipmentItem.modelId) && !equipmentDic.ContainsKey(equipmentItem.id))
+            if (!string.IsNullOrEmpty(equipmentItem.modelId) && modelPrefebDic.ContainsKey(equipmentItem.modelId) && !equipmentDic.ContainsKey(equipmentItem.id))
             {
                 GameObject equipment = GameObject.Instantiate(modelPrefebDic[equipmentItem.modelId]);
                 Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), equipment);

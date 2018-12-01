@@ -25,7 +25,7 @@ public static class Equipment3dProxy
     {
         string url = Config.parse("requestAddress") + "/searchEquipment";
 
-        url = "http://192.168.1.116:8080/3dServer/searchEquipment";
+       // url = "http://192.168.1.116:8080/3dServer/searchEquipment";
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, postData, sucesscallBack, (error) =>
@@ -48,7 +48,7 @@ public static class Equipment3dProxy
     {
         string url = Config.parse("requestAddress") + "/saveEquipment";
 
-        url = "http://192.168.1.116:8080/3dServer/saveEquipment";
+        //url = "http://192.168.1.116:8080/3dServer/saveEquipment";
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, postData,sucesscallBack, (error) =>

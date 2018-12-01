@@ -10,14 +10,14 @@ public class TreeProxy :  Proxy
 	
     public void GetBrowserData()
     {
-        EquipmentData.GetEquipmentListByParentId("", (list) =>
-        {
-            //SetEquipmentData(datas);
-            //TreeView.Items = datas;
+        //EquipmentData.GetEquipmentListByParentId("", (list) =>
+        //{
+        //    //SetEquipmentData(datas);
+        //    //TreeView.Items = datas;
 
            
-            SendNotification(TreeNotifications.UpdateBrowserTreeData);
+        //    SendNotification(TreeNotifications.UpdateBrowserTreeData);
         
-        });
+        //});
     }
 }

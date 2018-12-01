@@ -6,7 +6,7 @@ using System.Linq;
 using DataModel;
 using SystemCore.Task;
 using Core.Common.Logging;
-
+using Utils;
 
 public sealed class EquipmentData {
 
@@ -25,9 +25,7 @@ public sealed class EquipmentData {
     }
 
     //保存所有的设备数据
-    public static Dictionary<string, Object3DElement> equipmentDataDic = new Dictionary<string, Object3DElement>();
-
-
+    public static Dictionary<string, GameObject> allEquipmentDataDic = new Dictionary<string, GameObject>();
 
     /// 当前场景对象的设备数据
 
@@ -40,114 +38,99 @@ public sealed class EquipmentData {
             return currentEquipmentData;
         }
     }
-   
-
+  
     private static List<EquipmentItem> equipmentItemList;
-    /// <summary>
-    /// 通过父id获取3d对象列表
-    /// </summary>
-    /// <param name="parentid"></param>
-    /// <param name="callBack"></param>
-    public static void GetEquipmentListByParentId(string parentid, System.Action<List<Object3dItem>> callBack)
+    public static void SearchCurrentEquipmentData(System.Action callBack)
     {
-        if (equipmentItemList == null)
+        string sql = GetEquipmentSqlByParent();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+        dic.Add("result", sql);
+
+        Equipment3dProxy.SearchEquipmentData((result) =>
         {
-            Scene3dProxy.GetEquipmentData(string.Empty, (list) =>
+            currentEquipmentData = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
+
+            //获取模型列表
+            string[] modelids =  GetModelList(currentEquipmentData);
+            if(modelids.Length>0)
             {
-                equipmentItemList = list;
-                GetEquipmentByParent(parentid, callBack);
-            });
-        }
-        else
-        {
-            GetEquipmentByParent(parentid, callBack);
-        }
+                DownLoader.Instance.StartModelDownLoad(modelids,()=> {
 
-
-    }
-   
-
-
-    /// <summary>
-    /// 通过父节点查找设备
-    /// </summary>
-    /// <param name="parentid"></param>
-    /// <param name="callBack"></param>
-    private static void GetEquipmentByParent(string parentid, System.Action<List<Object3dItem>> callBack)
-    {
-        if (equipmentItemList == null || equipmentItemList.Count == 0)
-        {
-            if (callBack != null)
-            {
-                callBack.Invoke(null);
+                   if(callBack!=null)
+                    {
+                        callBack.Invoke();
+                    }
+                });
             }
-            return;
-        }
-        IEnumerable<EquipmentItem> equipmentList = null;
-        if(!string.IsNullOrEmpty(parentid))
-        {
-            equipmentList = from item in equipmentItemList
-                            where  !string.IsNullOrEmpty(item.parentsId) &&  item.parentsId.Equals(parentid)
-                            select item;
-        }
-        else
-        {
-            equipmentList = from item in equipmentItemList
-                            where string.IsNullOrEmpty(item.parentsId)
-                            select item;
-        }
-       
-
-        List<Object3dItem> objList = new List<Object3dItem>();
-        foreach (var item in equipmentList)
-        {
-            Object3dItem object3dItem = new Object3dItem();
-            object3dItem.name = item.name;
-            object3dItem.id = item.id;
-            object3dItem.type = Type.Equipment;
-            object3dItem.parentsId = item.parentsId;
-            objList.Add(object3dItem);
-        }
-
-        if (callBack != null)
-        {
-            callBack.Invoke(objList);
-        }
-    }
-
-    /// <summary>
-    /// 获取楼层和大楼在的设备列表
-    /// </summary>
-    /// <param name="eList"></param>
-    /// <param name="floorList"></param>
-    /// <returns></returns>
-    private static IEnumerable<EquipmentItem> GetFoorEquipmentList(List<EquipmentItem> eList,List<Object3dItem> floorList)
-    {
-
-        List<string> ids = new List<string>();
-        foreach(Object3dItem floor in floorList)
-        {
-            ids.Add(floor.id);
-            if(floor.childs!=null && floor.childs.Count>0)
+            else
             {
-                foreach(Object3dItem room in floor.childs)
+                if (callBack != null)
                 {
-                    ids.Add(room.id);
+                    callBack.Invoke();
                 }
             }
-        }
-        if(ids.Count>0)
-        {
-            IEnumerable<EquipmentItem> equipmentList =
-               from item in eList
-               where ids.Contains(item.parentsId)
-               select item;
-
-            return equipmentList;
-        }
-       
-        return null;
+        }, dic);
     }
+    /// <summary>
+    /// 通过父节点得到设备查询的sql语句 
+    /// </summary>
+    /// <param name="parentid"></param>
+    /// <param name="callBack"></param>
+    private static string  GetEquipmentSqlByParent()
+    {
+
+        Object3dItem object3dItem = SceneContext.currentSceneData;
+        IState curerState = AppInfo.GetCurrentState;
+        List<Object3dItem> list = new List<Object3dItem>();
+        string sql = "";
+        //全景模式不需要得到设备
+        if(curerState is FullAreaState)
+        {
+            sql =  "";
+        }
+        else if(curerState  is AreaState)
+        {
+            sql =  "parentsId is null";
+        }
+        else if(curerState is RoomState)
+        {
+            sql =  "parentsId is " + object3dItem.id;
+        }
+        else if(curerState is FloorState)
+        {
+            list.Add(object3dItem);
+            list.AddRange(object3dItem.childs);
+            sql = GetParentStr(list);
+        }
+        else if(curerState is BuilderState)
+        {
+            list.AddRange(object3dItem.childs);
+            foreach(Object3dItem floor in object3dItem.childs)
+            {
+                list.AddRange(floor.childs);
+            }
+            sql = GetParentStr(list); 
+
+        }
+        return sql;
+        
+    }
+
+    private static string GetParentStr(List<Object3dItem> list)
+    {
+        List<string> ids = new List<string>();
+        foreach(Object3dItem item in list)
+        {
+            ids.Add(item.id);
+        }
+
+        string connectStr =  Utils.StrUtil.ConnetString(ids, ",");
+
+        return "parentsId in(" + connectStr + ")";
+
+    }
+
+   
     /// <summary>
     /// 得到模型下载列表，通过equipmentData数据。
     /// </summary>
@@ -205,16 +188,13 @@ public sealed class EquipmentData {
             modelPrefebDic.Add(key, (GameObject)abTask.Data);
         }
     }
-    /// <summary>
-    /// 设备id，设备对象
-    /// </summary>
-    private static Dictionary<string, GameObject> equipmentDic = new Dictionary<string, GameObject>();
+    
     
     public static Dictionary<string, GameObject> GetEquipmentDic
     {
         get
         {
-            return equipmentDic;
+            return allEquipmentDataDic;
         }
     }
 
@@ -222,7 +202,7 @@ public sealed class EquipmentData {
     {
 
         GameObject result = null;
-        equipmentDic.TryGetValue(id, out result);
+        allEquipmentDataDic.TryGetValue(id, out result);
 
         return result;
     }

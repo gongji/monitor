@@ -10,21 +10,29 @@ public class Object3DElement : MonoBehaviour {
     {
     }
     public DataModel.Type type;
-
+    //原来的
+    [SerializeField]
+    public EquipmentItem preEquipmentData = null;
+    //现在的
+    [SerializeField]
     public EquipmentItem equipmentData = new EquipmentItem();
 
     public void SetEquipmentData(EquipmentItem _equipmentData)
     {
         this.equipmentData = _equipmentData;
+        if(AppInfo.Platform == BRPlatform.Editor)
+        {
+            this.preEquipmentData = _equipmentData;
+        }
     }
 
     public string sceneId = string.Empty;
 
     private void Update()
     {
-        if(type == Type.Equipment)
+        if(type == Type.Equipment &&  AppInfo.Platform == BRPlatform.Editor)
         {
-            //equipmentData.Update(transform.localPosition, transform.localScale, transform.localEulerAngles);
+            equipmentData.Update(transform.localPosition, transform.localScale, transform.localEulerAngles);
         }
         
     }

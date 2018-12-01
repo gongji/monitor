@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class BrowserDataCommand : SimpleCommand
 {
-    public new const string NAME = "BrowserDataCommand";
+    public  const string NAME = "BrowserDataCommand";
 
     public override void Execute(INotification notification)
     {
-
-        TreeProxy treeProxy = (TreeProxy)AppFacade.GetInstance().RetrieveProxy(TreeProxy.NAME);
-        treeProxy.GetBrowserData();
+        //TreeProxy treeProxy = (TreeProxy)AppFacade.GetInstance().RetrieveProxy(TreeProxy.NAME);
+        //treeProxy.GetBrowserData();
     }
 }

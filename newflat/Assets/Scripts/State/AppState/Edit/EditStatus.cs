@@ -49,7 +49,7 @@ public class EditStatus : AppBaseState
         {
             if(hitTransform.Equals(MouseCheck.clickHitTransform))
             {
-                CreateEquipment.Create(modelPrefeb, hitPoint, hitTransform);
+                EditorCreateEquipment.Create(modelPrefeb, hitPoint, hitTransform);
             }
            
         }

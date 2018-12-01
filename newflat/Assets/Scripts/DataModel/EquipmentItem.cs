@@ -63,13 +63,19 @@ namespace DataModel
             this.rotationZ = rotationZ;
         }
 
-        //public void Update(Vector3 postion, Vector3 scale, Vector3 eulerAngles)
-        //{
-        //    this.postion = postion;
-        //    this.scale = scale;
-        //    this.eulerAngles = eulerAngles;
+        public void Update(Vector3 postion, Vector3 scale, Vector3 eulerAngles)
+        {
+            this.x = postion.x;
+            this.y = postion.y;
+            this.z = postion.z;
+            this.scaleX = scale.x;
+            this.scaleY = scale.y;
+            this.scaleZ = scale.z;
+            this.rotationX = eulerAngles.x;
+            this.rotationY = eulerAngles.y;
+            this.rotationZ = eulerAngles.z;
 
-        //}
+        }
 
     }
 }

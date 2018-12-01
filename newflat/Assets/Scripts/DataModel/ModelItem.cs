@@ -10,7 +10,7 @@ public class ModelItem  {
 
     public string id;
 
-    public string modelid;
+    public string path;
 
 
 }

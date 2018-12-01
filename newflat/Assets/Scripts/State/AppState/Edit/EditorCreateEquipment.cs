@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 创建设备
+/// 创建编辑态设备
 /// </summary>
-public sealed class CreateEquipment  {
+public sealed class EditorCreateEquipment
+{
 
     private static ILog log = LogManagers.GetLogger("CreateEquipment");
 

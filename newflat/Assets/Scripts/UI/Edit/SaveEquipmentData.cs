@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 /// <summary>
 /// 保存设备的数据
@@ -25,14 +26,28 @@ public static class SaveEquipmentData
         
         result.Add("delete", deleteStr);
 
+        //修改变化的
         List<EquipmentItem> modityData = new List<EquipmentItem>();
-        foreach (Object3DElement item in EquipmentData.equipmentDataDic.Values)
+        foreach (Object3DElement item in EquipmentData.allEquipmentDataDic.Values)
         {
-            modityData.Add(item.equipmentData);
+            bool isSame = Object3dUtility.IsCompareObjectProperty(item.equipmentData, item.preEquipmentData);
+            if(!isSame)
+            {
+                modityData.Add(item.equipmentData);
+            }
         }
-        
 
-        
+        result.Add("update", modityData);
+
+
+        Dictionary<string, string> postData = new Dictionary<string, string>();
+        postData.Add("result", CollectionsConvert.ToJSON(result));
+        Equipment3dProxy.PostEquipmentSaveData((a) => {
+            MessageBox.Show("信息提示","保存成功");
+
+        }, postData);
+
+
 
     }
 

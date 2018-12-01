@@ -64,25 +64,23 @@ public class DownLoader:MonoSingleton<DownLoader> {
     /// </summary>
     /// <param name="models"></param>
     /// <param name="callBack"></param>
-    public void StartModelDownLoad(List<ModelItem> modelList, System.Action callBack)
+    public void StartModelDownLoad(string[] modelList, System.Action callBack)
     {
 
-        Dictionary<string, ABModelDownloadTask> abTask = new Dictionary<string, ABModelDownloadTask>();
+        Dictionary<string, ABModelDownloadTask> abTaskDic = new Dictionary<string, ABModelDownloadTask>();
       // 下载设备模型和资源包
-        if (modelList != null && modelList.Count > 0)
+        if (modelList != null && modelList.Length > 0)
         {
-            foreach (ModelItem modelItem in modelList)
+            foreach (string  id in modelList)
             {
-                //避免下载重复
-                if (!EquipmentData.modelPrefebDic.ContainsKey(modelItem.id))
-                {
-                  
-                    ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(modelItem.id, modelItem.icon, modelItem.name);
 
-                    abTask.Add(modelItem.id, abDownloadTask);
+                string path = Config.parse("requestAddress") + "/upload/equipment/" + id + ".unity3d";
+                ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(id, path, id);
 
-                    taskQueue.Add(abDownloadTask);
-                }
+                abTaskDic.Add(id, abDownloadTask);
+
+                taskQueue.Add(abDownloadTask);
+               
             }
         }
         taskQueue.StartTask();
@@ -92,15 +90,14 @@ public class DownLoader:MonoSingleton<DownLoader> {
             GameObject.Destroy(loader);
             loader = null;
             taskQueue = null;
-            //更新场景状态
+            //更新模型字典
 
-            EquipmentData.UpdateModelDic(abTask);
+            EquipmentData.UpdateModelDic(abTaskDic);
 
             if (callBack != null)
             {
                 callBack();
             }
-
         };
 
     }
