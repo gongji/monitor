@@ -22,7 +22,7 @@ public class Object3DElement : MonoBehaviour {
         this.equipmentData = _equipmentData;
         if(AppInfo.Platform == BRPlatform.Editor)
         {
-            this.preEquipmentData = _equipmentData;
+            this.preEquipmentData = _equipmentData.Clone() as EquipmentItem;
         }
     }
 

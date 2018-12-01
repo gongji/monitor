@@ -5,6 +5,8 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Reflection;
 using DataModel;
+using System.IO;
+using System.Runtime.Serialization;
 
 public static  class Object3dUtility
 {
@@ -416,5 +418,17 @@ public static  class Object3dUtility
         return true;
     }
 
-   
+    public static EquipmentItem DeepClone()
+    {
+        return null;
+        //using (Stream objectStream = new MemoryStream())
+        //{
+        //    IFormatter formatter = new BinaryFormatter();
+        //    formatter.Serialize(objectStream, this);
+        //    objectStream.Seek(0, SeekOrigin.Begin);
+        //    return formatter.Deserialize(objectStream) as Employee;
+        //}
+    }
+
+
 }

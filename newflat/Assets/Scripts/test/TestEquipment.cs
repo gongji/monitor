@@ -18,7 +18,7 @@ public class TestEquipment : MonoBehaviour {
 
         //    Debug.Log(result);
         //}, dic);
-
+        CompareObject();
 
 
     }
@@ -81,5 +81,27 @@ public class TestEquipment : MonoBehaviour {
         Debug.Log(CollectionsConvert.ToJSON(postData));
 
         Equipment3dProxy.PostEquipmentSaveData((a) => { }, postData);
+    }
+
+    private void CompareObject()
+    {
+        EquipmentItem ei = new EquipmentItem();
+        ei.name = "54333";
+
+        ei.id = "123456";
+
+        EquipmentItem  aa = ei.Clone() as EquipmentItem;
+        Debug.Log(aa.name);
+        Debug.Log(aa.id);
+
+        if(aa.Equals(ei))
+        {
+            Debug.Log("相等");
+        }
+        else
+        {
+            Debug.Log("不相等");
+        }
+
     }
 }

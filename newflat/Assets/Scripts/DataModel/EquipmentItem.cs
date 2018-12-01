@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 
@@ -11,7 +14,7 @@ namespace DataModel
     /// </summary>
     ///
     [Serializable]
-    public class EquipmentItem
+    public class EquipmentItem : ICloneable
     {
         public string id = "";
         public string name = "";
@@ -77,6 +80,17 @@ namespace DataModel
 
         }
 
+        public object Clone()
+        {
+
+            using (Stream objectStream = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(objectStream, this);
+                objectStream.Seek(0, SeekOrigin.Begin);
+                return formatter.Deserialize(objectStream) as EquipmentItem;
+            }
+        }
     }
 }
 
