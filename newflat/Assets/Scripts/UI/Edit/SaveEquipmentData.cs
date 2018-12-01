@@ -28,12 +28,13 @@ public static class SaveEquipmentData
 
         //修改变化的
         List<EquipmentItem> modityData = new List<EquipmentItem>();
-        foreach (Object3DElement item in EquipmentData.allEquipmentDataDic.Values)
+        foreach (GameObject item in EquipmentData.allEquipmentDataDic.Values)
         {
-            bool isSame = Object3dUtility.IsCompareObjectProperty(item.equipmentData, item.preEquipmentData);
+            Object3DElement object3DElement = item.GetComponent<Object3DElement>();
+            bool isSame = Object3dUtility.IsCompareObjectProperty(object3DElement.equipmentData, object3DElement.preEquipmentData);
             if(!isSame)
             {
-                modityData.Add(item.equipmentData);
+                modityData.Add(object3DElement.equipmentData);
             }
         }
 
