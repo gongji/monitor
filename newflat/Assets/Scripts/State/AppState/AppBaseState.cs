@@ -86,7 +86,8 @@ public class AppBaseState
     protected void EquipmentEffect()
     {
        
-        if (EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())
+        if ((EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())|| 
+            OperateControlManager.Instance.CurrentState != OperateControlManager.EquipmentEditState.None)
         {
             return;
         }

@@ -90,14 +90,33 @@ public sealed class UIElementCommandBar : MonoBehaviour
        
     }
 
+    private gizmoScript gs = null;
     //高级编辑器
     public void EditClick(GameObject g)
     {
+        Transform selectE = selectingObjectTransform.GetComponent<Object3DElement>().transform;
         Hide();
         OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.Edit;
+        if(gs == null)
+        {
+            gs =  TransformControlUtility.CreateItem("Edit/Gizmo", null).GetComponent<gizmoScript>();
+            gs.transform.localScale = Vector3.one * 0.1f;
+        }
+        gs.SetSelectObject(selectE);
     }
 
+    public void DestroyGizmo()
+    {
+        if(gs!=null)
+        {
+            GameObject.DestroyImmediate(gs.par);
+            GameObject.DestroyImmediate(gs.gameObject);
+        }
+       
+        gs = null;
+    }
 
+    //保存定位点
     public void SaveLocateClick(GameObject g)
     {
         EquipmentItem equipmentItem = selectingObjectTransform.GetComponent<Object3DElement>().equipmentData;
@@ -239,7 +258,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
     /// </summary>
     public void SelectEquipment(GameObject currentGameObject)
     {
-        if (currentGameObject == null)
+        if (currentGameObject == null || OperateControlManager.Instance.CurrentState != OperateControlManager.EquipmentEditState.None)
         {
             return;
         }
@@ -248,8 +267,9 @@ public sealed class UIElementCommandBar : MonoBehaviour
         selectingObjectTransform = currentGameObject.transform;
         EffectionUtility.playSelectingEffect(selectingObjectTransform);
         Show();
+        PropertySet.instance.UpdateData(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData);
 
-        
+
     }
 
     public void CancelSelect()

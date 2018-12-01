@@ -84,6 +84,7 @@ public class Object3DElement : MonoBehaviour {
         {
             if(add3dObjects[i].Equals(item))
             {
+                
                 add3dObjects.Remove(item);
                 break;
             }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class gizmoScript : MonoBehaviour {
 
@@ -63,7 +64,7 @@ public class gizmoScript : MonoBehaviour {
 		}
 	}
 
-    private Transform selectObject = null;
+    public Transform selectObject = null;
 
     public void SetSelectObject(Transform selectTransform)
     {
@@ -153,21 +154,22 @@ public class gizmoScript : MonoBehaviour {
 	}
 
 	void saveSelectedState () {
-		tempPos = new Vector3[control.Length];
-		tempScale = new Vector3[control.Length];
-		tempRot = new Quaternion[control.Length];
-		tempID = new GameObject[control.Length];
-		tempVert = new Vector3[control.Length, 5000];
-		for (int h = 0; h < control.Length; h++) {
-			tempPos [h] = control [h].transform.position;
-			tempScale [h] = control [h].transform.localScale;
-			tempRot [h] = control [h].transform.localRotation;
-			tempID [h] = control [h];
-			Vector3[] ve = control [h].GetComponent<MeshFilter> ().mesh.vertices;
-			for (int ii = 0; ii < ve.Length; ii++) { 
-				tempVert [h,ii] = ve[ii];
-			}
-		}
+        return;
+		//tempPos = new Vector3[control.Length];
+		//tempScale = new Vector3[control.Length];
+		//tempRot = new Quaternion[control.Length];
+		//tempID = new GameObject[control.Length];
+		//tempVert = new Vector3[control.Length, 5000];
+		//for (int h = 0; h < control.Length; h++) {
+		//	tempPos [h] = control [h].transform.position;
+		//	tempScale [h] = control [h].transform.localScale;
+		//	tempRot [h] = control [h].transform.localRotation;
+		//	tempID [h] = control [h];
+		//	Vector3[] ve = control [h].GetComponent<MeshFilter> ().mesh.vertices;
+		//	for (int ii = 0; ii < ve.Length; ii++) { 
+		//		tempVert [h,ii] = ve[ii];
+		//	}
+		//}
 	}
 
 	public void removeControl () {
@@ -231,6 +233,18 @@ public class gizmoScript : MonoBehaviour {
         {
 
             return;
+        }
+        if(Input.GetMouseButtonDown(0))
+        {
+            Camera.main.GetComponent<CameraObjectController>().SetEnable(false);
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            DOVirtual.DelayedCall(0.1f, () => {
+                Camera.main.GetComponent<CameraObjectController>().SetEnable(true);
+
+            });
+            
         }
 		cam = Camera.main.transform.position;
 		camPos = cam - transform.position;

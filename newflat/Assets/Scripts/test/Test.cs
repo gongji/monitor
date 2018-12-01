@@ -80,5 +80,17 @@ public class Test : MonoBehaviour {
 
     }
 
-  
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            gizmoScript gs = GameObject.FindObjectOfType<gizmoScript>();
+            if(gs!=null)
+            {
+                gs.SetSelectObject(transform);
+            }
+        }
+    }
+
+
 }

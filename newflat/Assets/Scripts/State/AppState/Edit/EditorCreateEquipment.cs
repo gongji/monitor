@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// 创建编辑态设备
@@ -41,6 +42,11 @@ public sealed class EditorCreateEquipment
 
         ShowModelList.instance.RemoveReset();
         UIElementCommandBar.instance.SelectEquipment(Equipmentinstance);
+
+        DOVirtual.DelayedCall(1.0f, () => {
+            PropertySet.instance.UpdateData(equipment3DElement.equipmentData);
+        });
+       
 
 
     }

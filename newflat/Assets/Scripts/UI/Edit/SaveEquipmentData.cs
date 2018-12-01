@@ -38,6 +38,7 @@ public static class SaveEquipmentData
             bool isSame = Object3dUtility.IsCompareObjectProperty(object3DElement.equipmentData, object3DElement.preEquipmentData);
             if(!isSame)
             {
+                FormatUtil.FormatEquipmentData(object3DElement.equipmentData);
                 modityData.Add(object3DElement.equipmentData);
             }
         }
@@ -69,11 +70,11 @@ public static class SaveEquipmentData
         List<EquipmentItem> result = new List<EquipmentItem>();
         foreach(Object3DElement item in list)
         {
+            FormatUtil.FormatEquipmentData(item.equipmentData);
             result.Add(item.equipmentData);
         }
 
         return result;
-
-
     }
+
 }

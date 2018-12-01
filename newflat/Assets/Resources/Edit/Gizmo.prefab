@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33338893027920628}
   - component: {fileID: 23895881058908182}
   - component: {fileID: 65118887469293996}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: xRot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33559206788876178}
   - component: {fileID: 23378744518453836}
   - component: {fileID: 65070290954010348}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: middleScale
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 33924809101801558}
   - component: {fileID: 23051948636164882}
   - component: {fileID: 65458234304390180}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: xArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4950797549136260}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: xDir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 33167889472245656}
   - component: {fileID: 23038156349980748}
   - component: {fileID: 65538700501261068}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: zRot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4828249678120120}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: zDir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4049917233898776}
   - component: {fileID: 114310294531314002}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Gizmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4537416025912336}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: yDir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 33109746742927094}
   - component: {fileID: 23848480431478960}
   - component: {fileID: 65858185512871436}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: xBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 33434130216494752}
   - component: {fileID: 23406744369860230}
   - component: {fileID: 65792564014894520}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: zArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 33122221939491690}
   - component: {fileID: 23226960347483960}
   - component: {fileID: 65142670810402474}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: zBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 33757238209134598}
   - component: {fileID: 23345500633915952}
   - component: {fileID: 65841707631342730}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: zPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 33496808674707782}
   - component: {fileID: 23614898626462576}
   - component: {fileID: 65299976281949562}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: yRot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4288014586745528}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 33858201925690948}
   - component: {fileID: 23751770627186664}
   - component: {fileID: 65473780441862994}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: yArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 33411582249322648}
   - component: {fileID: 23827085389145828}
   - component: {fileID: 65424992981446302}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: xPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 33460607708863100}
   - component: {fileID: 23669473704646162}
   - component: {fileID: 65089791613675166}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: yBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 4999246741348250}
   - component: {fileID: 33305658221588838}
   - component: {fileID: 23307206053993126}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: lookerRot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 33482385350289232}
   - component: {fileID: 23018130087893100}
   - component: {fileID: 65678961425038290}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: yPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b948ba2eb00acad4e9a4994410e16b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localControl: 0
+  localControl: 1
   scaleS: 15
   scales: 1
   offset: []
@@ -1382,13 +1382,14 @@ MonoBehaviour:
   lastMat: {fileID: 0}
   maskSel:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8192
   tagToFind: Finish
   gridSnap: 0.25
   type: 0
-  moveCode: 119
-  rotateCode: 101
-  scaleCode: 114
-  localControlCode: 116
+  moveCode: 49
+  rotateCode: 50
+  scaleCode: 51
+  localControlCode: 52
   historyEnabled: 1
   historySize: 100
+  selectObject: {fileID: 0}

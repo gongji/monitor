@@ -18,10 +18,13 @@ public class EditToolBar : MonoBehaviour {
         save = transform.Find("Save");
         viewReset = transform.Find("ViewReset");
         savelocate = transform.Find("Savelocate");
+       
+        
 
         TransformControlUtility.AddEventToBtn(save.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { Save(save.gameObject);});
         TransformControlUtility.AddEventToBtn(viewReset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ResetView(); });
         TransformControlUtility.AddEventToBtn(savelocate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveLocate(); });
+       
 
     }
 
@@ -33,15 +36,18 @@ public class EditToolBar : MonoBehaviour {
     {
         SaveEquipmentData.StartSave();
     }
-
+    //视角复位
     public void ResetView()
     {
         CameraInitSet.ResetCameraPostion();
     }
 
+    //保存定位点
     private void SaveLocate()
     {
 
         CameraViewData.SaveSceneCameraView();
     }
+
+   
 }

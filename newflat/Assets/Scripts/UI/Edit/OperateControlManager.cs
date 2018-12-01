@@ -54,11 +54,15 @@ public class OperateControlManager : MonoSingleton<OperateControlManager> {
             GameObject tips = TransformControlUtility.CreateItem("Edit/operateTips", UIUtility.GetRootCanvas());
             tips.name = "tips";
             operateTips = tips.GetComponent<OperateTips>();
+        }else
+        {
+            UIElementCommandBar.instance.DestroyGizmo();
         }
 
         if(operateTips!=null && currentState == EquipmentEditState.Edit)
         {
-            operateTips.SetShowText("处于编辑器态");
+            operateTips.SetShowText("快捷键：数字1位置，数字2旋转，数字3缩放。");
+
         }else if(operateTips != null && currentState == EquipmentEditState.BulkCopy)
         {
             operateTips.SetShowText("shift水平垂直复制，滚轴+左ctrl调整距离");
