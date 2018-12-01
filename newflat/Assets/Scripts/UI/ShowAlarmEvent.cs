@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
 {
 
-    class ItemData
+    class EventItemData
     {
-        public string locateId;
-        public string confirmId;
+        public string equipmentid;   
+        public string eventId;
+        public AlarmEventItem id;
     }
 
 
@@ -25,6 +26,10 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
         //listView.DefaultHeadingTextColor = Color.red;
     }
 
+    private void Start()
+    {
+        Init();
+    }
     private  bool isInit = false;
     private   void Init()
     {
@@ -46,7 +51,7 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
     {
         if(!isInit)
         {
-            Init();
+           
             isInit = true;
 
             for (int i=0;i< ecs.Count;i++)
@@ -99,9 +104,9 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
     {
         string[] subItemTexts = new string[] { aei.name, aei.content, aei.dateTime, aei.station};
         ListViewItem _item = new ListViewItem(subItemTexts);
-        ItemData item = new ItemData();
-        item.locateId = aei.id;
-        item.confirmId = aei.id;
+        EventItemData item = new EventItemData();
+        item.equipmentid = aei.id;
+        item.eventId = aei.eventId;
         _item.Tag = item;
 
         return _item;
@@ -114,13 +119,13 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
     /// <param name="item"></param>
     private void OnItemBecameVisible(ListViewItem item)
     {
-        ItemData itemData = item.Tag as ItemData;
+        EventItemData itemData = item.Tag as EventItemData;
         var confirmItem = item.SubItems[4];
         GameObject confirmButton = GameObject.Instantiate(Resources.Load("UI/Alarm/confirm")) as GameObject;
         confirmItem.CustomControl = confirmButton.transform as RectTransform;
         confirmButton.GetComponent<Button>().onClick.AddListener(delegate ()
         {
-            ConfirmEquipment(itemData.confirmId, item);
+            ConfirmEquipment(itemData.eventId, item);
         });
 
         // Create locate 按钮
@@ -129,7 +134,7 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
         locateItem.CustomControl = locateButton.transform as RectTransform;
         locateButton.GetComponent<Button>().onClick.AddListener(delegate ()
         {
-            LocateEquipment(itemData.locateId);
+            LocateEquipment(itemData.equipmentid);
         });
     }
 
@@ -143,12 +148,18 @@ public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
     }
 
     /// <summary>
-    /// 确认
+    /// 确认id
     /// </summary>
     /// <param name="confirmId"></param>
     private void ConfirmEquipment(string confirmId, ListViewItem item)
     {
         transform.GetComponentInChildren<ListView>().Items.Remove(item);
+
+        Dictionary<string, string> sendDic = new Dictionary<string, string>();
+        sendDic.Add("eventId", confirmId);
+        sendDic.Add("userName", "admin");
+        string json = Utils.CollectionsConvert.ToJSON(sendDic);
+        WebsocjetService.Instance.SendData(json);
     }
 
     private void OnItemBecameInvisible(ListViewItem item)

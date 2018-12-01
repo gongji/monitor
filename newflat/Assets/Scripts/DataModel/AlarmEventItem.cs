@@ -16,4 +16,6 @@ public class AlarmEventItem  {
     public string station;
 
     public int level = 0;
+
+    public string eventId = ""; 
 }

@@ -8,11 +8,11 @@ public class EquipmentAlarmProxy  {
     private static ILog log = LogManagers.GetLogger("EquipmentAlarmProxy");
 
     /// <summary>
-    /// 获取报警设备列表
+    /// 获取设备的状态
     /// </summary>
     /// <param name="sucesscallBack"></param>
     /// <param name="postData">设备ids</param>
-    public static void GetAlarmEquipmentList(System.Action<string> sucesscallBack, Dictionary<string, string> postData)
+    public static void GetEquipmentAlarmStateList(System.Action<string> sucesscallBack, Dictionary<string, string> postData)
     {
         string url = Config.parse("requestAddress") + "/GetAlarmEquipmentList";
 
@@ -31,7 +31,7 @@ public class EquipmentAlarmProxy  {
 
 
    /// <summary>
-   /// 获取报警设备的测点列表
+   /// 获取报警设备的测点列表，用于查看报警设备的报警测点信息。
    /// </summary>
    /// <param name="sucesscallBack"></param>
    /// <param name="postData">设备id</param>

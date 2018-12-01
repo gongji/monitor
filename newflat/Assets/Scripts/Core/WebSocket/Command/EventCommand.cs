@@ -14,7 +14,7 @@ public class EventCommand : ICommand
         get
         {
 
-            return "event";
+            return "alarmEvent";
         }
     }
 
@@ -27,6 +27,7 @@ public class EventCommand : ICommand
             ShowAlarmEvent.Instance.Show(list);
         }
 
-        throw new System.NotImplementedException();
+        return null;
+        //throw new System.NotImplementedException();
     }
 }

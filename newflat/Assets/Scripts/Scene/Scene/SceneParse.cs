@@ -8,8 +8,6 @@ using State;
 using System.Text.RegularExpressions;
 
 public static class SceneParse  {
-
-  
     /// <summary>
     /// 通过ID查找外构下的相机位置
     /// </summary>
@@ -85,7 +83,7 @@ public static class SceneParse  {
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.RoomDoor;
-            gs[0].AddComponent<DoorData>();
+            gs[0].AddComponent<DoorSceneData>();
         //地形
         }else if(sceneName.Equals(Constant.Main_dxName.ToLower()))
         {
@@ -215,6 +213,11 @@ public static class SceneParse  {
                 object3DElement.equipmentData.type = Type.De_Door.ToString();
             }
         }
+    }
+
+    private static void AddAlarmObjectScripts(string MatchStr,Transform parent)
+    {
+
     }
 
     

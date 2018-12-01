@@ -5,8 +5,22 @@ using UnityEngine;
 /// <summary>
 /// 全局单例类，更新温湿度
 /// </summary>
-public class WenshiduTimer : MonoSingleton<WenshiduTimer> {
+public class WenshiduTimer : MonoSingleton<WenshiduTimer>,ITimer {
 
+
+    private int time = 5;
+    public int Time
+    {
+        get
+        {
+            return time;
+        }
+           
+        set
+        {
+            time = value;
+        }
+    }
     public  void StartTimer()
     {
         StartCoroutine(Start());
@@ -22,7 +36,7 @@ public class WenshiduTimer : MonoSingleton<WenshiduTimer> {
         while(true)
         {
             UpdateData();
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(time);
         }
     }
 

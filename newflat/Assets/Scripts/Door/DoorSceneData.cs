@@ -4,14 +4,12 @@ using UnityEngine;
 using DataModel;
 using Utils;
 
-public class DoorData : MonoBehaviour {
+public class DoorSceneData : MonoBehaviour {
 
 	void Start () {
         SearchDoorData();
         
     }
-
-
     private void SearchDoorData()
     {
         string sql = "sceneId = " + GetComponent<Object3DElement>().sceneId;

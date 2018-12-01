@@ -52,7 +52,7 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
         ws.Close();
     }
 
-    private void SendData(string sendData)
+    public void SendData(string sendData)
     {
         if(ws!=null)
         {
