@@ -13,7 +13,7 @@ public sealed class CameraViewEdit  {
         dic.Add("result", CollectionsConvert.ToJSON(cvt));
         CameraViewProxy.SaveCameraview((rersult) =>
         {
-            Debug.Log(rersult);
+            MessageBox.Show("信息提示","保存成功");
         }, dic);
     }
     public static void SaveEquipmentCameraView(string equipmentId)
@@ -24,7 +24,7 @@ public sealed class CameraViewEdit  {
         dic.Add("result", CollectionsConvert.ToJSON(cvt));
         CameraViewProxy.SaveCameraview((rersult) =>
         {
-            Debug.Log(rersult);
+            MessageBox.Show("信息提示", "保存成功");
         }, dic);
     }
 
@@ -64,7 +64,6 @@ public sealed class CameraViewEdit  {
             if (!string.IsNullOrEmpty(result))
             {
                 resultCameraViewItem = Utils.CollectionsConvert.ToObject<CameraViewItem>(result);
-
             }
             if (callBack != null)
             {
