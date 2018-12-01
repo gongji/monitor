@@ -84,7 +84,11 @@ namespace State
             baseSet.Enter(curentDataList, () => {
                 BrowserEquipmentCreate.CreateEquipment(()=> {
                     EnableEventSystem(true);
-                    SceneAlarmTimer.Instance.StartTimer();
+                    if(AppInfo.Platform == BRPlatform.Browser)
+                    {
+                        SceneAlarmTimer.Instance.StartTimer();
+                    }
+                   
                     if (enterCallBack != null)
                     {
                         enterCallBack.Invoke();
@@ -112,8 +116,11 @@ namespace State
             }
             EnableEventSystem(false);
             EquipmentData.SetAllEquipmentParentEmpty();
-            SceneAlarmTimer.Instance.StopTimer();
-
+            if(AppInfo.Platform == BRPlatform.Browser)
+            {
+                SceneAlarmTimer.Instance.StopTimer();
+            }
+          
         }
 
 

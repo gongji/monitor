@@ -24,7 +24,7 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
     }
     public void StartTimer()
     {
-        StartCoroutine(Start());
+        StartCoroutine(StartTask());
     }
 
     public void StopTimer()
@@ -32,7 +32,7 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
         StopAllCoroutines();
     }
 
-    private IEnumerator Start()
+    private IEnumerator StartTask()
     {
         while (true)
         {
@@ -57,7 +57,7 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
                     Debug.Log("scene state is null");
                     return;
                 }
-                //Debug.Log("scene alarm state:1= alarm :"+success);
+                Debug.Log("scene alarm state:1= alarm :"+success);
                 List<SceneAlarmItem> sceneAlarmItems = Utils.CollectionsConvert.ToObject<List<SceneAlarmItem>>(success);
 
                 foreach(SceneAlarmItem item in sceneAlarmItems)

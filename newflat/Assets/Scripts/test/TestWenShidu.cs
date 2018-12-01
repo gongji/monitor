@@ -12,9 +12,9 @@ public class TestWenShidu : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            GetComponent<WenShiduDataUpdate>().UpdateaData(100,100);
-        }
+        //if(Input.GetKeyDown(KeyCode.A))
+        //{
+        //    GetComponent<WenShiduDataUpdate>().UpdateaData(100,100);
+        //}
 	}
 }

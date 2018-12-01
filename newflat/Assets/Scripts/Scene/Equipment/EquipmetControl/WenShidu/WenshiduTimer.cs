@@ -23,7 +23,7 @@ public class WenshiduTimer : MonoSingleton<WenshiduTimer>,ITimer {
     }
     public  void StartTimer()
     {
-        StartCoroutine(Start());
+        StartCoroutine(StartTask());
     }
 
     public void StopTimer()
@@ -31,7 +31,7 @@ public class WenshiduTimer : MonoSingleton<WenshiduTimer>,ITimer {
         StopAllCoroutines();
     }
 
-    private IEnumerator Start()
+    private IEnumerator StartTask()
     {
         while(true)
         {

@@ -80,7 +80,11 @@ public sealed class BrowserEquipmentCreate
 
         SetCurrentEquipmentShow();
 
-        EquipmentServiceInit.Init(gs);
+        if(AppInfo.Platform == BRPlatform.Browser)
+        {
+            EquipmentServiceInit.Init(gs);
+        }
+       
     }
 
     private static void SetEquipmentLayerAndScripts(GameObject equipment,EquipmentItem equipmentItem, 

@@ -38,6 +38,7 @@ public class WenShiduEquipmentControl : BaseEquipmentControl
 
     public override void ExeAnimation(string name, bool isExe)
     {
+        Debug.Log(name);
         // throw new System.NotImplementedException();
     }
 }
