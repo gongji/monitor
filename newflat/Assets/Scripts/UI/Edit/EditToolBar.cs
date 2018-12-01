@@ -11,13 +11,18 @@ public class EditToolBar : MonoBehaviour {
 
     private Transform viewReset;
 
+    private Transform savelocate;
+
     private void Start()
     {
         save = transform.Find("Save");
         viewReset = transform.Find("ViewReset");
+        savelocate = transform.Find("Savelocate");
 
         TransformControlUtility.AddEventToBtn(save.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { Save(save.gameObject);});
         TransformControlUtility.AddEventToBtn(viewReset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ResetView(); });
+
+        TransformControlUtility.AddEventToBtn(savelocate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveLocate(); });
 
     }
 
@@ -35,5 +40,12 @@ public class EditToolBar : MonoBehaviour {
     public void ResetView()
     {
         CameraInitSet.ResetCameraPostion();
+    }
+
+    //
+
+    private void SaveLocate()
+    {
+        CameraViewEdit.SaveSceneCameraView();
     }
 }
