@@ -70,9 +70,6 @@ namespace SystemCore.Task
                     }
                     yield break;
                 }
-
-
-
                 AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 if (asyncOperation == null)
                 {

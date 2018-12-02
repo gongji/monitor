@@ -66,6 +66,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
     /// <param name="callBack"></param>
     public void StartModelDownLoad(string[] modelList, System.Action callBack)
     {
+
         taskQueue = new TaskQueue(this);
         Dictionary<string, ABModelDownloadTask> abTaskDic = new Dictionary<string, ABModelDownloadTask>();
       // 下载设备模型和资源包
@@ -75,7 +76,9 @@ public class DownLoader:MonoSingleton<DownLoader> {
             {
 
                 string path = Config.parse("requestAddress") + "/upload/modefile/" + id + ".unity3d";
-                ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(id, path, id);
+                ModelItem mi = ModelData.dicModelData[id];
+                ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(id, path, mi.name);
+
 
                 abTaskDic.Add(id, abDownloadTask);
 
