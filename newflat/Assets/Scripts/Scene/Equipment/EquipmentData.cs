@@ -48,6 +48,11 @@ public sealed class EquipmentData {
 
         Equipment3dProxy.SearchEquipmentData((result) =>
         {
+            if(string.IsNullOrEmpty(result)&& callBack!=null)
+            {
+                callBack.Invoke();
+                return;
+            }
             currentEquipmentData = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
 
             //获取模型列表
@@ -165,14 +170,12 @@ public sealed class EquipmentData {
         {
             return;
         }
-
         foreach(string key in abTask.Keys)
         {
-            if(!modelPrefebDic.ContainsKey (key))
+            if(!modelPrefebDic.ContainsKey(key))
             {
                 modelPrefebDic.Add(key, (GameObject)abTask[key].Data);
             }
-           
         }
         
     }

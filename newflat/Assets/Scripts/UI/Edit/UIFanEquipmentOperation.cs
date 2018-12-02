@@ -27,10 +27,6 @@ public class UIFanEquipmentOperation : MonoBehaviour
 
     }
 
-    
-
-
-
     public void CalcAngle()
     {
         for (int a = 0; a < transform.childCount; a++)

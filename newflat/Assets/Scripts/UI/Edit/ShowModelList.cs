@@ -238,17 +238,10 @@ public class ShowModelList : MonoBehaviour {
 
     private void StartDownLoad(ModelCategory mc)
     {
-        TaskQueue taskQueue = new TaskQueue(this);
+        DownLoader.Instance.StartModelDownLoad(mc, () => {
 
-        ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(mc.id, mc.path, mc.name);
-        taskQueue.Add(abDownloadTask);
-        taskQueue.StartTask();
-        //下载完成
-        taskQueue.OnFinish = () =>
-        {
-            EquipmentData.UpdateModelDic(mc.id, abDownloadTask);
             CreatePrefeb(mc);
-        };
+        });
     }
 
     private void Update()

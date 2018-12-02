@@ -66,7 +66,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
     /// <param name="callBack"></param>
     public void StartModelDownLoad(string[] modelList, System.Action callBack)
     {
-
+        taskQueue = new TaskQueue(this);
         Dictionary<string, ABModelDownloadTask> abTaskDic = new Dictionary<string, ABModelDownloadTask>();
       // 下载设备模型和资源包
         if (modelList != null && modelList.Length > 0)
@@ -74,7 +74,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
             foreach (string  id in modelList)
             {
 
-                string path = Config.parse("requestAddress") + "/upload/equipment/" + id + ".unity3d";
+                string path = Config.parse("requestAddress") + "/upload/modefile/" + id + ".unity3d";
                 ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(id, path, id);
 
                 abTaskDic.Add(id, abDownloadTask);
@@ -89,11 +89,11 @@ public class DownLoader:MonoSingleton<DownLoader> {
 
             GameObject.Destroy(loader);
             loader = null;
-            taskQueue = null;
+            
             //更新模型字典
 
             EquipmentData.UpdateModelDic(abTaskDic);
-
+            taskQueue = null;
             if (callBack != null)
             {
                 callBack();
@@ -101,6 +101,26 @@ public class DownLoader:MonoSingleton<DownLoader> {
         };
 
     }
+
+    public void StartModelDownLoad(ModelCategory mc,System.Action callBack)
+    {
+        taskQueue = new TaskQueue(this);
+
+        ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(mc.id, mc.path, mc.name);
+        taskQueue.Add(abDownloadTask);
+        taskQueue.StartTask();
+        //下载完成
+        taskQueue.OnFinish = () =>
+        {
+            EquipmentData.UpdateModelDic(mc.id, abDownloadTask);
+            if(callBack!=null)
+            {
+                callBack.Invoke();
+            }
+           
+        };
+    }
+
 
     private void Update()
     {

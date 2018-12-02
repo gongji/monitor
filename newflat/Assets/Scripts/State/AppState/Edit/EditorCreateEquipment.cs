@@ -21,6 +21,7 @@ public sealed class EditorCreateEquipment
         }
         GameObject Equipmentinstance = GameObject.Instantiate(modelPrefeb);
         Object3DElement equipment3DElement = Equipmentinstance.AddComponent<Object3DElement>();
+        //增加，保存的时候使用
         Object3DElement.AddNewItem(equipment3DElement);
         equipment3DElement.type = DataModel.Type.Equipment;
         Equipmentinstance.transform.position = hitpostion;
