@@ -73,7 +73,7 @@ public class FindObjUtility
     /// </summary>
     /// <param name="t"></param>
     /// <returns></returns>
-    public static Object3DElement FindParent(Transform t, DataModel.Type type)
+    public static Object3DElement FindEquipmentParent(Transform t)
     {
         if (t == null)
         {
@@ -83,8 +83,12 @@ public class FindObjUtility
         while (t)
         {
             Object3DElement object3DElement = t.GetComponent<Object3DElement>();
-            if (object3DElement != null && object3DElement.type == type)
+            //if (object3DElement != null && object3DElement.type == type)
+            //{
+            //Debug.Log(object3DElement.type.ToString());
+            if (object3DElement != null && object3DElement.type.ToString().StartsWith(Constant.Equipment_Prefix))
             {
+
                 parentObjectElement = object3DElement;
                 break;
             }
@@ -102,7 +106,7 @@ public class FindObjUtility
             string[] names = child.name.ToLower().Split('_');
             string endStr = names[names.Length - 1].ToLower().Trim();
             Regex fjRegex = new Regex("fj\\d");
-            if(fjRegex.IsMatch(endStr))
+            if(fjRegex.IsMatch(endStr) && !child.name.Contains(Constant.Door))
             {
                 list.Add(child);
             }

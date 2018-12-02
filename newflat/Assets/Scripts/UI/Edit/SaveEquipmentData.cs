@@ -35,6 +35,10 @@ public static class SaveEquipmentData
                 continue;
             }
             Object3DElement object3DElement = item.GetComponent<Object3DElement>();
+            if(string.IsNullOrEmpty(object3DElement.equipmentData.modelId))
+            {
+                continue;
+            }
             bool isSame = Object3dUtility.IsCompareObjectProperty(object3DElement.equipmentData, object3DElement.preEquipmentData);
             if(!isSame)
             {
@@ -53,7 +57,7 @@ public static class SaveEquipmentData
 
         Dictionary<string, string> postData = new Dictionary<string, string>();
         string resultPostData = CollectionsConvert.ToJSON(result);
-        Debug.Log(resultPostData);
+       // Debug.Log(resultPostData);
         postData.Add("result", resultPostData);
         Equipment3dProxy.PostEquipmentSaveData((a) => {
             MessageBox.Show("信息提示","保存成功");
@@ -75,6 +79,42 @@ public static class SaveEquipmentData
         }
 
         return result;
+    }
+
+    public static void SaveDoor(EquipmentItem doorData)
+    {
+        Dictionary<string, object> result = new Dictionary<string, object>();
+
+        //新增的数据
+        List<EquipmentItem> AddData = new List<EquipmentItem>();
+
+        if (string.IsNullOrEmpty(doorData.id))
+        {
+            AddData.Add(doorData);
+        }
+        
+        result.Add("add", AddData);
+
+        //删除的数据
+
+     
+
+        result.Add("delete", "");
+
+        //修改变化的
+        List<EquipmentItem> modityData = new List<EquipmentItem>();
+        if(!string.IsNullOrEmpty(doorData.id))
+        {
+            modityData.Add(doorData);
+        }
+        result.Add("update", modityData);
+        Dictionary<string, string> postData = new Dictionary<string, string>();
+        string resultPostData = CollectionsConvert.ToJSON(result);
+        postData.Add("result", resultPostData);
+        Equipment3dProxy.PostEquipmentSaveData((a) => {
+            MessageBox.Show("信息提示", "保存成功");
+
+        }, postData);
     }
 
 }

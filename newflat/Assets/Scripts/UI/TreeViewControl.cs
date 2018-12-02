@@ -137,12 +137,12 @@ namespace Battlehub.UIControls
                     Main.instance.stateMachineManager.SwitchStatus<RoomState>(object3dItem.id);
                     break;
                 }
-                case (DataModel.Type.Equipment):
-                {
+                //case (DataModel.Type.):
+                //{
 
-                    Main.instance.stateMachineManager.LocateEquipment(object3dItem.id, object3dItem.parentsId);
-                    break;
-                }
+                //    Main.instance.stateMachineManager.LocateEquipment(object3dItem.id, object3dItem.parentsId);
+                //    break;
+                //}
 
             }
         }

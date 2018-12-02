@@ -27,7 +27,12 @@ namespace DataModel
         Builder,
         Floor,
         Room,
-        Equipment
+        RoomDoor,
+        De_Equipment,
+        De_Camera,
+        De_LouShui,
+        De_WenShidu,
+        De_Door
     }
 }
 

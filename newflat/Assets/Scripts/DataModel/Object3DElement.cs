@@ -30,7 +30,8 @@ public class Object3DElement : MonoBehaviour {
 
     private void Update()
     {
-        if(type == Type.Equipment &&  AppInfo.Platform == BRPlatform.Editor)
+      
+        if(type.ToString().StartsWith(Constant.Equipment_Prefix) &&  AppInfo.Platform == BRPlatform.Editor)
         {
             equipmentData.Update(transform.localPosition, transform.localScale, transform.localEulerAngles);
         }

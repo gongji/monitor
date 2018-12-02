@@ -20,5 +20,6 @@ public static class Constant  {
     public static string GuanDao = "guandao";
     public static string Door = "door";
     public static string DX = "dx";
+    public static string Equipment_Prefix = "De_";
         
 }

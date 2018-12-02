@@ -24,7 +24,7 @@ public sealed class EditorCreateEquipment
         Object3DElement equipment3DElement = Equipmentinstance.AddComponent<Object3DElement>();
         //增加，保存的时候使用
         Object3DElement.AddNewItem(equipment3DElement);
-        equipment3DElement.type = DataModel.Type.Equipment;
+        equipment3DElement.type = DataModel.Type.De_Equipment;
         Equipmentinstance.transform.position = hitpostion;
         Equipmentinstance.name = modelPrefeb.name;
         Equipmentinstance.transform.localRotation = Quaternion.identity;

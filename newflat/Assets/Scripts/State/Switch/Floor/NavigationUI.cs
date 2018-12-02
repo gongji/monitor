@@ -39,7 +39,7 @@ public  class NavigationUI:MonoBehaviour
         backButton.GetComponentInChildren<Text>().text = backName;
         foreach (Object3dItem object3dItem in DataSouce)
         {
-            if(object3dItem.type == Type.Equipment)
+            if(object3dItem.type.ToString().StartsWith(Constant.Equipment_Prefix))
             {
                 continue;
             }

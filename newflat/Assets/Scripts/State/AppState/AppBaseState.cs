@@ -50,7 +50,7 @@ public class AppBaseState
             {
                 Debug.Log("单击的设备对象：" + hit.transform.name);
                 hitTransform = hit.transform;
-                return FindObjUtility.FindParent(hit.transform, DataModel.Type.Equipment);
+                return FindObjUtility.FindEquipmentParent(hit.transform);
             }
 
         }
@@ -98,7 +98,8 @@ public class AppBaseState
         //悬停检测
         if (Physics.Raycast(ray, out hit, float.MaxValue, (1 << Constant.EquipmentLayer)))
         {
-            baseObject3DElement = FindObjUtility.FindParent(hit.transform, DataModel.Type.Equipment).GetComponent<Object3DElement>();
+            // Debug.Log(hit.transform);
+            baseObject3DElement = FindObjUtility.FindEquipmentParent(hit.transform);
            
             if (baseObject3DElement != null)
             {

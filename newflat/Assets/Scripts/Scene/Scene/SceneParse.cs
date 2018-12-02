@@ -69,7 +69,7 @@ public static class SceneParse  {
 
         }
         //房间
-        else if(fjRegex.IsMatch(endStr)  && gs.Count == 1)
+        else if(fjRegex.IsMatch(endStr)  && gs.Count == 1 && !sceneName.Contains(Constant.Door))
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Room;
@@ -79,6 +79,13 @@ public static class SceneParse  {
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Builder;
+        }
+        //门的场景
+        else if(fjRegex.IsMatch(endStr) && gs.Count == 1 && sceneName.Contains(Constant.Door))
+        {
+            object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement.type = Type.RoomDoor;
+            gs[0].AddComponent<DoorData>();
         }
         if(object3DElement!=null)
         {
@@ -104,7 +111,7 @@ public static class SceneParse  {
             {
                 SetBoxDisable(colliderGameObject);
             }
-    
+            //处理楼层下的房间
             List<Transform> roomts = FindObjUtility.FindRoom(item.transform);
             
             if(roomts != null && roomts.Count>0)
@@ -126,6 +133,16 @@ public static class SceneParse  {
                
 
             }
+
+            //处理门禁
+
+            bool isDoor = IsDoor(item.name);
+
+            if(isDoor)
+            {
+                AddDoorScripts(item.transform);
+            }
+
             SetLight(item.gameObject);
         }
     }
@@ -152,6 +169,45 @@ public static class SceneParse  {
         //}
 
     }
+
+    /// <summary>
+    /// 判断是否为门的场景
+    /// </summary>
+    /// <param name="ItemName"></param>
+    private static bool IsDoor(string itemName)
+    {
+        string[] names = itemName.ToLower().Split('_');
+        string endStr = names[names.Length - 1].ToLower().Trim();
+        Regex fjRegex = new Regex("fj\\d");
+        if (fjRegex.IsMatch(endStr)  && itemName.Contains(Constant.Door))
+        {
+           return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 添加门禁脚本
+    /// </summary>
+    /// <param name="doorRoot"></param>
+    private static void AddDoorScripts(Transform  doorRoot)
+    {
+       
+        foreach (Transform child in doorRoot)
+        {
+            if(child.name.Contains(Constant.Door))
+            {
+                Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), child.gameObject);
+                Object3DElement object3DElement = child.gameObject.AddComponent<Object3DElement>();
+                object3DElement.type = Type.De_Door;
+                object3DElement.equipmentData.number = object3DElement.transform.name;
+                object3DElement.equipmentData.sceneId = doorRoot.GetComponent<Object3DElement>().sceneId;
+            }
+        }
+    }
+
+    
+
 
 
 

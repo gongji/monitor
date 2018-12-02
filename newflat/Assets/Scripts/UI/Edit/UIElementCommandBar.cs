@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 using DataModel;
+using TMPro;
 
 /// <summary>
 /// 
@@ -75,6 +76,11 @@ public sealed class UIElementCommandBar : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 门禁是否显示保存，非门金显示编辑
+    /// </summary>
+  
+
     public void CopyClick(GameObject g)
     {
         Hide();
@@ -94,15 +100,25 @@ public sealed class UIElementCommandBar : MonoBehaviour
     //高级编辑器
     public void EditClick(GameObject g)
     {
-        Transform selectE = selectingObjectTransform.GetComponent<Object3DElement>().transform;
-        Hide();
-        OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.Edit;
-        if(gs == null)
+        if(selectingObjectTransform.GetComponent<Object3DElement>().type == Type.De_Door)
         {
-            gs =  TransformControlUtility.CreateItem("Edit/Gizmo", null).GetComponent<gizmoScript>();
-            gs.transform.localScale = Vector3.one * 0.1f;
+            SaveEquipmentData.SaveDoor(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData);
         }
-        gs.SetSelectObject(selectE);
+        else
+        {
+            Transform selectE = selectingObjectTransform.GetComponent<Object3DElement>().transform;
+          
+            OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.Edit;
+            if (gs == null)
+            {
+                gs = TransformControlUtility.CreateItem("Edit/Gizmo", null).GetComponent<gizmoScript>();
+                gs.transform.localScale = Vector3.one * 0.1f;
+            }
+            gs.SetSelectObject(selectE);
+        }
+
+        Hide();
+
     }
 
     public void DestroyGizmo()
@@ -268,8 +284,26 @@ public sealed class UIElementCommandBar : MonoBehaviour
         EffectionUtility.playSelectingEffect(selectingObjectTransform);
         Show();
         PropertySet.instance.UpdateData(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData);
+        if(selectingObjectTransform.GetComponent<Object3DElement>().type  == Type.De_Door)
+        {
+            SetEditName(true);
+        }
+        else
+        {
+            SetEditName(false);
+        }
+    }
 
-
+    public void SetEditName(bool isDoor)
+    {
+        if (isDoor)
+        {
+            edit.GetComponentInChildren<TextMeshProUGUI>().text = "保存";
+        }
+        else
+        {
+            edit.GetComponentInChildren<TextMeshProUGUI>().text = "编辑";
+        }
     }
 
     public void CancelSelect()
