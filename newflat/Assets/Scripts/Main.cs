@@ -58,6 +58,7 @@ public class Main : MonoBehaviour {
             }
             //StartCoroutine(WebsocjetService.Instance.StartWebSocket());
             Battlehub.UIControls.TreeViewControl.Instance.Init();
+            ModelData.InitModelData();
 
         });
     }

@@ -48,6 +48,17 @@ public sealed class EquipmentData {
 
         Equipment3dProxy.SearchEquipmentData((result) =>
         {
+            if(string.IsNullOrEmpty(result))
+            {
+                log.Debug("SearchEquipmentData is null");
+               // Debug.Log("SearchEquipmentData is null");
+                if (callBack != null)
+                {
+                    callBack.Invoke();
+                }
+
+                return;
+            }
             currentEquipmentData = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
 
             //获取模型列表

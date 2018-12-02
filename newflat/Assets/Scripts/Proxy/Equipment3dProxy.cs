@@ -62,5 +62,21 @@ public static class Equipment3dProxy
 
     }
 
+    public static void  GetAllModelList(System.Action<string> callBack)
+    {
+        string url = Config.parse("requestAddress") + "/getModelList";
+
+        HttpRequestSingle.Instance.StartCoroutine(
+
+          HttpRequest.GetRequest(url, callBack, (a) =>
+          {
+
+              log.Error("http reqeust error getModelList:url=" + url);
+
+              log.Error("http reqeust error getModelList:" + a.ToString());
+
+          }));
+    }
+
 
 }

@@ -39,12 +39,12 @@ namespace SystemCore.Task
             }
         }
 
-        private string name = string.Empty;
-		public ABModelDownloadTask(string id, string fullpath,string name) : base(id)
+        private string code = string.Empty;
+		public ABModelDownloadTask(string id, string fullpath,string code) : base(id)
         {
           
             this._npath = fullpath;
-            this.name = name;
+            this.code = code;
             _loadProgress = 0;
             _wwwProgress = 0;
         }
@@ -54,6 +54,7 @@ namespace SystemCore.Task
             if (OnStart != null) { OnStart(); }
 
 
+            Debug.Log("_npath="+ _npath);
             using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(_npath))
             {
                 yield return uwr.SendWebRequest();
@@ -67,7 +68,7 @@ namespace SystemCore.Task
                     
                     AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(uwr);
                     _loadProgress = 1;
-                    _data = bundle.LoadAsset<GameObject>(name);
+                    _data = bundle.LoadAsset<GameObject>(code);
                     if (OnFinish != null)
                     {
                         OnFinish();
