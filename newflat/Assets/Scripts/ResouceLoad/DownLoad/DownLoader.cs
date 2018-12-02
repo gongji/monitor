@@ -92,10 +92,10 @@ public class DownLoader:MonoSingleton<DownLoader> {
 
             GameObject.Destroy(loader);
             loader = null;
-            
+
             //更新模型字典
 
-            EquipmentData.UpdateModelDic(abTaskDic);
+            ModelData.UpdateModelDic(abTaskDic);
             taskQueue = null;
             if (callBack != null)
             {
@@ -115,7 +115,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
         //下载完成
         taskQueue.OnFinish = () =>
         {
-            EquipmentData.UpdateModelDic(mc.id, abDownloadTask);
+            ModelData.UpdateModelDic(mc.id, abDownloadTask);
             if(callBack!=null)
             {
                 callBack.Invoke();

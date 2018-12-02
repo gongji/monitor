@@ -28,8 +28,12 @@ public static class SaveEquipmentData
 
         //修改变化的
         List<EquipmentItem> modityData = new List<EquipmentItem>();
-        foreach (GameObject item in EquipmentData.allEquipmentDataDic.Values)
+        foreach (GameObject item in EquipmentData.GetAllEquipmentData.Values)
         {
+            if(!item)
+            {
+                continue;
+            }
             Object3DElement object3DElement = item.GetComponent<Object3DElement>();
             bool isSame = Object3dUtility.IsCompareObjectProperty(object3DElement.equipmentData, object3DElement.preEquipmentData);
             if(!isSame)
@@ -40,9 +44,16 @@ public static class SaveEquipmentData
 
         result.Add("update", modityData);
 
+        if(AddData.Count == 0 && string.IsNullOrEmpty(deleteStr.Trim()) && modityData.Count==0)
+        {
+            MessageBox.Show("信息提示", "无变化数据");
+            return;
+        }
 
         Dictionary<string, string> postData = new Dictionary<string, string>();
-        postData.Add("result", CollectionsConvert.ToJSON(result));
+        string resultPostData = CollectionsConvert.ToJSON(result);
+        Debug.Log(resultPostData);
+        postData.Add("result", resultPostData);
         Equipment3dProxy.PostEquipmentSaveData((a) => {
             MessageBox.Show("信息提示","保存成功");
 

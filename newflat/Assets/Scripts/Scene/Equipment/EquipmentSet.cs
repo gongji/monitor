@@ -30,8 +30,9 @@ public sealed class EquipmentSet  {
             return;
         }
         log.Debug("创建设备" + currentEquipmentData.Count);
-        Dictionary<string, GameObject> modelPrefebDic = EquipmentData.GetmodelPrefebDic;
-        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetEquipmentDic;
+        Dictionary<string, GameObject> modelPrefebDic = ModelData.GetmodelPrefebDic;
+        //所有的设备
+        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
 
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
         {
@@ -67,31 +68,10 @@ public sealed class EquipmentSet  {
         equipmentObject3DElement.equipmentData = equipmentItem;
   
         equipment.name = equipmentItem.name;
-       
-       
+        equipmentObject3DElement.SetEquipmentData(equipmentItem);
+
     }
 
-    /// <summary>
-    /// 切换的时候将设备隐藏，并且parent设置为null
-    /// </summary>
-    public static void HideCurrentEquipment()
-    {
-        List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
-        if(currentEquipmentData==null || currentEquipmentData.Count == 0)
-        {
-            return;
-        }
-        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetEquipmentDic;
-
-        foreach (EquipmentItem equipmentItem in currentEquipmentData)
-        {
-            if (!string.IsNullOrEmpty(equipmentItem.id) && equipmentDic.ContainsKey(equipmentItem.id))
-            {
-                equipmentDic[equipmentItem.id].SetActive(false);
-                equipmentDic[equipmentItem.id].transform.parent = null;
-            }
-        }
-    }
 
     /// <summary>
     /// 隐藏设备标签
@@ -103,7 +83,7 @@ public sealed class EquipmentSet  {
         {
             return;
         }
-        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetEquipmentDic;
+        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
 
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
         {
@@ -125,7 +105,7 @@ public sealed class EquipmentSet  {
     {
 
         List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
-        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetEquipmentDic;
+        Dictionary<string, GameObject> allEquipmentDic = EquipmentData.GetAllEquipmentData;
 
         IState istate = AppInfo.GetCurrentState;
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
@@ -134,7 +114,7 @@ public sealed class EquipmentSet  {
             {
                 continue;
             }
-            GameObject equipment = equipmentDic[equipmentItem.id];
+            GameObject equipment = allEquipmentDic[equipmentItem.id];
             //ShowOrHideEquipment(equipment,true);
             equipment.SetActive(true);
             BaseEquipmentControl bec = equipment.GetComponent<BaseEquipmentControl>();
@@ -146,7 +126,7 @@ public sealed class EquipmentSet  {
             //if (string.IsNullOrEmpty(equipmentItem.parentid))
             //{
             //查找父对象
-            Object3dItem parent = SceneData.FindObjUtilityect3dItemById(equipmentItem.parentsId);
+            Object3dItem parent = SceneData.FindObjUtilityect3dItemById(equipmentItem.sceneId);
 
             //楼层或者房间
             if (parent!=null &&(parent.type == Type.Floor || (parent.type == Type.Room && istate is RoomState)))

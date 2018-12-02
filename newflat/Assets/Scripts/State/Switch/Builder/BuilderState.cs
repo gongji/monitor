@@ -59,7 +59,7 @@ namespace State
         protected override void OnExitFront()
         {
             base.OnExitFront();
-            EquipmentSet.HideCurrentEquipment();
+           
         }
 
 

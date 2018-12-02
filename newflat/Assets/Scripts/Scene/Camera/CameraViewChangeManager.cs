@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 对2d和3d视角进行管理
 /// </summary>
-public class CameraViewManager : MonoBehaviour {
+public class CameraViewChangeManager : MonoBehaviour {
 
 	void Update () {
       

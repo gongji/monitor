@@ -35,7 +35,7 @@ namespace DataModel
 
         public float scaleZ = 0.0f;
 
-        public string parentsId = "";
+       // public string parentsId = "";
 
         public string modelId="";
 

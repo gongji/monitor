@@ -53,8 +53,7 @@ namespace SystemCore.Task
         {
             if (OnStart != null) { OnStart(); }
 
-
-            Debug.Log("_npath="+ _npath);
+           // Debug.Log("_npath="+ _npath);
             using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(_npath))
             {
                 yield return uwr.SendWebRequest();

@@ -21,7 +21,6 @@ public class EditToolBar : MonoBehaviour {
 
         TransformControlUtility.AddEventToBtn(save.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { Save(save.gameObject);});
         TransformControlUtility.AddEventToBtn(viewReset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ResetView(); });
-
         TransformControlUtility.AddEventToBtn(savelocate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveLocate(); });
 
     }
@@ -33,8 +32,6 @@ public class EditToolBar : MonoBehaviour {
     private void Save(GameObject g)
     {
         SaveEquipmentData.StartSave();
-
-
     }
 
     public void ResetView()
@@ -42,10 +39,9 @@ public class EditToolBar : MonoBehaviour {
         CameraInitSet.ResetCameraPostion();
     }
 
-    //
-
     private void SaveLocate()
     {
-        CameraViewEdit.SaveSceneCameraView();
+
+        CameraViewData.SaveSceneCameraView();
     }
 }

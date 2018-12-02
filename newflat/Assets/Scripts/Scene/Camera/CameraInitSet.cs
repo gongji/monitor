@@ -39,15 +39,10 @@ public static class CameraInitSet {
             return;
         }
 
-        string sql = "sceneId = "+ sceneid;
-
-        Dictionary<string, string> dic = new Dictionary<string, string>();
-        dic.Add("result", sql); ;
-
-
-        CameraViewProxy.GetCameraView(dic, (result) =>
+     
+        CameraViewData.GetCurrentSceneCameraView((result) =>
         {
-            CameraViewItem cameraView = Utils.CollectionsConvert.ToObject<CameraViewItem>(result);
+            CameraViewItem cameraView = result;
             if (cameraView != null)
             {
                 // Debug.Log("数据库读取");
@@ -62,13 +57,6 @@ public static class CameraInitSet {
             }
 
             CameraMove(cameraMoveTime, callBack);
-
-        }, (error) =>
-        {
-            CalculateCameraPostionRoation(box);
-            CameraMove(cameraMoveTime, callBack);
-
-
         });
 
     }

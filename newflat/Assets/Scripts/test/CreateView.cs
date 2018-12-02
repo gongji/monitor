@@ -11,16 +11,18 @@ public class CreateView : MonoBehaviour {
 	void Start () {
 
 
-        // CameraView cameraView = new CameraView();
-        //cameraView.equipId = "12";
-        //cameraView.x = 512.0f;
+        CameraViewItem cameraView = new CameraViewItem();
+        cameraView.sceneId = "-1";
+        cameraView.x = 512.0f;
 
-        //Dictionary<string, string> dic = new Dictionary<string, string>();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
 
-        //dic.Add("result", CollectionsConvert.ToJSON(cameraView));
-        //CameraViewProxy.SaveCameraview((rersult) => {
-        //    Debug.Log(rersult);
-        //}, dic);
+        dic.Add("result", CollectionsConvert.ToJSON(cameraView));
+        Debug.Log(CollectionsConvert.ToJSON(dic));
+        CameraViewProxy.SaveCameraview((rersult) =>
+        {
+           Debug.Log(rersult);
+        }, dic);
 
         //string sql = "equipId = 123";
 
@@ -39,9 +41,9 @@ public class CreateView : MonoBehaviour {
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 	    
 
         

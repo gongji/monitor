@@ -216,7 +216,7 @@ public class ShowModelList : MonoBehaviour {
         {
             GameObject.Destroy(prefebGameObject);
         }
-        if (EquipmentData.modelPrefebDic.ContainsKey(mc.id))
+        if (ModelData.modelPrefebDic.ContainsKey(mc.id))
         {
             Debug.Log("开始创建");
             CreatePrefeb(mc);
@@ -230,7 +230,7 @@ public class ShowModelList : MonoBehaviour {
 
     private void CreatePrefeb(ModelCategory mc)
     {
-        prefebGameObject = GameObject.Instantiate(EquipmentData.modelPrefebDic[mc.id]);
+        prefebGameObject = GameObject.Instantiate(ModelData.modelPrefebDic[mc.id]);
         prefebGameObject.name = mc.id+","+ mc.name;
         prefebGameObject.transform.localScale = Vector3.one * 0.1f;
     }

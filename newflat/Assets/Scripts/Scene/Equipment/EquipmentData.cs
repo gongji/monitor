@@ -11,22 +11,42 @@ using Utils;
 public sealed class EquipmentData {
 
     private static ILog log = LogManagers.GetLogger("EquipmentData");
-    /// <summary>
-    /// 模型id，和模型的字典
-    /// </summary>
-    public static Dictionary<string, GameObject> modelPrefebDic = new Dictionary<string, GameObject>();
 
-    public static Dictionary<string, GameObject> GetmodelPrefebDic
+
+    #region allEquipmentData
+    //保存所有的设备数据
+    private static Dictionary<string, GameObject> allEquipmentDataDic = new Dictionary<string, GameObject>();
+    public static Dictionary<string, GameObject> GetAllEquipmentData
     {
         get
         {
-            return modelPrefebDic;
+            return allEquipmentDataDic;
         }
     }
 
-    //保存所有的设备数据
-    public static Dictionary<string, GameObject> allEquipmentDataDic = new Dictionary<string, GameObject>();
 
+    public static  void RemoveDeleteEquipment(string id)
+    {
+        allEquipmentDataDic.Remove(id);
+    }
+
+    /// <summary>
+    /// 退出状态时候将所有对象设为null,并隐藏
+    /// </summary>
+    public static void SetAllEquipmentParentEmpty()
+    {
+        foreach(GameObject item in allEquipmentDataDic.Values)
+        {
+            if(item.activeSelf)
+            {
+                item.transform.SetParent(null);
+                item.gameObject.SetActive(false);
+            }
+            
+        }
+    }
+
+    #endregion allEquipmentData
     /// 当前场景对象的设备数据
 
     private static List<EquipmentItem> currentEquipmentData = null;
@@ -39,7 +59,7 @@ public sealed class EquipmentData {
         }
     }
   
-    private static List<EquipmentItem> equipmentItemList;
+   
     public static void SearchCurrentEquipmentData(System.Action callBack)
     {
         string sql = GetEquipmentSqlByParent();
@@ -95,11 +115,11 @@ public sealed class EquipmentData {
         }
         else if(curerState  is AreaState)
         {
-            sql =  "parentsId is null";
+            sql = "sceneId is null or sceneId = 0 ";
         }
         else if(curerState is RoomState)
         {
-            sql =  "parentsId is " + object3dItem.id;
+            sql = "sceneId = " + object3dItem.id;
         }
         else if(curerState is FloorState)
         {
@@ -131,7 +151,7 @@ public sealed class EquipmentData {
 
         string connectStr =  Utils.StrUtil.ConnetString(ids, ",");
 
-        return "parentsId in(" + connectStr + ")";
+        return "sceneId in(" + connectStr + ")";
 
     }
 
@@ -150,8 +170,9 @@ public sealed class EquipmentData {
         }).ToList();
 
         foreach (var a in list)
+            
         {
-            if(!string.IsNullOrEmpty(a.modelId) && !modelPrefebDic.ContainsKey(a.modelId))
+            if(!string.IsNullOrEmpty(a.modelId) && !ModelData.modelPrefebDic.ContainsKey(a.modelId))
             {
                 modelist.Add(a.modelId);
             }
@@ -160,50 +181,10 @@ public sealed class EquipmentData {
         return modelist.ToArray();
        
     }
-    /// <summary>
-    /// 下载完成后，更新model字典
-    /// </summary>
-    /// <param name="abTask"></param>
-    public static void  UpdateModelDic(Dictionary<string, ABModelDownloadTask> abTask)
-    {
-        if(abTask.Count==0)
-        {
-            return;
-        }
-        foreach(string key in abTask.Keys)
-        {
-            if(!modelPrefebDic.ContainsKey(key))
-            {
-                modelPrefebDic.Add(key, (GameObject)abTask[key].Data);
-            }
-        }
-        
-    }
-    /// <summary>
-    /// 更新字典
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="abTask"></param>
-    public static void UpdateModelDic(string key, ABModelDownloadTask abTask)
-    {
-        if (!modelPrefebDic.ContainsKey(key))
-        {
-            modelPrefebDic.Add(key, (GameObject)abTask.Data);
-        }
-    }
-    
-    
-    public static Dictionary<string, GameObject> GetEquipmentDic
-    {
-        get
-        {
-            return allEquipmentDataDic;
-        }
-    }
-
+   
+   
     public static GameObject FindGameObjectById(string id)
-    {
-
+    { 
         GameObject result = null;
         allEquipmentDataDic.TryGetValue(id, out result);
 

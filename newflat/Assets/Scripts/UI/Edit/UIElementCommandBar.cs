@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using DataModel;
 
 /// <summary>
 /// 
@@ -58,7 +59,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
         TransformControlUtility.AddEventToBtn(copy.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CopyClick(copy.gameObject); });
         TransformControlUtility.AddEventToBtn(mulkCopy.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { MulkCopyClick(mulkCopy.gameObject); });
         TransformControlUtility.AddEventToBtn(edit.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { EditClick(edit.gameObject); });
-        TransformControlUtility.AddEventToBtn(locate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { LocateClick(locate.gameObject); });
+        TransformControlUtility.AddEventToBtn(locate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveLocateClick(locate.gameObject); });
         TransformControlUtility.AddEventToBtn(bind.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BindClick(bind.gameObject); });
         TransformControlUtility.AddEventToBtn(delete.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { DeleteClick(delete.gameObject); });
         buttons.Add(moveXZButton);
@@ -89,8 +90,6 @@ public sealed class UIElementCommandBar : MonoBehaviour
        
     }
 
-
-
     //高级编辑器
     public void EditClick(GameObject g)
     {
@@ -99,8 +98,14 @@ public sealed class UIElementCommandBar : MonoBehaviour
     }
 
 
-    public void LocateClick(GameObject g)
+    public void SaveLocateClick(GameObject g)
     {
+        EquipmentItem equipmentItem = selectingObjectTransform.GetComponent<Object3DElement>().equipmentData;
+        if(equipmentItem!=null)
+        {
+            CameraViewData.SaveEquipmentCameraView(equipmentItem.id);
+        }
+      
         Hide();
     }
 
@@ -111,22 +116,26 @@ public sealed class UIElementCommandBar : MonoBehaviour
     //删除
     private void DeleteClick(GameObject g)
     {
-        Hide();
+        
         Object3DElement equipmentItem = selectingObjectTransform.GetComponent<Object3DElement>();
         if(selectingObjectTransform!=null)
         {
             //不为空的话，保存数据库
             if(!string.IsNullOrEmpty(equipmentItem.equipmentData.id))
             {
+                EquipmentData.RemoveDeleteEquipment(equipmentItem.equipmentData.id);
+
                 Object3DElement.AddDeleteItem(equipmentItem.equipmentData.id);
             }
             else
             {
+                //移除新建的列表
                 Object3DElement.DeleteNewItem(equipmentItem);
             }
             GameObject.Destroy(selectingObjectTransform.gameObject);
         }
-       
+        Hide();
+
     }
 
     public void Init()

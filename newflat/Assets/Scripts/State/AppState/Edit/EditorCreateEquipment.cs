@@ -58,7 +58,7 @@ public sealed class EditorCreateEquipment
         Debug.Log(parent);
         if (parent == null)
         {
-            object3DElement.equipmentData.parentsId = null;
+            object3DElement.equipmentData.sceneId = null;
         }
         else
         {

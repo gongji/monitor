@@ -108,6 +108,7 @@ namespace State
                 baseEquipmentControl.CancelEquipment();
             }
             EnableEventSystem(false);
+            EquipmentData.SetAllEquipmentParentEmpty();
         }
 
 

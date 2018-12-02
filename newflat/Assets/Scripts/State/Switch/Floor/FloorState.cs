@@ -51,11 +51,12 @@ namespace State
                 OnExit<RoomState>(nextState, nextid, () => {
 
                     OnFadeIn();
+                    OnExitFront();
                     if (callBack != null)
                     {
                         callBack.Invoke();
                     }
-                    EquipmentSet.HideCurrentEquipment();
+                   
                 }, true);
             }
             else 
@@ -65,8 +66,6 @@ namespace State
                     OnFadeIn();
                 }
                 OnExitFront();
-            
-                EquipmentSet.HideCurrentEquipment();
                 OnNoTransitionExit(nextState, nextid);
                 if (callBack != null)
                 {

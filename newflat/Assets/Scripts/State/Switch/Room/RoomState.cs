@@ -58,7 +58,7 @@ namespace State
                     {
                         callBack.Invoke();
                     }
-                    EquipmentSet.HideCurrentEquipment();
+                   
                 });
 
             }
@@ -70,7 +70,6 @@ namespace State
                 }
               
                 OnExitFront();
-                EquipmentSet.HideCurrentEquipment();
                 OnNoTransitionExit(nextState, nextid);
               
                 if (callBack != null)

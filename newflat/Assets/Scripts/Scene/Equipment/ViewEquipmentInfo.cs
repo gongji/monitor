@@ -44,9 +44,10 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
     /// <param name="id"></param>
     private void CreateEquipment(string EquipmentId)
     {
-        if (EquipmentData.GetEquipmentDic.ContainsKey(EquipmentId))
+       
+        if (EquipmentData.GetAllEquipmentData.ContainsKey(EquipmentId))
         {
-            currentEquipment = EquipmentData.GetEquipmentDic[EquipmentId];
+            currentEquipment = EquipmentData.GetAllEquipmentData[EquipmentId];
             currentCloneEquipment = GameObject.Instantiate(currentEquipment);
             Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipmentZoom"), currentCloneEquipment);
             currentCloneEquipment.transform.localScale = Vector3.one * 0.1f;

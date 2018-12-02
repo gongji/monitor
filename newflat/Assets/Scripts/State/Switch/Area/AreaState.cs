@@ -72,7 +72,7 @@ namespace State
         protected override void OnExitFront()
         {
             base.OnExitFront();
-            EquipmentSet.HideCurrentEquipment();
+           
         }
 
         protected override void OnTransitionExit(IState  nextState,string nextid,System.Action callBack)
