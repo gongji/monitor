@@ -72,7 +72,7 @@ public sealed class EditorCreateEquipment
 
         }
 
-        Equipmentinstance.transform.localScale = Vector3.one * 0.1f;
+        Equipmentinstance.transform.localScale = Vector3.one * 1f;
         if (parent != null)
         {
             GameObject parentbox = FindObjUtility.GetTransformChildByName(parent, Constant.ColliderName);

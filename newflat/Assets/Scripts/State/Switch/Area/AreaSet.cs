@@ -18,6 +18,8 @@ public class AreaSet:BaseSet
         SetCameraProccessEffection();
         InitCameraPostion(callBack);
         SetTips();
+        string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
+        CreateSubsystem.Create(sceneid);
 
     }
     /// <summary>

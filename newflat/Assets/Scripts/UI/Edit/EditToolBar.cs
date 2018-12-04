@@ -19,13 +19,14 @@ public class EditToolBar : MonoBehaviour {
         viewReset = transform.Find("ViewReset");
         savelocate = transform.Find("Savelocate");
        
-        
-
         TransformControlUtility.AddEventToBtn(save.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { Save(save.gameObject);});
         TransformControlUtility.AddEventToBtn(viewReset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ResetView(); });
         TransformControlUtility.AddEventToBtn(savelocate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveLocate(); });
-       
 
+        if (GameObject.Find("FPSController") != null)
+        {
+            GameObject.DestroyImmediate(GameObject.Find("FPSController"));
+        }
     }
 
     /// <summary>

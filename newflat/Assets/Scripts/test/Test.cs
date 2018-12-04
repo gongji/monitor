@@ -77,7 +77,12 @@ public class Test : MonoBehaviour {
 
         // }
 
-        CreateTreeData();
+        // CreateTreeData();
+
+        SubSystemProxy.GetSubSystemByScene((result) => {
+            Debug.Log("result=" + result);
+
+        }, "242");
 
 
 

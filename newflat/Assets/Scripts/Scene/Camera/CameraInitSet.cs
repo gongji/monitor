@@ -206,12 +206,15 @@ public static class CameraInitSet {
         string sql = "sceneId = -1 and (equipId is null or equipId = 0)";
         CameraViewData.CallProxyGetViewData(sql, (cameraView) => {
 
+            if(cameraView!=null)
+            {
+                Vector3 cameraPostion = new Vector3(cameraView.x, cameraView.y, cameraView.z);
+                Quaternion cameraRoation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
+                Camera.main.transform.position = cameraPostion;
+                Camera.main.transform.rotation = cameraRoation;
+                Camera.main.GetComponent<CameraObjectController>().SetCameraPostion();
+            }
             
-            Vector3 cameraPostion = new Vector3(cameraView.x, cameraView.y, cameraView.z);
-            Quaternion cameraRoation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
-            Camera.main.transform.position = cameraPostion;
-            Camera.main.transform.rotation = cameraRoation;
-            Camera.main.GetComponent<CameraObjectController>().SetCameraPostion();
 
 
         });

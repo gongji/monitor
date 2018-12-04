@@ -232,7 +232,7 @@ public class ShowModelList : MonoBehaviour {
     {
         prefebGameObject = GameObject.Instantiate(ModelData.modelPrefebDic[mc.id]);
         prefebGameObject.name = mc.id+","+ mc.name;
-        prefebGameObject.transform.localScale = Vector3.one * 0.1f;
+        prefebGameObject.transform.localScale = Vector3.one;
     }
 
 

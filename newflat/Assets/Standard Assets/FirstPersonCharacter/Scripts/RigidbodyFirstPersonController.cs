@@ -271,7 +271,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void OnDisable()
         {
          
-            Cursor.visible = true;
+           Cursor.visible = true;
         }
     }
 }

@@ -48,7 +48,7 @@ public static class CaluteCameraRangeHeight  {
             }
         }
 
-        Debug.Log("maxY="+ maxY * multiple);
+       // Debug.Log("maxY="+ maxY * multiple);
         return maxY*multiple;
 
 
