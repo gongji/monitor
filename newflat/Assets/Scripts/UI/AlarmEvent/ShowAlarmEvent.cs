@@ -186,7 +186,7 @@ public  class ShowAlarmEvent :MonoBehaviour
         this.item = item;
     }
 
-    public void SetConfirmEquipment(AlarmEventItem itemData,string repairPerson)
+    public void SetConfirmEquipment(AlarmEventItem itemData,string repairPerson,string eventContent)
     {
         if (item != null)
         {
@@ -209,8 +209,6 @@ public  class ShowAlarmEvent :MonoBehaviour
         string sendData = Utils.StrUtil.ConnetString(list, "|");
         Debug.Log("sendData="+ sendData);
         WebsocjetService.Instance.SendData(sendData);
-
-        
 
     }
 
@@ -287,6 +285,7 @@ public  class ShowAlarmEvent :MonoBehaviour
 
         public ListViewItemComparer()
         {
+
         }
 
         public ListViewItemComparer(int columnIndex)

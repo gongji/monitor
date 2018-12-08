@@ -8,7 +8,7 @@ using DG.Tweening;
 
 public  class AlarmEventConfirm: AlarmEventWindowBase
 {
-    public System.Action<AlarmEventItem,string> callBack;
+    public System.Action<AlarmEventItem,string,string> callBack;
     private void Start()
     {
 
@@ -34,10 +34,17 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
     {
         if(callBack!=null && aei!=null)
         {
-           
-            callBack.Invoke(aei, GetComponentInChildren<UserListUI>().SelectUserId);
+            string eventContent = GetEventContet();
+
+
+            callBack.Invoke(aei, GetComponentInChildren<UserListUI>().SelectUserId, eventContent);
             Hide();
         }
+    }
+
+    public string GetEventContet()
+    {
+        return "事件的内容";
     }
  
 }

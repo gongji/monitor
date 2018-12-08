@@ -31,8 +31,11 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         }
         ei.equipmentObject = gameObject;
     }
-    public virtual void Alarm(){
-        if(isAlarm)
+    private int state = 0;
+    public virtual void Alarm(int state=0){
+
+        this.state = state;
+        if (isAlarm)
         {
             return;
         }

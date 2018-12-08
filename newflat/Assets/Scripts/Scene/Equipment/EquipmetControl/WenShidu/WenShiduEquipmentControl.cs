@@ -11,9 +11,9 @@ public class WenShiduEquipmentControl : BaseEquipmentControl
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
 
     }
-    public override void Alarm()
+    public override void Alarm(int state)
     {
-        base.Alarm();
+        base.Alarm(state);
     }
 
     public override void CancleAlarm()

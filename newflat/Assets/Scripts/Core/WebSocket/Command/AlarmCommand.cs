@@ -29,7 +29,16 @@ public class AlarmCommand : ICommand
         Dictionary<string, GameObject>  dic = EquipmentData.GetAllEquipmentData;
         if(dic.ContainsKey(equipmentAlarm.id))
         {
-            dic[equipmentAlarm.id].GetComponent<BaseEquipmentControl>().Alarm();
+            //正常
+            if(equipmentAlarm.state == 4)
+            {
+                dic[equipmentAlarm.id].GetComponent<BaseEquipmentControl>().CancleAlarm();
+            }
+            else
+            {
+                dic[equipmentAlarm.id].GetComponent<BaseEquipmentControl>().Alarm();
+            }
+            
         }
         else
         {

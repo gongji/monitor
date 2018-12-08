@@ -11,14 +11,14 @@ public  class LouShuiControl : BaseEquipmentControl {
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
         
     }
-    public override void Alarm()
+    public override void Alarm(int state=0)
     {
-        base.Alarm();
+        base.Alarm(state);
     }
 
-    public void Alarm(int segments)
+    public void LouShuiAlarm(int segments,int state)
     {
-        Alarm();
+        Alarm(state);
         SetSegmentsAlarm(segments);
     }
 

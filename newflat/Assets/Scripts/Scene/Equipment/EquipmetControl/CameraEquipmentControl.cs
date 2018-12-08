@@ -27,9 +27,9 @@ public class CameraEquipmentControl : BaseEquipmentControl
         }
         
     }
-    public override void Alarm()
+    public override void Alarm(int state)
     {
-        base.Alarm();
+        base.Alarm(state);
     }
 
     public override void CancleAlarm()

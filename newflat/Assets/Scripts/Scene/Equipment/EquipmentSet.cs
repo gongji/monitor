@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 /// <summary>
 /// 设备创建，显示，隐藏
@@ -28,8 +29,10 @@ public sealed class EquipmentSet  {
        
     }
 
+    private static List<GameObject> gs = new List<GameObject>();
     private static void StartCreateEquipment()
     {
+        gs.Clear();
         List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
         if (currentEquipmentData == null || currentEquipmentData.Count == 0)
         {
@@ -67,11 +70,16 @@ public sealed class EquipmentSet  {
                 {
                     loushui.CreateLouShui(equipmentItem.loushuiPoints);
                 }
-
+            
+            }
+            if(equipment!=null)
+            {
+                gs.Add(equipment);
             }
         }
 
         SetCurrentEquipmentShow();
+        SetEquipmentAlarmInitState();
     }
 
     private static void SetEquipmentLayerAndScripts(GameObject equipment,EquipmentItem equipmentItem, Dictionary<string, GameObject> equipmentDic)
@@ -242,6 +250,46 @@ public sealed class EquipmentSet  {
             }
         }
         
+    }
+
+
+    /// <summary>
+    /// 设置设备的报警初始状态
+    /// </summary>
+    public static void SetEquipmentAlarmInitState()
+    {
+        if(gs.Count==0)
+        {
+
+            return;
+        }
+        List<string> ids =new List<string>();
+
+
+        foreach(GameObject child in gs)
+        {
+            string id = child.GetComponent<Object3DElement>().equipmentData.id;
+            if(!string.IsNullOrEmpty(id))
+            {
+                ids.Add(child.GetComponent<Object3DElement>().equipmentData.id);
+            }
+           
+        }
+        Dictionary<string, string> postData = new Dictionary<string, string>();
+        if(ids.Count>0)
+        {
+            string resultPostData = CollectionsConvert.ToJSON(ids);
+           // Debug.Log(resultPostData);
+            postData.Add("result", resultPostData);
+
+            EquipmentAlarmProxy.GetEquipmentAlarmStateList((rsult) => {
+                    
+                
+            }
+            , postData);
+        }
+
+        gs.Clear();
     }
    
 
