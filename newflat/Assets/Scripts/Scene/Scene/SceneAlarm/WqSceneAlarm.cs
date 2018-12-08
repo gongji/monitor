@@ -6,11 +6,8 @@ public class WqSceneAlarm : SceneAlarmBase
 {
     private void Start()
     {
-       
-
+      
         Init();
-
-
     }
 
     public override void Alarm()
