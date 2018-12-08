@@ -82,7 +82,7 @@ namespace State
         protected void InitSet()
         {
             baseSet.Enter(curentDataList, () => {
-                BrowserEquipmentCreate.CreateEquipment(()=> {
+                BrowserCreateEquipment.CreateEquipment(()=> {
                     EnableEventSystem(true);
                     if(AppInfo.Platform == BRPlatform.Browser)
                     {
@@ -107,7 +107,7 @@ namespace State
 
         protected virtual void OnExitFront()
         {
-            BrowserEquipmentCreate.HideCurrentEquipmentTips();
+            BrowserCreateEquipment.HideCurrentEquipmentTips();
             ViewEquipmentInfo.Instance.RemoveAllResouce();
             DisableCamera();
             if(baseEquipmentControl!=null)

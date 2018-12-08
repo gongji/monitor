@@ -10,9 +10,9 @@ using Utils;
 /// <summary>
 /// 设备创建，显示，隐藏，browser
 /// </summary>
-public sealed class BrowserEquipmentCreate
+public sealed class BrowserCreateEquipment
 {
-    private static ILog log = LogManagers.GetLogger("BrowserEquipmentSet");
+    private static ILog log = LogManagers.GetLogger("BrowserCreateEquipment");
     /// <summary>
     /// 创建当前场景的设备
     /// </summary>
@@ -20,30 +20,35 @@ public sealed class BrowserEquipmentCreate
     {
         //search database
         EquipmentData.SearchCurrentEquipmentDataDownModel(() => {
-            StartCreateEquipment();
-            if(createCallBack!=null)
+            List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
+            if (currentEquipmentData == null || currentEquipmentData.Count == 0)
             {
-                createCallBack.Invoke();
+                if (createCallBack != null)
+                {
+                    createCallBack.Invoke();
+                }
+
+                return;
             }
+            log.Debug("创建设备" + currentEquipmentData.Count);
+
+
+            StartCreateEquipment(currentEquipmentData, createCallBack);
+            
         });
        
     }
 
     private static List<GameObject> gs = new List<GameObject>();
-    private static void StartCreateEquipment()
+    private static float u_high = 0.04445f;
+    public static void StartCreateEquipment(List<EquipmentItem> crateEquipmentDatas,System.Action createCallBack)
     {
         gs.Clear();
-        List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
-        if (currentEquipmentData == null || currentEquipmentData.Count == 0)
-        {
-            return;
-        }
-        log.Debug("创建设备" + currentEquipmentData.Count);
         Dictionary<string, GameObject> modelPrefebDic = ModelData.GetmodelPrefebDic;
         //所有的设备
         Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
 
-        foreach (EquipmentItem equipmentItem in currentEquipmentData)
+        foreach (EquipmentItem equipmentItem in crateEquipmentDatas)
         {
             DataModel.Type type = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), equipmentItem.type);
 
@@ -55,34 +60,48 @@ public sealed class BrowserEquipmentCreate
                 equipment = GameObject.Instantiate(modelPrefebDic[equipmentItem.modelId]);
                 SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
 
+                if (type == DataModel.Type.De_ItEquipment && !string.IsNullOrEmpty(equipmentItem.parentsId))
+                {
+
+                    SetItEquipmentProperty(equipmentItem, equipment);
+                }
+                else
+                {
+                    SetCurrentEquipmentShow();
+                }
+         
             }
             //创建漏水
             else if(type == DataModel.Type.De_LouShui && !equipmentDic.ContainsKey(equipmentItem.id))
             {
-               // Debug.Log(equipmentItem.loushuiPoints);
-                //仅仅用于测试
-               // equipmentItem.loushuiPoints = "-1.67,0.596,-5.06418|-1.67,0.596,-3.19418|-1.67,0.596,-1.29418|1.02,0.596,-1.29418|1.02,0.596,1.47582";
                 equipment = new GameObject();
                 SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
 
                 LouShuiControl loushui =  equipment.GetComponent<LouShuiControl>();
-                if(loushui!=null)
+                equipment.name = equipmentItem.name;
+                if (loushui!=null)
                 {
                     loushui.CreateLouShui(equipmentItem.loushuiPoints);
                 }
-            
-            }
+                SetCurrentEquipmentShow();
+
+                //it equipment
+            } 
             if(equipment!=null)
             {
                 gs.Add(equipment);
             }
         }
 
-        SetCurrentEquipmentShow();
-
+      
         if(AppInfo.Platform == BRPlatform.Browser)
         {
             EquipmentServiceInit.Init(gs);
+        }
+
+        if(createCallBack!=null)
+        {
+            createCallBack.Invoke();
         }
        
     }
@@ -124,7 +143,7 @@ public sealed class BrowserEquipmentCreate
         
         if (type == DataModel.Type.De_Door)
         {
-
+            equipment.AddComponent<DoorEquipmentControl>();
         }
         //漏水绳
         else if (type == DataModel.Type.De_LouShui)
@@ -142,6 +161,13 @@ public sealed class BrowserEquipmentCreate
         else if(type == DataModel.Type.De_Camera)
         {
             equipment.AddComponent<CameraEquipmentControl>();
+        }
+        else if (type == DataModel.Type.De_JiGui)
+        {
+            equipment.AddComponent<JiGuiControl>();
+        }else if(type == DataModel.Type.De_ItEquipment)
+        {
+            equipment.AddComponent<ITEquipmentControl>();
         }
     }
     /// <summary>
@@ -256,6 +282,21 @@ public sealed class BrowserEquipmentCreate
             }
         }
         
+    }
+
+    private static void SetItEquipmentProperty(EquipmentItem equipmentItem,GameObject equipment)
+    {
+        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
+        Transform jiguiTransform = equipmentDic[equipmentItem.parentsId].transform;
+        equipment.transform.SetParent(jiguiTransform);
+        equipment.transform.localScale = Vector3.one;
+        equipment.transform.localRotation = Quaternion.identity;
+        float x = jiguiTransform.localPosition.x;
+        float z = jiguiTransform.localPosition.z;
+
+        float y = u_high * equipmentItem.childPosition-1;
+        equipment.transform.localPosition = new Vector3(x, y, z);
+        equipment.SetActive(true);
     }
 
 

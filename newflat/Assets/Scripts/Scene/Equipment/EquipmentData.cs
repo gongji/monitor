@@ -84,26 +84,32 @@ public sealed class EquipmentData {
            // Debug.Log(result);
             currentEquipmentData = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
 
-            //获取模型列表
-            string[] modelids =  GetModelList(currentEquipmentData);
-            if(modelids.Length>0)
-            {
-                DownLoader.Instance.StartModelDownLoad(modelids,()=> {
+            
+            DownLoadModel(currentEquipmentData, callBack);
+        }, dic,null);
+    }
 
-                   if(callBack!=null)
-                    {
-                        callBack.Invoke();
-                    }
-                });
-            }
-            else
-            {
+
+    public static  void DownLoadModel(List<EquipmentItem> currentEquipmentData,System.Action callBack)
+    {
+        string[] modelids = GetModelList(currentEquipmentData);
+        if (modelids.Length > 0)
+        {
+            DownLoader.Instance.StartModelDownLoad(modelids, () => {
+
                 if (callBack != null)
                 {
                     callBack.Invoke();
                 }
+            });
+        }
+        else
+        {
+            if (callBack != null)
+            {
+                callBack.Invoke();
             }
-        }, dic,null);
+        }
     }
     /// <summary>
     /// 通过父节点得到设备查询的sql语句 
