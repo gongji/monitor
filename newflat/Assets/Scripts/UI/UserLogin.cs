@@ -30,7 +30,7 @@ public class UserLogin : MonoBehaviour {
         //  Debug.Log("Submit");
         string _userName = userName.text.Trim();
         string _password = password.text.Trim();
-        UserProxy.UserLogin((result) => {
+        UserProxy.WebUserLogin((result) => {
             UserItem userItem = Utils.CollectionsConvert.ToObject<UserItem>(result);
             //成功
             if(userItem!=null)

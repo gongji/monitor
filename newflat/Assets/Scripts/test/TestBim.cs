@@ -6,8 +6,9 @@ public class TestBim : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        CreateData();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -82,6 +83,7 @@ public class TestBim : MonoBehaviour {
         dic.Add("type", type);
 
         string json = Utils.CollectionsConvert.ToJSON(dic);
+        Debug.Log(json);
         return json;
 
 

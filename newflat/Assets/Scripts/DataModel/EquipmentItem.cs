@@ -49,6 +49,8 @@ namespace DataModel
 
         public string guid = "";
 
+        public int childPosition = 0;
+
         public void UpdatePostion(float x,float y, float z)
         {
             this.x = x;
