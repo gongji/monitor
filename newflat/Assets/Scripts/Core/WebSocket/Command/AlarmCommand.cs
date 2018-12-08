@@ -24,21 +24,13 @@ public class AlarmCommand : ICommand
 
     public object ExecuteCommand(string data)
     {
-        
-        EquipmentAlarm equipmentAlarm = Utils.CollectionsConvert.ToObject<EquipmentAlarm>(data);
+
+        EquipmentAlarmItem equipmentAlarm = Utils.CollectionsConvert.ToObject<EquipmentAlarmItem>(data);
         Dictionary<string, GameObject>  dic = EquipmentData.GetAllEquipmentData;
         if(dic.ContainsKey(equipmentAlarm.id))
         {
             //正常
-            if(equipmentAlarm.state == 4)
-            {
-                dic[equipmentAlarm.id].GetComponent<BaseEquipmentControl>().CancleAlarm();
-            }
-            else
-            {
-                dic[equipmentAlarm.id].GetComponent<BaseEquipmentControl>().Alarm();
-            }
-            
+            StartDoAlarmEquipment(equipmentAlarm, dic[equipmentAlarm.id]);
         }
         else
         {
@@ -46,5 +38,32 @@ public class AlarmCommand : ICommand
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// //处理设备报警
+    /// </summary>
+    /// <param name="equipmentAlarm"></param>
+    /// <param name="equipmentObject"></param>
+    public static void  StartDoAlarmEquipment(EquipmentAlarmItem equipmentAlarm, GameObject equipmentObject)
+    {
+
+        Debug.Log("开始处理报警："+ equipmentAlarm.state + ":"+ equipmentAlarm.id);
+        if (equipmentAlarm.state == 4)
+        {
+            equipmentObject.GetComponent<BaseEquipmentControl>().CancleAlarm();
+        }
+        else
+        {
+            if(equipmentObject.GetComponent<Object3DElement>().type == DataModel.Type.De_LouShui)
+            {
+                equipmentObject.GetComponent<LouShuiControl>().LouShuiAlarm(equipmentAlarm.state, equipmentAlarm.segments);
+            }
+            else
+            {
+                equipmentObject.GetComponent<BaseEquipmentControl>().Alarm(equipmentAlarm.state);
+            }
+           
+        }
     }
 }

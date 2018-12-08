@@ -6,15 +6,11 @@ public class WqSceneAlarm : SceneAlarmBase
 {
     private void Start()
     {
-        if(GetComponent<Object3DElement>()!=null)
-        {
-            sceneId = GetComponent<Object3DElement>().sceneId;
-        }
-        else
-        {
-            sceneId = SceneData.GetIdByNumber(transform.name);
-        }
        
+
+        Init();
+
+
     }
 
     public override void Alarm()

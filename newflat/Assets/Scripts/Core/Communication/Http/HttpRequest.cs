@@ -48,8 +48,6 @@ public static class HttpRequest  {
 
     public static IEnumerator GetWWWRequest(string url, System.Action<string> sucessCallBack, System.Action<string> errorCallBack)
     {
-
-       
         WWW www = new WWW(url);
 
         yield return www;
@@ -110,10 +108,14 @@ public static class HttpRequest  {
     {
         WWWForm form = new WWWForm();
 
-        foreach(string key in dic.Keys)
+        if(dic!=null)
         {
-            form.AddField(key, dic[key]);
+            foreach (string key in dic.Keys)
+            {
+                form.AddField(key, dic[key]);
+            }
         }
+       
       
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();

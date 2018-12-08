@@ -79,10 +79,12 @@ public sealed class EquipmentSet  {
         }
 
         SetCurrentEquipmentShow();
+        //设备
         SetEquipmentAlarmInitState();
     }
 
-    private static void SetEquipmentLayerAndScripts(GameObject equipment,EquipmentItem equipmentItem, Dictionary<string, GameObject> equipmentDic)
+    private static void SetEquipmentLayerAndScripts(GameObject equipment,EquipmentItem equipmentItem, 
+        Dictionary<string, GameObject> equipmentDic)
     {
         Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), equipment);
         equipment.SetActive(false);
@@ -264,8 +266,6 @@ public sealed class EquipmentSet  {
             return;
         }
         List<string> ids =new List<string>();
-
-
         foreach(GameObject child in gs)
         {
             string id = child.GetComponent<Object3DElement>().equipmentData.id;
@@ -275,18 +275,31 @@ public sealed class EquipmentSet  {
             }
            
         }
-        Dictionary<string, string> postData = new Dictionary<string, string>();
+       
         if(ids.Count>0)
         {
-            string resultPostData = CollectionsConvert.ToJSON(ids);
-           // Debug.Log(resultPostData);
-            postData.Add("result", resultPostData);
+          
+            string resultPostData = FormatUtil.ConnetString(ids, ",");
 
-            EquipmentAlarmProxy.GetEquipmentAlarmStateList((rsult) => {
-                    
-                
+            Dictionary<string, GameObject> equipmentDic =  EquipmentData.GetAllEquipmentData;
+            EquipmentAlarmProxy.GetEquipmentAlarmStateList((result) =>
+            {
+                List<EquipmentAlarmItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAlarmItem>>(result);
+                if(list ==null || list.Count==0)
+                {
+
+                    Debug.Log("resultPostData="+ resultPostData);
+                    return;
+                }
+                foreach(EquipmentAlarmItem dataItem in list)
+                {
+                    if(equipmentDic.ContainsKey(dataItem.id))
+                    {
+                        AlarmCommand.StartDoAlarmEquipment(dataItem, equipmentDic[dataItem.id]);
+                    }
+                }
             }
-            , postData);
+            , resultPostData);
         }
 
         gs.Clear();

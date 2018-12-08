@@ -221,18 +221,19 @@ public static class SceneParse  {
 
     private static void AddWqAlarmObjectScripts(Regex flooRegex, Transform parent)
     {
-    
-        foreach (Transform child in parent)
-        {
-            string[] names = child.name.ToLower().Split('_');
-            string endStr = names[names.Length - 1].ToLower().Trim();
-            if(flooRegex.IsMatch(endStr))
-            {
-                child.gameObject.AddComponent<WqSceneAlarm>();
-            }
+
+        parent.gameObject.AddComponent<WqSceneAlarm>();
+        //foreach (Transform child in parent)
+        //{
+        //    string[] names = child.name.ToLower().Split('_');
+        //    string endStr = names[names.Length - 1].ToLower().Trim();
+        //    if(flooRegex.IsMatch(endStr))
+        //    {
+        //        child.gameObject.AddComponent<WqSceneAlarm>();
+        //    }
 
 
-        }
+        //}
     }
 
     

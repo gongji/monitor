@@ -49,6 +49,7 @@ namespace SystemCore.Task
         public override IEnumerator Excute()
         {
             if (OnStart != null) { OnStart(); }
+            Debug.Log("_npath="+ _npath);
             _www = new WWW(_npath);
             yield return _www;
             if (_www.isDone)

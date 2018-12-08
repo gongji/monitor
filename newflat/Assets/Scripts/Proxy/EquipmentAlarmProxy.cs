@@ -12,18 +12,19 @@ public class EquipmentAlarmProxy  {
     /// </summary>
     /// <param name="sucesscallBack"></param>
     /// <param name="postData">设备ids</param>
-    public static void GetEquipmentAlarmStateList(System.Action<string> sucesscallBack, Dictionary<string, string> postData)
+    public static void GetEquipmentAlarmStateList(System.Action<string> successcallBack, string postData)
     {
-        string url = Config.parse("requestAddress") + "/GetAlarmEquipmentList";
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getEquipmentAlarm?ids=" + postData;
 
+        Debug.Log("url="+ url);
         HttpRequestSingle.Instance.StartCoroutine(
 
-          HttpRequest.WWWPostRequest(url, postData, sucesscallBack, (a) =>
+          HttpRequest.WWWPostRequest(url, null, successcallBack, (a) =>
           {
 
-              log.Error("http reqeust error GetAlarmEquipmentList:url=" + url);
+              log.Error("http reqeust error getEquipmentAlarm:url=" + url);
 
-              log.Error("http reqeust error GetAlarmEquipmentList:" + a.ToString());
+              log.Error("http reqeust error getEquipmentAlarm:" + a.ToString());
 
           }));
 

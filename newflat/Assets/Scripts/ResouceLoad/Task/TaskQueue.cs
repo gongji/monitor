@@ -135,7 +135,7 @@ public class TaskQueue : ITaskQueue,IDisposable
             _curTaskIndex += 1;
             //递归
 
-            ResouceSingle.Instance.StartCoroutine(StartTaskQueue());
+            PublicMonoSingle.Instance.StartCoroutine(StartTaskQueue());
         }
         else
         {
@@ -146,7 +146,7 @@ public class TaskQueue : ITaskQueue,IDisposable
 
     public void StopTask()
     {
-        ResouceSingle.Instance.StopAllCoroutines();
+        PublicMonoSingle.Instance.StopAllCoroutines();
     }
 
     #region IDisposable Support

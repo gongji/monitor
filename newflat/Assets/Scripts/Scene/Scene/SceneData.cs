@@ -17,8 +17,9 @@ public static class SceneData {
 
     //scenid和游戏对象数据的字典
     public static Dictionary<string, Object3DElement> gameObjectDic = new Dictionary<string, Object3DElement>();
-   
 
+    //场景id和scene的关系
+    public static Dictionary<string, SceneAlarmBase> sceneAlarmDic = new Dictionary<string, SceneAlarmBase>();
     //当前的显示的3d对象
     public static List<Object3dItem> currentobject3dList = null;
     /// <summary>
@@ -29,7 +30,7 @@ public static class SceneData {
         Scene3dProxy.GetAll3dObjectData((result) =>
         {
 
-           // Debug.Log(result);
+           Debug.Log(result);
             object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
           
             // Debug.Log(object3dList.Count);

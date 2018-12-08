@@ -12,15 +12,22 @@ public class Test : MonoBehaviour {
     public Transform t1 = null;
 	 void Start () {
 
-     
+
+
+        string url = Application.streamingAssetsPath + "/R/alarmeffection";
+        Debug.Log(url);
+        ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+
+           GameObject g =   (GameObject)GameObject.Instantiate(result.LoadAsset<GameObject>("alarmeffection"));
+        });
             //Debug.Log( Utils.StrUtil.GetNewGuid());
-       // }
-       // Debug.Log("base start");
-        //EnergyConsumptionTestData.GetTestData();
-        //Debug.Log(Camera.allCameras);
-        //foreach(Camera c in Camera.allCameras)
-        //{
-        //    Debug.Log(c.name);
+            // }
+            // Debug.Log("base start");
+            //EnergyConsumptionTestData.GetTestData();
+            //Debug.Log(Camera.allCameras);
+            //foreach(Camera c in Camera.allCameras)
+            //{
+            //    Debug.Log(c.name);
 
         //}
 
@@ -89,7 +96,7 @@ public class Test : MonoBehaviour {
 
         //}, "242");
 
-        CreateTreeData();
+        //CreateTreeData();
 
 
     }
@@ -113,48 +120,48 @@ public class Test : MonoBehaviour {
 
     private void CreateTreeData()
     {
-        List<SubSystemItem> ss = new List<SubSystemItem>();
+    //    List<SubSystemItem> ss = new List<SubSystemItem>();
 
-        for (int i = 0;i<5;i++)
-        {
-            SubSystemItem ssi = new SubSystemItem();
-            ssi.name = "button1" + i;
-            ssi.id = "id1" + i;
-            ssi.type = "01";
+    //    for (int i = 0;i<5;i++)
+    //    {
+    //        SubSystemItem ssi = new SubSystemItem();
+    //        ssi.name = "button1" + i;
+    //        ssi.id = "id1" + i;
+    //        ssi.type = "01";
 
-            List<SubSystemItem> twoList = new List<SubSystemItem>();
-            for (int k= 0;k < 8;k++)
-            {
-                SubSystemItem ssi2 = new SubSystemItem();
-                ssi2.name = "button2" + i;
-                ssi2.id = "id" + i;
-                ssi2.type = "model";
-                twoList.Add(ssi2);
+    //        List<SubSystemItem> twoList = new List<SubSystemItem>();
+    //        for (int k= 0;k < 8;k++)
+    //        {
+    //            SubSystemItem ssi2 = new SubSystemItem();
+    //            ssi2.name = "button2" + i;
+    //            ssi2.id = "id" + i;
+    //            ssi2.type = "model";
+    //            twoList.Add(ssi2);
 
-                if(k%2==0)
-                {
-                    List<SubSystemItem> threeList = new List<SubSystemItem>();
+    //            if(k%2==0)
+    //            {
+    //                List<SubSystemItem> threeList = new List<SubSystemItem>();
 
-                    for(int j=0;j<3;j++)
-                    {
-                        SubSystemItem ssi3 = new SubSystemItem();
-                        ssi3.name = "button3" + i;
-                        ssi3.id = "id" + i;
-                        ssi3.type = "equipment";
-                        threeList.Add(ssi3);
-                    }
-                    ssi2.childs = threeList;
+    //                for(int j=0;j<3;j++)
+    //                {
+    //                    SubSystemItem ssi3 = new SubSystemItem();
+    //                    ssi3.name = "button3" + i;
+    //                    ssi3.id = "id" + i;
+    //                    ssi3.type = "equipment";
+    //                    threeList.Add(ssi3);
+    //                }
+    //                ssi2.childs = threeList;
 
-                }
+    //            }
 
 
-            }
-            ssi.childs = twoList;
-            ss.Add(ssi);
+    //        }
+    //        ssi.childs = twoList;
+    //        ss.Add(ssi);
 
-        }
+    //    }
 
-        GetComponent<TreeManager>().Init(ss);
+    //    GetComponent<TreeManager>().Init(ss);
     }
 
    

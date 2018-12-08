@@ -5,8 +5,8 @@ using UnityEngine;
 public class FloorSceneAlarm : SceneAlarmBase
 {
     private void Start()
-    {
-        sceneId = GetComponent<Object3DElement>().sceneId;
+    { 
+        Init();
     }
     public override void Alarm()
     {

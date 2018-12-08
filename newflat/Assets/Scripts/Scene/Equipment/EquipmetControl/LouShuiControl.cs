@@ -16,7 +16,7 @@ public  class LouShuiControl : BaseEquipmentControl {
         base.Alarm(state);
     }
 
-    public void LouShuiAlarm(int segments,int state)
+    public void LouShuiAlarm(int state, int segments)
     {
         Alarm(state);
         SetSegmentsAlarm(segments);

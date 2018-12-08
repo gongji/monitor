@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Common.Logging;
 using UnityEngine;
+using Utils;
 
 /// <summary>
 /// 获取场景的报警信息
@@ -9,18 +10,19 @@ using UnityEngine;
 public class SceneAlamProxy : MonoBehaviour {
 
     private static ILog log = LogManagers.GetLogger("SceneAlamProxy");
-    public static void GetSceneAlarmList(System.Action<string> sucesscallBack, Dictionary<string, string> postData)
+    public static void GetSceneAlarmStateList(System.Action<string> sucesscallBack, List<string> sceneids)
     {
-        string url = Config.parse("requestAddress") + "/GetSceneAlarmList";
-
+        string strConnect = FormatUtil.ConnetString(sceneids, ",");
+        
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/isSceneAlarm?ids=" + strConnect;
         HttpRequestSingle.Instance.StartCoroutine(
 
-          HttpRequest.WWWPostRequest(url, postData, sucesscallBack, (a) =>
+          HttpRequest.WWWPostRequest(url, null, sucesscallBack, (a) =>
           {
 
-              log.Error("http reqeust error GetSceneAlarmList:url=" + url);
+              log.Error("http reqeust error GetSceneAlarmStateList:url=" + url);
 
-              log.Error("http reqeust error GetSceneAlarmList:" + a.ToString());
+              log.Error("http reqeust error GetSceneAlarmStateList:" + a.ToString());
 
           }));
     }

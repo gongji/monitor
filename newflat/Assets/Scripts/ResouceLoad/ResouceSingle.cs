@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResouceSingle :MonoSingleton<ResouceSingle> {
+public class PublicMonoSingle :MonoSingleton<PublicMonoSingle> {
 
 	
 }
