@@ -655,11 +655,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000076293945
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 22450892, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchorMax.x
@@ -1565,7 +1565,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5400000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
       propertyPath: m_Constraints
-      value: 32
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
       propertyPath: m_ClearFlags
@@ -1573,7 +1573,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
       propertyPath: m_CullingMask.m_Bits
-      value: 1536
+      value: 1537
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
       propertyPath: near clip plane
@@ -1586,6 +1586,10 @@ Prefab:
     - target: {fileID: 5400000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
       propertyPath: m_UseGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
+      propertyPath: m_Drag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
