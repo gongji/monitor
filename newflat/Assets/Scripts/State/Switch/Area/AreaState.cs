@@ -51,10 +51,7 @@ namespace State
                 baseSet = new AreaSet();
             }
             InitSet();
-
-
         }
-
 
         #endregion
 
