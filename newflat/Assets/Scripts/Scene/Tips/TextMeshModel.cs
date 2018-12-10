@@ -21,12 +21,7 @@ public class TextMeshModel : MeshTextAbstract
     }
 
     
-    public Vector3 MinLoacalScale = Vector3.one;
-
-    public Vector3 MaxLocalScale = Vector3.one;
-
-
-    private GameObject fontModel = null;
+   
 
     /// <summary>
     /// 生成的模型
@@ -67,38 +62,7 @@ public class TextMeshModel : MeshTextAbstract
         
     }
 
-    private MeshRenderer[] meshRenders;
-    /// <summary>
-    /// 始终面向相机
-    /// </summary>
-    private void LookAtCamera()
-    {
-        if (fontModel != null && fontModel.GetComponentInChildren<MeshRenderer>().enabled)
-        {
-
-            // Object3dUtils.LookAtCamera(fontModel.gameObject,false,true,false, Camera.main);
-            Object3dUtility.LookAtCamera2(fontModel.gameObject, Camera.main);
-        }
-         
-    }
-
   
-    private void SetTextScale()
-    {
-        if (fontModel != null && fontModel.GetComponentInChildren<MeshRenderer>().enabled)
-        {
-
-            SetScale();
-        }
-    }
-
-    private void  SetScale()
-    {
-        float distance = Vector3.Distance(fontModel.transform.position, Camera.main.transform.position);
-        distance /= 1000.0f;
-        distance = Mathf.Clamp01(distance);
-        fontModel.transform.localScale =  Vector3.Lerp(MinLoacalScale, MaxLocalScale, distance);
-    }
 
     public Vector3 size = Vector3.one;
     /// <summary>
@@ -127,7 +91,7 @@ public class TextMeshModel : MeshTextAbstract
     /// <summary>
     /// 挂载脚本，设置文本的背景大小
     /// </summary>
-    private void AddScripts()
+    protected override void AddScripts()
     {
         if (fontModel != null)
         {
@@ -139,26 +103,7 @@ public class TextMeshModel : MeshTextAbstract
             }
             mte.id = id;
             mte.scaleEffetion = MinLoacalScale / 2.0f;
-            //mteBox = tips.gameObject.GetComponent<BoxCollider>();
-            //if (mteBox == null)
-            //{
-            //    mteBox = tips.gameObject.AddComponent<BoxCollider>();
-            //}
-
-
-            //
-            //SetScale();
-            // Object3dUtility.LookAtCamera2(fontModel.gameObject, Camera.main);
-          //  fontModel.GetComponentInChildren<MeshRenderer>().enabled = true;
            
-            //DOVirtual.DelayedCall(1.0f, () =>
-            //{
-            //    mteBox = tips.gameObject.GetComponent<BoxCollider>();
-            //    if (mteBox == null)
-            //    {
-            //        mteBox = tips.gameObject.AddComponent<BoxCollider>();
-            //    }
-            //});
 
         }
     }

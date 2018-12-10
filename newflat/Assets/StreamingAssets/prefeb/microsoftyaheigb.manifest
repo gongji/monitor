@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3735670606
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 62000804c8431eb873c0680972d11a26
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Font/MicrosoftYaHeiGB.bytes
+Dependencies: []

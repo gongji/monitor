@@ -36,7 +36,7 @@ public class ShowModelList : MonoBehaviour {
         Transform topItem = topCategory.Find("item");
        
         ///创建一级菜单
-       for (int i=0;i< list.Count;i++)
+       for (int i=0; list!=null && i < list.Count;i++)
         {
             GameObject clone = GameObject.Instantiate(topItem.gameObject);
             clone.transform.SetParent(topItem.parent);

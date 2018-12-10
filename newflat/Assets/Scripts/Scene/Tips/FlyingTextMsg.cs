@@ -14,9 +14,10 @@ public class FlyingTextMsg : MonoBehaviour {
 
     public void LoadFontAsset()
     {
-        string url = Application.streamingAssetsPath + "/Text/textfont";
+      
+        string url = Application.streamingAssetsPath + "/Text/microsoftyaheigb";
         ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
-            TextAsset fontAsset = result.LoadAsset("simhei") as TextAsset;
+            TextAsset fontAsset = result.LoadAsset("microsoftyaheigb") as TextAsset;
 
             FontData fd = new FontData();
             fd.fontName = TTFFontInfo.GetFontName(fontAsset.bytes);

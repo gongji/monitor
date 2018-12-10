@@ -26,11 +26,11 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
     {
         if (collider != null)
         {
-            TextMeshModel tmm = collider.GetComponent<TextMeshModel>();
+            FlyTextMeshModel tmm = collider.GetComponent<FlyTextMeshModel>();
             if (tmm == null)
             {
 
-                tmm = collider.AddComponent<TextMeshModel>();
+                tmm = collider.AddComponent<FlyTextMeshModel>();
             }
             tmm.id = object3dItem.id;
             BoxCollider bc = collider.GetComponent<BoxCollider>();
@@ -48,7 +48,7 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
            Transform tips =   tmm.Create(object3dItem.name, boudns.center + Vector3.up * boudns.size.y, parent);
             tipsList.Add(tips);
             bc.enabled = isActive;
-            //处理2d吧标签
+            //处理2d标签
             View2dTextManager.Instance.Create2dText(object3dItem, boudns);
 
 

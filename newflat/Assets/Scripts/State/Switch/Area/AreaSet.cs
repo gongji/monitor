@@ -85,7 +85,7 @@ public class AreaSet:BaseSet
                 {
 
                     GameObject collider = FindObjUtility.GetTransformChildByName(rootGameObjerct.transform, Constant.ColliderName);
-                    TipsMgr.Instance.CreateTips(collider, object3dItem, collider.transform,Vector3.one , Vector3.one * 2);
+                    TipsMgr.Instance.CreateTips(collider, object3dItem, collider.transform,Vector3.one * 3 , Vector3.one * 6);
                 }
             }
         }

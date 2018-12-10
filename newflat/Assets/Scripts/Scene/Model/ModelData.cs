@@ -6,6 +6,8 @@ using UnityEngine;
 public static class ModelData  {
 
 
+
+   
     /// <summary>
     /// 模型预制物id，和模型的字典
     /// </summary>
@@ -61,6 +63,11 @@ public static class ModelData  {
 
            // Debug.Log(result);
             List<ModelItem> modelList =  Utils.CollectionsConvert.ToObject<List<ModelItem>>(result);
+            if(modelList==null || modelList.Count==0)
+            {
+                Debug.Log("modelData is  null");
+                return;
+            }
             foreach(ModelItem modelItem in modelList)
             {
                 dicModelData.Add(modelItem.id, modelItem);
