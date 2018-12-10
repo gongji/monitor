@@ -15,7 +15,7 @@ public class BuilderSet: BaseSet
     private List<Object3dItem> currentfloorData;
 
     private List<Object3dItem> originalData;
-    private float yoffest = 0.6f;
+    private float yoffest = 6.0f;
 
     private GameObject navigationUI;
 
