@@ -279,20 +279,20 @@ public class CameraObjectController : MonoBehaviour
 
     public void SetSpeedFloorChange()
     {
-        m_speedScaleSlope = 0.04f;
-        m_MouseDragSpeed = 1000;
-    }
-
-    public void SetSpeedRoomChange()
-    {
         m_speedScaleSlope = 0.01f;
         m_MouseDragSpeed = 10;
     }
 
+    public void SetSpeedRoomChange()
+    {
+        m_speedScaleSlope = 0.002f;
+        m_MouseDragSpeed = 5;
+    }
+
     public void SetSpeedReset()
     {
-        m_speedScaleSlope = 0.05f;
-        m_MouseDragSpeed = 2000;
+        m_speedScaleSlope = 0.03f;
+        m_MouseDragSpeed = 50;
     }
     
   

@@ -29,6 +29,8 @@ public class BrowserToolBar : MonoBehaviour {
     private Transform firstFPSController;
     private Camera firstCamera;
 
+    protected Texture2D m_FirstPersonIcon = null;
+
     private void Awake()
     {
 
@@ -60,9 +62,7 @@ public class BrowserToolBar : MonoBehaviour {
             firstCamera = firstFPSController.GetComponentInChildren<Camera>(true);
             firstFPSController.gameObject.SetActive(false);
         }
-        
-        
-
+        m_FirstPersonIcon = Resources.Load("UI/frist_target") as Texture2D;
 
     }
 
@@ -210,10 +210,38 @@ public class BrowserToolBar : MonoBehaviour {
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Q) && isFlyCameraMode)
+        if (Input.GetKeyUp(KeyCode.Q) && isFlyCameraMode)
         {
             CameraModeSwitch();
         }
+
+        //进入人物模式
+        
+    }
+
+    private  void OnGUI()
+    {
+        if (isFlyCameraMode)
+        {
+            Cursor.visible = false;
+
+#if UNITY_EDITOR
+            int nSize = 32;
+#else
+           int nSize = Screen.width > 1920 ? (Screen.width * 32) / 1920 : 32;
+#endif
+
+
+            DrawCursor(new Vector3(Screen.width >> 1, (Screen.height + nSize) >> 1), m_FirstPersonIcon, nSize);
+        }
+        else
+        {
+            Cursor.visible = true;
+        }
+    }
+    private void DrawCursor(Vector3 mousePosition, Texture2D texture, int nIconSize)
+    {
+        GUI.DrawTexture(new Rect(mousePosition.x - (nIconSize >> 1), Screen.height - mousePosition.y - (nIconSize >> 1), nIconSize, nIconSize), texture);
     }
 
 
@@ -228,6 +256,6 @@ public class BrowserToolBar : MonoBehaviour {
     {
         return guanxianSelect3d;
     }
-    #endregion
+#endregion
 
 }

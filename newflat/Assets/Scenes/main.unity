@@ -655,11 +655,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000015258789
+      value: -0.0000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000061035156
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 22450892, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchorMax.x
@@ -978,7 +978,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1481498075}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 666774e39a469704bbe384a0beff8e4d, type: 3}
   m_Name: 
@@ -1013,8 +1013,8 @@ MonoBehaviour:
   m_MouseTolerance: 10
   m_speedScaleSlope: 0.005
   m_TestWindowsEdge: 1
-  m_MinRange: {x: -3.4028235e+38, y: -3.4028235e+38, z: -3.4028235e+38}
-  m_MaxRange: {x: 3.4028235e+38, y: 3.4028235e+38, z: 3.4028235e+38}
+  m_MinRange: {x: 0, y: 0, z: 0}
+  m_MaxRange: {x: 0, y: 0, z: 0}
   m_DefaultMultiple: 0.1
   isRotation: 1
   SpeedControlMask:
