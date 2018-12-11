@@ -655,7 +655,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000038146973
+      value: -0.000022888184
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -1017,6 +1017,7 @@ MonoBehaviour:
   m_MaxRange: {x: 0, y: 0, z: 0}
   m_DefaultMultiple: 0.1
   isRotation: 1
+  boxCollider: {fileID: 0}
   SpeedControlMask:
     serializedVersion: 2
     m_Bits: 4294967295

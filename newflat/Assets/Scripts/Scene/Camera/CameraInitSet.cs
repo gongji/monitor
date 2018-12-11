@@ -191,4 +191,25 @@ public static class CameraInitSet {
     {
         StartSet(_sceneid, _box, _cameraMoveTime, null);
     }
+
+    /// <summary>
+    /// 系统的初始化视角
+    /// </summary>
+    public static void SystemInitCamera()
+    {
+        string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
+        string   sql = "sceneId = " + sceneid + " and (equipId is null or equipId = 0)";
+        CameraViewData.CallProxyGetViewData(sql, (cameraView) => {
+
+            Vector3 cameraPostion = new Vector3(cameraView.x, cameraView.y, cameraView.z);
+            Quaternion cameraRoation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
+            Camera.main.transform.position = cameraPostion;
+            Camera.main.transform.rotation = cameraRoation;
+
+
+        });
+
+
+       
+    }
 }

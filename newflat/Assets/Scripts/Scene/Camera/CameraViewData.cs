@@ -124,18 +124,18 @@ public sealed class CameraViewData
         {
             sql = "sceneId = -1 and (equipId is null or equipId = 0)";
         }
-       
 
-        CallProxyGetData(sql, callBack);
+
+        CallProxyGetViewData(sql, callBack);
     }
 
     private static void GetCurrentEquipmentCameraView(System.Action<CameraViewItem> callBack,string equipmentId)
     {
         string sql = "equipId = " + equipmentId + " and (sceneId is null or sceneId = -1)";
-        CallProxyGetData(sql, callBack);
+        CallProxyGetViewData(sql, callBack);
     }
 
-    private static void CallProxyGetData(string sql, System.Action<CameraViewItem> callBack)
+    public static void CallProxyGetViewData(string sql, System.Action<CameraViewItem> callBack)
     {
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("result", sql); ;
