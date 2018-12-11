@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using DataModel;
 using System.Reflection;
+using System.Collections.Generic;
 
 public class Test : MonoBehaviour {
 
@@ -38,7 +39,7 @@ public class Test : MonoBehaviour {
         //FieldInfo[] fieldInfos1 = type1.GetFields();
 
         //System.Type type2 = item2.GetType();
-        
+
         //foreach (var f in fieldInfos1)
         //{
         //    //字段名称
@@ -64,18 +65,21 @@ public class Test : MonoBehaviour {
 
         //        Debug.Log(fieldName + ":" + isSame.ToString());
         //    }
-            
-          
 
-           
-            //Debug.Log ("fieldName------>" + fieldName);
-            //Debug.Log("fieldType------>" + fieldType);
-            //Debug.Log("fieldValue------>" + fieldValue);
 
-            //Debug.Log("-------------------------------------------------------------------");
 
-       // }
-       
+
+        //Debug.Log ("fieldName------>" + fieldName);
+        //Debug.Log("fieldType------>" + fieldType);
+        //Debug.Log("fieldValue------>" + fieldValue);
+
+        //Debug.Log("-------------------------------------------------------------------");
+
+        // }
+
+        CreateTreeData();
+
+
 
 
     }
@@ -90,6 +94,52 @@ public class Test : MonoBehaviour {
         //        gs.SetSelectObject(transform);
         //    }
         //}
+    }
+
+    private void CreateTreeData()
+    {
+        List<SubSystemItem> ss = new List<SubSystemItem>();
+
+        for (int i = 0;i<5;i++)
+        {
+            SubSystemItem ssi = new SubSystemItem();
+            ssi.name = "button1" + i;
+            ssi.id = "id1" + i;
+            ssi.type = "0";
+
+            List<SubSystemItem> twoList = new List<SubSystemItem>();
+            for (int k= 0;k < 8;k++)
+            {
+                SubSystemItem ssi2 = new SubSystemItem();
+                ssi2.name = "button2" + i;
+                ssi2.id = "id" + i;
+                ssi2.type = "0";
+                twoList.Add(ssi2);
+
+                if(k%2==0)
+                {
+                    List<SubSystemItem> threeList = new List<SubSystemItem>();
+
+                    for(int j=0;j<3;j++)
+                    {
+                        SubSystemItem ssi3 = new SubSystemItem();
+                        ssi3.name = "button3" + i;
+                        ssi3.id = "id" + i;
+                        ssi3.type = "0";
+                        threeList.Add(ssi3);
+                    }
+                    ssi2.childs = threeList;
+
+                }
+
+
+            }
+            ssi.childs = twoList;
+            ss.Add(ssi);
+
+        }
+
+        GetComponent<TreeManager>().Init(ss);
     }
 
    
