@@ -27,8 +27,18 @@ public class FlyingTextMsg : MonoBehaviour {
                 FlyingText.instance.m_fontData = new List<FontData>();
             }
             FlyingText.instance.m_fontData.Add(fd);
+            LoadMaterial();
             GetComponent<FlyingText>().Initialize();
 
+        });
+    }
+
+    public void LoadMaterial()
+    {
+        string url = Application.streamingAssetsPath + "/Text/Material/text";
+        ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+            Material m = result.LoadAsset("text") as Material;
+            GetComponent<FlyingText>().m_defaultMaterial = m;
         });
     }
 }

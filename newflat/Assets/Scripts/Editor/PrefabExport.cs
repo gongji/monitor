@@ -7,7 +7,7 @@ public class PrefabExport {
     /// <summary>
     /// prefeb 预制物导出
     /// </summary>
-    [MenuItem("Tools/多个资源打包")]
+    [MenuItem("Tools/对象打包")]
     public static void ExportResource()
     {
         AssetBundleBuild[] builds = new AssetBundleBuild[1];
@@ -20,14 +20,14 @@ public class PrefabExport {
         }
         builds[0].assetNames = TestAsset;
         builds[0].assetBundleName = selects[0].name;
-        BuildPipeline.BuildAssetBundles(Application.dataPath + "/StreamingAssets/prefeb", builds, BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.WebGL);
+        BuildPipeline.BuildAssetBundles(Application.dataPath + "/StreamingAssets/Test", builds, BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.WebGL);
         AssetDatabase.Refresh();
     }
 
     /// <summary>
     /// prefeb 预制物导出
     /// </summary>
-    [MenuItem("Tools/设备打包")]
+    [MenuItem("Tools/旧的设备打包方式")]
     public static void ExportEquipment()
     {
         string path = EditorUtility.SaveFolderPanel("Save model", "assetbundles", "");

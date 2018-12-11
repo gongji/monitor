@@ -24,46 +24,46 @@ public class Test : MonoBehaviour {
         //Debug.Log(Mathf.Approximately(f1, f2));
 
 
-        EquipmentItem item1 = new EquipmentItem();
-        item1.name = "1223";
-        item1.x = 0.99999999999f;
-        item1.y = 7.111f;
+        //EquipmentItem item1 = new EquipmentItem();
+        //item1.name = "1223";
+        //item1.x = 0.99999999999f;
+        //item1.y = 7.111f;
 
-        EquipmentItem item2 = new EquipmentItem();
-        item2.name = "456";
-        item2.x = 1.000000000f;
-        item2.y = 7.112f;
+        //EquipmentItem item2 = new EquipmentItem();
+        //item2.name = "456";
+        //item2.x = 1.000000000f;
+        //item2.y = 7.112f;
 
-        System.Type type1 = item1.GetType();
-        FieldInfo[] fieldInfos1 = type1.GetFields();
+        //System.Type type1 = item1.GetType();
+        //FieldInfo[] fieldInfos1 = type1.GetFields();
 
-        System.Type type2 = item2.GetType();
+        //System.Type type2 = item2.GetType();
         
-        foreach (var f in fieldInfos1)
-        {
-            //字段名称
-            string fieldName = f.Name;
+        //foreach (var f in fieldInfos1)
+        //{
+        //    //字段名称
+        //    string fieldName = f.Name;
 
-            FieldInfo fieldInfo2 = type2.GetField(fieldName);
-            //字段类型
-            //string fieldType = f.FieldType.ToString() ;
+        //    FieldInfo fieldInfo2 = type2.GetField(fieldName);
+        //    //字段类型
+        //    //string fieldType = f.FieldType.ToString() ;
 
-            object fieldValue1 = f.GetValue(item1);
+        //    object fieldValue1 = f.GetValue(item1);
 
-            object fieldValue2 = fieldInfo2.GetValue(item2);
+        //    object fieldValue2 = fieldInfo2.GetValue(item2);
 
-            bool isSame = true;
-            if (f.FieldType == typeof(System.Single))
-            {
-               isSame =  Mathf.Approximately((float)fieldValue1, (float)fieldValue2);
-                Debug.Log("single:"+fieldName +":"+ isSame.ToString());
-            }
-            else
-            {
-                isSame = fieldValue1.Equals(fieldValue2);
+        //    bool isSame = true;
+        //    if (f.FieldType == typeof(System.Single))
+        //    {
+        //       isSame =  Mathf.Approximately((float)fieldValue1, (float)fieldValue2);
+        //        Debug.Log("single:"+fieldName +":"+ isSame.ToString());
+        //    }
+        //    else
+        //    {
+        //        isSame = fieldValue1.Equals(fieldValue2);
 
-                Debug.Log(fieldName + ":" + isSame.ToString());
-            }
+        //        Debug.Log(fieldName + ":" + isSame.ToString());
+        //    }
             
           
 
@@ -74,7 +74,7 @@ public class Test : MonoBehaviour {
 
             //Debug.Log("-------------------------------------------------------------------");
 
-        }
+       // }
        
 
 
@@ -82,15 +82,17 @@ public class Test : MonoBehaviour {
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            gizmoScript gs = GameObject.FindObjectOfType<gizmoScript>();
-            if(gs!=null)
-            {
-                gs.SetSelectObject(transform);
-            }
-        }
+        //if(Input.GetKeyDown(KeyCode.A))
+        //{
+        //    gizmoScript gs = GameObject.FindObjectOfType<gizmoScript>();
+        //    if(gs!=null)
+        //    {
+        //        gs.SetSelectObject(transform);
+        //    }
+        //}
     }
+
+   
 
 
 }
