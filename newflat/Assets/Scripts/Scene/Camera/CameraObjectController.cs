@@ -8,6 +8,7 @@ using System.Threading;
 using UnityEngine.EventSystems;
 
 
+[RequireComponent(typeof(Camera))]
 public class CameraObjectController : MonoBehaviour
 {
     [Serializable]
@@ -132,7 +133,7 @@ public class CameraObjectController : MonoBehaviour
     private float m_ScaleSpeed = 5.0f;
 
     [SerializeField]
-    private float m_speedScaleSlope = 0.06f;
+    protected float m_speedScaleSlope = 0.005f;
 
     //是否检测窗口边缘
     [SerializeField]
@@ -167,21 +168,7 @@ public class CameraObjectController : MonoBehaviour
 
     private float forwardVelocity = 0;
 
-    /// <summary>上一帧的姿态</summary>
-    private Quaternion lastRotation;
-
-    /// <summary>上一帧的距离</summary>
-    private float lastDistance;
-
-    /// <summary>上一帧的tag位置</summary>
-    private Vector3 lastTagPos;
-
-    /// <summary>上一帧x角度</summary>
-    private float xlastDeg = 0.0f;
-
-    /// <summary>上一帧y角度</summary>
-    //private float ylastDeg = 0.0f;
-
+   
     /// <summary>保存target的原始位置，用于复位</summary>
     private Vector3 oldtargetPos;
 
@@ -200,7 +187,7 @@ public class CameraObjectController : MonoBehaviour
     protected System.Action m_HandleMouse;
     protected System.Action m_HandleKeyboard;
 
-    public bool isMoved { get; private set; }
+   // public bool isMoved { get; private set; }
 
 
     protected bool m_IsLocating = false;
@@ -246,47 +233,7 @@ public class CameraObjectController : MonoBehaviour
        // SetCharaterScale();
     }
 
-
-
-    public void SetSpeedScale(float scale)
-    {
-        m_MoveSpeed = m_MoveSpeed * scale;
-        m_MouseDragSpeed = m_MouseDragSpeed * scale;
-        m_RotationSpeed = m_RotationSpeed * scale;
-        m_speedScaleSlope = m_speedScaleSlope * scale;
-    }
-
-    public void SetSpeedFloorChange()
-    {
-        m_speedScaleSlope = 0.01f;
-        m_MouseDragSpeed = 10;
-    }
-
-    public void SetSpeedRoomChange()
-    {
-        m_speedScaleSlope = 0.002f;
-        m_MouseDragSpeed = 5;
-    }
-
-    public void SetSpeedReset()
-    {
-        m_speedScaleSlope = 0.03f;
-        m_MouseDragSpeed = 50;
-    }
-
-
-    public void SetEnable(bool isEnable)
-    {
-        if (isEnable)
-        {
-            Enable();
-        }
-        else
-        {
-            Disable();
-        }
-    }
-
+  
     /// <summary>
     /// 设定控制器的缩放
     /// </summary>
@@ -322,136 +269,50 @@ public class CameraObjectController : MonoBehaviour
         //}
     }
 
-    //public void SetSpeedScale(float scale)
-    //{
-    //    m_MoveSpeed = m_MoveSpeed * scale;
-    //    m_MouseDragSpeed = m_MouseDragSpeed * scale;
-    //    m_RotationSpeed = m_RotationSpeed * scale;
-    //    m_speedScaleSlope = m_speedScaleSlope * scale;
-    //}
+    public void SetSpeedScale(float scale)
+    {
+        m_MoveSpeed = m_MoveSpeed * scale;
+        m_MouseDragSpeed = m_MouseDragSpeed * scale;
+        m_RotationSpeed = m_RotationSpeed * scale;
+        m_speedScaleSlope = m_speedScaleSlope * scale;
+    }
 
+    public void SetSpeedFloorChange()
+    {
+        m_speedScaleSlope = 0.01f;
+        m_MouseDragSpeed = 10;
+    }
+
+    public void SetSpeedRoomChange()
+    {
+        m_speedScaleSlope = 0.002f;
+        m_MouseDragSpeed = 5;
+    }
+
+    public void SetSpeedReset()
+    {
+        m_speedScaleSlope = 0.03f;
+        m_MouseDragSpeed = 50;
+    }
+    
   
-   
-    /// <summary>
-    /// 定位功能
-    /// </summary>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <param name="forward"></param>
-    /// <param name="seconds"></param>
-    /// <param name="isBlur"></param>
-    public void LocateFunc(Vector3 from, Vector3 to, float seconds, bool isBlur)
-    {
-        //if (m_IsLocating) return;
-        StartCoroutine(locateC(from, to, seconds, isBlur, null));
-    }
-
-    public void RotateFunc(Vector3 from, Vector3 to, float sectonds, Action callBack)
-    {
-        var ob = new GameObject("cheshi");
-        ob.transform.forward = (to - from).normalized;
-
-        var f = currentCamera.transform.rotation;
-        var t1 = ob.transform.rotation;
-      
-        //DOVirtual.Float(0, 100, sectonds, (t) =>
-        //    {
-        //        var temp = Quaternion.Lerp(f, t1, t / 100f);
-        //        currentCamera.transform.rotation = temp;
-        //        SetCamerRotation();
-        //    }).OnComplete(() =>
-        //    {
-        //        if (callBack != null)
-        //            callBack.Invoke();
-
-			
-        //    });
-        //Destroy(ob);
-    }
-
-    public void locateCallback(Vector3 from, Vector3 to, Vector3 forward, float seconds, bool isBlur, Action callBack)
-    {
-        //if (m_IsLocating) return;
-        StartCoroutine(locateC(from, to, seconds, isBlur, callBack));
-    }
-
-    private IEnumerator locateC(Vector3 from, Vector3 to, float seconds, bool isBlur, Action callBack)
-    {
-        
-        transform.position = from;
-      
-        float passedTime = 0;
-        while ((passedTime += Time.deltaTime) < seconds)
-        {
-            m_vCameraPosition = Vector3.Lerp(from, to, passedTime / seconds);
-            this.TestPositionRange();
-            this.transform.position = m_vCameraPosition;
-            yield return 0;
-        }
-
-        m_vCameraPosition = to;
-        this.TestPositionRange();
-        this.transform.position = m_vCameraPosition;
  
-        if (callBack != null)
-            callBack();
-    }
-
-    public void MoveDestination(Vector3 from, Vector3 to, Vector3 lookAt, float seconds, bool isBlur, System.Action<GameObject> callback)
-    {
-        if (m_IsLocating)
-        {
-            if (callback != null)
-                callback(null);
-        }
-        else
-            StartCoroutine(StartupMoveDestination(from, to, lookAt, seconds, isBlur, callback));
-    }
 
     public void SetCamerRotation()
     {
         m_rCameraRotation = this.transform.rotation;
     }
 
-    private IEnumerator StartupMoveDestination(Vector3 from, Vector3 to, Vector3 lookAt, float seconds, bool isBlur, System.Action<GameObject> callback)
+    public void SetCameraPostion()
     {
-        m_IsLocating = true;
-        this.transform.position = from;
-        //if (isBlur)
-        //    motionBlur.enabled = true;
-        float passedTime = 0;     
-        while ((passedTime += Time.deltaTime) < seconds)
-        {
-            //this.transform.LookAt(lookAt);
-            Quaternion target = Quaternion.LookRotation(lookAt - this.transform.position);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, target, 30 * Time.deltaTime);
-            m_rCameraRotation = this.transform.rotation;
-
-            m_vCameraPosition = Vector3.Lerp(from, to, passedTime / seconds);
-            this.TestPositionRange();
-            this.transform.position = m_vCameraPosition;
-
-            yield return 0;
-        }
-
-        m_vCameraPosition = to;
-        this.TestPositionRange();
-        this.transform.position = m_vCameraPosition;
-
-        this.transform.LookAt(lookAt);
-        m_rCameraRotation = this.transform.rotation;
-
-        //if (isBlur)
-        //    motionBlur.enabled = false;
-        m_IsLocating = false;
-
-        if (callback != null)
-            callback(null);
+        m_vCameraPosition = this.transform.position;
     }
+
+  
 
     void OnEnable()
     {
-        this.ResetData();
+       this.ResetData();
     }
 
     private bool isHoverUI = false;
@@ -490,18 +351,23 @@ public class CameraObjectController : MonoBehaviour
         //Move();
     }
 
-    void OnTriggerEnter(Collider collider)
-    {
-    }
-
-    void OnTriggerExit(Collider collider)
-    {
-        //SceneController.onCameraTriggerExit(collider);
-    }
+  
 
     public void Enable()
     {
         m_nFlags = 0;
+    }
+
+    public void SetEnable(bool isEnable)
+    {
+        if(isEnable)
+        {
+            Enable();
+        }
+        else
+        {
+            Disable();
+        }
     }
 
     public void Disable()
@@ -512,6 +378,7 @@ public class CameraObjectController : MonoBehaviour
 
     protected void HandleInput()
     {
+        
         if (Input.GetKeyDown(KeyCode.W) )
         {
            // Debug.Log("w");
@@ -639,31 +506,31 @@ public class CameraObjectController : MonoBehaviour
 
         if ((m_nFlags & MOVEMENT) != 0)
         {
-            this.isMoved = true;
-           // Debug.Log("MOVEMENT");
-            move(m_vCameraPosition.x, m_vCameraPosition.y, m_vCameraPosition.z);
+           /// this.isMoved = true;
+          // Debug.Log("MOVEMENT");
+           // move(m_vCameraPosition.x, m_vCameraPosition.y, m_vCameraPosition.z);
             //SynchronizeMessager.send3rdViewCameraMove(m_vCameraPosition.x, m_vCameraPosition.y, m_vCameraPosition.z);
         }
 
         if ((m_nFlags & ROTATION) != 0)
         {
             //this.transform.rotation = m_rCameraRotation;
-
-           // rotate(m_rCameraRotation.x, m_rCameraRotation.y, m_rCameraRotation.z, m_rCameraRotation.w);
+          //  Debug.Log("ROTATION");
+          //  rotate(m_rCameraRotation.x, m_rCameraRotation.y, m_rCameraRotation.z, m_rCameraRotation.w);
             //SynchronizeMessager.send3rdViewCameraRotate(m_rCameraRotation.x, m_rCameraRotation.y, m_rCameraRotation.z, m_rCameraRotation.w);
         }
 
         m_nFlags &= ~(MOVEMENT | ROTATION);
     }
-
+    //是否旋转
+    public bool isRotation = true;
     /// <summary>
     /// 拖动鼠标
     /// </summary>
 
-    //是否旋转
-    public bool isRotation = true;
     protected void HandleNormalMouse()
     {
+        //鼠标右键
         if ((m_nFlags & MOUSE_RIGHT_DOWN) != 0 && isRotation)
         {
             float dx = Input.GetAxis("Mouse X"), dy = Input.GetAxis("Mouse Y");
@@ -678,7 +545,7 @@ public class CameraObjectController : MonoBehaviour
                 m_vMouseOperation.w = 0.0f;//dy;
             }
 
-
+            
             //Vector3 vEulerAngles = m_rCameraRotation.eulerAngles;
             Vector3 vEulerAngles = transform.eulerAngles;
             //防止万向锁
@@ -696,6 +563,7 @@ public class CameraObjectController : MonoBehaviour
             transform.rotation = Quaternion.Euler(vEulerAngles);
         }
 
+        //鼠标左键
         if ((m_nFlags & MOUSE_LEFT_DOWN) != 0)
         {
             float dx = Input.GetAxis("Mouse X"), dy = Input.GetAxis("Mouse Y");
@@ -715,12 +583,23 @@ public class CameraObjectController : MonoBehaviour
             m_nFlags |= MOVEMENT;
         }
 
-        if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0)
+        //滚轴
+        if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.LeftControl))
         {
-            Vector3 vForward = new Vector3(0.0f, 0.0f, Input.GetAxis("Mouse ScrollWheel"));
-            vForward.Normalize();
-            this.Move(this.CalculateWalkSpeed() * vForward);
-            m_nFlags |= MOVEMENT;
+            float ScrollWheelValue = Input.GetAxis("Mouse ScrollWheel");
+            Vector3 vForward = new Vector3(0.0f, 0.0f, ScrollWheelValue);
+            if(GetComponent<Camera>().orthographic)
+            {
+                GetComponent<Camera>().orthographicSize += -1* ScrollWheelValue;
+            }
+            else
+            {
+                vForward.Normalize();
+                this.Move(this.CalculateWalkSpeed() * vForward);
+                m_nFlags |= MOVEMENT;
+            }
+           // Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+           
         }
 
         if ((m_nFlags & (MOVEMENT | ROTATION)) == 0 && m_TestWindowsEdge)
@@ -777,7 +656,7 @@ public class CameraObjectController : MonoBehaviour
         //俯视图下滚轴滚动
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            float sensitivity = 5;
+          //  float sensitivity = 5;
             //if (SceneController.currentMode == SceneController.layerMode)
             //{
             //    sensitivity = sensitivity * Constant.GlobalUnit * 0.5f;
@@ -835,42 +714,18 @@ public class CameraObjectController : MonoBehaviour
                 m_nFlags |= ROTATION;
             }
             vEulerAngles.x += m_RotationSpeed * dy;
-            if (vEulerAngles.x > 180.0f)
-                vEulerAngles.x -= 360.0f;
-            if (vEulerAngles.x > 60.0f)
-                vEulerAngles.x = 60.0f;
-            else if (vEulerAngles.x < -60.0f)
-                vEulerAngles.x = -60.0f;
+            //if (vEulerAngles.x > 180.0f)
+            //    vEulerAngles.x -= 360.0f;
+            //if (vEulerAngles.x > 60.0f)
+            //    vEulerAngles.x = 60.0f;
+            //else if (vEulerAngles.x < -60.0f)
+            //    vEulerAngles.x = -60.0f;
             m_rCameraRotation = Quaternion.Euler(vEulerAngles);
             m_nFlags |= ROTATION;
         }
     }
 
-    protected void HandleTopViewKeyboard()
-    {
-    }
-
-    // 获取上一帧的各个参数
-    void GetLastInfo()
-    {
-        lastRotation = transform.rotation;   // 上一帧的姿态
-        xlastDeg = xDeg;
-        // ylastDeg = yDeg;
-        lastDistance = Vector3.Distance(transform.position, m_Target.position);        // 上一帧的距离
-        lastTagPos = m_Target.position;        // 上一帧的tag位置
-    }
-
-    // 设为上一帧的参数
-    void ResetLastInfo()
-    {
-        desDistance = lastDistance;
-        desiredRotation = lastRotation;
-        transform.rotation = lastRotation;
-        xDeg = xlastDeg;
-        yDeg = Vector3.Angle(Vector3.up, transform.up);
-        yDeg = ClampAngle(yDeg, minYDeg, maxYDeg);
-        m_Target.position = lastTagPos;
-    }
+  
 
     // 最大最小值
     private float ClampAngle(float angle, float min, float max)
@@ -900,59 +755,32 @@ public class CameraObjectController : MonoBehaviour
         //desDistance += add * forwardSensitivity * Mathf.Lerp(1.0f, 10.0f, (lerpDis) / (maxDistance - minDistance)) * Time.deltaTime;
     }
 
-    //俯视视角下的向前
-    public void MoveForwardTopCam(float value)
-    {
-        //int rowCountOfScreen = Option.rowCountOfScreen, columnCountOfScreen = Option.columnCountOfScreen, rowOfScreen = Option.rowOfScreen, columnOfScreen = Option.columnOfScreen;
-        //int max = Mathf.Max(rowCountOfScreen, columnCountOfScreen);
-        //if (max * currentCamera.fieldOfView > 120.0f)
-        //    currentCamera.fieldOfView = 120f / max;
-        //float x = columnCountOfScreen - 1 - 2 * columnOfScreen;
-        //float y = rowCountOfScreen - 1 - 2 * rowOfScreen;
-        //Matrix4x4 transformProjection = Matrix4x4.TRS(new Vector3(x, y, 0), Quaternion.identity, Vector3.one);
-
-        //currentCamera.orthographicSize += value;
-        //currentCamera.ResetProjectionMatrix();
-        //currentCamera.projectionMatrix = transformProjection * currentCamera.projectionMatrix;
-
-        // TransformerCamera.currentCamera.orthographicSize = currentCamera.orthographicSize;
-        // TransformerCamera.currentCamera.ResetProjectionMatrix();
-        //TransformerCamera.currentCamera.projectionMatrix = transformProjection * TransformerCamera.currentCamera.projectionMatrix;
-    }
-    // 设置摄像机的大小
-    public void SetOrthographicSize(float value)
-    {
-        //int rowCountOfScreen = Option.rowCountOfScreen, columnCountOfScreen = Option.columnCountOfScreen, rowOfScreen = Option.rowOfScreen, columnOfScreen = Option.columnOfScreen;
-        //int max = Mathf.Max(rowCountOfScreen, columnCountOfScreen);
-        //if (max * currentCamera.fieldOfView > 120.0f)
-        //    currentCamera.fieldOfView = 120f / max;
-        //float x = columnCountOfScreen - 1 - 2 * columnOfScreen;
-        //float y = rowCountOfScreen - 1 - 2 * rowOfScreen;
-        //Matrix4x4 transformProjection = Matrix4x4.TRS(new Vector3(x, y, 0), Quaternion.identity, Vector3.one);
-
-        //currentCamera.orthographicSize = value;
-        //currentCamera.ResetProjectionMatrix();
-        //currentCamera.projectionMatrix = transformProjection * currentCamera.projectionMatrix;
-
-        // TransformerCamera.currentCamera.orthographicSize = currentCamera.orthographicSize;
-        // TransformerCamera.currentCamera.ResetProjectionMatrix();
-        // TransformerCamera.currentCamera.projectionMatrix = transformProjection * TransformerCamera.currentCamera.projectionMatrix;
-    }
-
     protected void Move(Vector3 value)
     {
-        m_vCameraPosition += this.transform.right * value.x + this.transform.up * value.y + this.transform.forward * value.z;
+        Vector3  camerPpostion = transform.position;
+        camerPpostion += this.transform.right * value.x + this.transform.up * value.y + this.transform.forward * value.z;
+        this.transform.position = camerPpostion;
         this.TestPositionRange();
     }
 
     // 平移
     void Translation(Vector2 value)
     {
-        float fPosY = m_vCameraPosition.y < camMinHeight ? camMinHeight : m_vCameraPosition.y > camMaxHeight ? camMaxHeight : m_vCameraPosition.y;
+        Vector3 cameraPostion = transform.position;
+        float fPosY = cameraPostion.y < camMinHeight ? camMinHeight : cameraPostion.y > camMaxHeight ? camMaxHeight : cameraPostion.y;
 
-        Vector3 vRight = m_rCameraRotation * Vector3.right, vUp = m_rCameraRotation * Vector3.up;
-        m_vCameraPosition += vRight * value.x * translationSensitivity * (1.0f / Screen.width) * fPosY;
-        m_vCameraPosition -= vUp * value.y * translationSensitivity * (1.0f / Screen.height) * fPosY;
+        
+        Vector3 vRight = transform.rotation * Vector3.right, vUp = transform.rotation * Vector3.up;
+        cameraPostion += vRight * value.x * translationSensitivity * (1.0f / Screen.width) * fPosY;
+        cameraPostion -= vUp * value.y * translationSensitivity * (1.0f / Screen.height) * fPosY;
+        transform.position = cameraPostion;
+        //float fPosY = m_vCameraPosition.y < camMinHeight ? camMinHeight : m_vCameraPosition.y > camMaxHeight ? camMaxHeight : m_vCameraPosition.y;
+
+        //Vector3 vRight = m_rCameraRotation * Vector3.right, vUp = m_rCameraRotation * Vector3.up;
+        //m_vCameraPosition += vRight * value.x * translationSensitivity * (1.0f / Screen.width) * fPosY;
+        //m_vCameraPosition -= vUp * value.y * translationSensitivity * (1.0f / Screen.height) * fPosY;
+
+
         this.TestPositionRange();
 
         m_Target.rotation = transform.rotation;
@@ -974,65 +802,10 @@ public class CameraObjectController : MonoBehaviour
         m_Target.transform.Translate(-transform.up * addT.y * fSensitivity * (1.0f / Screen.height) * fPosY, Space.World);
     }
 
-    // 移动
-    void Move()
-    {
-        return;
-        // 视角的平滑移动
-       // currentRotation = transform.rotation;
-       // // 避免网路延迟引起晃动，去掉差值
-       // currentRotation = desiredRotation;// Quaternion.Lerp(currentRotation, desiredRotation, 0.25f);
-       // // 修改：由rotate函数实现
-       // //transform.rotation = currentRotation;
-       // //if (Option.isController && transform.rotation != currentRotation)
-       // //{
-       // //    //Debug.LogWarning(DateTime.Now.ToString() + " send position: " + currentRotation);
-       // //    Messenger.MultiClientSynchronize.sendCameraRotate(currentRotation.x, currentRotation.y, currentRotation.z, currentRotation.w);
-       // //}
-       // // 修改：需求变更为任何机器都能控制所以取消控制判断
-       // rotate(currentRotation.x, currentRotation.y, currentRotation.z, currentRotation.w);
-       //// SynchronizeMessager.send3rdViewCameraRotate(currentRotation.x, currentRotation.y, currentRotation.z, currentRotation.w);
-       // // 修改- 距离大于最大值和小于最小值时的判断
-       // if (desDistance < m_MinDistance)
-       // {
-       //     //target.position = target.position + currentRotation * Vector3.forward * (minDistance - desDistance);
-       //     //currDistance = currDistance + (minDistance - desDistance);
-       //     desDistance = m_MinDistance;
-       // }
-       // else if (desDistance > m_MaxDistance)
-       // {
-       //     desDistance = m_MaxDistance;
-       // }
-       // // 距离平滑
-       // m_CurrentDistance = desDistance;//Mathf.SmoothDamp(currDistance, desDistance, ref forwardVelocity, smoothTime);
-       // //currDistance = Mathf.Lerp(currDistance, desDistance,Time.deltaTime * zoomDampening);
-       // // tag的位置
-       // DealTagSide();
-       // // 计算位置
-       // Vector3 position = m_Target.position - (currentRotation * Vector3.forward * m_CurrentDistance);
-       // if (position.y < camMinHeight)
-       // {
-       //     ResetLastInfo();// 设为上一帧的参数
-       // }
-       // else
-       // {
-       //     // 修改：由move函数实现
-       //     //transform.position = position;
-       //     //if (Option.isController && transform.position != position)
-       //     //{
-       //     //    //Debug.LogWarning(DateTime.Now.ToString() + " send position: " + position);
-       //     //    Messenger.MultiClientSynchronize.sendCameraMove(position.x, position.y, position.z);
-       //     //}
-       //     // 修改：需求变更为任何机器都能控制所以取消控制判断
-       //     move(position.x, position.y, position.z);
-       //    // SynchronizeMessager.send3rdViewCameraMove(position.x, position.y, position.z);
-       // }
-        //control.Move(position - transform.position);
-    }
-
     // 重设数据
     public void ResetData()
     {
+       
         if (m_Target == null)
         {
             GameObject go = new GameObject("Cam Target");
@@ -1054,36 +827,88 @@ public class CameraObjectController : MonoBehaviour
 
     }
 
+    // 处理Tag边界
+    public void DealTagSide()
+    {
 
+        return;
+        Vector3 tagPos = m_Target.position;
+        // y方向
+        if (m_Target.position.y < camMinHeight + m_MinDistance)
+        {
+            tagPos.y = camMinHeight + m_MinDistance;
+            m_Target.position = tagPos;
+        }
+        else if (m_Target.position.y > camMaxHeight)
+        {
+            tagPos.y = camMaxHeight;
+            m_Target.position = tagPos;
+        }
+
+        // x方向
+        if (m_Target.position.x < canFlyRect.x)
+        {
+            tagPos.x = canFlyRect.x;
+            m_Target.position = tagPos;
+        }
+        else if (m_Target.position.x > canFlyRect.x + canFlyRect.width)
+        {
+            tagPos.x = canFlyRect.x + canFlyRect.width;
+            m_Target.position = tagPos;
+        }
+        // z方向
+        if (m_Target.position.z < canFlyRect.y)
+        {
+            tagPos.z = canFlyRect.y;
+            m_Target.position = tagPos;
+        }
+        else if (m_Target.position.z > canFlyRect.y + canFlyRect.height)
+        {
+            tagPos.z = canFlyRect.y + canFlyRect.height;
+            m_Target.position = tagPos;
+        }
+    }
+
+    // 跳转到点
+    public void JumpToLookAtPos(Vector3 pos, float fDistance = 5.0f)
+    {
+        transform.LookAt(pos);
+        transform.forward = pos - transform.position;
+
+        m_Target.position = pos;
+        //float distance = Vector3.Distance(transform.position,Object3DElement.selectingObject[0].transform.position) * 0.5f;
+        //m_CurrentDistance = distance;
+        //if (distance > centerMaxDis)
+        //    distance = centerMaxDis;
+        
+        //desDistance = distance * 0.8f;
+        //position = transform.position;
+        //rotation = transform.rotation;
+        currentRotation = transform.rotation;
+        desiredRotation = transform.rotation;
+
+        yDeg = transform.rotation.eulerAngles.x;
+        xDeg = transform.rotation.eulerAngles.y;
+        yDeg = ClampAngle(yDeg, minYDeg, maxYDeg);
+
+        this.transform.position = pos - this.transform.forward * fDistance;// +transform.position * 0.5f;
+        m_vCameraPosition = this.transform.position;
+        m_rCameraRotation = this.transform.rotation;
+        this.TestPositionRange();
+    }
+
+    public void resetP()
+    {
+        this.transform.position = positionReset.position;// +transform.position * 0.5f;
+        this.transform.rotation = positionReset.rotation;
+        m_vCameraPosition = this.transform.position;
+        m_rCameraRotation = this.transform.rotation;
+        this.TestPositionRange();
+    }
+
+    
 
    
-
-    void animationUpdate(bool go)
-    {
-        ResetData();
-    }
-
-    void animationEnd(string f)
-    {
-        //Debug.Log("end : " + f);
-        ResetData();
-    }
-
-    public void SetTargetPosY(float y)
-    {
-        m_Target.position = new Vector3(m_Target.position.x, y, m_Target.position.z);
-    }
-
-    public void ResetTargetPos()
-    {
-        m_Target.position = oldtargetPos;
-    }
-
-    //protected void OnRenderImage(RenderTexture sourceTexture, RenderTexture destTexture)
-    //{
-    //    SceneController.instance.onRenderImage(sourceTexture, destTexture);
-    //}
-
     public void move(float x, float y, float z)
     {
         transform.position = new Vector3(x, y, z);
@@ -1097,28 +922,23 @@ public class CameraObjectController : MonoBehaviour
         m_rCameraRotation = transform.rotation;
     }
 
-    /// <summary>恢复相机遮罩层 </summary>
-    public void restoreMask()
-    {
-        currentCamera.cullingMask = mask;
-        rayCast(c => true);
-    }
+    private bool isTestPositionRang = false;
 
-    public void rayCast(Func<Camera, bool> callback)
+    public void SetCheckPositionRange(bool isTestPositionRang)
     {
-        //if (callback(secCamera.GetComponent<Camera>()))
-        //{
-        //    callback(currentCamera);
-        //}
+        this.isTestPositionRang = isTestPositionRang;
     }
-
     /// <summary>
     /// 检测屏幕的移动边界
     /// </summary>
     public void TestPositionRange()
     {
+       // return;
+       if(isTestPositionRang)
+        {
+           CheckBound();
+        }
        
-        CheckBound();
     }
 
     private void DefaultConstrain()
@@ -1140,56 +960,56 @@ public class CameraObjectController : MonoBehaviour
 
     private float CamConstrainScale = 1.0f;
 
-    public BoxCollider boxCollider = null;
-
-    private float scaleValue = 1.0f;
-
-    public void SetBox(BoxCollider box, float scaleValue)
-    {
-        this.boxCollider = box;
-        this.scaleValue = scaleValue;
-    }
+    private GameObject dxBox = null;
     private void CheckBound()
     {
-      
-        if(boxCollider == null)
+        if(dxBox == null)
         {
-            return;
+            dxBox = SceneUtility.GetGameByRootName(Constant.Main_dxName, "box");
         }
-      
-        if (boxCollider)
+       
+
+        if (dxBox != null)
         {
-            Bounds b = boxCollider.bounds;
+            BoxCollider collider = dxBox.GetComponent<BoxCollider>();
+            if (collider)
+            {
+                // Bounds b = collider.bounds;
 
-            Vector3 localScale = new Vector3(Mathf.Abs(b.size.x * scaleValue), Mathf.Abs(b.size.y * scaleValue), Mathf.Abs(b.size.z * scaleValue));
-            Vector3 max = b.center + localScale / 2;
-            Vector3 min = b.center - (localScale / 2);
+                Vector3 localScale = new Vector3(Mathf.Abs(dxBox.transform.localScale.x), Mathf.Abs(dxBox.transform.localScale.y), Mathf.Abs(dxBox.transform.localScale.z));
+                Vector3 max = dxBox.transform.position + localScale / 2;
+                Vector3 min = dxBox.transform.position - (localScale / 2);
 
-            //max.x *= CamConstrainScale;
-            //max.z *= CamConstrainScale;
+                //max.x *= CamConstrainScale;
+                //max.z *= CamConstrainScale;
 
-            max *= CamConstrainScale;
-            min *= CamConstrainScale;
-            Vector3 size = max - min;
-            size = new Vector3(Mathf.Abs(size.x), Mathf.Abs(size.y), Mathf.Abs(size.z));
-            Bounds newb = new Bounds(b.center, size);
+                max *= CamConstrainScale;
+                min *= CamConstrainScale;
+                Vector3 size = max - min;
+                size = new Vector3(Mathf.Abs(size.x), Mathf.Abs(size.y), Mathf.Abs(size.z));
+                Bounds b = new Bounds(dxBox.transform.position, size);
 
-            //min.x *= CamConstrainScale;
-            //min.z *= CamConstrainScale;
+                //min.x *= CamConstrainScale;
+                //min.z *= CamConstrainScale;
 
-            //max = t.position + max;
-            //min = t.position + min;
+                //max = t.position + max;
+                //min = t.position + min;
 
-            //Debug.LogError(max + "____" + min + "____" + t.position);
+                //Debug.LogError(max + "____" + min + "____" + t.position);
 
-            ConstrainCamera(newb.min, newb.max);
+                ConstrainCamera(b.min, b.max);
+            }
+            else
+            {
+                //Debug.LogError("地形碰撞盒没有找到");
+                //DefaultConstrain();
+            }
         }
         else
         {
-            //Debug.LogError("地形碰撞盒没有找到");
-            //DefaultConstrain();
+            //Debug.LogError("地形碰撞盒gameobject没有找到");
+           // DefaultConstrain();
         }
-        
     }
 
     private float MulScale(float origin, float scaleFactor)
@@ -1313,95 +1133,23 @@ public class CameraObjectController : MonoBehaviour
 
     public Transform target { get { return m_Target; } }
 
-    // 临时的解决方案（切换对摄像机的操控）
-    public void SwitchCtrl(System.Action mouseHandler, System.Action keybardHandler)
-    {
-        //if (mouseHandler != null)
-        //{
-        //    m_HandleMouse = mouseHandler;
-        //}
-        //else
-        //{
-        //    if (!currentCamera.orthographic)
-        //    {
-        //        m_HandleMouse = this.HandleNormalMouse;
-        //    }
-        //    else
-        //    {
-        //        m_HandleMouse = this.HandleTopViewMouse;
-        //    }
-
-        //    m_vCameraPosition = this.transform.position;
-        //    m_rCameraRotation = this.transform.rotation;
-        //}
-
-        //if (keybardHandler != null)
-        //{
-        //    m_HandleKeyboard = keybardHandler;
-        //}
-        //else
-        //{
-        //    if (!currentCamera.orthographic)
-        //    {
-        //        m_HandleKeyboard = this.HandleNormalKeyboard;
-        //    }
-        //    else
-        //    {
-        //        m_HandleKeyboard = this.HandleTopViewKeyboard;
-        //    }
-
-        //    m_vCameraPosition = this.transform.position;
-        //    m_rCameraRotation = this.transform.rotation;
-        //}
-    }
-
-    /// 第一人称碰撞检测。用于所在区域提示
     /// </summary>
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
        
     }
 
-    public void SetControlMoveSpeed(float param)
-    {
-        m_MoveSpeed = param;
-    }
-
-    public void SetControlRotationSpeed(float param)
-    {
-        m_RotationSpeed = param;
-    }
-
     void OnApplicationFocus(bool focusStatus)
     {
         if (focusStatus)
         {
+            Enable();
             //Debug.Log("OnApplicationFocus");
         }
         else
         {
            // Debug.Log("Exit ApplicationFocus");
         }
-
-        //if (SceneSystemMsg.Instance.selectSystem == -1)
-        //    Enable();
-
     }
 
-    public int flags { set { m_nFlags = value; } get { return m_nFlags; } }
-
-    public float forward { get { return this.CalculateWalkSpeed(); } }
-
-    public float sensitiveX { set { /** m_RotationSpeed = value;**/ } get { return m_RotationSpeed; } }
-
-    public float sensitiveY { set { /** m_RotationSpeed = value;**/ } get { return m_RotationSpeed; } }
-
-    public int enterRoomCount { set { m_nEnterRoomCount = value; } get { return m_nEnterRoomCount; } }
 }
-/*********************************************************************************************************
- * 创建日期:2012-2-8
- * 作者:zpba
- * 功能：在ipad中的飞行相机
- *    1.转视角
- *    2.移动（向前+平移）
- *********************************************************************************************************/

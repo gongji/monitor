@@ -56,12 +56,14 @@ public static class CameraInitSet {
                 CalculateCameraPostionRoation(box);
             }
 
-            CameraMove(cameraMoveTime, callBack);
+            CameraMove(cameraMoveTime, callBack, box);
+
+
         });
 
     }
 
-    private static void CameraMove(float cameraMoveTime, System.Action callBack)
+    private static void CameraMove(float cameraMoveTime, System.Action callBack, Transform box)
     {
         CameraAnimation.CameraMove(Camera.main, cameraPostion, cameraRoation.eulerAngles, cameraMoveTime, () =>
         {
@@ -162,7 +164,7 @@ public static class CameraInitSet {
 
         //}
 
-        if (isEnable)
+        if (isEnable && coc!=null)
         {
             IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
             if (mCurrentState is AreaState)
@@ -182,6 +184,8 @@ public static class CameraInitSet {
                 //Debug.Log("aaaaaaaaaa");
                 SceneContext.sceneBox = box.transform;
             }
+            float yvalue = CaluteCameraRangeHeight.GetCameraHeight();
+           // coc.SetBox(box.GetComponent<BoxCollider>(), 2,yvalue);
         }
         //coc.SetEnable(isEnable);
 
@@ -198,13 +202,16 @@ public static class CameraInitSet {
     public static void SystemInitCamera()
     {
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
-        string   sql = "sceneId = " + sceneid + " and (equipId is null or equipId = 0)";
+        // string   sql = "sceneId = " + sceneid + " and (equipId is null or equipId = 0)";
+        string sql = "sceneId = -1 and (equipId is null or equipId = 0)";
         CameraViewData.CallProxyGetViewData(sql, (cameraView) => {
 
+            
             Vector3 cameraPostion = new Vector3(cameraView.x, cameraView.y, cameraView.z);
             Quaternion cameraRoation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
             Camera.main.transform.position = cameraPostion;
             Camera.main.transform.rotation = cameraRoation;
+            Camera.main.GetComponent<CameraObjectController>().SetCameraPostion();
 
 
         });

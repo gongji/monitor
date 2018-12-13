@@ -41,7 +41,9 @@ public static class CameraAnimation
                 callBack.Invoke();
             }
 
-            
+            camera.GetComponent<CameraObjectController>().SetCameraPostion();
+
+
 
         });
     }
