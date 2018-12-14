@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using DG.Tweening;
 using State;
 using System;
 using System.Collections;
@@ -31,6 +32,8 @@ public class BrowserToolBar : MonoBehaviour {
 
     protected Texture2D m_FirstPersonIcon = null;
 
+    private Transform builderSwitch = null;
+
     private void Awake()
     {
 
@@ -47,11 +50,15 @@ public class BrowserToolBar : MonoBehaviour {
         tips = transform.Find("tips");
         cameraMode = transform.Find("cameraMode");
 
+        builderSwitch = transform.Find("builderSwitch");
+
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
 
         TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
 
         TransformControlUtility.AddEventToBtn(cameraMode.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CameraModeSwitch(); });
+
+        TransformControlUtility.AddEventToBtn(builderSwitch.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BuilderSwitch(); });
 
 
         guanxian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(guanxian.GetComponent<Toggle>(), value));
@@ -80,6 +87,7 @@ public class BrowserToolBar : MonoBehaviour {
         fullArea.gameObject.SetActive(true);
         tips.gameObject.SetActive(true);
         cameraMode.gameObject.SetActive(true);
+        builderSwitch.gameObject.SetActive(true);
 
 
         IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
@@ -88,12 +96,14 @@ public class BrowserToolBar : MonoBehaviour {
             qiangti.gameObject.SetActive(false);
             guanxian.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
+            builderSwitch.gameObject.SetActive(false);
         }
         else if (mCurrentState is RoomState)
         {
             fullArea.gameObject.SetActive(false);
             qiangti.gameObject.SetActive(false);
             guanxian.gameObject.SetActive(false);
+            builderSwitch.gameObject.SetActive(false);
         }
 
         else if (mCurrentState is BuilderState)
@@ -111,6 +121,7 @@ public class BrowserToolBar : MonoBehaviour {
         else if (mCurrentState is FloorState)
         {
             fullArea.gameObject.SetActive(false);
+            builderSwitch.gameObject.SetActive(false);
 
         }
         else if (mCurrentState is FullAreaState)
@@ -121,6 +132,7 @@ public class BrowserToolBar : MonoBehaviour {
             guanxian.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
+            builderSwitch.gameObject.SetActive(false);
         }
     }
 
@@ -205,6 +217,38 @@ public class BrowserToolBar : MonoBehaviour {
         }
 
         isFlyCameraMode = !isFlyCameraMode;
+    }
+
+
+    private bool isExpandbuilder = true;
+    private bool isEnaleClick = true;
+    private void BuilderSwitch()
+    {
+        
+        if(!isEnaleClick)
+        {
+            return;
+        }
+        Dictionary<string, object> dic = new Dictionary<string, object>();
+        if(!isExpandbuilder)
+        {
+            builderSwitch.GetComponentInChildren<Text>().text = "楼层复位";
+            dic.Add("value", "0");
+        }
+        else
+        {
+            builderSwitch.GetComponentInChildren<Text>().text = "楼层展开";
+            dic.Add("value", "1");
+        }
+        EventMgr.Instance.SendEvent(EventName.FloorExpand, dic);
+        isExpandbuilder = !isExpandbuilder;
+
+        isEnaleClick = false;
+        DOVirtual.DelayedCall(2.0f, () =>
+        {
+            isEnaleClick = true;
+        });
+
     }
 
 

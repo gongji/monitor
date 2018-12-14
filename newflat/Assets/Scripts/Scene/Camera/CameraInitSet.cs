@@ -219,4 +219,43 @@ public static class CameraInitSet {
 
        
     }
+
+
+    /// <summary>
+    /// 设置绕中心点旋转
+    /// </summary>
+    /// <param name="box"></param>
+    public static void SetRotationCamera(Transform  centerTransform)
+    {
+        CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
+        coc.enabled = false;
+        CameraRotatoAround acc = Camera.main.gameObject.GetComponent<CameraRotatoAround>();
+        if (acc == null)
+        {
+            acc = Camera.main.gameObject.AddComponent<CameraRotatoAround>();
+        }
+        acc.target = centerTransform;
+        float _distance = Vector3.Distance(centerTransform.position, Camera.main.transform.position);
+        acc.distance = _distance;
+        acc.distanceMax = _distance * 2.0f;
+        acc.distanceMin = 0.0f;
+        acc.speedx = 0.5f;
+        acc.MouseScrollWheelSensitivity = 5.0f;
+    }
+
+    public static void SetObjectCamera()
+    {
+        CameraRotatoAround acc = Camera.main.gameObject.GetComponent<CameraRotatoAround>();
+        if (acc != null)
+        {
+            GameObject.DestroyImmediate(acc);
+        }
+
+        CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
+        if(coc!=null)
+        {
+            coc.enabled = true;
+        }
+        
+    }
 }

@@ -21,7 +21,7 @@ public class CameraViewChangeManager : MonoBehaviour {
 
             Camera.main.orthographic =false;
             Camera.main.gameObject.GetComponent<CameraObjectController>().enabled = false;
-            Camera.main.farClipPlane = 100;
+            Camera.main.farClipPlane = 1000;
         }
         else if(AppInfo.GetCurrentState is AreaState ||  AppInfo.currentView == ViewType.View3D)
         {

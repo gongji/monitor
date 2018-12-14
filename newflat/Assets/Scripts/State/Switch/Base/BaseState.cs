@@ -15,7 +15,7 @@ namespace State
 		protected string nextId =string.Empty;
         protected System.Action enterCallBack;
 
-        protected BaseSet baseSet = null;
+        public BaseSet baseSet = null;
 
         protected List<Object3dItem> curentDataList = null;
 

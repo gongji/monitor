@@ -8,14 +8,14 @@ using TMPro;
 using UnityEngine;
 using System.Linq;
 
-public class BuilderSet: BaseSet
+public class BuilderSet: BaseSet,IEventListener
 {
     private static ILog log = LogManagers.GetLogger("BuilderSet");
 
     private List<Object3dItem> currentfloorData;
 
     private List<Object3dItem> originalData;
-    private float yoffest = 6.0f;
+    private float yoffest = 1.0f;
 
     private GameObject navigationUI;
 
@@ -25,17 +25,14 @@ public class BuilderSet: BaseSet
         base.Enter(currentData, callBack);
         
         this.currentfloorData = GetAllFloor(currentData);
-        CreateNavigation();
+        CreateGroupNavigation();
         SaveOrResetFloorPostion(currentData);
         SwitchBG(false);
         InitCamera(()=> { });
        
         SetFloorSplitAnimation(callBack);
-
-       
-
+        EventMgr.Instance.AddListener(this, EventName.FloorExpand);
     }
-
 
     private List<Object3dItem> GetAllFloor(List<Object3dItem> currentData)
     {
@@ -73,17 +70,17 @@ public class BuilderSet: BaseSet
         camera.transform.localRotation = Quaternion.identity;
 
         //SwitchCameraMode(true);
-        camera.orthographicSize = GetMaxBoxLength() / 2 / (Screen.width * 1.0f / Screen.height * 1.0f) * 2.0f;
-        camera.transform.position = CalculateCameraPostion() - (camera.transform.forward * GetMaxBoxWidth());
+       // camera.orthographicSize = GetMaxBoxLength() / 2 / (Screen.width * 1.0f / Screen.height * 1.0f) * 2.0f;
+        camera.transform.position = CalculateCameraPostion() - (camera.transform.forward * GetMaxBoxWidth()*1.5f);
 
-        camera.transform.localRotation *= Quaternion.AngleAxis(10.0f, Vector3.right);
+        camera.transform.localRotation *= Quaternion.AngleAxis(0.0f, Vector3.right);
 
         //临时增加y的偏移量
 
-        camera.transform.position += Vector3.up;
+       // camera.transform.position += Vector3.up;
         CameraInitSet.SetIsEnbaleCamera(null, false);
         //SetIsEnbaleCamera(null, false);
-      //  Camera.main.enabled = true;
+        //  Camera.main.enabled = true;
 
         //Vector3 tartPostion = CalculateCameraPostion() - (camera.transform.forward * GetMaxBoxWidth()) + Vector3.up;
         //camera.transform.DOMove(tartPostion, 0.5f).OnComplete(()=> {
@@ -93,6 +90,8 @@ public class BuilderSet: BaseSet
         //        callBack.Invoke();
         //    }
         //});
+
+        CameraInitSet.SetRotationCamera(rotationTransfrom);
 
     }
 
@@ -143,6 +142,7 @@ public class BuilderSet: BaseSet
         return width;
     }
 
+    private Transform rotationTransfrom = null;
     /// <summary>
     /// 计算相机的位置
     /// </summary>
@@ -156,6 +156,7 @@ public class BuilderSet: BaseSet
         GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
         if (collider != null)
         {
+            rotationTransfrom = collider.transform;
             return collider.GetComponent<BoxCollider>().bounds.center;
         }
 
@@ -198,14 +199,14 @@ public class BuilderSet: BaseSet
 
         Object3dItem object3dItem = currentfloorData[index - 1];
 
-        ///奇数,偶数后边考虑
+        ///奇数
         if (currentfloorData.Count % 2 != 0)
         {
             for (int i = 0; i < currentfloorData.Count; i++)
             {
                 GameObject root = SceneUtility.GetGameByRootName(currentfloorData[i].number, currentfloorData[i].number);
                 Vector3 tartPostion = root.transform.position - Vector3.up * (index - 1 - i) * yoffest *2;
-                root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
+                //root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
                 root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
             }
 
@@ -226,13 +227,15 @@ public class BuilderSet: BaseSet
                     tartPostion = root.transform.position + Vector3.up * yoffest * 2;
                 }
                 
-                root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
+                //root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
                 root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
             }
         }
         DOVirtual.DelayedCall(2.0f, () =>
         {
-            BuiderNavigationUI.CreateNavigateUI(currentfloorData);
+            uiTempObject = new GameObject();
+            BuiderNavigationUI buiderNavigationUI = uiTempObject.AddComponent<BuiderNavigationUI>();
+            buiderNavigationUI.CreateNavigateUI(currentfloorData);
             if(callBack!=null)
             {
                 callBack.Invoke();
@@ -240,10 +243,23 @@ public class BuilderSet: BaseSet
         });
     }
 
-    
 
+    private GameObject uiTempObject;
 
-    protected void CreateNavigation()
+    /// <summary>
+    /// 楼层复位
+    /// </summary>
+    private void FloorPostionReset()
+    {
+        for (int i = 0; i < currentfloorData.Count; i++)
+        {
+            GameObject root = SceneUtility.GetGameByRootName(currentfloorData[i].number, currentfloorData[i].number);
+            Vector3 defaultPostion = root.GetComponent<TransformObject>().defaultPostion;
+            root.transform.DOLocalMove(defaultPostion, moveTime);
+        }
+    }
+
+    protected void CreateGroupNavigation()
     {
         Transform canvas = GameObject.Find("Canvas").transform;
         NavigationUI fnui = canvas.GetComponentInChildren<NavigationUI>();
@@ -265,7 +281,7 @@ public class BuilderSet: BaseSet
         
     }
 
-    protected void DeleteNavigation()
+    protected void DeleteGrounpNavigation()
     {
        
         if (navigationUI != null)
@@ -285,53 +301,53 @@ public class BuilderSet: BaseSet
     {
        
         base.Exit(currentid, callBack);
-        List<Object3dItem> topList = new List<Object3dItem>();
-        List<Object3dItem> downList = new List<Object3dItem>();
-        int index = 0;
-        for(int i =0;i< currentfloorData.Count;i++)
-        {
-            if(currentfloorData[i].id.Equals(currentid))
-            {
-                index = i;
-                break;
-            }
-        }
+        // List<Object3dItem> topList = new List<Object3dItem>();
+        // List<Object3dItem> downList = new List<Object3dItem>();
+        // int index = 0;
+        // for(int i =0;i< currentfloorData.Count;i++)
+        // {
+        //     if(currentfloorData[i].id.Equals(currentid))
+        //     {
+        //         index = i;
+        //         break;
+        //     }
+        // }
 
-        for (int i = 0; i < currentfloorData.Count; i++)
-        {
-            if(i>index)
-            {
-                topList.Add(currentfloorData[i]);
-            }
-            else if(i < index)
-            {
-                downList.Add(currentfloorData[i]);
-            }
-        }
-        float duringTime = 0.5f;
-        //上边向上移动
-       foreach(Object3dItem o in topList)
-        {
-            GameObject g =  SceneUtility.GetGameByRootName(o.number, o.number);
-            Vector3 newPostion = g.transform.position + Vector3.up * 10;
-            g.transform.DOLocalMove(newPostion, duringTime).OnComplete(()=> {
-               // g.SetActive(false);
-            });
-        }
-       //下边向下移动
-        foreach (Object3dItem o in downList)
-        {
-            GameObject g = SceneUtility.GetGameByRootName(o.number, o.number);
-            Vector3 newPostion = g.transform.position - Vector3.up * 10;
-            g.transform.DOLocalMove(newPostion, duringTime).OnComplete(() => {
-                //g.SetActive(false);
-            });
-        }
+        // for (int i = 0; i < currentfloorData.Count; i++)
+        // {
+        //     if(i>index)
+        //     {
+        //         topList.Add(currentfloorData[i]);
+        //     }
+        //     else if(i < index)
+        //     {
+        //         downList.Add(currentfloorData[i]);
+        //     }
+        // }
+        // float duringTime = 0.5f;
+        // //上边向上移动
+        //foreach(Object3dItem o in topList)
+        // {
+        //     GameObject g =  SceneUtility.GetGameByRootName(o.number, o.number);
+        //     Vector3 newPostion = g.transform.position + Vector3.up * 10;
+        //     g.transform.DOLocalMove(newPostion, duringTime).OnComplete(()=> {
+        //        // g.SetActive(false);
+        //     });
+        // }
+        ////下边向下移动
+        // foreach (Object3dItem o in downList)
+        // {
+        //     GameObject g = SceneUtility.GetGameByRootName(o.number, o.number);
+        //     Vector3 newPostion = g.transform.position - Vector3.up * 10;
+        //     g.transform.DOLocalMove(newPostion, duringTime).OnComplete(() => {
+        //         //g.SetActive(false);
+        //     });
+        // }
 
-        GameObject currentSelect = SceneUtility.GetGameByRootName(currentfloorData[index].number, currentfloorData[index].number);
-        currentSelect.transform.DOLocalRotate(Vector3.zero, duringTime);
-
-        DOVirtual.DelayedCall(duringTime * 1.2f, () =>
+        // GameObject currentSelect = SceneUtility.GetGameByRootName(currentfloorData[index].number, currentfloorData[index].number);
+        // currentSelect.transform.DOLocalRotate(Vector3.zero, duringTime);
+        FloorPostionReset();
+        DOVirtual.DelayedCall(moveTime * 1.2f, () =>
         {
 
           //  Debug.Log("回调退出");
@@ -353,15 +369,37 @@ public class BuilderSet: BaseSet
     {
        // Debug.Log("直接退出");
         base.Exit(nextid);
-        BuiderNavigationUI.DeleteAllUI();
-        DeleteNavigation();
+        uiTempObject.GetComponent<BuiderNavigationUI>().DeleteAllUI();
+        GameObject.DestroyImmediate(uiTempObject);
+        
+        DeleteGrounpNavigation();
+       
+        CameraInitSet.SetObjectCamera();
+
+        EventMgr.Instance.RemoveListener(this, EventName.FloorExpand);
 
     }
+
+    public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+        string result = dictionary["value"].ToString();
+        //展开
+        if(result.Equals("0"))
+        {
+            SetFloorSplitAnimation(null);
+        }
+        //复位
+        else
+        {
+            FloorPostionReset();
+        }
+        return true;
+    }
     #endregion
-    
 
 
 
-    
+
+
 
 }

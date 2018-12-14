@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Battlehub.UIControls;
 using DG.Tweening;
+using State;
 
 public class BrowseStatus : AppBaseState
 {
@@ -33,7 +34,7 @@ public class BrowseStatus : AppBaseState
            
         }
 
-        if(MouseCheck.DOUBLE_CLICK)
+        if(MouseCheck.DOUBLE_CLICK && !(Main.instance.stateMachineManager.mCurrentState is BuilderState))
         {
             Vector3 centerPostion = MouseCheck.clickHitPoint;
             float distance = Vector3.Distance(Camera.main.transform.position, centerPostion);

@@ -310,7 +310,8 @@ public static class SceneData {
         IEnumerable<Object3dItem> floorResult =
               from object3dItem in object3dList
                   //不包含管网
-              where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.GuanDao)
+              where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.GuanDao) 
+              orderby object3dItem.number ascending
               select object3dItem;
 
         //按照范围过滤

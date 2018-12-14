@@ -655,11 +655,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000022888184
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 22450892, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchorMax.x
@@ -795,9 +795,9 @@ GameObject:
   - component: {fileID: 1481498076}
   - component: {fileID: 1481498084}
   - component: {fileID: 1481498081}
-  - component: {fileID: 1481498085}
   - component: {fileID: 1481498082}
   - component: {fileID: 1481498083}
+  - component: {fileID: 1481498085}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -980,7 +980,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481498075}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666774e39a469704bbe384a0beff8e4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a778d2a793b00c43a50d8bf6088ef51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DocuMark: {fileID: 0}
@@ -1013,11 +1013,10 @@ MonoBehaviour:
   m_MouseTolerance: 10
   m_speedScaleSlope: 0.005
   m_TestWindowsEdge: 1
-  m_MinRange: {x: 0, y: 0, z: 0}
-  m_MaxRange: {x: 0, y: 0, z: 0}
+  m_MinRange: {x: -3.4028235e+38, y: -3.4028235e+38, z: -3.4028235e+38}
+  m_MaxRange: {x: 3.4028235e+38, y: 3.4028235e+38, z: 3.4028235e+38}
   m_DefaultMultiple: 0.1
   isRotation: 1
-  boxCollider: {fileID: 0}
   SpeedControlMask:
     serializedVersion: 2
     m_Bits: 4294967295

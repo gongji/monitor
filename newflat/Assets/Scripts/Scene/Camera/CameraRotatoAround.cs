@@ -98,7 +98,7 @@ public class CameraRotatoAround : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Check();
+       // Check();
         if (!isEnabel)
         {
             return;
@@ -267,7 +267,7 @@ public class CameraRotatoAround : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 1000.0f, 1 << Constant.SceneLayer))
         {
-            Debug.Log(hit.transform);
+           // Debug.Log(hit.transform);
             cube.position = hit.point;
         }
 
