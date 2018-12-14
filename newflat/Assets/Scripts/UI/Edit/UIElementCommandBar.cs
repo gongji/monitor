@@ -77,7 +77,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
     }
 
     /// <summary>
-    /// 门禁是否显示保存，非门金显示编辑
+    /// 门禁是否显示保存，非门禁显示编辑
     /// </summary>
   
 
@@ -112,7 +112,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
             if (gs == null)
             {
                 gs = TransformControlUtility.CreateItem("Edit/Gizmo", null).GetComponent<gizmoScript>();
-                gs.transform.localScale = Vector3.one * 0.1f;
+                gs.transform.localScale = Vector3.one *1.0f;
             }
             gs.SetSelectObject(selectE);
         }
@@ -279,9 +279,9 @@ public sealed class UIElementCommandBar : MonoBehaviour
             return;
         }
         Init();
-        EffectionUtility.StopFlashingEffect(selectingObjectTransform);
+        EffectionUtility.StopOutlineEffect(selectingObjectTransform);
         selectingObjectTransform = currentGameObject.transform;
-        EffectionUtility.playSelectingEffect(selectingObjectTransform);
+        EffectionUtility.PlayOutlineEffect(selectingObjectTransform,Color.blue,Color.yellow);
         Show();
         PropertySet.instance.UpdateData(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData);
         if(selectingObjectTransform.GetComponent<Object3DElement>().type  == Type.De_Door)
@@ -308,7 +308,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
 
     public void CancelSelect()
     {
-        EffectionUtility.StopFlashingEffect(selectingObjectTransform);
+        EffectionUtility.StopOutlineEffect(selectingObjectTransform);
         ShowAll();
         Hide();
         selectingObjectTransform = null;

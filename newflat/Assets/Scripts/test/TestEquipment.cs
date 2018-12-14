@@ -34,28 +34,28 @@ public class TestEquipment : MonoBehaviour {
 
     private void Save()
     {
-        List<EquipmentItem> addList = new List<EquipmentItem>();
+        //List<EquipmentItem> addList = new List<EquipmentItem>();
 
 
-        for (int i = 0; i < 1; i++)
-        {
+        //for (int i = 0; i < 1; i++)
+        //{
 
-            EquipmentItem item = new EquipmentItem();
+        //    EquipmentItem item = new EquipmentItem();
 
-            item.name = "addnumber" + i;
-            item.modelId = "23";
-            item.sceneId = "";
-            item.number = "number123";
-            item.type = "door";
-            addList.Add(item);
-        }
-
-
+        //    item.name = "addnumber" + i;
+        //    item.modelId = "23";
+        //    item.sceneId = "";
+        //    item.number = "number123";
+        //    item.type = "door";
+        //    addList.Add(item);
+        //}
 
 
-        result.Add("add", addList);
 
-        List<EquipmentItem> updateList = new List<EquipmentItem>();
+
+        //result.Add("add", addList);
+
+        //List<EquipmentItem> updateList = new List<EquipmentItem>();
 
 
 
@@ -72,36 +72,36 @@ public class TestEquipment : MonoBehaviour {
         //}
 
 
-        result.Add("update", updateList);
-        result.Add("delete", "");
+        //result.Add("update", updateList);
+        //result.Add("delete", "");
 
-        Dictionary<string, string> postData = new Dictionary<string, string>();
-        postData.Add("result", CollectionsConvert.ToJSON(result));
+        //Dictionary<string, string> postData = new Dictionary<string, string>();
+        //postData.Add("result", CollectionsConvert.ToJSON(result));
 
-        Debug.Log(CollectionsConvert.ToJSON(postData));
+        //Debug.Log(CollectionsConvert.ToJSON(postData));
 
-        Equipment3dProxy.PostEquipmentSaveData((a) => { }, postData);
+        //Equipment3dProxy.PostEquipmentSaveData((a) => { }, postData);
     }
 
     private void CompareObject()
     {
-        EquipmentItem ei = new EquipmentItem();
-        ei.name = "54333";
+        //EquipmentItem ei = new EquipmentItem();
+        //ei.name = "54333";
 
-        ei.id = "123456";
+        //ei.id = "123456";
 
-        EquipmentItem  aa = ei.Clone() as EquipmentItem;
-        Debug.Log(aa.name);
-        Debug.Log(aa.id);
+        //EquipmentItem  aa = ei.Clone() as EquipmentItem;
+        //Debug.Log(aa.name);
+        //Debug.Log(aa.id);
 
-        if(aa.Equals(ei))
-        {
-            Debug.Log("相等");
-        }
-        else
-        {
-            Debug.Log("不相等");
-        }
+        //if(aa.Equals(ei))
+        //{
+        //    Debug.Log("相等");
+        //}
+        //else
+        //{
+        //    Debug.Log("不相等");
+        //}
 
     }
 }

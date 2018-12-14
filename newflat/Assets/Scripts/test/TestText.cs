@@ -19,11 +19,11 @@ public class TestText : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        EffectionUtility.playSelectingEffect(transform);
+       // EffectionUtility.playSelectingEffect(transform);
     }
 
     private void OnMouseExit()
     {
-        EffectionUtility.StopFlashingEffect(transform);
+       // EffectionUtility.StopFlashingEffect(transform);
     }
 }

@@ -126,13 +126,22 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         equipmentTips.SetActive(false);
     }
 
-    public override void Locate()
+    protected bool isShowTips = true;
+
+    public void SetTipsShow(bool isEnable)
     {
-        base.Locate();
+        isShowTips = isEnable;
+    }
+    //定位设备
+    public override void SelectEquipment()
+    {
+        base.SelectEquipment();
 
     }
 
-
-
+    public override void OnMouseClick() {
+        ShowTestPoint.Show(equipmentItem.name, equipmentItem.id);
+    }
+    
 
 }

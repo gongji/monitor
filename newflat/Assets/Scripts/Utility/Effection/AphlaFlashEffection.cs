@@ -10,28 +10,28 @@ public class AphlaFlashEffection : MonoBehaviour
     Renderer[] renders;
     private System.Action callBack;
 
-    void Start()
-    {
-       Flash(1000,null);
-    }
-    public void Flash(float totalTime,System.Action callBack)
+    //void Start()
+    //{
+    //   Flash(1000,null);
+    //}
+    public void Flash()
     {
         //if (callBack!=null)
         //{
         //    callBack.Invoke();
         //}
-        this.callBack = callBack;
+       
 
         renders = GetComponentsInChildren<Renderer>();
         if(gameObject.activeSelf)
         {
-            StartCoroutine(StartFlash(totalTime));
+            StartCoroutine(StartFlash());
         }
         
     }
 
     private Dictionary<object, object> dic = new Dictionary<object, object>();
-    private IEnumerator StartFlash(float totalTime)
+    private IEnumerator StartFlash()
     {
         dic.Clear();
         MeshRenderer[] mrs  = gameObject.GetComponentsInChildren<MeshRenderer>();
@@ -76,21 +76,21 @@ public class AphlaFlashEffection : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
 
-            if ((Time.realtimeSinceStartup - tempTime) > totalTime)
-            {
-                if (callBack != null)
-                {
-                    callBack.Invoke();
-                };
-                StopAllTask();
-                yield break;
-            }
+            //if ((Time.realtimeSinceStartup - tempTime) > totalTime)
+            //{
+            //    if (callBack != null)
+            //    {
+            //        callBack.Invoke();
+            //    };
+            //    StopAllTask();
+            //    yield break;
+            //}
         }
       
 
     }
 
-    public void ResetColor()
+    private void ResetColor()
     {
         foreach (Material _mat in dic.Keys)
         {
@@ -107,6 +107,7 @@ public class AphlaFlashEffection : MonoBehaviour
         //    mr.enabled = true;
         //}
         ResetColor();
+        StopAllCoroutines();
         GameObject.Destroy(this);
     }
 }

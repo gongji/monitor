@@ -185,7 +185,7 @@ namespace State
             baseEquipmentControl = equipmentObject.GetComponent<BaseEquipmentControl>();
             if (equipmentObject!=null && baseEquipmentControl != null)
             {
-                baseEquipmentControl.Locate();
+                baseEquipmentControl.SelectEquipment();
                // LocateBack.instance.SetEquipment(baseEquipmentControl);
             }
         }

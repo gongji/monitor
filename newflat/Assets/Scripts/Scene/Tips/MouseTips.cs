@@ -39,12 +39,12 @@ public class MouseTips : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        EffectionUtility.playSelectingEffect(transform);
+        EffectionUtility.PlayOutlineEffect(transform,Color.blue,Color.yellow);
     }
 
     private void OnMouseExit()
     {
-        EffectionUtility.StopFlashingEffect(transform);
+        EffectionUtility.StopOutlineEffect(transform);
     }
 
 

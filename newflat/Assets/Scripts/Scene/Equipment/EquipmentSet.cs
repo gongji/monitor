@@ -1,6 +1,7 @@
 ﻿using Core.Common.Logging;
 using DataModel;
 using State;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,11 @@ public sealed class EquipmentSet  {
 
     private static ILog log = LogManagers.GetLogger("EquipmentSet");
     /// <summary>
-    /// 创建当前的设备
+    /// 创建当前场景的设备
     /// </summary>
     public static void CreateEquipment()
     {
+        //查询当前的数据库
         EquipmentData.SearchCurrentEquipmentData(() => {
             StartCreateEquipment();
         });
@@ -36,6 +38,10 @@ public sealed class EquipmentSet  {
 
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
         {
+
+            DataModel.Type type = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), equipmentItem.type);
+
+
             //避免重复创建
             if (!string.IsNullOrEmpty(equipmentItem.modelId) && modelPrefebDic.ContainsKey(equipmentItem.modelId) && !equipmentDic.ContainsKey(equipmentItem.id))
             {
@@ -48,6 +54,17 @@ public sealed class EquipmentSet  {
                 {
                     equipmentDic.Add(equipmentItem.id, equipment);
                 }
+
+               
+            }
+            //处理门禁
+            else if(type == DataModel.Type.De_Door)
+            {
+
+            }
+            //漏水绳
+            else if(type == DataModel.Type.De_LouShui)
+            {
 
             }
         }
@@ -64,15 +81,14 @@ public sealed class EquipmentSet  {
             neControl.equipmentItem = equipmentItem;
         }
         Object3DElement equipmentObject3DElement = equipment.AddComponent<Object3DElement>();
-        equipmentObject3DElement.type = Type.De_Equipment;
+        
+        equipmentObject3DElement.type = DataModel.Type.De_Equipment;
         equipmentObject3DElement.equipmentData = equipmentItem;
   
         equipment.name = equipmentItem.name;
         equipmentObject3DElement.SetEquipmentData(equipmentItem);
 
     }
-
-
     /// <summary>
     /// 隐藏设备标签
     /// </summary>
@@ -89,7 +105,7 @@ public sealed class EquipmentSet  {
         {
             if (!string.IsNullOrEmpty(equipmentItem.id) && equipmentDic.ContainsKey(equipmentItem.id))
             {
-                BaseEquipmentControl bec = equipmentDic[equipmentItem.id].GetComponent<BaseEquipmentControl>();
+                NormalEquipmentControl bec = equipmentDic[equipmentItem.id].GetComponent<NormalEquipmentControl>();
                 if(bec!=null)
                 {
                     bec.SetTipsShow(false);
@@ -117,7 +133,7 @@ public sealed class EquipmentSet  {
             GameObject equipment = allEquipmentDic[equipmentItem.id];
             //ShowOrHideEquipment(equipment,true);
             equipment.SetActive(true);
-            BaseEquipmentControl bec = equipment.GetComponent<BaseEquipmentControl>();
+            NormalEquipmentControl bec = equipment.GetComponent<NormalEquipmentControl>();
             if(bec!=null)
             {
                 bec.SetTipsShow(true);
@@ -129,7 +145,8 @@ public sealed class EquipmentSet  {
             Object3dItem parent = SceneData.FindObjUtilityect3dItemById(equipmentItem.sceneId);
 
             //楼层或者房间
-            if (parent!=null &&(parent.type == Type.Floor || (parent.type == Type.Room && istate is RoomState)))
+            
+            if (parent!=null &&(parent.type == DataModel.Type.Floor || (parent.type == DataModel.Type.Room && istate is RoomState)))
             {
                 GameObject root = SceneUtility.GetGameByRootName(parent.number, parent.number);
                 GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);

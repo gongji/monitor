@@ -42,11 +42,11 @@ public class Object3DElement : MonoBehaviour {
     {
         if (isSelected)
         {
-            EffectionUtility.playSelectingEffect(transform);
+            EffectionUtility.PlayOutlineEffect(transform,Color.blue,Color.yellow);
         }
         else
         {
-            EffectionUtility.StopFlashingEffect(transform);
+            EffectionUtility.StopOutlineEffect(transform);
         }
     }
 

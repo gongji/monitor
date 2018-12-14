@@ -6,13 +6,14 @@ using UnityEngine;
 /// 效果工具类
 /// </summary>
 public sealed  class EffectionUtility  {
-    
 
+
+    #region OutlineEffect
     /// <summary>
-    /// 选中设备
+    /// 描边效果
     /// </summary>
     /// <param name="selectingObjectTransform"></param>
-    public static  void playSelectingEffect(Transform selectingObjectTransform)
+    public static void PlayOutlineEffect(Transform selectingObjectTransform, Color fromColor,Color toColor)
     {
         //this.selectingObjectTransform = selectingObjectTransform;
         HighlightingSystem.HighlightingRenderer hr = Camera.main.GetComponent<HighlightingSystem.HighlightingRenderer>();
@@ -37,15 +38,17 @@ public sealed  class EffectionUtility  {
         {
             flash = selectingObjectTransform.gameObject.AddComponent<FlashingController>();
         }
-        flash.play(Color.blue, Color.yellow);
+        //flash.play(Color.blue, Color.yellow);
+
+        flash.play(fromColor, toColor);
 
     }
 
     /// <summary>
-    /// 取消设备的效果
+    /// 取消描边的效果
     /// </summary>
     /// <param name="selectingObjectTransform"></param>
-    public static void StopFlashingEffect(Transform selectingObjectTransform)
+    public static void StopOutlineEffect(Transform selectingObjectTransform)
     {
         if (selectingObjectTransform != null)
         {
@@ -68,6 +71,8 @@ public sealed  class EffectionUtility  {
        
 
     }
+
+    #endregion
     /// <summary>
     /// 模糊效果
     /// </summary>
@@ -95,4 +100,56 @@ public sealed  class EffectionUtility  {
         }
         blur.enabled = false;
     }
+
+
+    #region AphlaFlash
+    public static void PlayAphlaFlash(GameObject gameObject)
+    {
+        AphlaFlashEffection afe = gameObject.GetComponent<AphlaFlashEffection>();
+        if(!afe)
+        {
+            afe = gameObject.AddComponent<AphlaFlashEffection>();
+        }
+        afe.Flash();
+
+
+    }
+
+    public static void StopAphlaFlash(GameObject gameObject)
+    {
+        AphlaFlashEffection afe = gameObject.GetComponent<AphlaFlashEffection>();
+        if (afe)
+        {
+            afe.StopAllTask();
+        }
+    }
+
+
+    # endregion
+
+
+    #region  dotwenAphlaFlash
+    public static void PlayDotweenAphlaFlash(GameObject gameObject,Color color,string property)
+    {
+        DoTweenAphlaFlashEffection afe = gameObject.GetComponent<DoTweenAphlaFlashEffection>();
+        if (!afe)
+        {
+            afe = gameObject.AddComponent<DoTweenAphlaFlashEffection>();
+        }
+        afe.Flash(color, property);
+
+
+    }
+
+    public static void StopDotweenAphlaFlash(GameObject gameObject)
+    {
+        DoTweenAphlaFlashEffection afe = gameObject.GetComponent<DoTweenAphlaFlashEffection>();
+        if (afe)
+        {
+            afe.StopAllTask();
+        }
+    }
+
+
+    # endregion
 }

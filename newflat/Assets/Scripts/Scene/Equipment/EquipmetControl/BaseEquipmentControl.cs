@@ -7,12 +7,35 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
 
     public EquipmentItem equipmentItem =new EquipmentItem();
 
-    public virtual void alarm(){}
+    private bool isAlarm = false;
+    public virtual void Alarm(){
+        if(isAlarm)
+        {
+            return;
+        }
+        isAlarm = true;
+        UpdateShow();
+    }
 
-    public virtual void Locate() {
+    public virtual void CancleAlarm() {
+        if(!isAlarm)
+        {
+            return;
+        }
+        isAlarm = false;
+        UpdateShow();
+    }
 
+    private bool isSelect = false;
+    public virtual void SelectEquipment() {
 
-        BoxCollider collider = transform.GetComponentInChildren<BoxCollider>();
+        if(isSelect)
+        {
+            return;
+        }
+        isSelect = true;
+        UpdateShow();
+       BoxCollider collider = transform.GetComponentInChildren<BoxCollider>();
 
         Vector3 upPostion = transform.position + transform.up * collider.bounds.size.y * 1.5f ;
 
@@ -25,54 +48,85 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         CameraAnimation.CameraMove(Camera.main, targetPostion, quaternion.eulerAngles, 1.0f,null);
         //Camera.main.transform.position = targetPostion;
         //Camera.main.transform.localRotation = quaternion;
-        SelectEquipment();
+       // SelectEffection();
        // LocateBack.instance.Show();
     }
 
 
     private GameObject selectArrow = null;
-    private  void SelectEquipment()
+    private  void CreateSelectEffection()
     {
+       
         selectArrow = TransformControlUtility.CreateItem("equipment/select", null);
 
-        selectArrow.transform.position = transform.position + Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
-        selectArrow.transform.localScale = Vector3.one * 0.1f;
+        selectArrow.transform.position = transform.position + 
+            Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
+        
+        selectArrow.transform.SetParent(transform.parent);
+        EffectionUtility.PlayDotweenAphlaFlash(gameObject,Color.blue, "_Color");
+       
+    }
 
-        GetComponent<Object3DElement>().SelectHigh(true);
-        //AphlaFlashEffection afe = GetComponent<AphlaFlashEffection>();
-        //if (afe == null)
-        //{
-        //    afe = gameObject.AddComponent<AphlaFlashEffection>();
-        //}
+
+    private GameObject alarmArrow;
+    private void CreateAlarmEffection()
+    {
+        alarmArrow = TransformControlUtility.CreateItem("equipment/alarm", null);
+        alarmArrow.transform.position = transform.position +
+            Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
+        alarmArrow.transform.SetParent(transform.parent);
+
+        EffectionUtility.PlayDotweenAphlaFlash(gameObject, Color.red, "_Color");
     }
 
     public virtual void CancelEquipment()
     {
-
-        if (selectArrow != null)
+        if (!isSelect)
         {
-            GameObject.Destroy(selectArrow);
+            return;
         }
-        AphlaFlashEffection afe = GetComponent<AphlaFlashEffection>();
+
+        isSelect = false;
+        UpdateShow();
+       
+        //LocateBack.instance.Hide();
+    }
+
+    private void CancelEffection(GameObject effectionObject)
+    {
+        if (effectionObject != null)
+        {
+            GameObject.Destroy(effectionObject);
+        }
+        DoTweenAphlaFlashEffection afe = GetComponent<DoTweenAphlaFlashEffection>();
         if (afe != null)
         {
             afe.StopAllTask();
         }
-        //LocateBack.instance.Hide();
     }
 
-    protected bool isShowTips = true;
+ 
+    public virtual void OnMouseClick() { }
 
-    public void SetTipsShow(bool isEnable)
+   
+
+    private void UpdateShow()
     {
-        isShowTips = isEnable;
+        CancelEffection(selectArrow);
+        CancelEffection(alarmArrow);
+
+        if (isSelect)
+        {
+            
+            CreateSelectEffection();
+        }
+        else
+        {
+            if(isAlarm)
+            {
+                CreateAlarmEffection();
+            }
+        }
     }
-    public void OnMouseClick()
-    {
-        // Main.instance.stateMachineManager.ViewEquipment(equipmentItem.id, equipmentItem.parentid);
-
-        ShowTestPoint.Show(equipmentItem.name, equipmentItem.id);
-    }
-
-
+   
 }
