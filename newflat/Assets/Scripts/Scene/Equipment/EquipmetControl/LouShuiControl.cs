@@ -33,15 +33,18 @@ public  class LouShui : BaseEquipmentControl {
 
 
     private GameObject loushuiLine = null;
+
+    private string data;
     /// <summary>
     /// 漏水绳的数据格式25.5，,5,5,7.8|14.1.36.9.58.7
     /// </summary>
     /// <param name="data"></param>
     public void CreateLouShui(string data)
     {
+        this.data = data;
         if(loushuiLine==null)
         {
-            loushuiLine = GameObject.Instantiate( Resources.Load<GameObject>("loushui"));
+            loushuiLine = GameObject.Instantiate(Resources.Load<GameObject>("loushui"));
         }
 
         string[] postions = data.Split('|');
@@ -57,6 +60,9 @@ public  class LouShui : BaseEquipmentControl {
         loushuiLine.GetComponent<LineRenderer>().endWidth = 0.1f;
         loushuiLine.GetComponent<LineRenderer>().SetPositions(ps.ToArray());
     }
+
+
+
 
 
 }
