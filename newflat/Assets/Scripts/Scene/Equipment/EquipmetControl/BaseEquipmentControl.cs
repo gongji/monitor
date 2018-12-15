@@ -17,6 +17,8 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         UpdateShow();
     }
 
+
+
     public virtual void CancleAlarm() {
         if(!isAlarm)
         {

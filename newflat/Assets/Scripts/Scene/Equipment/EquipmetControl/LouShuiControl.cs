@@ -1,13 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public  class LouShui : BaseEquipmentControl {
+public  class LouShuiControl : BaseEquipmentControl {
 
 
     public override void Alarm()
     {
         base.Alarm();
+    }
+
+    public void Alarm(int segments)
+    {
+        Alarm();
     }
 
     public override void CancleAlarm()
@@ -32,9 +38,13 @@ public  class LouShui : BaseEquipmentControl {
     }
 
 
-    private GameObject loushuiLine = null;
+    private Object loushuiLine = null;
+
+    private Material material;
 
     private string data;
+
+    private Color color;
     /// <summary>
     /// 漏水绳的数据格式25.5，,5,5,7.8|14.1.36.9.58.7
     /// </summary>
@@ -44,21 +54,38 @@ public  class LouShui : BaseEquipmentControl {
         this.data = data;
         if(loushuiLine==null)
         {
-            loushuiLine = GameObject.Instantiate(Resources.Load<GameObject>("loushui"));
+            loushuiLine = Resources.Load("equipment/loushui");
         }
+
+        material = Resources.Load<Material>("equipment/linerender");
 
         string[] postions = data.Split('|');
 
-        List<Vector3> ps = new List<Vector3>();
-        foreach(string temp in postions)
+        for(int i=1;i< postions.Length;i++)
         {
-            string[] _postions = temp.Split('_');
-            Vector3 p = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
-            ps.Add(p);
+            GameObject lineRender = (GameObject)GameObject.Instantiate(loushuiLine);
+            lineRender.GetComponent<LineRenderer>().startWidth = 0.1f;
+            lineRender.GetComponent<LineRenderer>().endWidth = 0.1f;
+            string[] _postions = postions[i - 1].Split(',');
+            lineRender.transform.SetParent(transform);
+            lineRender.name = i.ToString();
+            Vector3 preVerctor3 = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
+
+            _postions = postions[i ].Split(',');
+
+            Vector3 currentVerctor3 = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
+            Vector3[] vs = new Vector3[2] { preVerctor3 , currentVerctor3 };
+            lineRender.GetComponent<LineRenderer>().SetPositions(vs);
+            Material m = GameObject.Instantiate<Material>(material);
+            lineRender.GetComponent<LineRenderer>().material = m;
         }
-        loushuiLine.GetComponent<LineRenderer>().startWidth = 0.1f;
-        loushuiLine.GetComponent<LineRenderer>().endWidth = 0.1f;
-        loushuiLine.GetComponent<LineRenderer>().SetPositions(ps.ToArray());
+    }
+
+    private void SetSegmentsAlarm(int i)
+    {
+
+        Tweener tweener = transform.Find(i.ToString()).GetComponent<Material>().DOColor(Color.red, 1.0f);
+        tweener.SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
     }
 
 
