@@ -4,6 +4,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using  System.Linq;
 
 public class FullAreaSet : BaseSet
 {
@@ -12,31 +13,182 @@ public class FullAreaSet : BaseSet
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
         base.Enter(currentlist, callBack);
-        SaveOrResetFloorPostion(currentlist);
-        CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, callBack);
+        //SaveOrResetFloorPostion(currentlist);
+        Object3dItem currentScene = SceneContext.currentSceneData;
+
+        SceneContext.currentSceneData = FindMapWqItem();
+       CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, ()=> {
+
+           SetSkyEffection();
+           //设置能耗展示
+           SetEnergyConsumptionShow();
+           CreateTip(SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId).name);
 
 
+           if (callBack!=null)
+           {
+               callBack.Invoke();
+           }
+           
+       });
     }
     /// <summary>
-    /// 设置效果
+    /// 设置能耗展示
     /// </summary>
-    public  void SetSkyEffection()
+    private  void SetEnergyConsumptionShow()
     {
+        EnergyConsumptionProxy.GetEnergyConsumptionData((result) => {
+           // List<EnergyConsumptionItem> energyData = Utils.CollectionsConvert.ToObject<List<EnergyConsumptionItem>>(result);
+
+        },SceneContext.buiderId
+        );
+
+        List<EnergyConsumptionItem> energyData = EnergyConsumptionTestData.GetTestData();
+        Dictionary<string, EnergyConsumptionItem> dic = new Dictionary<string, EnergyConsumptionItem>();
+        foreach(EnergyConsumptionItem item in energyData)
+        {
+            if(!dic.ContainsKey(item.id))
+            {
+                dic.Add(item.id, item);
+            }
+           
+        }
+
+        string wqNumber = FindMapWqItem().number;
+        //查找外构
+
+        List<Transform> floorList = new List<Transform>();
+        if(!string.IsNullOrEmpty(wqNumber))
+        {
+           GameObject root =  SceneUtility.GetGameByRootName(wqNumber, wqNumber);
+
+            if(root!=null)
+            {
+                foreach (Transform chilid in root.transform)
+                {
+                    floorList.Add(chilid);
+                    string floorid = SceneData.GetIdByNumber(chilid.name.ToLower().Trim());
+
+                    EnergyConsumptionItem item = null;
+                    dic.TryGetValue(floorid, out item);
+                    if(item!=null)
+                    {
+                        CreateEnergyConsumptionMaterial(item, chilid);
+                    }
+                }
+            }
+        }
+
+        SwitchCamera(floorList);
+    }
+
+    /// <summary>
+    /// 创建能耗材质
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="t"></param>
+    private void CreateEnergyConsumptionMaterial(EnergyConsumptionItem item,Transform t)
+    {
+        if(t.GetComponent<MeshRenderer>().material.name.Equals(t.name))
+        {
+            return;
+        }
+        Shader shader1 = Shader.Find("Custom/Multi-Gradient");
+
+        Material m = new Material(shader1);
+        m.name = t.name;
+
+        t.GetComponent<MeshRenderer>().material = m;
+
+        Color startc = new Color32(item.startR, item.startG,item.startB, item.startA);
+        Color endc = new Color32(item.endR, item.endG, item.endB, item.endA);
+        m.SetColor("_Color1", startc);
+        m.SetColor("_Color2", endc);
+    }
+
+    /// <summary>
+    /// 切换为旋转相机
+    /// </summary>
+    /// <param name="list"></param>
+    private void SwitchCamera(List<Transform> list)
+    {
+        if(list==null || list.Count == 0)
+        {
+            return;
+        }
+
+        IEnumerable<Transform> result =
+            from t in list
+            orderby t.name ascending
+            select t;
+
+        Transform resultTransform = result.ToList<Transform>()[0];
+        //Debug.Log(resultTransform);
+        CameraInitSet.SetRotationCamera(resultTransform,true);
+    }
+
+    /// <summary>
+    /// 查找wq的场景
+    /// </summary>
+    /// <returns></returns>
+    private Object3dItem FindMapWqItem()
+    {
+        foreach (Object3dItem item in currentlist)
+        {
+            if (item.number.Contains(Constant.WQName))
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    private Transform FindMapWqTransform()
+    {
+        Object3dItem mapWqItem = FindMapWqItem();
+        GameObject g =   SceneUtility.GetGameByRootName(mapWqItem.number, mapWqItem.number);
+        if(g!=null)
+        {
+            return g.transform;
+        }
+
+        return null;
+    }
+
+    private FlyTextMeshModel tmm = null;
+    private void CreateTip(string name)
+    {
+
+        Transform t = FindMapWqTransform();
+
+        if(t==null || tmm!=null)
+        {
+            return;
+        }
+ 
+        GameObject collider = FindObjUtility.GetTransformChildByName(t, Constant.ColliderName);
+        tmm = collider.GetComponent<FlyTextMeshModel>();
+        if (tmm == null)
+        {
+
+            tmm = collider.AddComponent<FlyTextMeshModel>();
+        }
        
+        BoxCollider bc = collider.GetComponent<BoxCollider>();
+        if (bc == null)
+        {
+            bc = collider.gameObject.AddComponent<BoxCollider>();
+        }
+        bool isActive = bc.enabled;
+        bc.enabled = true;
+        Bounds boudns = bc.GetComponent<BoxCollider>().bounds;
+        tmm.MinLoacalScale = Vector3.one * 3 ;
+        tmm.MaxLocalScale = Vector3.one * 6;
+        tmm.isAddScript = false;
 
+        Transform tips = tmm.Create(name, boudns.center + Vector3.up * boudns.size.y, collider.transform);
     }
-    /// <summary>
-    /// 设置相机特效和相机的范围
-    /// </summary>
-    public  void SetCameraProccessEffection()
-    {
-        GameObject cameraGameObject = SceneUtility.GetGameByComponent<Camera>(Constant.SkyboxName);
-        //cameraGameObject.layer = LayerMask.NameToLayer("PostProcessing");
-       // Camera.main.GetComponent<PostProcessVolume>().sharedProfile = cameraGameObject.GetComponent<PostProcessVolume>().sharedProfile;
-
-
-    }
-
     #endregion
 
     #region 退出场景的逻辑处理
@@ -50,8 +202,6 @@ public class FullAreaSet : BaseSet
         {
             callBack.Invoke();
         }
-
-
     }
    
 
@@ -60,6 +210,8 @@ public class FullAreaSet : BaseSet
         base.Exit(nextid);
         
         RenderSettingsValue.SetNoAreaEffction();
+        CameraInitSet.SetObjectCamera();
+        
     }
     #endregion
 }

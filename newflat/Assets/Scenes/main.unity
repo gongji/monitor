@@ -655,7 +655,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000091552734
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 22467792, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -1315,7 +1315,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1737730624}
-  - component: {fileID: 1737730623}
   - component: {fileID: 1737730622}
   m_Layer: 0
   m_Name: flyingText
@@ -1335,35 +1334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548106fb32e376049afa892d32408dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1737730623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1737730621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 167923245, guid: b74fe8ec664122a44bd6ad3b1d747deb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_fontData: []
-  m_defaultFont: 0
-  m_defaultMaterial: {fileID: 2100000, guid: 2184c969d5d70b5418f6f57915a48631, type: 2}
-  m_defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  m_defaultResolution: 5
-  m_defaultSize: 2
-  m_defaultDepth: 0.25
-  m_defaultLetterSpacing: 1
-  m_defaultLineSpacing: 1
-  m_defaultJustification: 1
-  m_includeBackface: 1
-  m_texturePerLetter: 0
-  m_anchor: 7
-  m_zAnchor: 0
-  m_colliderType: 2
-  m_addRigidbodies: 0
-  m_physicsMaterial: {fileID: 0}
-  m_smoothingAngle: 50
 --- !u!4 &1737730624
 Transform:
   m_ObjectHideFlags: 0
@@ -1371,7 +1341,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1737730621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.70175, y: -11.744144, z: -11.481756}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

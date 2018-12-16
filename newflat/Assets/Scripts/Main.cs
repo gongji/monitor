@@ -60,7 +60,9 @@ public class Main : MonoBehaviour {
             CameraInitSet.SystemInitCamera();
             Battlehub.UIControls.TreeViewControl.Instance.Init();
             ModelData.InitModelData();
-           
+            //FlyingTextMsg.instance.LoadFontAsset();
+
+
 
         });
     }

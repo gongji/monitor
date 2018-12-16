@@ -7,7 +7,7 @@ public static class CreateSubsystem  {
     public static void Create(string sceneid)
     {
         SubSystemProxy.GetSubSystemByScene((result) => {
-            Debug.Log("result=" + result);
+            Debug.Log("resultSubSystem=" + result);
 
         }, sceneid);
     }

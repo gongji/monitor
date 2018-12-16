@@ -113,11 +113,29 @@ public abstract class BaseSet
                 if (fo)
                 {
                     fo.Reset();
+                   
                 }
 
             }
 
         }
+
+    }
+
+    /// <summary>
+    /// 设置效果
+    /// </summary>
+    protected void SetSkyEffection()
+    {
+        GameObject renderGameObjerct = SceneUtility.GetGameByRootName(Constant.SkyboxName, "main");
+        if (renderGameObjerct != null)
+        {
+            renderGameObjerct.GetComponent<RenderSettingsValue>().SetRenderSettings();
+        }
+
+        GameObject cameraGameObject = SceneUtility.GetGameByComponent<Camera>(Constant.SkyboxName);
+        //cameraGameObject.layer = LayerMask.NameToLayer("PostProcessing");
+        // Camera.main.GetComponent<PostProcessVolume>().sharedProfile = cameraGameObject.GetComponent<PostProcessVolume>().sharedProfile;
 
     }
 

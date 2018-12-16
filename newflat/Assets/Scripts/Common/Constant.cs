@@ -21,5 +21,6 @@ public static class Constant  {
     public static string Door = "door";
     public static string DX = "dx";
     public static string Equipment_Prefix = "De_";
+    public static string MapName = "map";
         
 }

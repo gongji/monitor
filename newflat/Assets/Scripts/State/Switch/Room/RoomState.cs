@@ -106,7 +106,7 @@ namespace State
         }
 
         #endregion
-        public void LocateEquipment(string id)
+        public override void LocateEquipment(string id)
         {
             log.Debug("view equipment id="+id);
             ViewEquipmentInfo.Instance.Init(id, (baseSet as RoomSet).CameraLocateEquipment);

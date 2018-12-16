@@ -27,6 +27,7 @@ public static class SceneData {
 
             //Debug.Log(result);
             object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
+          
 
             // Debug.Log(object3dList.Count);
             objectDataDic.Clear();
@@ -180,6 +181,22 @@ public static class SceneData {
         if (type.Name.Equals(typeof(AreaState).Name))
         {
             currentobject3dList = GetObject3dItemByParent("0");
+
+            //将main_dx设置最前
+            Object3dItem maindx = null;
+            for(int i=0;i< currentobject3dList.Count;i++)
+            {
+                if(currentobject3dList[i].number.Equals(Constant.Main_dxName))
+                {
+                    maindx = currentobject3dList[i];
+
+                    currentobject3dList.RemoveAt(i);
+                    break;
+                }
+            }
+
+            currentobject3dList.Insert(0, maindx);
+
         }
         //房间
         else if (type.Name.Equals(typeof(RoomState).Name))
@@ -221,10 +238,8 @@ public static class SceneData {
 
         IEnumerable<Object3dItem> result =
               from object3dItem in object3dList
-              where object3dItem.parentsId.Equals(parentid)
+              where object3dItem.parentsId.Equals(parentid) && (!object3dItem.number.EndsWith(Constant.MapName.ToLower()))
               select object3dItem;
-
-
         return result.ToList<Object3dItem>();
     }
 
@@ -287,14 +302,19 @@ public static class SceneData {
     /// <returns></returns>
     public static List<Object3dItem> GetFullAreaObject3dItem(string currentid, string buiderId)
     {
-        IEnumerable<Object3dItem> floorResult =
+
+        Object3dItem builderItem = FindObjUtilityect3dItemById(buiderId);
+        string firstName = builderItem.number.Split('_')[0];
+        IEnumerable<Object3dItem> fullresult =
              from object3dItem in object3dList
                  //不包含管网
-             where ((object3dItem.parentsId.Equals(buiderId) && !object3dItem.number.Contains(Constant.GuanDao))|| object3dItem.number.Equals(Constant.Main_dxName))
+             where object3dItem.number.Equals(Constant.SkyboxName) || (object3dItem.number.StartsWith(firstName)  && object3dItem.number.EndsWith(Constant.MapName.ToString()))
              select object3dItem;
 
 
-        return floorResult.ToList<Object3dItem>();
+       // Debug.Log(fullresult.ToList<Object3dItem>().Count);
+
+        return fullresult.ToList<Object3dItem>();
     }
 
         /// <summary>

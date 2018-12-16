@@ -228,22 +228,35 @@ public static class CameraInitSet {
     /// 设置绕中心点旋转
     /// </summary>
     /// <param name="box"></param>
-    public static void SetRotationCamera(Transform  centerTransform)
+    public static void SetRotationCamera(Transform  centerTransform,bool isFullArea =false)
     {
         CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
-        coc.enabled = false;
+        if(coc!=null)
+        {
+            GameObject.DestroyImmediate(coc);
+        }
+      
         CameraRotatoAround acc = Camera.main.gameObject.GetComponent<CameraRotatoAround>();
         if (acc == null)
         {
             acc = Camera.main.gameObject.AddComponent<CameraRotatoAround>();
         }
+       
         acc.target = centerTransform;
+        
         float _distance = Vector3.Distance(centerTransform.position, Camera.main.transform.position);
         acc.distance = _distance;
         acc.distanceMax = _distance * 2.0f;
         acc.distanceMin = 0.0f;
         acc.speedx = 0.5f;
         acc.MouseScrollWheelSensitivity = 5.0f;
+
+        if(isFullArea)
+        {
+            acc.MouseScrollWheelSensitivity = 25.0f;
+            acc.distanceMin = _distance;
+        }
+        acc.SetEnable(true);
     }
 
     public static void SetObjectCamera()
@@ -255,9 +268,9 @@ public static class CameraInitSet {
         }
 
         CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
-        if(coc!=null)
+        if(coc==null)
         {
-            coc.enabled = true;
+            Camera.main.gameObject.AddComponent<CameraObjectController>();
         }
         
     }

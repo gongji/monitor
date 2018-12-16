@@ -129,6 +129,13 @@ public sealed class CameraViewData
         CallProxyGetViewData(sql, callBack);
     }
 
+    public static void GetCameraViewBySceneId(System.Action<CameraViewItem> callBack, string sceneId,System.Action error = null)
+    {
+        
+         string  sql = "sceneId = " + sceneId + " and (equipId is null or equipId = 0)";
+        CallProxyGetViewData(sql, callBack);
+    }
+
     private static void GetCurrentEquipmentCameraView(System.Action<CameraViewItem> callBack,string equipmentId)
     {
         string sql = "equipId = " + equipmentId + " and (sceneId is null or sceneId = -1)";

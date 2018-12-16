@@ -35,7 +35,7 @@ public class CameraRotatoAround : MonoBehaviour
     private Vector3 now;
 
 
-    private bool isEnabel = true;
+    private bool isEnabel = false;
     private Vector3 postion =Vector3.zero;
     public Vector3 Postion
     {
@@ -74,12 +74,19 @@ public class CameraRotatoAround : MonoBehaviour
     {
         cube = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
         //target = cube;
-        //Vector3 eulerAngles = this.transform.eulerAngles;
+       
 
-        //this.eulerAngles_x = eulerAngles.y;
 
-        //this.eulerAngles_y = eulerAngles.x;
 
+    }
+
+    public void SetRotation()
+    {
+        Vector3 eulerAngles = this.transform.eulerAngles;
+
+        this.eulerAngles_x = eulerAngles.y;
+
+        this.eulerAngles_y = eulerAngles.x;
     }
 
     public void Init()

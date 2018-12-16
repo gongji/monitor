@@ -26,6 +26,7 @@ public class FlyTextMeshModel : MeshTextAbstract
         }
     }
 
+    public bool isAddScript = true;
     public override Transform Create(string text, Vector3 postion, Transform parentBox)
     {
         if (fontModel == null)
@@ -35,8 +36,11 @@ public class FlyTextMeshModel : MeshTextAbstract
             fontModel.transform.position = postion;
             fontModel.transform.SetParent(parentBox.parent);
             fontModel.name = text;
+           if(isAddScript)
+            {
+                AddScripts();
+            }
            
-            AddScripts();
         }
         return fontModel.transform;
 
@@ -61,9 +65,9 @@ public class FlyTextMeshModel : MeshTextAbstract
     }
 
 
-    private void DestroyModel()
+    public void DestroyModel()
     {
-        GameObject.Destroy(fontModelGo);
+        GameObject.DestroyImmediate(fontModelGo);
         fontMaterial = null;
     }
 

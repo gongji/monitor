@@ -12,6 +12,8 @@ public class Test : MonoBehaviour {
     public Transform t1 = null;
 	void Start () {
 
+
+        EnergyConsumptionTestData.GetTestData();
         //Debug.Log(Camera.allCameras);
         //foreach(Camera c in Camera.allCameras)
         //{

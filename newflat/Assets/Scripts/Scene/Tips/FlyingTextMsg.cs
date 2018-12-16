@@ -3,32 +3,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingTextMsg : MonoBehaviour {
-
+public class FlyingTextMsg : MonoBehaviour
+{
 
     public static FlyingTextMsg instance;
-    void Start () {
+    void Awake()
+    {
         instance = this;
-        LoadFontAsset();
+
+        // LoadFontAsset();
+        LoadPrefeb();
+    }
+    void Start()
+    {
+
+
+
     }
 
     public void LoadFontAsset()
     {
-      
         string url = Application.streamingAssetsPath + "/Text/microsoftyaheigb";
         ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+           
             TextAsset fontAsset = result.LoadAsset("microsoftyaheigb") as TextAsset;
 
             FontData fd = new FontData();
             fd.fontName = TTFFontInfo.GetFontName(fontAsset.bytes);
+
             fd.ttfFile = fontAsset;
             if (FlyingText.instance.m_fontData == null)
             {
+
                 FlyingText.instance.m_fontData = new List<FontData>();
             }
-            FlyingText.instance.m_fontData.Add(fd);
-            LoadMaterial();
+
+            FlyingText.instance.m_fontData[0] = fd;
+
+
             GetComponent<FlyingText>().Initialize();
+            LoadMaterial();
+
 
         });
     }
@@ -39,6 +54,20 @@ public class FlyingTextMsg : MonoBehaviour {
         ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
             Material m = result.LoadAsset("text") as Material;
             GetComponent<FlyingText>().m_defaultMaterial = m;
+            GetComponent<FlyingText>().Initialize();
+
+        });
+    }
+
+    private void LoadPrefeb()
+    {
+        string url = Application.streamingAssetsPath + "/Text/FlyingText.unity3d";
+        ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+
+            GameObject g =  (GameObject)GameObject.Instantiate(result.mainAsset);
+            result.Unload(false);
+
+
         });
     }
 }

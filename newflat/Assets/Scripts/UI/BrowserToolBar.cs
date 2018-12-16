@@ -181,7 +181,7 @@ public class BrowserToolBar : MonoBehaviour {
         {
             fullArea.GetComponentInChildren<Text>().text = "退出全景";
             //外构的id暂时写死
-            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1",null,0,"147");
+            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1",null,0,"241");
         }
         else
         {

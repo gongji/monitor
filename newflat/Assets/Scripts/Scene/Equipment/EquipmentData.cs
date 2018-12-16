@@ -63,6 +63,11 @@ public sealed class EquipmentData {
     public static void SearchCurrentEquipmentData(System.Action callBack)
     {
         string sql = GetEquipmentSqlByParent();
+        if(string.IsNullOrEmpty(sql))
+        {
+
+            return;
+        }
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("result", sql);
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 计算相机的范围的高度
+/// 计算相机的范围的高度,用于控制相机的范围
 /// </summary>
 public static class CaluteCameraRangeHeight  {
 

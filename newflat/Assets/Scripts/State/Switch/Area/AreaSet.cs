@@ -7,47 +7,19 @@ using UnityEngine;
 
 public class AreaSet:BaseSet
 {
-   
-
+  
     private static ILog log = LogManagers.GetLogger("AreaSet");
     #region 设置全员场景初始化
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
         base.Enter(currentlist, callBack);
         SetSkyEffection();
-        SetCameraProccessEffection();
         InitCameraPostion(callBack);
         SetTips();
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
         CreateSubsystem.Create(sceneid);
-
     }
-    /// <summary>
-    /// 设置效果
-    /// </summary>
-    public  void SetSkyEffection()
-    {
-
-        
-        GameObject renderGameObjerct = SceneUtility.GetGameByRootName(Constant.SkyboxName, "main");
-        if (renderGameObjerct != null)
-        {
-            renderGameObjerct.GetComponent<RenderSettingsValue>().SetRenderSettings();
-        }
-
-    }
-    /// <summary>
-    /// 设置相机特效和相机的范围
-    /// </summary>
-    public  void SetCameraProccessEffection()
-    {
-        GameObject cameraGameObject = SceneUtility.GetGameByComponent<Camera>(Constant.SkyboxName);
-        //cameraGameObject.layer = LayerMask.NameToLayer("PostProcessing");
-       // Camera.main.GetComponent<PostProcessVolume>().sharedProfile = cameraGameObject.GetComponent<PostProcessVolume>().sharedProfile;
-
-
-    }
-
+   
     public void InitCameraPostion(System.Action callBack)
     {
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
