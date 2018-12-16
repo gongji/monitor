@@ -28,7 +28,7 @@ class FlyingTextInspector extends Editor {
 		showFonts = Foldout (showFonts, "Font settings");
 		if (showFonts) {
 			var hasChanged = false;
-			BeginVertical ("Box");
+			UnityEditor.EditorGUILayout.BeginVertical ("Box");
 //			Label ("TTF files must be renamed to end with “.bytes”");
 			if (Button ("+ Add Font")) {
 				if (t.m_fontData == null) {
@@ -39,33 +39,33 @@ class FlyingTextInspector extends Editor {
 			}
 			if (t.m_fontData != null) {
 				for (var i = 0; i < t.m_fontData.Count; i++) {
-					BeginVertical ("Box");
+					UnityEditor.EditorGUILayout.BeginVertical ("Box");
 					LabelField ("Name in font:", t.m_fontData[i].fontName);
-					BeginHorizontal();
-					BeginVertical();
+					UnityEditor.EditorGUILayout.BeginHorizontal();
+					UnityEditor.EditorGUILayout.BeginVertical();
 					t.m_fontData[i].ttfFile = ObjectField ("Font #" + i, t.m_fontData[i].ttfFile, TextAsset, false);
 					if (!hasChanged && GUI.changed) {
 						t.m_fontData[i].fontName = TTFFontInfo.GetFontName (t.m_fontData[i].ttfFile.bytes);
 						hasChanged = true;
 					}
-					EndVertical();
+					UnityEditor.EditorGUILayout.EndVertical();
 					if (Button ("X", Width(22), Height(16))) {
 						t.m_fontData.RemoveAt (i);
 						EditorUtility.SetDirty (target);
 					}
-					EndHorizontal();
-					EndVertical();
+					UnityEditor.EditorGUILayout.EndHorizontal();
+					UnityEditor.EditorGUILayout.EndVertical();
 				}
 			}
-			EndVertical();
+			UnityEditor.EditorGUILayout.EndVertical();
 		}
 
 		EditorGUIUtility.LookLikeControls (125);
 		
 		showTextSettings = Foldout (showTextSettings, "Text settings");
 		if (showTextSettings) {
-			BeginVertical ("Box");
-			BeginHorizontal();
+			UnityEditor.EditorGUILayout.BeginVertical ("Box");
+			UnityEditor.EditorGUILayout.BeginHorizontal();
 			t.m_defaultFont = IntField ("Default Font", t.m_defaultFont, Width(148));
 			if (t.m_fontData != null && t.m_fontData.Count != 0) {
 				t.m_defaultFont = Mathf.Clamp (t.m_defaultFont, 0, t.m_fontData.Count-1);
@@ -74,7 +74,7 @@ class FlyingTextInspector extends Editor {
 			else {
 				t.m_defaultFont = 0;
 			}
-			EndHorizontal();
+			UnityEditor.EditorGUILayout.EndHorizontal();
 			t.m_defaultMaterial = ObjectField ("Default Material", t.m_defaultMaterial, Material, false);
 			t.m_defaultColor = ColorField ("Default Color", t.m_defaultColor);
 			t.m_defaultResolution = IntField ("Default Resolution", t.m_defaultResolution);
@@ -98,12 +98,12 @@ class FlyingTextInspector extends Editor {
 			t.m_includeBackface = Toggle ("Include Backface", t.m_includeBackface);
 			t.m_texturePerLetter = Toggle ("Texture Per Letter", t.m_texturePerLetter);
 			t.m_smoothingAngle = Slider ("Smoothing Angle", t.m_smoothingAngle, 0.0, 180.0);
-			EndVertical();
+			UnityEditor.EditorGUILayout.EndVertical();
 		}
 		
 		showGOsettings = Foldout (showGOsettings, "GameObject settings");
 		if (showGOsettings) {
-			BeginVertical ("Box");
+			UnityEditor.EditorGUILayout.BeginVertical ("Box");
 			t.m_anchor = EnumPopup ("Text Anchor", t.m_anchor);
 			if (t.m_defaultDepth > 0.0) {
 				t.m_zAnchor = EnumPopup ("Z Anchor", t.m_zAnchor);
@@ -113,7 +113,7 @@ class FlyingTextInspector extends Editor {
 			if (t.m_addRigidbodies) {
 				t.m_physicsMaterial = ObjectField ("Physics Material", t.m_physicsMaterial, PhysicMaterial, false);
 			}			
-			EndVertical();
+			UnityEditor.EditorGUILayout.EndVertical();
 		}
 		
 		if (GUI.changed) {
