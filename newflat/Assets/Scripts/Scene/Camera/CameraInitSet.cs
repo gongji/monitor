@@ -144,7 +144,7 @@ public static class CameraInitSet {
         {
             box.GetComponent<BoxCollider>().isTrigger = true;
         }
-        
+       
          CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
         //CameraRotatoAround acc = Camera.main.gameObject.GetComponent<CameraRotatoAround>();
         //if(acc==null)

@@ -377,7 +377,7 @@ public class BuilderSet: BaseSet,IEventListener
         CameraInitSet.SetObjectCamera();
 
         EventMgr.Instance.RemoveListener(this, EventName.FloorExpand);
-
+       
     }
 
     public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)

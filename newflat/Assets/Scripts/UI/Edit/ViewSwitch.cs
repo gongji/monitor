@@ -55,7 +55,7 @@ public class ViewSwitch : MonoBehaviour {
         if (mCurrentState is AreaState)
         {
             Camera.main.orthographic = false;
-            Camera.main.transform.position = box.transform.position + Vector3.up * 10.0f;
+            Camera.main.transform.position = box.transform.position + Vector3.up * 100.0f;
             Camera.main.transform.eulerAngles = new Vector3(90, 0, 0);
 
         }

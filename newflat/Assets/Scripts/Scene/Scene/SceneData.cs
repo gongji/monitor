@@ -544,7 +544,6 @@ public static class SceneData {
     /// <returns></returns>
     public static List<Object3dItem> GetCurrentGuangWang()
     {
-       
         if (SceneContext.currentSceneData != null)
         {
             string[] strs = SceneContext.currentSceneData.number.Split('_');
