@@ -1551,7 +1551,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
       propertyPath: far clip plane
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5400000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
       propertyPath: m_UseGravity

@@ -34,8 +34,12 @@ public class BrowseStatus : AppBaseState
            
         }
 
-        if(MouseCheck.DOUBLE_CLICK && !(Main.instance.stateMachineManager.mCurrentState is BuilderState))
+        if(MouseCheck.DOUBLE_CLICK)
         {
+            if(Camera.main.GetComponent<CameraRotatoAround>()!=null)
+            {
+                return;
+            }
             Vector3 centerPostion = MouseCheck.clickHitPoint;
             float distance = Vector3.Distance(Camera.main.transform.position, centerPostion);
             if(distance>3.0f)

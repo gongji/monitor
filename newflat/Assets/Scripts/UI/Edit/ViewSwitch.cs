@@ -45,7 +45,7 @@ public class ViewSwitch : MonoBehaviour {
 
     public void Switch2D(Transform box)
     {
-       
+        BrowserToolBar.instance.Switch2DButtonControl();
         if(box==null)
         {
             box = SceneContext.sceneBox;
@@ -96,6 +96,7 @@ public class ViewSwitch : MonoBehaviour {
     public void Switch3D()
     { 
         CameraInitSet.ResetCameraPostion();
+        BrowserToolBar.instance.SetToolBarState();
     }
 	
 }

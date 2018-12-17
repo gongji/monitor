@@ -39,6 +39,7 @@ public sealed class EquipmentSet  {
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
         {
 
+            return;
             DataModel.Type type = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), equipmentItem.type);
 
 

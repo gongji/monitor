@@ -40,18 +40,25 @@ public class BrowserToolBar : MonoBehaviour {
         instance = this;
     }
 
+    List<Transform> buttonList = new List<Transform>();
     private void Start()
     {
         reset = transform.Find("reset");
+        buttonList.Add(reset);
         viewSwitch = transform.Find("viewSwitch");
+        buttonList.Add(viewSwitch);
         qiangti = transform.Find("qiangti");
+        buttonList.Add(qiangti);
         guanxian = transform.Find("guanxian");
+        buttonList.Add(guanxian);
         fullArea = transform.Find("fullArea");
+        buttonList.Add(fullArea);
         tips = transform.Find("tips");
+        buttonList.Add(tips);
         cameraMode = transform.Find("cameraMode");
-
+        buttonList.Add(cameraMode);
         builderSwitch = transform.Find("builderSwitch");
-
+        buttonList.Add(builderSwitch);
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
 
         TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
@@ -73,24 +80,29 @@ public class BrowserToolBar : MonoBehaviour {
 
     }
 
-
+    #region toolBar control
     /// <summary>
     /// 设置工具条的显示隐藏
     /// </summary>
     public void SetToolBarState()
     {
         transform.localScale = Vector3.one;
-        reset.gameObject.SetActive(true);
-        viewSwitch.gameObject.SetActive(true);
-        qiangti.gameObject.SetActive(true);
-        guanxian.gameObject.SetActive(true);
-        fullArea.gameObject.SetActive(true);
-        tips.gameObject.SetActive(true);
-        cameraMode.gameObject.SetActive(true);
-        builderSwitch.gameObject.SetActive(true);
-
 
         IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
+
+
+        if (AppInfo.currentView == ViewType.View2D && !(mCurrentState is BuilderState))
+        {
+            Switch2DButtonControl();
+            return;
+        }
+        foreach (Transform  item in buttonList)
+        {
+            item.gameObject.SetActive(true);
+        }
+
+
+       
         if (mCurrentState is AreaState)
         {
             qiangti.gameObject.SetActive(false);
@@ -116,8 +128,6 @@ public class BrowserToolBar : MonoBehaviour {
             tips.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
         }
-
-
         else if (mCurrentState is FloorState)
         {
             fullArea.gameObject.SetActive(false);
@@ -136,6 +146,18 @@ public class BrowserToolBar : MonoBehaviour {
         }
     }
 
+    public void Switch2DButtonControl()
+    {
+        foreach (Transform item in buttonList)
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        reset.gameObject.SetActive(true);
+        viewSwitch.gameObject.SetActive(true);
+    }
+
+    #endregion 
 
     private bool guanxianSelect3d = false;
 
@@ -201,7 +223,16 @@ public class BrowserToolBar : MonoBehaviour {
             cameraMode.GetComponentInChildren<Text>().text = "人物模式";
             mainCamera.gameObject.SetActive(false);
 
-            firstFPSController.transform.position = mainCamera.transform.position - Vector3.up * 0.6f;
+            GameObject point = ManyouMsg.GetManYouPoint();
+            if(point==null)
+            {
+                firstFPSController.transform.position = mainCamera.transform.position - Vector3.up * 0.6f;
+            }
+            else
+            {
+                firstFPSController.transform.position = point.transform.position;
+            }
+           
             firstFPSController.transform.rotation = mainCamera.transform.rotation;
             firstFPSController.gameObject.SetActive(true);
             firstCamera.enabled = true;

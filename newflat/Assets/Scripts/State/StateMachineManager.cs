@@ -124,8 +124,9 @@ namespace State
 	        {
                 
                 mCurrentState.Exit(nextState, nextSceneid, ()=>{
+                    mCurrentState = nextState;
                     nextState.Enter(nextSceneid, enterCallBack);
-                    mCurrentState  = nextState;
+                   
 	        	   });
 	        }
             this.currentSceneId = nextSceneid;

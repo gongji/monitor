@@ -12,6 +12,15 @@ public class MouseTips : MonoBehaviour {
     public Vector3 scaleEffetion = Vector3.one;
     //缩放系数
     private float scaleIntensity = 1.3f;
+    private Color originalColor = Color.white;
+    private void Start()
+    {
+        if(GetComponent<Material>()!=null)
+        {
+            originalColor = GetComponent<Material>().color;
+        }
+        
+    }
     //void OnMouseEnter()
     //{
 

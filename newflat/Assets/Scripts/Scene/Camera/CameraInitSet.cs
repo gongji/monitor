@@ -139,8 +139,13 @@ public static class CameraInitSet {
 
     public static void SetIsEnbaleCamera(GameObject box, bool isEnable)
     {
-       // Debug.Log(box);
-        CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
+        // Debug.Log(box);
+        if(box!=null)
+        {
+            box.GetComponent<BoxCollider>().isTrigger = true;
+        }
+        
+         CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
         //CameraRotatoAround acc = Camera.main.gameObject.GetComponent<CameraRotatoAround>();
         //if(acc==null)
         //{
@@ -183,6 +188,7 @@ public static class CameraInitSet {
             {
                 //Debug.Log("aaaaaaaaaa");
                 SceneContext.sceneBox = box.transform;
+                
             }
             float yvalue = CaluteCameraRangeHeight.GetCameraHeight();
            // coc.SetBox(box.GetComponent<BoxCollider>(), 2,yvalue);

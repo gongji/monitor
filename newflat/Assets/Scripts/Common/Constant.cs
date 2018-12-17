@@ -22,5 +22,8 @@ public static class Constant  {
     public static string DX = "dx";
     public static string Equipment_Prefix = "De_";
     public static string MapName = "map";
-        
+
+    public static string Person_Point = "person_point";
+
+
 }

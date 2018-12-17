@@ -55,7 +55,7 @@ public   class BuiderNavigationUI:MonoBehaviour
         StopAllCoroutines();
         foreach (GameObject ui in navaUIList)
         {
-            GameObject.Destroy(ui);
+            GameObject.DestroyImmediate(ui);
         }
         navaUIList.Clear();
     }
