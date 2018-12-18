@@ -15,22 +15,36 @@ public class FullAreaSet : BaseSet
         base.Enter(currentlist, callBack);
         //SaveOrResetFloorPostion(currentlist);
         Object3dItem currentScene = SceneContext.currentSceneData;
-
-        SceneContext.currentSceneData = FindMapWqItem();
+       SceneContext.currentSceneData = FindMapWqItem();
        CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, ()=> {
 
            SetSkyEffection();
            //设置能耗展示
            SetEnergyConsumptionShow();
-           CreateTip(SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId).name);
-
-
+           CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId).name);
            if (callBack!=null)
            {
                callBack.Invoke();
            }
            
        });
+    }
+
+
+    private GameObject uiTempObject;
+    /// <summary>
+    /// 创建每一楼层的能源数据
+    /// </summary>
+    /// <param name="floorList"></param>
+    private void CreateFloorTips(List<Transform> floorList)
+    {
+        if(uiTempObject==null)
+        {
+            uiTempObject = new GameObject();
+        }
+
+        FullAreaNavigationUI fnu = uiTempObject.AddComponent<FullAreaNavigationUI>();
+        fnu.CreateNavigateUI(floorList);
     }
     /// <summary>
     /// 设置能耗展示
@@ -80,6 +94,7 @@ public class FullAreaSet : BaseSet
         }
 
         SwitchCamera(floorList);
+        CreateFloorTips(floorList);
     }
 
     /// <summary>
@@ -157,7 +172,7 @@ public class FullAreaSet : BaseSet
     }
 
     private FlyTextMeshModel tmm = null;
-    private void CreateTip(string name)
+    private void CreateNameTip(string name)
     {
 
         Transform t = FindMapWqTransform();
@@ -183,8 +198,8 @@ public class FullAreaSet : BaseSet
         bool isActive = bc.enabled;
         bc.enabled = true;
         Bounds boudns = bc.GetComponent<BoxCollider>().bounds;
-        tmm.MinLoacalScale = Vector3.one * 3 ;
-        tmm.MaxLocalScale = Vector3.one * 6;
+        tmm.MinLoacalScale = Vector3.one * 6 ;
+        tmm.MaxLocalScale = Vector3.one * 10;
         tmm.isAddScript = false;
 
         Transform tips = tmm.Create(name, boudns.center + Vector3.up * boudns.size.y, collider.transform);
@@ -208,7 +223,15 @@ public class FullAreaSet : BaseSet
    public override void Exit(string nextid)
     {
         base.Exit(nextid);
+
+        if(uiTempObject)
+        {
+            uiTempObject.GetComponent<FullAreaNavigationUI>().DeleteAllUI();
+            GameObject.DestroyImmediate(uiTempObject);
+        }
         
+
+
         RenderSettingsValue.SetNoAreaEffction();
         CameraInitSet.SetObjectCamera();
         
