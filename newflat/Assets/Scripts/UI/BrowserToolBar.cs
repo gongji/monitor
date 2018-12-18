@@ -116,6 +116,7 @@ public class BrowserToolBar : MonoBehaviour {
             qiangti.gameObject.SetActive(false);
             guanxian.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
+            tips.gameObject.SetActive(false);
         }
 
         else if (mCurrentState is BuilderState)
