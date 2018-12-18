@@ -51,11 +51,11 @@ public class FlyTextMeshModel : MeshTextAbstract
     {
         if (fontModel != null)
         {
-            
-            MouseTips mte = fontModel.gameObject.GetComponent<MouseTips>();
+
+            Mouse3DTips mte = fontModel.gameObject.GetComponent<Mouse3DTips>();
             if (mte == null)
             {
-                mte = fontModel.gameObject.AddComponent<MouseTips>();
+                mte = fontModel.gameObject.AddComponent<Mouse3DTips>();
             }
             mte.id = id;
             mte.scaleEffetion = MinLoacalScale / 2.0f;

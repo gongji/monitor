@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseTips : MonoBehaviour {
+public class Mouse3DTips : MonoBehaviour {
 
     private GameObject selectEffection = null;
 

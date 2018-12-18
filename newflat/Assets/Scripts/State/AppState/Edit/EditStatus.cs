@@ -19,11 +19,7 @@ public class EditStatus : AppBaseState
     
     public override void Update()
     {
-        if ((EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
-        {
-            
-            return;
-        }
+        
     
         base.Update();
         hitTransform = null;

@@ -58,7 +58,7 @@ public class FloorRoomSet : BaseSet
                 if (roomObject != null && collider != null)
                 {
 
-                    TipsMgr.Instance.CreateTips(collider, roomObject, child, Vector3.one * 0.5f, Vector3.one * 1.5f);
+                    TipsMgr.Instance.CreateTips(collider, roomObject, child, Vector3.one * 1f, Vector3.one * 3.0f);
                 }
             }
         }

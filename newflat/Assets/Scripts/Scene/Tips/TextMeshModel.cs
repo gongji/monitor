@@ -96,10 +96,10 @@ public class TextMeshModel : MeshTextAbstract
         if (fontModel != null)
         {
             Transform tips = fontModel.transform.Find("tips");
-            MouseTips mte = tips.gameObject.GetComponent<MouseTips>();
+            Mouse3DTips mte = tips.gameObject.GetComponent<Mouse3DTips>();
             if (mte == null)
             {
-                mte = tips.gameObject.AddComponent<MouseTips>();
+                mte = tips.gameObject.AddComponent<Mouse3DTips>();
             }
             mte.id = id;
             mte.scaleEffetion = MinLoacalScale / 2.0f;

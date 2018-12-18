@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class View2dTextManager : MonoSingleton<View2dTextManager>
 {
@@ -31,6 +32,13 @@ public class View2dTextManager : MonoSingleton<View2dTextManager>
         GetParent();
 
         GameObject text = GameObject.Instantiate(Resources.Load<GameObject>("Text"));
+        ContentSizeFitter csf = text.GetComponent<ContentSizeFitter>();
+        if(csf==null)
+        {
+            csf = text.AddComponent<ContentSizeFitter>();
+        }
+        csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         text.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
         textList.Add(text);
         if(!dic.ContainsKey(object3dItem.id))
@@ -43,6 +51,8 @@ public class View2dTextManager : MonoSingleton<View2dTextManager>
         text.GetComponentInChildren<TMPro.TextMeshProUGUI>().fontSize = 12;
         text.transform.SetParent(parent);
         text.name = object3dItem.id;
+        Mouse2DTips mouse2DTips = text.AddComponent<Mouse2DTips>();
+        mouse2DTips.sceneid = object3dItem.id;
 
     }
 

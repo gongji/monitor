@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ViewSwitch : MonoBehaviour {
 
@@ -45,6 +46,10 @@ public class ViewSwitch : MonoBehaviour {
 
     public void Switch2D(Transform box)
     {
+        //if(box!=null && box.name.Contains("box_floor"))
+        //{
+        //    return;
+        //}
         BrowserToolBar.instance.Switch2DButtonControl();
         if(box==null)
         {
@@ -61,6 +66,8 @@ public class ViewSwitch : MonoBehaviour {
         }
         else
         {
+
+
             Camera.main.orthographic = true;
             bool flag = box.GetComponent<BoxCollider>().enabled;
             box.GetComponent<BoxCollider>().enabled = true;
@@ -79,6 +86,7 @@ public class ViewSwitch : MonoBehaviour {
         {
             up = box.TransformDirection(Vector3.forward);
             maxWidth = bounds.size.x;
+           // Debug.Log("maxWidth="+ maxWidth);
         }
         else
 
@@ -86,11 +94,19 @@ public class ViewSwitch : MonoBehaviour {
             up = box.TransformDirection(Vector3.right);
             maxWidth = bounds.size.z;
         }
-        Camera.main.orthographic = true;
-        Camera.main.transform.position = box.transform.position + box.up * 2;
-        Camera.main.orthographicSize = maxWidth / 2 / (Screen.width * 1.0f / Screen.height * 1.0f);
-        Quaternion rot = Quaternion.LookRotation(Vector3.down, up);
-        Camera.main.transform.rotation = rot;
+
+        DOVirtual.DelayedCall(0.1f, () => {
+            Camera.main.orthographic = true;
+            //  Debug.Log(box.transform.position + box.up * 2);
+            Camera.main.transform.position = box.transform.position + box.up * 2;
+            Camera.main.orthographicSize = maxWidth / 2 / (Screen.width * 1.0f / Screen.height * 1.0f);
+            Quaternion rot = Quaternion.LookRotation(Vector3.down, up);
+            Camera.main.transform.rotation = rot;
+
+        });
+
+
+       
     }
 
     public void Switch3D()

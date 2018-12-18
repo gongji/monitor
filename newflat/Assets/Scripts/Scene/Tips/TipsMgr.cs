@@ -7,11 +7,7 @@ using DataModel;
 /// </summary>
 public class TipsMgr : MonoSingleton<TipsMgr> {
     
-    public void Start()
-    {
-
-       
-    }
+   
 
     /// <summary>
     /// 初始化管理类
@@ -96,14 +92,5 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
             
         }
     }
-    public void Show()
-    {
-
-    }
-
-    public void Hide()
-    {
-
-    }
-    
+   
 }

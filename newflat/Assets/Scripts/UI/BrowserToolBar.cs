@@ -253,6 +253,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     private bool isExpandbuilder = true;
     private bool isEnaleClick = true;
+    private Dictionary<string, object> dic = null;
     private void BuilderSwitch()
     {
         
@@ -260,8 +261,15 @@ public class BrowserToolBar : MonoBehaviour {
         {
             return;
         }
-        Dictionary<string, object> dic = new Dictionary<string, object>();
-        if(!isExpandbuilder)
+        if(dic==null)
+        {
+           dic = new Dictionary<string, object>();
+        }
+
+        dic.Clear();
+
+
+        if (!isExpandbuilder)
         {
             builderSwitch.GetComponentInChildren<Text>().text = "楼层复位";
             dic.Add("value", "0");
@@ -275,7 +283,7 @@ public class BrowserToolBar : MonoBehaviour {
         isExpandbuilder = !isExpandbuilder;
 
         isEnaleClick = false;
-        DOVirtual.DelayedCall(2.0f, () =>
+        DOVirtual.DelayedCall(0.8f, () =>
         {
             isEnaleClick = true;
         });

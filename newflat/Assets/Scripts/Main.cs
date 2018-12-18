@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using State;
-
+using UnityEngine.EventSystems;
 
 public class Main : MonoBehaviour {
 
@@ -68,7 +68,13 @@ public class Main : MonoBehaviour {
     }
 
 	void Update () {
-		 stateMachineManager.OnUpdate();
+
+        if ((EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
+        {
+            return;
+        }
+
+        stateMachineManager.OnUpdate();
 	}
 	
 	void FixedUpdate()

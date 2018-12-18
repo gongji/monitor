@@ -207,7 +207,8 @@ public class BuilderSet: BaseSet,IEventListener
                 GameObject root = SceneUtility.GetGameByRootName(currentfloorData[i].number, currentfloorData[i].number);
                 Vector3 tartPostion = root.transform.position - Vector3.up * (index - 1 - i) * yoffest *2;
                 //root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
-                root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
+                // root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(0.0f);
+                root.transform.DOLocalMove(tartPostion, moveTime);
             }
 
         }
@@ -226,9 +227,10 @@ public class BuilderSet: BaseSet,IEventListener
                 {
                     tartPostion = root.transform.position + Vector3.up * yoffest * 2;
                 }
-                
+
                 //root.transform.localRotation = root.transform.localRotation * Quaternion.AngleAxis(-30.0f, Vector3.up);
-                root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
+                // root.transform.DOLocalMove(tartPostion, moveTime).SetDelay(1.0f);
+                root.transform.DOLocalMove(tartPostion, moveTime);
             }
         }
         DOVirtual.DelayedCall(2.0f, () =>

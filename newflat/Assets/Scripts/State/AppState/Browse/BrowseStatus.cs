@@ -19,6 +19,7 @@ public class BrowseStatus : AppBaseState
         //TreeViewControl.Instance.SetBrowserData();
     }
 
+    private static float maxDistance = 1.0f;
     public override void Update()
     {
         base.Update();
@@ -36,19 +37,21 @@ public class BrowseStatus : AppBaseState
 
         if(MouseCheck.DOUBLE_CLICK)
         {
-            if(Camera.main.GetComponent<CameraRotatoAround>()!=null)
+            if(Camera.main.GetComponent<CameraRotatoAround>()!=null || AppInfo.currentView == ViewType.View2D)
             {
                 return;
             }
-            Vector3 centerPostion = MouseCheck.clickHitPoint;
-            float distance = Vector3.Distance(Camera.main.transform.position, centerPostion);
-            if(distance>3.0f)
-            {
-                CameraAnimation.RotationScreenCenter(centerPostion, 1.0f, (postion, duringTime) => {
-                    Main.instance.StartCoroutine(EffectionUtility.BlurEffection(duringTime, 0, 10));
-                    Camera.main.transform.DOMove(postion, duringTime).OnComplete(() =>
-                    {
+            Vector3 hitInfoPoint = MouseCheck.clickHitPoint;
+            float distance = Vector3.Distance(Camera.main.transform.position, hitInfoPoint);
+            Vector3 from = Camera.main.transform.position;
+            Vector3 to = hitInfoPoint - (hitInfoPoint - from).normalized * maxDistance;
 
+            if (distance>3.0f)
+            {
+                CameraAnimation.RotationScreenCenter(hitInfoPoint, 1.0f, (postion, duringTime) => {
+                    Main.instance.StartCoroutine(EffectionUtility.BlurEffection(duringTime, 1, 10));
+                    Camera.main.transform.DOMove(to, duringTime).OnComplete(() =>
+                    {
 
                     });
 
