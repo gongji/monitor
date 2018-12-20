@@ -73,12 +73,16 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
     private GameObject alarmArrow;
     private void CreateAlarmEffection()
     {
-        alarmArrow = TransformControlUtility.CreateItem("equipment/alarm", null);
-        alarmArrow.transform.position = transform.position +
-            Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
-        alarmArrow.transform.SetParent(transform.parent);
+        if(GetComponentInChildren<BoxCollider>()!=null)
+        {
+            alarmArrow = TransformControlUtility.CreateItem("equipment/alarm", null);
+            alarmArrow.transform.position = transform.position +
+                Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
+            alarmArrow.transform.SetParent(transform.parent);
 
-        EffectionUtility.PlayDotweenAphlaFlash(gameObject, Color.red, "_Color");
+            EffectionUtility.PlayDotweenAphlaFlash(gameObject, Color.red, "_Color");
+        }
+       
     }
 
     public virtual void CancelEquipment()
@@ -100,11 +104,15 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         {
             GameObject.Destroy(effectionObject);
         }
-        DoTweenAphlaFlashEffection afe = GetComponent<DoTweenAphlaFlashEffection>();
-        if (afe != null)
+        if (GetComponentInChildren<BoxCollider>() != null)
         {
-            afe.StopAllTask();
+            DoTweenAphlaFlashEffection afe = GetComponent<DoTweenAphlaFlashEffection>();
+            if (afe != null)
+            {
+                afe.StopAllTask();
+            }
         }
+           
     }
 
  

@@ -14,11 +14,13 @@ public  class LouShuiControl : BaseEquipmentControl {
     public void Alarm(int segments)
     {
         Alarm();
+        SetSegmentsAlarm(segments);
     }
 
     public override void CancleAlarm()
     {
         base.CancleAlarm();
+        ResetAll();
     }
 
 
@@ -36,8 +38,6 @@ public  class LouShuiControl : BaseEquipmentControl {
     {
         base.CancelEquipment();
     }
-
-
     private Object loushuiLine = null;
 
     private Material material;
@@ -45,12 +45,17 @@ public  class LouShuiControl : BaseEquipmentControl {
     private string data;
 
     private Color color;
+    private Color originalColor = Color.white;
     /// <summary>
     /// 漏水绳的数据格式25.5，,5,5,7.8|14.1.36.9.58.7
     /// </summary>
     /// <param name="data"></param>
     public void CreateLouShui(string data)
     {
+        if(transform.childCount>0)
+        {
+            return;
+        }
         this.data = data;
         if(loushuiLine==null)
         {
@@ -58,6 +63,7 @@ public  class LouShuiControl : BaseEquipmentControl {
         }
 
         material = Resources.Load<Material>("equipment/linerender");
+        originalColor = material.color;
 
         string[] postions = data.Split('|');
 
@@ -81,15 +87,32 @@ public  class LouShuiControl : BaseEquipmentControl {
         }
     }
 
+    private Tweener tweener = null;
+    private int alarmIndex = -1;
     private void SetSegmentsAlarm(int i)
     {
-
-        Tweener tweener = transform.Find(i.ToString()).GetComponent<Material>().DOColor(Color.red, 1.0f);
+        StopDotween();
+        ResetAll();
+        tweener = transform.Find(i.ToString()).GetComponent<LineRenderer>().material.DOColor(Color.red, 1.0f);
         tweener.SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+     
+    }
+    private void StopDotween()
+    {
+        if(tweener!=null)
+        {
+            tweener.Kill();
+            tweener = null;
+        }
     }
 
+    private void ResetAll()
+    {
+        StopDotween();
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<LineRenderer>().material.color = originalColor;
 
-
-
-
+        }
+    }
 }
