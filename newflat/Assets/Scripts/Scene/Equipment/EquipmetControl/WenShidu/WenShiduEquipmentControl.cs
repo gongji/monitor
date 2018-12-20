@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WenShiduControl : BaseEquipmentControl
+public class WenShiduEquipmentControl : BaseEquipmentControl
 {
 
     private void Start()

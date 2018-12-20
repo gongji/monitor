@@ -28,7 +28,7 @@ namespace DataModel
         Floor,
         Room,
         RoomDoor,
-        De_Equipment,
+        De_Normal,
         De_Camera,
         De_LouShui,
         De_WenShidu,

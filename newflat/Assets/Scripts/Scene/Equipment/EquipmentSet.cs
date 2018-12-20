@@ -82,8 +82,8 @@ public sealed class EquipmentSet  {
             neControl.equipmentItem = equipmentItem;
         }
         Object3DElement equipmentObject3DElement = equipment.AddComponent<Object3DElement>();
-        
-        equipmentObject3DElement.type = DataModel.Type.De_Equipment;
+
+        equipmentObject3DElement.type = DataModel.Type.De_Normal;
         equipmentObject3DElement.equipmentData = equipmentItem;
   
         equipment.name = equipmentItem.name;
