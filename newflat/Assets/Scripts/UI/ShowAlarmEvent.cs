@@ -7,6 +7,13 @@ using UnityEngine.UI;
 public  class ShowAlarmEvent :MonoBehaviour
 {
 
+    class ItemData
+    {
+        public string locateId;
+        public string confirmId;
+    }
+
+
     public Transform horScrollBar;
     private void Start()
     {
@@ -23,8 +30,12 @@ public  class ShowAlarmEvent :MonoBehaviour
 
         CreateTitle(name);
         ListView listView = transform.GetComponentInChildren<ListView>();
-        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 290);
+        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 290);
         listView.ColumnClick += OnColumnClick;
+        listView.ItemBecameVisible += this.OnItemBecameVisible;
+        listView.ItemBecameInvisible += this.OnItemBecameInvisible;
+
+
         //增加列
         AddColumns(listView);
         SetColumWidth(listView);
@@ -36,15 +47,68 @@ public  class ShowAlarmEvent :MonoBehaviour
         //listView.ResumeLayout();
         for (int   i = 0;i<10;i++)
         {
-            string[] subItemTexts = new string[] { "ups"+i, "通讯中断无法连接", "2018-09-09 11:12:11" , "配电房1f101" };
+            string locateid = i + "locateid";
+            string confirmId = i + "confirmId";
+            string[] subItemTexts = new string[] { "ups"+i, "通讯中断无法连接", "2018-09-09 11:12:11" , "配电房1f101" ,"",""};
             ListViewItem _item = new ListViewItem(subItemTexts);
+            ItemData item = new ItemData();
+            item.locateId = locateid;
+            item.confirmId = confirmId;
+            _item.Tag = item;
             listView.Items.Add(_item);
         }
         horScrollBar.gameObject.SetActive(false);
         listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
+    }
 
+    private void OnItemBecameVisible(ListViewItem item)
+    {
+        // Create locate 按钮
+        var locateItem = item.SubItems[4];
+
+        ItemData itemData = item.Tag as ItemData;
+
+        GameObject locateButton = GameObject.Instantiate(Resources.Load("UI/Alarm/locate")) as GameObject;
+        locateItem.CustomControl = locateButton.transform as RectTransform;
+        locateButton.GetComponent<Button>().onClick.AddListener(delegate ()
+        {
+            LocateEquipment(itemData.locateId);
+        });
+
+        var confirmItem = item.SubItems[5];
+        GameObject confirmButton = GameObject.Instantiate(Resources.Load("UI/Alarm/confirm")) as GameObject;
+        confirmItem.CustomControl = confirmButton.transform as RectTransform;
+        confirmButton.GetComponent<Button>().onClick.AddListener(delegate ()
+        {
+            ConfirmEquipment(itemData.confirmId);
+        });
 
     }
+
+
+    private void LocateEquipment(string locateid)
+    {
+        Debug.Log(locateid);
+    }
+
+    private void ConfirmEquipment(string confirmId)
+    {
+        Debug.Log(confirmId);
+    }
+
+    private void OnItemBecameInvisible(ListViewItem item)
+    {
+        var locateItem = item.SubItems[4];
+        GameObject locateItemGameObject = locateItem.CustomControl.gameObject;
+
+
+        var confirmItem = item.SubItems[5];
+        GameObject confirmItemGameObject = confirmItem.CustomControl.gameObject;
+
+        GameObject.Destroy(locateItemGameObject);
+        GameObject.Destroy(confirmItemGameObject);
+    }
+
 
     /// <summary>
     /// 显示标题
@@ -62,6 +126,8 @@ public  class ShowAlarmEvent :MonoBehaviour
         ListView.Columns[1].Width = 150;
         ListView.Columns[2].Width = 150;
         ListView.Columns[3].Width = 100;
+        ListView.Columns[4].Width = 50;
+        ListView.Columns[5].Width = 50;
     }
 
     private static void AddColumns(ListView ListView)
@@ -72,6 +138,8 @@ public  class ShowAlarmEvent :MonoBehaviour
             AddColumnHeader(ListView, "报警内容");
             AddColumnHeader(ListView, "时间");
             AddColumnHeader(ListView, "地点");
+            AddColumnHeader(ListView, "确认");
+            AddColumnHeader(ListView, "定位");
         }
         ListView.ResumeLayout();
     }

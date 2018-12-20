@@ -295,9 +295,6 @@ public class CameraObjectController : MonoBehaviour
         m_MouseDragSpeed = 50;
     }
     
-  
- 
-
     public void SetCamerRotation()
     {
         m_rCameraRotation = this.transform.rotation;
