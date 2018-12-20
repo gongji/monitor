@@ -13,9 +13,9 @@ public sealed class EditEquipmentSet  {
         Transform parent = FindObjUtility.GetParentObject(hitTransform);
         Object3DElement element = parent.GetComponent<Object3DElement>();
         //园区
-        if(element ==null || (element!=null && element.type == DataModel.Type.Builder))
+        if(element ==null || (element!=null && (element.type == DataModel.Type.Builder || element.type == DataModel.Type.Area)))
         {
-            return null;
+            return GetDxRootTransform().transform;
         }
         //房间
         else if(element != null && element.type == DataModel.Type.Room)
@@ -89,6 +89,15 @@ public sealed class EditEquipmentSet  {
         {
             object3DElement = equipment.gameObject.AddComponent<Object3DElement>();
         }
+    }
+
+    /// <summary>
+    /// 获取主地形的根节点
+    /// </summary>
+    /// <returns></returns>
+    private static GameObject GetDxRootTransform()
+    {
+        return SceneUtility.GetGameByRootName(Constant.Main_dxName, Constant.Main_dxName);
     }
 
  

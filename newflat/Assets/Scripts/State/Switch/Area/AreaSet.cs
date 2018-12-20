@@ -25,7 +25,7 @@ public class AreaSet:BaseSet
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
 
        // Debug.Log("sceneid="+ sceneid);
-        GameObject box =  SceneUtility.GetGameByRootName(Constant.Main_dxName,Constant.ColliderName,true);
+        GameObject box =  SceneUtility.GetSceneCollider(Constant.Main_dxName);
         if(box!=null)
         {
             CameraInitSet.StartSet(sceneid, box.transform, 0.2f, callBack);

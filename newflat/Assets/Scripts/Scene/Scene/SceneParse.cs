@@ -86,6 +86,10 @@ public static class SceneParse  {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.RoomDoor;
             gs[0].AddComponent<DoorData>();
+        }else if(sceneName.Equals(Constant.Main_dxName.ToLower()))
+        {
+            object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement.type = Type.Area;
         }
         if(object3DElement!=null)
         {

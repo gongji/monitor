@@ -29,6 +29,7 @@ public sealed class EditorCreateEquipment
         Equipmentinstance.name = modelPrefeb.name;
         Equipmentinstance.transform.localRotation = Quaternion.identity;
 
+        Debug.Log(hitTransform.name);
         //设置父对象
         SetParent(hitTransform, hitpostion, Equipmentinstance, equipment3DElement);
         Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), Equipmentinstance);
