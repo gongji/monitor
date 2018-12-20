@@ -60,6 +60,7 @@ public class Main : MonoBehaviour {
             CameraInitSet.SystemInitCamera();
             Battlehub.UIControls.TreeViewControl.Instance.Init();
             ModelData.InitModelData();
+            WenshiduTimer.Instance.StartTimer();
             //FlyingTextMsg.instance.LoadFontAsset();
 
 

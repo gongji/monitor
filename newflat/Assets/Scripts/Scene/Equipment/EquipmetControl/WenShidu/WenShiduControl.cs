@@ -5,6 +5,10 @@ using UnityEngine;
 public class WenShiduControl : BaseEquipmentControl
 {
 
+    private void Start()
+    {
+        gameObject.AddComponent<WenShiduDataUpdate>();
+    }
     public override void Alarm()
     {
         base.Alarm();
