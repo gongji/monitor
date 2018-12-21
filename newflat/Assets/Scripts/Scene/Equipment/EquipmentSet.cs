@@ -38,10 +38,7 @@ public sealed class EquipmentSet  {
 
         foreach (EquipmentItem equipmentItem in currentEquipmentData)
         {
-
-            return;
             DataModel.Type type = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), equipmentItem.type);
-
 
             //避免重复创建
             if (!string.IsNullOrEmpty(equipmentItem.modelId) && modelPrefebDic.ContainsKey(equipmentItem.modelId) && !equipmentDic.ContainsKey(equipmentItem.id))
@@ -55,19 +52,13 @@ public sealed class EquipmentSet  {
                 {
                     equipmentDic.Add(equipmentItem.id, equipment);
                 }
-
-               
+                if(AppInfo.Platform == BRPlatform.Browser)
+                {
+                    AddControlScripts(equipment.GetComponent<Object3DElement>().type, equipment);
+                }
+              
             }
-            //处理门禁
-            else if(type == DataModel.Type.De_Door)
-            {
-
-            }
-            //漏水绳
-            else if(type == DataModel.Type.De_LouShui)
-            {
-
-            }
+           
         }
 
         SetCurrentEquipment();
@@ -75,20 +66,41 @@ public sealed class EquipmentSet  {
 
     private static void AddScript(GameObject equipment, EquipmentItem equipmentItem)
     {
-        NormalEquipmentControl neControl = equipment.GetComponent<NormalEquipmentControl>();
-        if (neControl == null && AppInfo.Platform == BRPlatform.Browser)
-        {
-            neControl = equipment.AddComponent<NormalEquipmentControl>();
-            neControl.equipmentItem = equipmentItem;
-        }
+        
         Object3DElement equipmentObject3DElement = equipment.AddComponent<Object3DElement>();
 
-        equipmentObject3DElement.type = DataModel.Type.De_Normal;
+        equipmentObject3DElement.type = EquipmentUtility.GetTypeByName(equipmentItem.type);
         equipmentObject3DElement.equipmentData = equipmentItem;
   
         equipment.name = equipmentItem.name;
         equipmentObject3DElement.SetEquipmentData(equipmentItem);
 
+    }
+
+    private  static void AddControlScripts(DataModel.Type type,GameObject equipment)
+    {
+        
+        if (type == DataModel.Type.De_Door)
+        {
+
+        }
+        //漏水绳
+        else if (type == DataModel.Type.De_LouShui)
+        {
+            equipment.AddComponent<LouShuiControl>();
+        }
+        else if(type == DataModel.Type.De_Normal)
+        {
+            equipment.AddComponent<NormalEquipmentControl>();
+        }
+        else if (type == DataModel.Type.De_WenShidu)
+        {
+            equipment.AddComponent<WenShiduEquipmentControl>();
+        }
+        else if(type == DataModel.Type.De_Camera)
+        {
+            equipment.AddComponent<CameraEquipmentControl>();
+        }
     }
     /// <summary>
     /// 隐藏设备标签
@@ -143,34 +155,30 @@ public sealed class EquipmentSet  {
             //if (string.IsNullOrEmpty(equipmentItem.parentid))
             //{
             //查找父对象
-            Object3dItem parent = SceneData.FindObjUtilityect3dItemById(equipmentItem.sceneId);
+            Object3dItem parentScene = SceneData.FindObjUtilityect3dItemById(equipmentItem.sceneId);
+
+             DataModel.Type sceneType = SceneData.gameObjectDic[equipmentItem.sceneId].type;
 
             //楼层或者房间
-            
-            if (parent!=null &&(parent.type == DataModel.Type.Floor || (parent.type == DataModel.Type.Room && istate is RoomState)))
+
+            if (parentScene != null &&(sceneType == DataModel.Type.Floor || sceneType == DataModel.Type.Area || 
+                (sceneType == DataModel.Type.Room && istate is RoomState)))
             {
-                GameObject root = SceneUtility.GetGameByRootName(parent.number, parent.number);
+                GameObject root = SceneUtility.GetGameByRootName(parentScene.number, parentScene.number);
                 GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
                 SetParent(equipment, box.transform, equipmentItem);
             }
             else
             {
-                //园区
-                if(parent==null)
-                {
-                    SetParent(equipment, null, equipmentItem);
-                }
-                //设置大楼下的房间
-                else
-                {
-                    string parentparentid = parent.parentsId;
-                    Object3dItem parentparentObject = SceneData.FindObjUtilityect3dItemById(parentparentid);
-                    GameObject parentparentRoot = SceneUtility.GetGameByRootName(parentparentObject.number, parentparentObject.number);
-                    GameObject root = FindObjUtility.GetTransformChildByName(parentparentRoot.transform, parent.number);
+                //当前为楼层或者大楼显示房间的设备
+                string parentparentid = parentScene.parentsId;
+                Object3dItem parentparentObject = SceneData.FindObjUtilityect3dItemById(parentparentid);
+                GameObject parentparentRoot = SceneUtility.GetGameByRootName(parentparentObject.number, parentparentObject.number);
+                GameObject root = FindObjUtility.GetTransformChildByName(parentparentRoot.transform, parentScene.number);
 
-                    GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
-                    SetParent(equipment, box.transform, equipmentItem);
-                }
+                GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
+                SetParent(equipment, box.transform, equipmentItem);
+               
               
             }
             

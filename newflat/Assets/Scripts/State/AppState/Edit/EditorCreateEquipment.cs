@@ -22,9 +22,10 @@ public sealed class EditorCreateEquipment
         }
         GameObject Equipmentinstance = GameObject.Instantiate(modelPrefeb);
         Object3DElement equipment3DElement = Equipmentinstance.AddComponent<Object3DElement>();
+
         //增加，保存的时候使用
         Object3DElement.AddNewItem(equipment3DElement);
-        equipment3DElement.type = DataModel.Type.De_Normal;
+        equipment3DElement.type = EquipmentUtility.GetTypeByTransform(Equipmentinstance.transform);
         Equipmentinstance.transform.position = hitpostion;
         Equipmentinstance.name = modelPrefeb.name;
         Equipmentinstance.transform.localRotation = Quaternion.identity;
@@ -39,6 +40,7 @@ public sealed class EditorCreateEquipment
         equipment3DElement.equipmentData.name = str[1];
 
         equipment3DElement.equipmentData.modelId = str[0];
+        equipment3DElement.equipmentData.type = equipment3DElement.type.ToString();
         Equipmentinstance.transform.name = str[1];
 
         ShowModelList.instance.RemoveReset();
@@ -48,6 +50,7 @@ public sealed class EditorCreateEquipment
             PropertySet.instance.UpdateData(equipment3DElement.equipmentData);
         });
        
+        
 
 
     }
@@ -89,4 +92,7 @@ public sealed class EditorCreateEquipment
        
         Equipmentinstance.transform.SetParent(parent);
     }
+
+
+   
 }

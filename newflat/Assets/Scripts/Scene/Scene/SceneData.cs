@@ -15,6 +15,10 @@ public static class SceneData {
     //3d对象列表
     private static Dictionary<string, Object3dItem> objectDataDic = new Dictionary<string, Object3dItem>();
 
+    //scenid和游戏对象数据的字典
+    public static Dictionary<string, Object3DElement> gameObjectDic = new Dictionary<string, Object3DElement>();
+   
+
     //当前的显示的3d对象
     public static List<Object3dItem> currentobject3dList = null;
     /// <summary>

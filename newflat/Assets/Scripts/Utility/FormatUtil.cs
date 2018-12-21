@@ -84,10 +84,10 @@ public class FormatUtil {
         item.rotationY = FormatUtil.FloatFomart(item.rotationY, 2);
         item.rotationZ = FormatUtil.FloatFomart(item.rotationZ, 2);
 
-        item.scaleX = FormatUtil.FloatFomart(item.scaleX, 2);
-        item.scaleY = FormatUtil.FloatFomart(item.scaleY, 2);
+        item.scaleX = FormatUtil.FloatFomart(item.scaleX, 4);
+        item.scaleY = FormatUtil.FloatFomart(item.scaleY, 4);
 
-        item.scaleZ = FormatUtil.FloatFomart(item.scaleZ, 2);
+        item.scaleZ = FormatUtil.FloatFomart(item.scaleZ, 4);
     }
 
 

@@ -96,6 +96,11 @@ public static class SceneParse  {
             object3DElement.sceneId = id;
 
         }
+        if(object3DElement!=null)
+        {
+            SceneData.gameObjectDic.Add(object3DElement.sceneId, object3DElement);
+        }
+        
 
         foreach (GameObject item in gs)
         {

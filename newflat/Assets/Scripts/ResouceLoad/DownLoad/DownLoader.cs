@@ -75,7 +75,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
             foreach (string  id in modelList)
             {
 
-                string path = Config.parse("requestAddress") + "/upload/modefile/" + id + ".unity3d";
+                string path = Config.parse("requestAddress") + "/upload/modefile/" + id;
                 ModelItem mi = ModelData.dicModelData[id];
                 ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(id, path, mi.name);
 

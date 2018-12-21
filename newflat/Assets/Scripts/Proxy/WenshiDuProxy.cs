@@ -10,6 +10,10 @@ public class WenshiDuProxy  {
     public static void GetWenShiduList(Dictionary<string, string> sqlPostData, System.Action<string> sucesscallBack, 
         System.Action<string> ErrorCallBack)
     {
+        if(sqlPostData==null)
+        {
+            return;
+        }
         string url = Config.parse("requestAddress") + "/getWenshiduList";
         HttpRequestSingle.Instance.StartCoroutine(
 

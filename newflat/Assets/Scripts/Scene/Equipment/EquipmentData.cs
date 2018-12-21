@@ -120,7 +120,8 @@ public sealed class EquipmentData {
         }
         else if(curerState  is AreaState)
         {
-            sql = "sceneId is null or sceneId = 0 ";
+            string sceneid =SceneData.GetIdByNumber(Constant.Main_dxName);
+            sql = "sceneId = " + sceneid;
         }
         else if(curerState is RoomState)
         {

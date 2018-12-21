@@ -8,6 +8,7 @@ public class Object3DElement : MonoBehaviour {
 
     private void Awake()
     {
+
     }
     public DataModel.Type type;
     //原来的
@@ -31,6 +32,7 @@ public class Object3DElement : MonoBehaviour {
     private void Update()
     {
       
+
         if(type.ToString().StartsWith(Constant.Equipment_Prefix) &&  AppInfo.Platform == BRPlatform.Editor)
         {
             equipmentData.Update(transform.localPosition, transform.localScale, transform.localEulerAngles);
