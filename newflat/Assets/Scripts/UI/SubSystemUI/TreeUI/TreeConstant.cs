@@ -28,25 +28,25 @@ namespace Tree
 
         public static GameObject CreateBranchButton()
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("UI/UITree/BranchButton")) as GameObject;
+            GameObject go = GameObject.Instantiate(Resources.Load("UI/UISubSystem/BranchButton")) as GameObject;
             return go;
         }
 
         public static GameObject CreateBranchGrid()
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("UI/UITree/tree")) as GameObject;
+            GameObject go = GameObject.Instantiate(Resources.Load("UI/UISubSystem/SubSystemItem")) as GameObject;
             return go;
         }
 
         public static GameObject CreateBranchArrowUp()
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("UI/UITree/ArrowUp")) as GameObject;
+            GameObject go = GameObject.Instantiate(Resources.Load("UI/UISubSystem/ArrowUp")) as GameObject;
             return go;
         }
 
         public static GameObject CreateBranchArrowDown()
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("UI/UITree/ArrowDown")) as GameObject;
+            GameObject go = GameObject.Instantiate(Resources.Load("UI/UISubSystem/ArrowDown")) as GameObject;
             return go;
         }
 

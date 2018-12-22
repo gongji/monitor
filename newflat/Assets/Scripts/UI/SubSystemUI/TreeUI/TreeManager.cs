@@ -8,8 +8,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Tree;
-using System.Linq;
 using UnityEngine.UI;
 
 public class TreeManager : MonoBehaviour
@@ -44,11 +42,6 @@ public class TreeManager : MonoBehaviour
     public GameObject arrow1;
     //下移
     public GameObject arrow2;
-
-    void Start()
-    {
-       // Init(this.json);
-    }
     // Use this for initialization
     public void Init(List<SubSystemItem> list)
     {
@@ -57,7 +50,7 @@ public class TreeManager : MonoBehaviour
         grid = Tree.Constant.CreateBranchGrid();
         grid.transform.SetParent(this.transform);
         grid.transform.localScale = Vector3.one;
-        grid.transform.localPosition = Vector3.zero;
+        grid.GetComponent<RectTransform>().anchoredPosition =new Vector2(50,0);
         grid.GetComponent<UITreeGrid>().index = 1;
         UITreeGrid treeGrid = grid.transform.GetComponent<UITreeGrid>();
         TopHeight = list.Count * treeGrid.cellSize.y;

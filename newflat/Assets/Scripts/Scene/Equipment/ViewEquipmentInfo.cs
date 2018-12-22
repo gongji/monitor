@@ -71,7 +71,8 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
             //增加箭头
             selectArrow =  TransformControlUtility.CreateItem("equipment/select", null);
 
-            selectArrow.transform.position = currentEquipment.transform.position + Vector3.up * currentEquipment.GetComponent<BoxCollider>().bounds.size.y + Vector3.up * 0.1f;
+            selectArrow.transform.position = currentEquipment.transform.position + 
+                Vector3.up * currentEquipment.GetComponent<BoxCollider>().bounds.size.y + Vector3.up * 0.1f;
             selectArrow.transform.localScale = Vector3.one * 0.1f;
             this.equipmentId = EquipmentId;
             CreateEffection();
@@ -165,9 +166,6 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
         }
 
         ShowTestPoint.DestryGrid();
-        
-
-
     }
     /// <summary>
     /// 直接显示

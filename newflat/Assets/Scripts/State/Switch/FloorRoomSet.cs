@@ -16,7 +16,14 @@ public class FloorRoomSet : BaseSet
 
     private GameObject plane;
     private int offestIndex = 1;
-    protected void OnInit(List<Object3dItem> currentDataList, Action callBack, string frontname, string backName)
+
+    public override void Enter(List<Object3dItem> currentDataList, Action callBack)
+    {
+        base.Enter(currentDataList, callBack);
+        SubsystemMsg.Create(SceneContext.currentSceneData.id);
+
+    }
+     protected void OnInit(List<Object3dItem> currentDataList, Action callBack, string frontname, string backName)
     {
         SwitchBG(false);
         this.currentObject = SceneContext.currentSceneData;

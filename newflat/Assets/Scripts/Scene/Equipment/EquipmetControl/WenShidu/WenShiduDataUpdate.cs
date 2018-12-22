@@ -12,6 +12,7 @@ public class WenShiduDataUpdate : MonoBehaviour {
         {
             ui = TransformControlUtility.CreateItem("UI/Wenshidu/Temperature", parent);
         }
+        ui.transform.localScale = Vector3.one * 0.25f;
         ui.GetComponent<UITemperature>().Show(gameObject, transform.name);
     }
 

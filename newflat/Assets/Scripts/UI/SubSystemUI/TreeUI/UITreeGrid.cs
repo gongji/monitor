@@ -21,18 +21,7 @@ public class UITreeGrid : MonoBehaviour
     private TreeManager treeManage;
     private int max;
     public int p;
-    // Use this for initialization
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+   
     public void OnInit(TreeManager param)
     {
         this.treeManage = param;

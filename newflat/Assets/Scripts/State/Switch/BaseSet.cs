@@ -95,9 +95,8 @@ public abstract class BaseSet
         //EnableOrDisableCamera(false);
         TipsMgr.Instance.DeleteTips();
         ShowOrHideScene(false);
+        SubsystemMsg.Delete();
     }
-
-
 
     protected Quaternion cameraRoation = Quaternion.identity;
     protected Vector3 cameraPostion = Vector3.zero;

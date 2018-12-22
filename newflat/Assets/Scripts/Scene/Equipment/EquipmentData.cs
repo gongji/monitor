@@ -81,7 +81,7 @@ public sealed class EquipmentData {
             callBack.Invoke();
             return;
         }
-            Debug.Log(result);
+           // Debug.Log(result);
             currentEquipmentData = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
 
             //获取模型列表

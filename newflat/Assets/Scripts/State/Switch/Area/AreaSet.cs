@@ -17,7 +17,8 @@ public class AreaSet:BaseSet
         InitCameraPostion(callBack);
         SetTips();
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
-        CreateSubsystem.Create(sceneid);
+
+        SubsystemMsg.Create(sceneid);
     }
    
     public void InitCameraPostion(System.Action callBack)
