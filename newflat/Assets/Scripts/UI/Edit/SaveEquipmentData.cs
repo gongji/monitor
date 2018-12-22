@@ -57,14 +57,12 @@ public static class SaveEquipmentData
 
         Dictionary<string, string> postData = new Dictionary<string, string>();
         string resultPostData = CollectionsConvert.ToJSON(result);
-       // Debug.Log(resultPostData);
+        Debug.Log(resultPostData);
         postData.Add("result", resultPostData);
         Equipment3dProxy.PostEquipmentSaveData((a) => {
             MessageBox.Show("信息提示","保存成功");
 
         }, postData);
-
-
 
     }
 

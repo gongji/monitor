@@ -37,7 +37,10 @@ public sealed class EquipmentData {
     {
         foreach(GameObject item in allEquipmentDataDic.Values)
         {
-            if(item.activeSelf)
+            Object3DElement object3DElement = item.GetComponent<Object3DElement>();
+            //只隐藏有模型的设备
+            if (item.activeSelf && object3DElement!=null && object3DElement.equipmentData!=null && 
+                string.IsNullOrEmpty(object3DElement.equipmentData.modelId))
             {
                 item.transform.SetParent(null);
                 item.gameObject.SetActive(false);
@@ -60,7 +63,7 @@ public sealed class EquipmentData {
     }
   
    
-    public static void SearchCurrentEquipmentData(System.Action callBack)
+    public static void SearchCurrentEquipmentDataDownModel(System.Action callBack)
     {
         string sql = GetEquipmentSqlByParent();
         if(string.IsNullOrEmpty(sql))
@@ -73,11 +76,12 @@ public sealed class EquipmentData {
 
         Equipment3dProxy.SearchEquipmentData((result) =>
         {
-            if(string.IsNullOrEmpty(result)&& callBack!=null)
-            {
-                callBack.Invoke();
-                return;
-            }
+        if (string.IsNullOrEmpty(result) && callBack != null)
+        {
+            callBack.Invoke();
+            return;
+        }
+            Debug.Log(result);
             currentEquipmentData = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
 
             //获取模型列表
@@ -125,7 +129,7 @@ public sealed class EquipmentData {
         }
         else if(curerState is RoomState)
         {
-            sql = "sceneId = " + object3dItem.id;
+            sql = "sceneId = " + object3dItem.id + " and type <>'De_Door'";
         }
         else if(curerState is FloorState)
         {
@@ -157,7 +161,7 @@ public sealed class EquipmentData {
 
         string connectStr =  Utils.StrUtil.ConnetString(ids, ",");
 
-        return "sceneId in(" + connectStr + ")";
+        return "sceneId in(" + connectStr + ")" + " and type<>'De_Door'";
 
     }
 
@@ -178,7 +182,7 @@ public sealed class EquipmentData {
         foreach (var a in list)
             
         {
-            if(!string.IsNullOrEmpty(a.modelId) && !ModelData.modelPrefebDic.ContainsKey(a.modelId))
+            if(!string.IsNullOrEmpty(a.modelId) && !ModelData.modelPrefebDic.ContainsKey(a.modelId) && !a.modelId.Equals("0"))
             {
                 modelist.Add(a.modelId);
             }

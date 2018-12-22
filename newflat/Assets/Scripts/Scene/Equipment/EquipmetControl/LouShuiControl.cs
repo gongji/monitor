@@ -72,6 +72,7 @@ public  class LouShuiControl : BaseEquipmentControl {
             GameObject lineRender = (GameObject)GameObject.Instantiate(loushuiLine);
             lineRender.GetComponent<LineRenderer>().startWidth = 0.1f;
             lineRender.GetComponent<LineRenderer>().endWidth = 0.1f;
+            lineRender.GetComponent<LineRenderer>().useWorldSpace = false;
             string[] _postions = postions[i - 1].Split(',');
             lineRender.transform.SetParent(transform);
             lineRender.name = i.ToString();

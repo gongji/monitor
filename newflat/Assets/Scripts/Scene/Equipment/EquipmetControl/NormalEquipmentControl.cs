@@ -14,6 +14,7 @@ public class NormalEquipmentControl :BaseEquipmentControl {
    // public bool isUpdate = true;
  
     void Start () {
+        equipmentItem = GetComponent<Object3DElement>().equipmentData;
         Transform t = GameObject.Find("Canvas/equipment").transform;
         equipmentTips = TransformControlUtility.CreateItem("Tips/EquipmentTips", t);
         string name = equipmentItem.name == null ? "默认" : equipmentItem.name;

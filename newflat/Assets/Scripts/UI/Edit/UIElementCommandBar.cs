@@ -76,11 +76,6 @@ public sealed class UIElementCommandBar : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// 门禁是否显示保存，非门禁显示编辑
-    /// </summary>
-  
-
     public void CopyClick(GameObject g)
     {
         Hide();
@@ -97,11 +92,16 @@ public sealed class UIElementCommandBar : MonoBehaviour
     }
 
     private gizmoScript gs = null;
-    //高级编辑器
+    /// <summary>
+    /// 门的话就保存，其他有模型的设备就编辑
+    /// </summary>
+    /// <param name="g"></param>
     public void EditClick(GameObject g)
     {
+        //
         if(selectingObjectTransform.GetComponent<Object3DElement>().type == Type.De_Door)
         {
+         
             SaveEquipmentData.SaveDoor(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData);
         }
         else

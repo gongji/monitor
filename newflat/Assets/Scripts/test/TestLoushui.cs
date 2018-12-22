@@ -8,7 +8,7 @@ public class TestLoushui : MonoBehaviour {
 
     private string loushuiData = "";
 	void Start () {
-        loushuiData = "15,25,17|26,25,34|5,25,37|24,25,19|24,25,78";
+        loushuiData = "-1.67,0.596,-5.06418|-1.67,0.596,-3.19418|-1.67,0.596,-1.29418|1.02,0.596,-1.29418|1.02,0.596,1.47582";
 
     }
 	

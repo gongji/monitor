@@ -236,6 +236,7 @@ public class BuilderSet: BaseSet,IEventListener
         DOVirtual.DelayedCall(2.0f, () =>
         {
             uiTempObject = new GameObject();
+            uiTempObject.name = "builderNavigation";
             BuiderNavigationUI buiderNavigationUI = uiTempObject.AddComponent<BuiderNavigationUI>();
             buiderNavigationUI.CreateNavigateUI(currentfloorData);
             if(callBack!=null)

@@ -18,7 +18,7 @@ public sealed class EquipmentSet  {
     public static void CreateEquipment()
     {
         //查询当前的数据库
-        EquipmentData.SearchCurrentEquipmentData(() => {
+        EquipmentData.SearchCurrentEquipmentDataDownModel(() => {
             StartCreateEquipment();
         });
        
@@ -40,28 +40,54 @@ public sealed class EquipmentSet  {
         {
             DataModel.Type type = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), equipmentItem.type);
 
-            //避免重复创建
-            if (!string.IsNullOrEmpty(equipmentItem.modelId) && modelPrefebDic.ContainsKey(equipmentItem.modelId) && !equipmentDic.ContainsKey(equipmentItem.id))
+            GameObject equipment = null;
+            //创建有模型的设备
+            if (!string.IsNullOrEmpty(equipmentItem.modelId) && modelPrefebDic.ContainsKey(equipmentItem.modelId) && 
+                !equipmentDic.ContainsKey(equipmentItem.id))
             {
-                GameObject equipment = GameObject.Instantiate(modelPrefebDic[equipmentItem.modelId]);
-                Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), equipment);
-                equipment.SetActive(false);
+                equipment = GameObject.Instantiate(modelPrefebDic[equipmentItem.modelId]);
+                SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
 
-                AddScript(equipment, equipmentItem);
-                if (!equipmentDic.ContainsKey(equipmentItem.id))
-                {
-                    equipmentDic.Add(equipmentItem.id, equipment);
-                }
-                if(AppInfo.Platform == BRPlatform.Browser)
-                {
-                    AddControlScripts(equipment.GetComponent<Object3DElement>().type, equipment);
-                }
-              
             }
-           
+            //创建漏水
+            else if(type == DataModel.Type.De_LouShui && !equipmentDic.ContainsKey(equipmentItem.id))
+            {
+                //仅仅用于测试
+                equipmentItem.loushuiPoints = "-1.67,0.596,-5.06418|-1.67,0.596,-3.19418|-1.67,0.596,-1.29418|1.02,0.596,-1.29418|1.02,0.596,1.47582";
+                equipment = new GameObject();
+                SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
+
+                LouShuiControl loushui =  equipment.GetComponent<LouShuiControl>();
+                if(loushui!=null)
+                {
+                    loushui.CreateLouShui(equipmentItem.loushuiPoints);
+                }
+
+            }
+
+            
+      
         }
 
-        SetCurrentEquipment();
+        SetCurrentEquipmentShow();
+    }
+
+    private static void SetEquipmentLayerAndScripts(GameObject equipment,EquipmentItem equipmentItem, Dictionary<string, GameObject> equipmentDic)
+    {
+        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), equipment);
+        equipment.SetActive(false);
+
+        AddScript(equipment, equipmentItem);
+
+        if (AppInfo.Platform == BRPlatform.Browser)
+        {
+            AddControlScripts(equipment.GetComponent<Object3DElement>().type, equipment);
+        }
+
+        if (!equipmentDic.ContainsKey(equipmentItem.id))
+        {
+            equipmentDic.Add(equipmentItem.id, equipment);
+        }
     }
 
     private static void AddScript(GameObject equipment, EquipmentItem equipmentItem)
@@ -130,9 +156,8 @@ public sealed class EquipmentSet  {
     /// <summary>
     /// 设置当前的设备父子归属关系，并显示出来
     /// </summary>
-    private static void SetCurrentEquipment()
+    private static void SetCurrentEquipmentShow()
     {
-
         List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
         Dictionary<string, GameObject> allEquipmentDic = EquipmentData.GetAllEquipmentData;
 
@@ -151,18 +176,18 @@ public sealed class EquipmentSet  {
             {
                 bec.SetTipsShow(true);
             }
-            //非园区的情况
-            //if (string.IsNullOrEmpty(equipmentItem.parentid))
-            //{
+          
             //查找父对象
             Object3dItem parentScene = SceneData.FindObjUtilityect3dItemById(equipmentItem.sceneId);
 
-             DataModel.Type sceneType = SceneData.gameObjectDic[equipmentItem.sceneId].type;
+            Object3DElement eObject3DElement = null;
+            SceneData.gameObjectDic.TryGetValue(equipmentItem.sceneId, out eObject3DElement);
+           
 
             //楼层或者房间
 
-            if (parentScene != null &&(sceneType == DataModel.Type.Floor || sceneType == DataModel.Type.Area || 
-                (sceneType == DataModel.Type.Room && istate is RoomState)))
+            if (eObject3DElement != null &&(eObject3DElement.type == DataModel.Type.Floor || eObject3DElement.type == DataModel.Type.Area || 
+                (eObject3DElement.type == DataModel.Type.Room && istate is RoomState)))
             {
                 GameObject root = SceneUtility.GetGameByRootName(parentScene.number, parentScene.number);
                 GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);

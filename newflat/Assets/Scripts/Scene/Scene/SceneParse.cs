@@ -86,6 +86,7 @@ public static class SceneParse  {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.RoomDoor;
             gs[0].AddComponent<DoorData>();
+        //地形
         }else if(sceneName.Equals(Constant.Main_dxName.ToLower()))
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
@@ -211,6 +212,7 @@ public static class SceneParse  {
                 object3DElement.type = Type.De_Door;
                 object3DElement.equipmentData.number = object3DElement.transform.name;
                 object3DElement.equipmentData.sceneId = doorRoot.GetComponent<Object3DElement>().sceneId;
+                object3DElement.equipmentData.type = Type.De_Door.ToString();
             }
         }
     }

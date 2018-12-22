@@ -45,6 +45,8 @@ namespace DataModel
 
         public string type = "";
 
+        public string loushuiPoints = "";
+
         public void UpdatePostion(float x,float y, float z)
         {
             this.x = x;

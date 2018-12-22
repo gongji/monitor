@@ -36,7 +36,18 @@ public class DoorData : MonoBehaviour {
             if(doorTransfrom!=null)
             {
                 doorTransfrom.GetComponent<Object3DElement>().equipmentData = item;
+                SetBrowserScript(doorTransfrom, item.id);
             }
+        }
+    }
+
+    private void SetBrowserScript(Transform child,string equipmentid)
+    {
+        if (AppInfo.Platform == BRPlatform.Browser)
+        {
+            child.gameObject.AddComponent<DoorEquipmentControl>();
+            Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
+            equipmentDic.Add(equipmentid, child.gameObject);
         }
     }
 }
