@@ -8,6 +8,8 @@ public static class SubsystemMsg {
     private static GameObject systemUI = null;
     private static ILog log = LogManagers.GetLogger("StateMachineManager");
 
+    private static List<SubSystemItem> dataSource = null;
+
     public static void Create(string sceneid)
     {
         if(AppInfo.Platform == BRPlatform.Editor)
@@ -22,12 +24,12 @@ public static class SubsystemMsg {
             }
             Debug.Log("resultSubSystem=" + result);
 
-            List<SubSystemItem> data = Utils.CollectionsConvert.ToObject<List<SubSystemItem>>(result);
+            dataSource = Utils.CollectionsConvert.ToObject<List<SubSystemItem>>(result);
             systemUI = TransformControlUtility.CreateItem("UI/UISubSystem/SubjetSystemTree", UIUtility.GetRootCanvas());
             systemUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             if (systemUI!=null && systemUI.GetComponent<TreeManager>()!=null)
             {
-                systemUI.GetComponent<TreeManager>().Init(data);
+                systemUI.GetComponent<TreeManager>().Init(dataSource);
             }
 
         }, sceneid);
@@ -38,6 +40,101 @@ public static class SubsystemMsg {
         if(systemUI!=null)
         {
             GameObject.DestroyImmediate(systemUI);
+          
+            subSystemItem = null;
+            ids.Clear();
         }
+        
+    }
+
+    private static Material wireframeM;
+    private static List<string> ids = new List<string>();
+    public static void SetWireframe(string id)
+    {
+        // Debug.Log("id="+id);
+        if (wireframeM == null)
+        {
+            wireframeM = Resources.Load<Material>("Material/wireframe");
+        }
+        BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
+        foreach (BaseEquipmentControl be in equipments)
+        {
+            be.ChangMaterial(wireframeM);
+        }
+        subSystemItem = null;
+
+        GetEquipmentById(dataSource, id);
+        if (subSystemItem != null)
+        {
+            ids.Clear();
+            GetAllEquipment(subSystemItem);
+
+            foreach (string equipmentid in ids)
+            {
+                if (EquipmentData.GetAllEquipmentData.ContainsKey(equipmentid))
+                {
+                    EquipmentData.GetAllEquipmentData[equipmentid].GetComponent<BaseEquipmentControl>().RestoreMaterial();
+                }
+
+            }
+        }
+
+    }
+
+    private static SubSystemItem subSystemItem = null;
+   /// <summary>
+   /// 通过子系统或者模型id
+   /// </summary>
+   /// <param name="id"></param>
+   /// <returns>设备ids</returns>
+    private static void GetEquipmentById(List<SubSystemItem> list,string id)
+    {
+       
+        if(list == null)
+        {
+            return ;
+        }
+        for(int i=0;i< list.Count;i++)
+        {
+            if(list[i].id.Equals(id))
+            {
+                subSystemItem = list[i];
+                return;
+            }
+
+            if(list[i].childs!=null && list[i].childs.Count>0)
+            {
+
+                foreach(SubSystemItem child in list[i].childs)
+                {
+                    GetEquipmentById(list[i].childs, id);
+                }
+            }
+        }
+    }
+
+    private static void GetAllEquipment(SubSystemItem subSystemItem)
+    {
+
+        if(subSystemItem.type.Equals("equipment"))
+        {
+            ids.Add(subSystemItem.id);
+        }
+       for(int i=0; subSystemItem.childs!=null && subSystemItem.childs.Count>0&&i < subSystemItem.childs.Count;i++)
+        {
+            SubSystemItem child = subSystemItem.childs[i];
+            if (child.type.Equals("equipment"))
+            {
+                ids.Add(subSystemItem.childs[i].id);
+            }
+            if(child.childs!=null && child.childs.Count>0)
+            {
+                foreach(SubSystemItem _child in child.childs)
+                {
+                    GetAllEquipment(_child);
+                }
+            }
+        }
+        
     }
 }

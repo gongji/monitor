@@ -64,7 +64,12 @@ public class UIBranchButton : MonoBehaviour
             onBranchBtnClicked = treeManager.OnBranchButtonClicked;
     }
 
- 
+    private void OnDestroy()
+    {
+        this.GetComponent<Toggle>().onValueChanged.RemoveAllListeners();
+    }
+
+
     public void Hide()
     {
         gameObject.SetActive(false);

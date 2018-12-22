@@ -7,6 +7,8 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
 
     public EquipmentItem equipmentItem =new EquipmentItem();
 
+    protected Dictionary<MeshRenderer, Material[]> materialDic = null;
+
     private bool isAlarm = false;
     public virtual void Alarm(){
         if(isAlarm)
@@ -16,6 +18,7 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         isAlarm = true;
         UpdateShow();
     }
+
 
 
 
@@ -156,6 +159,53 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
                 CreateAlarmEffection();
             }
         }
+    }
+
+    protected void InitMaterial()
+    {
+        if(materialDic == null)
+        {
+            materialDic = new Dictionary<MeshRenderer, Material[]>();
+        }
+        MeshRenderer[] meshRenders = gameObject.GetComponentsInChildren<MeshRenderer>();
+        foreach(MeshRenderer meshRender in meshRenders)
+        {
+            materialDic.Add(meshRender, meshRender.materials);
+        }
+    }
+
+    public void RestoreMaterial()
+    {
+        if (materialDic == null || !isMerialChange)
+        {
+            //Debug.Log("材质未恢复");
+            return;
+        }
+
+        foreach (MeshRenderer meshRender in materialDic.Keys)
+        {
+            meshRender.GetComponent<MeshRenderer>().materials = materialDic[meshRender];
+        }
+        isMerialChange = false;
+    }
+
+    private void OnDisable()
+    {
+        RestoreMaterial();
+    }
+
+    private bool isMerialChange = false;
+    public void ChangMaterial(Material wireframe)
+    {
+        if(materialDic==null)
+        {
+            return;
+        }
+        foreach (MeshRenderer meshRender in materialDic.Keys)
+        {
+            meshRender.GetComponent<MeshRenderer>().sharedMaterial = wireframe;
+        }
+        isMerialChange = true;
     }
    
 }

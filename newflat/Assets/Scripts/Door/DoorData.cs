@@ -8,6 +8,7 @@ public class DoorData : MonoBehaviour {
 
 	void Start () {
         SearchDoorData();
+        
     }
 
 

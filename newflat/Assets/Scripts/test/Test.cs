@@ -10,9 +10,9 @@ public class Test : MonoBehaviour {
     // Use this for initialization
     [SerializeField]
     public Transform t1 = null;
-	void Start () {
+	 void Start () {
 
-
+        Debug.Log("base start");
         EnergyConsumptionTestData.GetTestData();
         //Debug.Log(Camera.allCameras);
         //foreach(Camera c in Camera.allCameras)

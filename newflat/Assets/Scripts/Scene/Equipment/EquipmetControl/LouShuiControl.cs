@@ -9,6 +9,7 @@ public  class LouShuiControl : BaseEquipmentControl {
     void Start()
     {
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
+        
     }
     public override void Alarm()
     {

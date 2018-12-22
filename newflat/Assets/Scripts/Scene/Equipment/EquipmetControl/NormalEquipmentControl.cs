@@ -21,6 +21,7 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         equipmentTips.name = name;
         equipmentTips.SetActive(false);
         equipmentTips.GetComponentInChildren<TextMeshProUGUI>().text = name;
+        InitMaterial();
 
     }
 

@@ -89,21 +89,29 @@ public class TreeManager : MonoBehaviour
     {
         UIBranchButton target = (UIBranchButton)param;
 
-       
-        //设备定位
-        if(target.type.Equals("equipment"))
-        {
-            GameObject g =  EquipmentData.FindGameObjectById(target.id);
-            if(g!=null&& g.GetComponent<Object3DElement>()!=null)
-            {
-                string sceneid = g.GetComponent<Object3DElement>().equipmentData.sceneId;
-                //Debug.Log(sceneid);
-                Main.instance.stateMachineManager.LocateEquipment(target.id, sceneid);
-            }
-           
-        }
 
-        Debug.Log("OnBranchButtonClicked id:" + target.id + target.name);
+        if (target.transform.GetComponent<Toggle>().isOn)
+        {
+            ////设备定位
+            if (target.type.Equals("equipment"))
+            {
+                GameObject g = EquipmentData.FindGameObjectById(target.id);
+                if (g != null && g.GetComponent<Object3DElement>() != null)
+                {
+                    string sceneid = g.GetComponent<Object3DElement>().equipmentData.sceneId;
+                    //Debug.Log(sceneid);
+                    Main.instance.stateMachineManager.LocateEquipment(target.id, sceneid);
+                }
+
+            }
+            else
+            {
+                SubsystemMsg.SetWireframe(target.id);
+            }
+
+          //  Debug.Log("OnBranchButtonClicked id:" + target.id + target.name);
+        }
+       
     }
 
     public void BranchRootHideAllChilds()
