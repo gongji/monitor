@@ -36,6 +36,7 @@ public class UIBranchButton : MonoBehaviour
     //文本
     public Text label;
 
+    
     public string type;
 
     public delegate void OnBranchBtnClicked(object param);

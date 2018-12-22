@@ -37,22 +37,40 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         }
         isSelect = true;
         UpdateShow();
-       BoxCollider collider = transform.GetComponentInChildren<BoxCollider>();
 
-        Vector3 upPostion = transform.position + transform.up * collider.bounds.size.y * 1.5f ;
+        CameraViewData.GetCurrentEquipmentCameraView((result) =>
+        {
+            Vector3 targetPostion = Vector3.zero;
+            Vector3 eulerAngles = Vector3.zero;
+            if (result!=null)
+            {
+                targetPostion = new Vector3(result.x, result.y, result.z);
+                eulerAngles = new Vector3(result.rotationX, result.rotationY, result.rotationZ);
+            }
+            else
+            {
+                BoxCollider collider = transform.GetComponentInChildren<BoxCollider>();
 
-       // Vector3 targetPostion = upPostion + transform.forward * collider.bounds.size.z * 2.0f;
-        Vector3 targetPostion = upPostion + transform.forward * collider.bounds.size.z * 4.0f;
-        Vector3 center = transform.position + transform.up * collider.bounds.size.y * 0.5f;
-        Vector3 dir = center   - targetPostion;
-        Quaternion quaternion = Quaternion.LookRotation(dir, transform.up);
+                Vector3 upPostion = transform.position + transform.up * collider.bounds.size.y * 1.5f;
 
-        CameraAnimation.CameraMove(Camera.main, targetPostion, quaternion.eulerAngles, 1.0f,null);
+                // Vector3 targetPostion = upPostion + transform.forward * collider.bounds.size.z * 2.0f;
+                targetPostion = upPostion + transform.forward * collider.bounds.size.z * 4.0f;
+                Vector3 center = transform.position + transform.up * collider.bounds.size.y * 0.5f;
+                Vector3 dir = center - targetPostion;
+                Quaternion quaternion = Quaternion.LookRotation(dir, transform.up);
+                eulerAngles = quaternion.eulerAngles;
+            }
+
+            CameraAnimation.CameraMove(Camera.main, targetPostion, eulerAngles, 1.0f, null);
+        }, equipmentItem.id);
+      
         //Camera.main.transform.position = targetPostion;
         //Camera.main.transform.localRotation = quaternion;
        // SelectEffection();
        // LocateBack.instance.Show();
     }
+
+   
 
 
     private GameObject selectArrow = null;
@@ -61,6 +79,7 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
        
         selectArrow = TransformControlUtility.CreateItem("equipment/select", null);
 
+        selectArrow.name = transform.name;
         selectArrow.transform.position = transform.position + 
             Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
         

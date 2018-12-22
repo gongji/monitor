@@ -8,6 +8,8 @@ public class WenShiduEquipmentControl : BaseEquipmentControl
     private void Start()
     {
         gameObject.AddComponent<WenShiduDataUpdate>();
+        equipmentItem = GetComponent<Object3DElement>().equipmentData;
+
     }
     public override void Alarm()
     {

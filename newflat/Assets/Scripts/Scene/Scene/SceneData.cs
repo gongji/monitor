@@ -392,7 +392,7 @@ public static class SceneData {
     }
 
 
-    public static System. Type GetCurrentState(string parentid)
+    public static System.Type GetCurrentState(string parentid)
     {
         if(string.IsNullOrEmpty(parentid))
         {
@@ -400,9 +400,12 @@ public static class SceneData {
             return typeof(AreaState);
         }
 
-        Type t =  SceneData.FindObjUtilityect3dItemById(parentid).type;
-        
-        if (t == Type.Floor)
+        Type t = SceneData.gameObjectDic[parentid].GetComponent<Object3DElement>().type;
+        if(t== Type.Area)
+        {
+            return typeof(AreaState);
+        }
+        else if (t == Type.Floor)
         {
             return typeof(FloorState);
         }

@@ -37,7 +37,7 @@ public class DoTweenAphlaFlashEffection : MonoBehaviour
         foreach (Material _mat in dic.Keys)
         {
 
-           Debug.Log(_mat.GetColor(property));
+           //Debug.Log(_mat.GetColor(property));
         }
     }
 

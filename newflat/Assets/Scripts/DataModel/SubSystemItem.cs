@@ -8,7 +8,8 @@ public class SubSystemItem  {
 
     public string name;
 
-    public string type;
+   //"01","model","equipment"
+    public string type = "equipment";
 
     public List<SubSystemItem> childs;
 

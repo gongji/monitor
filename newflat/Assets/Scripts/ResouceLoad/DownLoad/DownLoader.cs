@@ -140,7 +140,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
     private void LoadLoader()
     {
         loader = GameObject.Instantiate(Resources.Load<GameObject>("loadingMask"));
-        loader.transform.parent = GameObject.Find("Canvas").transform;
+        loader.transform.SetParent(UIUtility.GetRootCanvas());
         loader.transform.localPosition = Vector3.zero;
        
     }

@@ -12,7 +12,6 @@ using UnityEngine.UI;
 
 public class TreeManager : MonoBehaviour
 {
-
     public enum LF_Anchor
     {
         left = 1,
@@ -27,7 +26,6 @@ public class TreeManager : MonoBehaviour
     //超出这个值就显示滚动功能
     [SerializeField]
     private int maxCount;
-
     public int MaxCount
     {
         get
@@ -45,8 +43,6 @@ public class TreeManager : MonoBehaviour
     // Use this for initialization
     public void Init(List<SubSystemItem> list)
     {
-       
-      //  List<SubSystemItem> list = Utils.CollectionsConvert.ToObject<List<SubSystemItem>>(json);
         grid = Tree.Constant.CreateBranchGrid();
         grid.transform.SetParent(this.transform);
         grid.transform.localScale = Vector3.one;
@@ -92,6 +88,21 @@ public class TreeManager : MonoBehaviour
     public void OnBranchButtonClicked(object param)
     {
         UIBranchButton target = (UIBranchButton)param;
+
+       
+        //设备定位
+        if(target.type.Equals("equipment"))
+        {
+            GameObject g =  EquipmentData.FindGameObjectById(target.id);
+            if(g!=null&& g.GetComponent<Object3DElement>()!=null)
+            {
+                string sceneid = g.GetComponent<Object3DElement>().equipmentData.sceneId;
+                //Debug.Log(sceneid);
+                Main.instance.stateMachineManager.LocateEquipment(target.id, sceneid);
+            }
+           
+        }
+
         Debug.Log("OnBranchButtonClicked id:" + target.id + target.name);
     }
 

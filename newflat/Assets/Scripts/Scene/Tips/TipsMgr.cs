@@ -81,6 +81,10 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
         }
         foreach (Transform tips in tipsList)
         {
+            if(!tips)
+            {
+                continue;
+            }
             if(isVisible && TipsToggle.isOn)
             {
                 tips.gameObject.SetActive(true);

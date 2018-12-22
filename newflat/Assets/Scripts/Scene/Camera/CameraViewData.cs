@@ -136,7 +136,7 @@ public sealed class CameraViewData
         CallProxyGetViewData(sql, callBack);
     }
 
-    private static void GetCurrentEquipmentCameraView(System.Action<CameraViewItem> callBack,string equipmentId)
+    public static void GetCurrentEquipmentCameraView(System.Action<CameraViewItem> callBack,string equipmentId)
     {
         string sql = "equipId = " + equipmentId + " and (sceneId is null or sceneId = -1)";
         CallProxyGetViewData(sql, callBack);

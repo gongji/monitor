@@ -24,11 +24,7 @@ namespace Battlehub.UIControls
         {
             Instance = this;
             AppFacade.GetInstance().RegisterMediator(new TreeNavigationMeditor(gameObject));
-
         }
-
-
-
         private List<Object3dItem> datas = null;
         public void Init()
         {

@@ -148,8 +148,9 @@ namespace State
             }
             System.Type type = SceneData.GetCurrentState(parentid);
             BaseState bs = null;
-            //Debug.Log(type.Name.ToString());
-            if(mCurrentState!=null)
+           // Debug.Log(type.Name.ToString());
+            //Debug.Log(mCurrentState.GetType().ToString());
+            if (mCurrentState!=null)
             {
                 Debug.Log(mCurrentState.GetType().ToString());
             }
