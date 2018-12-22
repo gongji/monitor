@@ -1562,6 +1562,14 @@ Prefab:
       propertyPath: m_Drag
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
+      propertyPath: m_Name
+      value: personCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
+      propertyPath: m_TagString
+      value: GameController
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e519fd729c6f28e46bba5c9d4c23b48f, type: 2}
   m_IsPrefabAsset: 0
