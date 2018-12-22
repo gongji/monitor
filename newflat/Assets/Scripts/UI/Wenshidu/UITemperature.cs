@@ -73,13 +73,14 @@ public class UITemperature : MonoBehaviour
     {
         if (this.target != null)
         {
-            Camera cam = Camera.main;
+            Camera cam = CameraMsg.GetCurrentCamera();
+           // Debug.Log(cam.name);
             Vector2 screenPoint = cam.WorldToScreenPoint(target.transform.position);
 
-            bool isForward = Object3dUtility.IsCameraForword2(target, cam);
+            bool isForward = Object3dUtility.IsCameraForword(target, cam);
             if(!isForward )
             {
-                this.transform.localPosition = new Vector3(100000,0,0);
+                this.transform.GetComponent<RectTransform>().anchoredPosition = new Vector3(100000,0);
                 return;
             }
 

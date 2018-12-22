@@ -216,10 +216,18 @@ public class BrowserToolBar : MonoBehaviour {
     }
 
 
-    private bool isFlyCameraMode = false;
+    private bool isFlyCameraMode = true;
+    public bool IsFlyCameraMode
+    {
+        get
+
+        {
+            return isFlyCameraMode;
+        }
+    }
     private void CameraModeSwitch()
     {
-        if (!isFlyCameraMode)
+        if (isFlyCameraMode)
         {
             cameraMode.GetComponentInChildren<Text>().text = "人物模式";
             mainCamera.gameObject.SetActive(false);
@@ -294,7 +302,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Q) && isFlyCameraMode)
+        if (Input.GetKeyUp(KeyCode.Q) && !isFlyCameraMode)
         {
             CameraModeSwitch();
         }
@@ -305,7 +313,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     private  void OnGUI()
     {
-        if (isFlyCameraMode)
+        if (!isFlyCameraMode)
         {
             Cursor.visible = false;
 

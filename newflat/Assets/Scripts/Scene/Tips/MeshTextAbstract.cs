@@ -29,7 +29,7 @@ public abstract class MeshTextAbstract : MonoBehaviour {
         {
 
             // Object3dUtils.LookAtCamera(fontModel.gameObject,false,true,false, Camera.main);
-            Object3dUtility.LookAtCamera2(fontModel.gameObject, Camera.main);
+            Object3dUtility.LookAtCamera2(fontModel.gameObject, CameraMsg.GetCurrentCamera());
         }
 
     }
@@ -46,10 +46,14 @@ public abstract class MeshTextAbstract : MonoBehaviour {
 
     protected void SetScale()
     {
-        float distance = Vector3.Distance(fontModel.transform.position, Camera.main.transform.position);
-        distance /= 1000.0f;
-        distance = Mathf.Clamp01(distance);
-        fontModel.transform.localScale = Vector3.Lerp(MinLoacalScale, MaxLocalScale, distance);
+        if(Camera.main!=null)
+        {
+            float distance = Vector3.Distance(fontModel.transform.position, Camera.main.transform.position);
+            distance /= 1000.0f;
+            distance = Mathf.Clamp01(distance);
+            fontModel.transform.localScale = Vector3.Lerp(MinLoacalScale, MaxLocalScale, distance);
+        }
+        
     }
 
 

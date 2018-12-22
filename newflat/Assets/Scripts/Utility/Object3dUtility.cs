@@ -141,16 +141,16 @@ public static  class Object3dUtility
     /// </summary>
     /// <param name="gameObject">3d对象</param>
     /// <param name="camera">面向的相机</param>
-    //public static bool IsCameraForword(GameObject gameObject, Camera camera)
-    //{
-    //    Transform cameraTrans = camera.transform;
-    //    Vector3 vDirection = gameObject.transform.position - cameraTrans.position;
-    //    if (Vector3.Dot(vDirection, cameraTrans.forward) <= Common.Global.EPSILON_E4)
-    //    {
-    //        return false;
-    //    }
-    //    return true;
-    //}
+    public static bool IsCameraForword(GameObject gameObject, Camera camera)
+    {
+        Transform cameraTrans = camera.transform;
+        Vector3 vDirection = gameObject.transform.position - cameraTrans.position;
+        if (Vector3.Dot(vDirection, cameraTrans.forward) <= Constant.EPSILON_E4)
+        {
+            return false;
+        }
+        return true;
+    }
 
     /// <summary>
     /// 判断3d对象是否位于相机的正前方
@@ -158,8 +158,11 @@ public static  class Object3dUtility
     /// <param name="gameObject">3d对象</param>
     /// <param name="camera">面向的相机</param>
     public static bool IsCameraForword2(GameObject gameObject, Camera camera)
+
     {
+        //Debug.Log(gameObject.name);
         Vector3 vScreenPosition = camera.WorldToViewportPoint(gameObject.transform.position);
+        Debug.Log(vScreenPosition);
         if (vScreenPosition.x < 0.0f || vScreenPosition.x > 1.0f || vScreenPosition.y < 0.0f || vScreenPosition.y > 1.0f)
         {
             return false;

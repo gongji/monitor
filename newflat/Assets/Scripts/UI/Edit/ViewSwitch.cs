@@ -51,7 +51,8 @@ public class ViewSwitch : MonoBehaviour {
         //    return;
         //}
         BrowserToolBar.instance.Switch2DButtonControl();
-        if(box==null)
+        SubsystemMsg.Delete();
+        if (box==null)
         {
             box = SceneContext.sceneBox;
         }
@@ -113,6 +114,7 @@ public class ViewSwitch : MonoBehaviour {
     { 
         CameraInitSet.ResetCameraPostion();
         BrowserToolBar.instance.SetToolBarState();
+        SubsystemMsg.Create("");
     }
 	
 }

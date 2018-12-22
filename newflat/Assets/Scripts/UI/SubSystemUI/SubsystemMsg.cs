@@ -10,11 +10,18 @@ public static class SubsystemMsg {
 
     private static List<SubSystemItem> dataSource = null;
 
+    private static string _sceneid = "";
+
     public static void Create(string sceneid)
     {
+
         if(AppInfo.Platform == BRPlatform.Editor)
         {
             return;
+        }
+        if(string.IsNullOrEmpty(sceneid) && !string.IsNullOrEmpty(_sceneid))
+        {
+            sceneid = _sceneid;
         }
         SubSystemProxy.GetSubSystemByScene((result) => {
             if(string.IsNullOrEmpty(result))
@@ -32,6 +39,7 @@ public static class SubsystemMsg {
                 systemUI.GetComponent<TreeManager>().Init(dataSource);
             }
 
+            _sceneid = sceneid;
         }, sceneid);
     }
 
@@ -40,7 +48,7 @@ public static class SubsystemMsg {
         if(systemUI!=null)
         {
             GameObject.DestroyImmediate(systemUI);
-          
+            AllRestore();
             subSystemItem = null;
             ids.Clear();
         }
@@ -79,6 +87,15 @@ public static class SubsystemMsg {
             }
         }
 
+    }
+
+    private static void AllRestore()
+    {
+        BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
+        foreach (BaseEquipmentControl be in equipments)
+        {
+            be.RestoreMaterial();
+        }
     }
 
     private static SubSystemItem subSystemItem = null;
