@@ -56,11 +56,11 @@ public class Main : MonoBehaviour {
             {
                 stateMachineManager.SetAppState<EditStatus>();
             }
-            //StartCoroutine(WebsocjetService.Instance.StartWebSocket());
+           
             CameraInitSet.SystemInitCamera();
             Battlehub.UIControls.TreeViewControl.Instance.Init();
             ModelData.InitModelData();
-            WenshiduTimer.Instance.StartTimer();
+            
             //FlyingTextMsg.instance.LoadFontAsset();
 
 

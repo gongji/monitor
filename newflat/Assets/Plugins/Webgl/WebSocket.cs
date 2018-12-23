@@ -10,7 +10,10 @@ using System.Runtime.InteropServices;
 
 public class WebSocket
 {
-	private Uri mUrl;
+   
+
+
+    private Uri mUrl;
 
 	public WebSocket(Uri url)
 	{

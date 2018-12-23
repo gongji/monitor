@@ -6,7 +6,7 @@ using UnityEngine;
 public static class SubsystemMsg {
 
     private static GameObject systemUI = null;
-    private static ILog log = LogManagers.GetLogger("StateMachineManager");
+    private static ILog log = LogManagers.GetLogger("SubsystemMsg");
 
     private static List<SubSystemItem> dataSource = null;
 
@@ -130,17 +130,18 @@ public static class SubsystemMsg {
         }
     }
 
+    private const string euipmentName = "equipment";
     private static void GetAllEquipment(SubSystemItem subSystemItem)
     {
 
-        if(subSystemItem.type.Equals("equipment"))
+        if(subSystemItem.type.Equals(euipmentName))
         {
             ids.Add(subSystemItem.id);
         }
        for(int i=0; subSystemItem.childs!=null && subSystemItem.childs.Count>0&&i < subSystemItem.childs.Count;i++)
         {
             SubSystemItem child = subSystemItem.childs[i];
-            if (child.type.Equals("equipment"))
+            if (child.type.Equals(euipmentName))
             {
                 ids.Add(subSystemItem.childs[i].id);
             }

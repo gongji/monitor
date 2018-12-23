@@ -98,23 +98,27 @@ public static class SaveEquipmentData
 
         Dictionary<string, GameObject> allequipmentDic = EquipmentData.GetAllEquipmentData;
 
-        foreach (EquipmentGuid guidEquipment in addResultData)
+        if(addResultData!=null)
         {
-
-            foreach(Object3DElement original in addObject3DElements)
+            foreach (EquipmentGuid guidEquipment in addResultData)
             {
-                if (original.equipmentData.guid.Equals(guidEquipment.guid))
-                {
-                    original.equipmentData.id = guidEquipment.id;
-                    original.preEquipmentData = original.equipmentData.Clone() as EquipmentItem;
-                    allequipmentDic.Add(original.equipmentData.id, original.gameObject);
 
-                    break;
+                foreach (Object3DElement original in addObject3DElements)
+                {
+                    if (original.equipmentData.guid.Equals(guidEquipment.guid))
+                    {
+                        original.equipmentData.id = guidEquipment.id;
+                        original.preEquipmentData = original.equipmentData.Clone() as EquipmentItem;
+                        allequipmentDic.Add(original.equipmentData.id, original.gameObject);
+
+                        break;
+                    }
                 }
             }
-        }
 
-        Object3DElement.ClearAllAdd();
+            Object3DElement.ClearAllAdd();
+        }
+       
 
 
     }
