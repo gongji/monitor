@@ -102,6 +102,7 @@ public class UIBranchButton : MonoBehaviour
             {
                 GameObject temp = Tree.Constant.CreateBranchButton();
                 temp.transform.SetParent(grid.transform);
+                temp.transform.localScale = Vector3.one;
                 UIBranchButton _bbtn = temp.GetComponent <UIBranchButton>();
                 _bbtn.ReadChild(_childs[i]);
                 _bbtn.Hide();
@@ -112,6 +113,7 @@ public class UIBranchButton : MonoBehaviour
                 temp.GetComponent <Toggle>().group = grid.GetComponent<ToggleGroup>();
                 childs.Add(temp);
                 treeGrid.childs.Add(temp);
+                temp.transform.localScale = Vector3.one;
             }
             if (_childs.Count > treeManager.MaxCount)
             {
@@ -186,5 +188,10 @@ public class UIBranchButton : MonoBehaviour
             }
         }
             
+    }
+
+    private void Update()
+    {
+        transform.localScale = Vector3.one;
     }
 }

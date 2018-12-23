@@ -52,8 +52,9 @@ public sealed class EquipmentSet  {
             //创建漏水
             else if(type == DataModel.Type.De_LouShui && !equipmentDic.ContainsKey(equipmentItem.id))
             {
+               // Debug.Log(equipmentItem.loushuiPoints);
                 //仅仅用于测试
-                equipmentItem.loushuiPoints = "-1.67,0.596,-5.06418|-1.67,0.596,-3.19418|-1.67,0.596,-1.29418|1.02,0.596,-1.29418|1.02,0.596,1.47582";
+               // equipmentItem.loushuiPoints = "-1.67,0.596,-5.06418|-1.67,0.596,-3.19418|-1.67,0.596,-1.29418|1.02,0.596,-1.29418|1.02,0.596,1.47582";
                 equipment = new GameObject();
                 SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
 

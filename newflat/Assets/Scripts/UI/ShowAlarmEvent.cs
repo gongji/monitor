@@ -63,11 +63,17 @@ public  class ShowAlarmEvent :MonoBehaviour
 
     private void OnItemBecameVisible(ListViewItem item)
     {
-        // Create locate 按钮
-        var locateItem = item.SubItems[4];
-
         ItemData itemData = item.Tag as ItemData;
+        var confirmItem = item.SubItems[4];
+        GameObject confirmButton = GameObject.Instantiate(Resources.Load("UI/Alarm/confirm")) as GameObject;
+        confirmItem.CustomControl = confirmButton.transform as RectTransform;
+        confirmButton.GetComponent<Button>().onClick.AddListener(delegate ()
+        {
+            ConfirmEquipment(itemData.confirmId);
+        });
 
+        // Create locate 按钮
+        var locateItem = item.SubItems[5];
         GameObject locateButton = GameObject.Instantiate(Resources.Load("UI/Alarm/locate")) as GameObject;
         locateItem.CustomControl = locateButton.transform as RectTransform;
         locateButton.GetComponent<Button>().onClick.AddListener(delegate ()
@@ -75,13 +81,7 @@ public  class ShowAlarmEvent :MonoBehaviour
             LocateEquipment(itemData.locateId);
         });
 
-        var confirmItem = item.SubItems[5];
-        GameObject confirmButton = GameObject.Instantiate(Resources.Load("UI/Alarm/confirm")) as GameObject;
-        confirmItem.CustomControl = confirmButton.transform as RectTransform;
-        confirmButton.GetComponent<Button>().onClick.AddListener(delegate ()
-        {
-            ConfirmEquipment(itemData.confirmId);
-        });
+        
 
     }
 

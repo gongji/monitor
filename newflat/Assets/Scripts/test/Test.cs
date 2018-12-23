@@ -12,8 +12,11 @@ public class Test : MonoBehaviour {
     public Transform t1 = null;
 	 void Start () {
 
-        Debug.Log("base start");
-        EnergyConsumptionTestData.GetTestData();
+     
+            //Debug.Log( Utils.StrUtil.GetNewGuid());
+       // }
+       // Debug.Log("base start");
+        //EnergyConsumptionTestData.GetTestData();
         //Debug.Log(Camera.allCameras);
         //foreach(Camera c in Camera.allCameras)
         //{

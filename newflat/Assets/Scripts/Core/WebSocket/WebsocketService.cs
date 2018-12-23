@@ -68,26 +68,26 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
         commandsUtils.Exec(messageContent);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            SendData(GetTestData());
-        }
-    }
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        SendData(GetTestData());
+    //    }
+    //}
 
-    private string GetTestData()
-    {
-        MessageContent mc = new MessageContent();
-        Dictionary<string, object> data = new Dictionary<string, object>();
-        data.Add("id","123456");
-        data.Add("state", "alarm");
-        mc.data = data;
-        mc.methodName = "alarm";
-       return  CollectionsConvert.ToJSON(mc);
+    //private string GetTestData()
+    //{
+    //    MessageContent mc = new MessageContent();
+    //    Dictionary<string, object> data = new Dictionary<string, object>();
+    //    data.Add("id","123456");
+    //    data.Add("state", "alarm");
+    //    mc.data = data;
+    //    mc.methodName = "alarm";
+    //   return  CollectionsConvert.ToJSON(mc);
 
 
-    }
+    //}
 
     
 }

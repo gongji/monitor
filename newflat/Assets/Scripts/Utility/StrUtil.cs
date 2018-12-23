@@ -27,6 +27,16 @@ namespace Utils
             result = result.Substring(0, result.Length - 1);
             return result;
         }
+
+
+        /// <summary>
+        /// 获取一个新的guid
+        /// </summary>
+        /// <returns></returns>
+        public static string GetNewGuid()
+        {
+            return System.Guid.NewGuid().ToString("N");
+        }
     }
 
   

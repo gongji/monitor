@@ -4,24 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 设备报警
+/// 动画执行
 /// </summary>
 [SCommand]
-public class AlarmCommand : ICommand
+public class AnimationCommand : ICommand
 {
     public string Name
     {
         get
         {
-
-            return "alarm";
+            return "animation";
         }
     }
 
     public object ExecuteCommand(string data)
     {
         
-        List<EquipmentAlarm> list = Utils.CollectionsConvert.ToObject<List<EquipmentAlarm>>(data);
+        List<EquipmentAnimation> list = Utils.CollectionsConvert.ToObject<List<EquipmentAnimation>>(data);
 
         throw new System.NotImplementedException();
     }

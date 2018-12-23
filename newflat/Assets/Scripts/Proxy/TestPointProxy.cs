@@ -16,7 +16,7 @@ public sealed class TestPointProxy
    /// <param name="callBack"></param>
     public static void GetTestPointData(string id,System.Action<List<EquipmentTestPoint>> callBack)
     {
-        string url = Config.parse("downPath") + "/TestPoint.bat";
+        string url = Config.parse("requestAddress") + "/GetTestPointData";
 
         HttpRequestSingle.Instance.StartCoroutine(
 
@@ -29,11 +29,34 @@ public sealed class TestPointProxy
           }, (a) =>
           {
 
-              log.Error("http reqeust error GetAll3dObjectData:url=" + url);
+              log.Error("http reqeust error GetTestPointData:url=" + url);
 
-              log.Error("http reqeust error GetAll3dObjectData:" + a.ToString());
+              log.Error("http reqeust error GetTestPointData:" + a.ToString());
 
           }));
 
+    }
+
+   /// <summary>
+   /// 获取控制点列表
+   /// </summary>
+    public static void GetControlPointList(string id,System.Action<string> successCallBack)
+    {
+        string url = Config.parse("requestAddress") + "/GetControlPointList";
+
+        HttpRequestSingle.Instance.StartCoroutine(
+
+          HttpRequest.GetRequest(url, (result) => {
+
+             
+
+          }, (a) =>
+          {
+
+              log.Error("http reqeust error GetControlPointList:url=" + url);
+
+              log.Error("http reqeust error GetControlPointList:" + a.ToString());
+
+          }));
     }
 }

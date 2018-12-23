@@ -16,6 +16,7 @@ public sealed class EditModelListData
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.GetRequest(url, (result)=> {
+              Debug.Log(result);
               List<ModelCategory> modelList = CollectionsConvert.ToObject<List<ModelCategory>>(result);
 
               callBack.Invoke(modelList);

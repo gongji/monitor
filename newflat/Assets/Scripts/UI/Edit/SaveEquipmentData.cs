@@ -16,7 +16,7 @@ public static class SaveEquipmentData
 
         //新增的数据
 
-        List<EquipmentItem> AddData = GetEquipmentItem(Object3DElement.GetNewList());
+        List<EquipmentItem> AddData = ForMatAddEquipmentItem(Object3DElement.GetNewList());
 
         result.Add("add", AddData);
 
@@ -40,6 +40,7 @@ public static class SaveEquipmentData
                 continue;
             }
             bool isSame = Object3dUtility.IsCompareObjectProperty(object3DElement.equipmentData, object3DElement.preEquipmentData);
+            //不相同
             if(!isSame)
             {
                 FormatUtil.FormatEquipmentData(object3DElement.equipmentData);
@@ -57,9 +58,13 @@ public static class SaveEquipmentData
 
         Dictionary<string, string> postData = new Dictionary<string, string>();
         string resultPostData = CollectionsConvert.ToJSON(result);
-        Debug.Log(resultPostData);
+       // Debug.Log(resultPostData);
         postData.Add("result", resultPostData);
-        Equipment3dProxy.PostEquipmentSaveData((a) => {
+        Equipment3dProxy.PostEquipmentSaveData((jsonString) => {
+
+            List<EquipmentGuid>  resultData = Utils.CollectionsConvert.ParseKey<List<EquipmentGuid>>("data",jsonString);
+            Debug.Log(resultData.Count);
+
             MessageBox.Show("信息提示","保存成功");
 
         }, postData);
@@ -67,18 +72,26 @@ public static class SaveEquipmentData
     }
 
 
-    private static List<EquipmentItem> GetEquipmentItem(List<Object3DElement> list)
+    private static List<EquipmentItem> ForMatAddEquipmentItem(List<Object3DElement> list)
     {
         List<EquipmentItem> result = new List<EquipmentItem>();
         foreach(Object3DElement item in list)
         {
-            FormatUtil.FormatEquipmentData(item.equipmentData);
+            EquipmentItem equipmentItem = item.equipmentData;
+            FormatUtil.FormatEquipmentData(equipmentItem);
+            equipmentItem.guid = Utils.StrUtil.GetNewGuid();
             result.Add(item.equipmentData);
         }
 
         return result;
     }
 
+
+
+    /// <summary>
+    /// 保存门禁数据
+    /// </summary>
+    /// <param name="doorData"></param>
     public static void SaveDoor(EquipmentItem doorData)
     {
         Dictionary<string, object> result = new Dictionary<string, object>();

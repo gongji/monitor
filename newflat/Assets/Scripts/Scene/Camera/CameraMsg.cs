@@ -7,7 +7,13 @@ public static  class CameraMsg  {
 	
     public static Camera GetCurrentCamera()
     {
-        if(BrowserToolBar.instance.IsFlyCameraMode)
+        if(AppInfo.Platform == BRPlatform.Editor)
+        {
+            return Camera.main;
+        }
+
+
+        if(BrowserToolBar.instance!=null && BrowserToolBar.instance.IsFlyCameraMode)
         {
             return Camera.main;
         }

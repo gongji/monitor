@@ -46,7 +46,7 @@ public class TreeManager : MonoBehaviour
         grid = Tree.Constant.CreateBranchGrid();
         grid.transform.SetParent(this.transform);
         grid.transform.localScale = Vector3.one;
-        grid.GetComponent<RectTransform>().anchoredPosition =new Vector2(50,0);
+        grid.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         grid.GetComponent<UITreeGrid>().index = 1;
         UITreeGrid treeGrid = grid.transform.GetComponent<UITreeGrid>();
         TopHeight = list.Count * treeGrid.cellSize.y;

@@ -51,6 +51,21 @@ namespace Utils
             return Newtonsoft.Json.JsonConvert.SerializeObject(o);
             
         }
-        
+
+        /// <summary>
+        /// 解析key的数据并转化为对象列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public static T ParseKey<T>(string key,string json)
+        {
+            Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JToken.Parse(json) as Newtonsoft.Json.Linq.JObject;
+            Newtonsoft.Json.Linq.JToken jToke = jObject.GetValue(key);
+            T result = jToke.ToObject<T>();
+            return result;
+        }
+
     }
 }
