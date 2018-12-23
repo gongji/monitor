@@ -16,7 +16,7 @@ public static class SaveEquipmentData
 
         //新增的数据
 
-        List<EquipmentItem> AddData = ForMatAddEquipmentItem(Object3DElement.GetNewList());
+        List<EquipmentItem> AddData = FormatAddEquipmentItem(Object3DElement.GetNewList());
 
         result.Add("add", AddData);
 
@@ -62,8 +62,9 @@ public static class SaveEquipmentData
         postData.Add("result", resultPostData);
         Equipment3dProxy.PostEquipmentSaveData((jsonString) => {
 
-            List<EquipmentGuid>  resultData = Utils.CollectionsConvert.ParseKey<List<EquipmentGuid>>("data",jsonString);
-            Debug.Log(resultData.Count);
+            List<EquipmentGuid>  addResultData = Utils.CollectionsConvert.ParseKey<List<EquipmentGuid>>("data",jsonString);
+            CallBackUpdate(AddData,addResultData, modityData);
+            //Debug.Log(resultData.Count);
 
             MessageBox.Show("信息提示","保存成功");
 
@@ -72,7 +73,7 @@ public static class SaveEquipmentData
     }
 
 
-    private static List<EquipmentItem> ForMatAddEquipmentItem(List<Object3DElement> list)
+    private static List<EquipmentItem> FormatAddEquipmentItem(List<Object3DElement> list)
     {
         List<EquipmentItem> result = new List<EquipmentItem>();
         foreach(Object3DElement item in list)
@@ -84,6 +85,29 @@ public static class SaveEquipmentData
         }
 
         return result;
+    }
+
+
+    /// <summary>
+    /// 更新成功后，回调同步
+    /// </summary>
+    /// <param name="OriginalAddData"></param>
+    /// <param name="addResultData"></param>
+    /// <param name="modityData"></param>
+    public  static void  CallBackUpdate(List<EquipmentItem> OriginalAddData, List<EquipmentGuid> addResultData, List<EquipmentItem> modityData)
+    {
+        //清除所有的删除
+        Object3DElement.ClearAllDelete();
+        
+        //同步修改的数据
+        foreach(EquipmentItem modityItem  in modityData)
+        {
+            GameObject eg = EquipmentData.GetAllEquipmentData[modityItem.id];
+            eg.GetComponent<Object3DElement>().preEquipmentData = modityItem.Clone() as EquipmentItem;
+        }
+        //增加
+
+
     }
 
 

@@ -69,6 +69,11 @@ public class Object3DElement : MonoBehaviour {
         return delete3dObjects;
     }
 
+    public static void ClearAllDelete()
+    {
+        delete3dObjects.Clear();
+    }
+
     #endregion
 
 
