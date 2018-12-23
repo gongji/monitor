@@ -16,7 +16,8 @@ public static class SaveEquipmentData
 
         //新增的数据
 
-        List<EquipmentItem> AddData = FormatAddEquipmentItem(Object3DElement.GetNewList());
+        List<Object3DElement> addObject3DElements = Object3DElement.GetNewList();
+        List<EquipmentItem> AddData = FormatAddEquipmentItem(addObject3DElements);
 
         result.Add("add", AddData);
 
@@ -58,12 +59,12 @@ public static class SaveEquipmentData
 
         Dictionary<string, string> postData = new Dictionary<string, string>();
         string resultPostData = CollectionsConvert.ToJSON(result);
-       // Debug.Log(resultPostData);
+        Debug.Log(resultPostData);
         postData.Add("result", resultPostData);
         Equipment3dProxy.PostEquipmentSaveData((jsonString) => {
 
             List<EquipmentGuid>  addResultData = Utils.CollectionsConvert.ParseKey<List<EquipmentGuid>>("data",jsonString);
-            CallBackUpdate(AddData,addResultData, modityData);
+            CallBackUpdate(addObject3DElements, addResultData, modityData);
             //Debug.Log(resultData.Count);
 
             MessageBox.Show("信息提示","保存成功");
@@ -73,19 +74,7 @@ public static class SaveEquipmentData
     }
 
 
-    private static List<EquipmentItem> FormatAddEquipmentItem(List<Object3DElement> list)
-    {
-        List<EquipmentItem> result = new List<EquipmentItem>();
-        foreach(Object3DElement item in list)
-        {
-            EquipmentItem equipmentItem = item.equipmentData;
-            FormatUtil.FormatEquipmentData(equipmentItem);
-            equipmentItem.guid = Utils.StrUtil.GetNewGuid();
-            result.Add(item.equipmentData);
-        }
-
-        return result;
-    }
+   
 
 
     /// <summary>
@@ -94,7 +83,7 @@ public static class SaveEquipmentData
     /// <param name="OriginalAddData"></param>
     /// <param name="addResultData"></param>
     /// <param name="modityData"></param>
-    public  static void  CallBackUpdate(List<EquipmentItem> OriginalAddData, List<EquipmentGuid> addResultData, List<EquipmentItem> modityData)
+    public  static void  CallBackUpdate(List<Object3DElement> addObject3DElements, List<EquipmentGuid> addResultData, List<EquipmentItem> modityData)
     {
         //清除所有的删除
         Object3DElement.ClearAllDelete();
@@ -105,12 +94,44 @@ public static class SaveEquipmentData
             GameObject eg = EquipmentData.GetAllEquipmentData[modityItem.id];
             eg.GetComponent<Object3DElement>().preEquipmentData = modityItem.Clone() as EquipmentItem;
         }
-        //增加
+        //处理增加
+
+        Dictionary<string, GameObject> allequipmentDic = EquipmentData.GetAllEquipmentData;
+
+        foreach (EquipmentGuid guidEquipment in addResultData)
+        {
+
+            foreach(Object3DElement original in addObject3DElements)
+            {
+                if (original.equipmentData.guid.Equals(guidEquipment.guid))
+                {
+                    original.equipmentData.id = guidEquipment.id;
+                    original.preEquipmentData = original.equipmentData.Clone() as EquipmentItem;
+                    allequipmentDic.Add(original.equipmentData.id, original.gameObject);
+
+                    break;
+                }
+            }
+        }
+
+        Object3DElement.ClearAllAdd();
 
 
     }
 
+    private static List<EquipmentItem> FormatAddEquipmentItem(List<Object3DElement> list)
+    {
+        List<EquipmentItem> result = new List<EquipmentItem>();
+        foreach (Object3DElement item in list)
+        {
+            EquipmentItem equipmentItem = item.equipmentData;
+            FormatUtil.FormatEquipmentData(equipmentItem);
+            equipmentItem.guid = Utils.StrUtil.GetNewGuid();
+            result.Add(item.equipmentData);
+        }
 
+        return result;
+    }
 
     /// <summary>
     /// 保存门禁数据

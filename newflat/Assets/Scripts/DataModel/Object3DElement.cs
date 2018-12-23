@@ -89,6 +89,11 @@ public class Object3DElement : MonoBehaviour {
         return add3dObjects;
     }
 
+    public static void ClearAllAdd()
+    {
+        add3dObjects.Clear();
+    }
+
     public static void DeleteNewItem(Object3DElement item)
     {
         
