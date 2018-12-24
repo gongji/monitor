@@ -129,6 +129,13 @@ public class CameraManage : MonoBehaviour
     }
 
 
+    private void OnDestroy()
+    {
+        if(target!=null)
+        {
+            GameObject.DestroyImmediate(target.gameObject);
+        }
+    }
 
 
 

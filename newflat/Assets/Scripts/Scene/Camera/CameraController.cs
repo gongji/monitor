@@ -219,6 +219,7 @@ public class CameraController : MonoBehaviour
     }
 
 
+  
     // Use this for initialization
     void Start()
     {
@@ -250,6 +251,14 @@ public class CameraController : MonoBehaviour
         m_HandleMouse = this.HandleNormalMouse;
         m_HandleKeyboard = this.HandleNormalKeyboard;
         SetCharaterScale();
+    }
+
+    private void OnDestroy()
+    {
+        if(m_Target!=null)
+        {
+            GameObject.DestroyImmediate(m_Target.gameObject);
+        }
     }
 
     /// <summary>

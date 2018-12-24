@@ -74,10 +74,11 @@ public class CameraRotatoAround : MonoBehaviour
     {
         cube = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
         //target = cube;
-       
+    }
 
-
-
+    private void OnDestroy()
+    {
+        GameObject.DestroyImmediate(cube.gameObject);
     }
 
     public void SetRotation()
@@ -119,12 +120,12 @@ public class CameraRotatoAround : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            isRotate = false;
-            transform.Translate(Vector3.left * Input.GetAxis("Mouse X") * 15f*Time.deltaTime);
-            transform.Translate(Vector3.up * Input.GetAxis("Mouse Y")*-1f * 15f*Time.deltaTime);
-            ismove = true;
-            wait = true;
-            now = transform.position;
+            //isRotate = false;
+            //transform.Translate(Vector3.left * Input.GetAxis("Mouse X") * 15f*Time.deltaTime);
+            //transform.Translate(Vector3.up * Input.GetAxis("Mouse Y")*-1f * 15f*Time.deltaTime);
+            //ismove = true;
+            //wait = true;
+            //now = transform.position;
         }
 
         if (ismove == false)

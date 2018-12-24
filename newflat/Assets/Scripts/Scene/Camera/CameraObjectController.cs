@@ -233,7 +233,15 @@ public class CameraObjectController : MonoBehaviour
        // SetCharaterScale();
     }
 
-  
+    private void OnDestroy()
+    {
+        if(m_Target!=null)
+        {
+            GameObject.DestroyImmediate(m_Target.gameObject);
+        }
+    }
+
+
     /// <summary>
     /// 设定控制器的缩放
     /// </summary>

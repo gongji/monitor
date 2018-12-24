@@ -50,8 +50,12 @@ public class ViewSwitch : MonoBehaviour {
         //{
         //    return;
         //}
-        BrowserToolBar.instance.Switch2DButtonControl();
-        SubsystemMsg.Delete();
+        if(AppInfo.Platform == BRPlatform.Browser)
+        {
+            BrowserToolBar.instance.Switch2DButtonControl();
+            SubsystemMsg.Delete();
+        }
+        
         if (box==null)
         {
             box = SceneContext.sceneBox;
@@ -66,9 +70,7 @@ public class ViewSwitch : MonoBehaviour {
 
         }
         else
-        {
-
-
+        { 
             Camera.main.orthographic = true;
             bool flag = box.GetComponent<BoxCollider>().enabled;
             box.GetComponent<BoxCollider>().enabled = true;
@@ -105,16 +107,17 @@ public class ViewSwitch : MonoBehaviour {
             Camera.main.transform.rotation = rot;
 
         });
-
-
-       
     }
 
     public void Switch3D()
     { 
         CameraInitSet.ResetCameraPostion();
-        BrowserToolBar.instance.SetToolBarState();
-        SubsystemMsg.Create("");
+        if(AppInfo.Platform == BRPlatform.Browser)
+        {
+            BrowserToolBar.instance.SetToolBarState();
+            SubsystemMsg.Create("");
+        }
+        
     }
 	
 }

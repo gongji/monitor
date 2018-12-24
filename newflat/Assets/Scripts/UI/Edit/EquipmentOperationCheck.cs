@@ -28,7 +28,10 @@ public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointe
 
     }
     public void OnPointerDown(PointerEventData eventData)
-    {
+
+    { 
+        Debug.Log("OnPointerDown");
+
         uiElementCommandBar.HideOther(transform.name);
         HandleMouseDown(transform.name);
         isDown = true;
@@ -37,7 +40,8 @@ public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointe
 
     public void OnPointerUp(PointerEventData eventData)
     {
-      
+
+        Debug.Log("OnPointerUp");
         HandleMouseUp();
         uiElementCommandBar.ShowAll();
         isDown = false;

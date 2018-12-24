@@ -216,20 +216,22 @@ public sealed class UIElementCommandBar : MonoBehaviour
             moveYButton.GetComponent<Button>().enabled = true;
             //  edit.GetComponent<Button>().enabled = true;
             edit.GetComponent<EventTrigger>().enabled = true;
+            locate.GetComponent<EventTrigger>().enabled = true;
+
+
             moveYButton.GetComponent<Image>().color = Color.white;
+            locate.GetComponent<Image>().color = new Color32(0, 152, 255, 255);
             edit.GetComponent<Image>().color = new Color32(0,152,255,255);
         }
         else
         {
             moveYButton.GetComponent<Button>().enabled = false;
             edit.GetComponent<EventTrigger>().enabled = false;
-
+            locate.GetComponent<EventTrigger>().enabled = false;
             moveYButton.GetComponent<Image>().color = Color.gray;
-            edit.GetComponent<Image>().color = new Color32(0, 152, 255, 130);
+            edit.GetComponent<Image>().color = Color.gray;
+            locate.GetComponent<Image>().color = Color.gray;
         }
-
-       
-
     }
 
     public void HideOther(string name)

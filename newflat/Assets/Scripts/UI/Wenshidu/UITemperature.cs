@@ -5,6 +5,7 @@
     **  功能:
     **  备注:
 ************************************/
+using State;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +72,7 @@ public class UITemperature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (this.target != null)
         {
             Camera cam = CameraMsg.GetCurrentCamera();
@@ -80,7 +82,13 @@ public class UITemperature : MonoBehaviour
             bool isForward = Object3dUtility.IsCameraForword(target, cam);
             if(!isForward )
             {
-                this.transform.GetComponent<RectTransform>().anchoredPosition = new Vector3(100000,0);
+                this.transform.GetComponent<RectTransform>().anchoredPosition = new Vector3(4000,0);
+                return;
+            }
+
+            if(Main.instance.stateMachineManager.mCurrentState is BuilderState)
+            {
+                this.transform.GetComponent<RectTransform>().anchoredPosition = new Vector3(4000, 0);
                 return;
             }
 

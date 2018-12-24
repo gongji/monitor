@@ -9,6 +9,7 @@ using  System.Linq;
 public class FullAreaSet : BaseSet
 {
     private static ILog log = LogManagers.GetLogger("FullAreaSet");
+    private GameObject colorImageUI;
     #region 设置全员场景初始化
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
@@ -26,7 +27,11 @@ public class FullAreaSet : BaseSet
            {
                callBack.Invoke();
            }
-           
+
+           colorImageUI = TransformControlUtility.CreateItem("UI/fullAreColor", UIUtility.GetRootCanvas());
+           colorImageUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+
        });
     }
 
@@ -230,10 +235,13 @@ public class FullAreaSet : BaseSet
             GameObject.DestroyImmediate(uiTempObject);
         }
         
-
-
         RenderSettingsValue.SetNoAreaEffction();
         CameraInitSet.SetObjectCamera();
+
+        if(colorImageUI!=null)
+        {
+            GameObject.DestroyImmediate(colorImageUI);
+        }
         
     }
     #endregion

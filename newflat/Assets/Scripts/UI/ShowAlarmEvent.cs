@@ -30,7 +30,7 @@ public  class ShowAlarmEvent :MonoBehaviour
 
         CreateTitle(name);
         ListView listView = transform.GetComponentInChildren<ListView>();
-        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 290);
+        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(605, 290);
         listView.ColumnClick += OnColumnClick;
         listView.ItemBecameVisible += this.OnItemBecameVisible;
         listView.ItemBecameInvisible += this.OnItemBecameInvisible;

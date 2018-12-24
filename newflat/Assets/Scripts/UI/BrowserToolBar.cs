@@ -101,8 +101,6 @@ public class BrowserToolBar : MonoBehaviour {
             item.gameObject.SetActive(true);
         }
 
-
-       
         if (mCurrentState is AreaState)
         {
             qiangti.gameObject.SetActive(false);

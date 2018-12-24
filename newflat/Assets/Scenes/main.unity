@@ -721,6 +721,10 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11447686, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a98e7875c94b3e40a54a1a10581c8aa, type: 2}
   m_IsPrefabAsset: 0
