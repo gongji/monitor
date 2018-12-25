@@ -9,4 +9,19 @@ using TMPro;
 public class DoorEquipmentControl : NormalEquipmentControl {
 
     private ILog log = LogManagers.GetLogger("DoorEquipmentControl");
+
+    private void Start()
+    {
+        Init("door");
+    }
+
+    private void OnDisable()
+    {
+        equipmentIconObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        equipmentIconObject.SetActive(true);
+    }
 }

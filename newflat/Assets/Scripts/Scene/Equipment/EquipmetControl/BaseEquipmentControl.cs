@@ -10,6 +10,24 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
     protected Dictionary<MeshRenderer, Material[]> materialDic = null;
 
     private bool isAlarm = false;
+
+    protected GameObject equipmentIconObject;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="iconName">icon的名字</param>
+    protected void Init(string iconName)
+    {
+        equipmentItem = GetComponent<Object3DElement>().equipmentData;
+        equipmentIconObject = TransformControlUtility.CreateItem("IconPrefeb/"+ iconName, UIUtility.GetRootCanvas());
+        EquipmentIcon ei = equipmentIconObject.GetComponent<EquipmentIcon>();
+        if (!ei)
+        {
+            ei = equipmentIconObject.AddComponent<EquipmentIcon>();
+        }
+        ei.equipmentObject = gameObject;
+    }
     public virtual void Alarm(){
         if(isAlarm)
         {

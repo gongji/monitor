@@ -113,8 +113,8 @@ public static class UIUtility
     {
        // Debug.Log(worldPoint);
         Vector2 ScreenPostion = GetWordToScreen(worldPoint, objCamera);
-       // Debug.Log(ScreenPostion);
-        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        // Debug.Log(ScreenPostion);
+        Canvas canvas = GetRootCanvas().GetComponent<Canvas>();
         Vector2 uiPostion = GetScreenToUIPos(new Vector3(ScreenPostion.x, ScreenPostion.y, 0), canvas);
         return uiPostion;
     }

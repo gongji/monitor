@@ -7,15 +7,15 @@ using UnityEngine.UI;
 
 public class EquipmentIcon : MonoBehaviour ,IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public EquipmentItem equipmentItem;
+    public GameObject equipmentObject;
   
     private TMPro.TextMeshProUGUI text;
     void Start()
     {
         text = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        if (equipmentItem != null)
+        if (equipmentObject != null)
         {
-            text.text = equipmentItem.name;
+            text.text = equipmentObject.GetComponent<Object3DElement>().equipmentData.name;
         }
         text.enabled = false;
     }
@@ -32,14 +32,20 @@ public class EquipmentIcon : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
    
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(!string.IsNullOrEmpty(equipmentItem.id )&&  EquipmentData.GetAllEquipmentData.ContainsKey(equipmentItem.id))
+        if(equipmentObject!=null)
         {
-            GameObject item = EquipmentData.GetAllEquipmentData[equipmentItem.id];
-            if(item.GetComponent<BaseEquipmentControl>()!=null)
-            {
-                item.GetComponent<BaseEquipmentControl>().OnMouseClick();
-            }
+            equipmentObject.GetComponent<BaseEquipmentControl>().OnMouseClick();
         }
        
     }
+
+    void Update()
+    {
+        if(equipmentObject!=null)
+        {
+            transform.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(equipmentObject.transform.position, Camera.main);
+        }
+        
+    }
+   
 }

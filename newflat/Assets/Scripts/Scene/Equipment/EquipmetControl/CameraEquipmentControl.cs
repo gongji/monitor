@@ -7,7 +7,17 @@ public class CameraEquipmentControl : BaseEquipmentControl
 
     private void Start()
     {
-        equipmentItem = GetComponent<Object3DElement>().equipmentData;
+        Init("camera");
+    }
+
+    private void OnDisable()
+    {
+        equipmentIconObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        equipmentIconObject.SetActive(true);
     }
     public override void Alarm()
     {
