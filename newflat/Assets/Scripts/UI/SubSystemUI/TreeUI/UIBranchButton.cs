@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using System;
 using Tree;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class UIBranchButton : MonoBehaviour
 {
@@ -37,7 +38,8 @@ public class UIBranchButton : MonoBehaviour
     public Text label;
 
     
-    public string type;
+    //01,equipment ，model
+    public string type ="";
 
     public delegate void OnBranchBtnClicked(object param);
     //点击的回调
@@ -55,13 +57,19 @@ public class UIBranchButton : MonoBehaviour
 
     void Awake()
     {
-        this.GetComponent<Toggle>().onValueChanged.AddListener(OnClicked);
+        this.GetComponent<Toggle>().onValueChanged.AddListener(OnClickedChang);
+        //this.GetComponent<Toggle>().OnPointerClick = aa;
+    }
+
+    public void OnMouseClick()
+    {
+        treeManager.OnMouseClick(this);
     }
 
     void Start()
     {
         if (treeManager != null)
-            onBranchBtnClicked = treeManager.OnBranchButtonClicked;
+            onBranchBtnClicked = treeManager.OnBranchButtonChangeValue;
     }
 
     private void OnDestroy()
@@ -136,7 +144,7 @@ public class UIBranchButton : MonoBehaviour
         }
     }
 
-    public void OnClicked(bool p)
+    public void OnClickedChang(bool p)
     {
         //点击树的最顶层
         if (!p)

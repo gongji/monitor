@@ -69,6 +69,7 @@ public sealed class ShowTestPoint
             //    listView.Items.Clear();
             //}
             //listView.ResumeLayout();
+            //设置值
             foreach (EquipmentTestPoint item in result)
             {
                 string[] subItemTexts = new string[] { item.name, item.value, item.unit };

@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TreeManager : MonoBehaviour
 {
@@ -83,22 +84,23 @@ public class TreeManager : MonoBehaviour
         }
         grid.GetComponent<UITreeGrid>().OnInit(this);
     }
-	
-  
-    public void OnBranchButtonClicked(object param)
+
+
+
+    private string selectId = "";
+    public void OnBranchButtonChangeValue(object param)
     {
         UIBranchButton target = (UIBranchButton)param;
-
-
         if (target.transform.GetComponent<Toggle>().isOn)
         {
+           // Debug.Log("change");
             ////设备定位
             if (target.type.Equals("equipment"))
             {
-                GameObject g = EquipmentData.FindGameObjectById(target.id);
-                if (g != null && g.GetComponent<Object3DElement>() != null)
+                GameObject item = EquipmentData.FindGameObjectById(target.id);
+                if (item != null && item.GetComponent<Object3DElement>() != null)
                 {
-                    string sceneid = g.GetComponent<Object3DElement>().equipmentData.sceneId;
+                    string sceneid = item.GetComponent<Object3DElement>().equipmentData.sceneId;
                     //Debug.Log(sceneid);
                     Main.instance.stateMachineManager.LocateEquipment(target.id, sceneid);
                 }
@@ -109,9 +111,29 @@ public class TreeManager : MonoBehaviour
                 SubsystemMsg.SetWireframe(target.id);
             }
 
-          //  Debug.Log("OnBranchButtonClicked id:" + target.id + target.name);
+            //  Debug.Log("OnBranchButtonClicked id:" + target.id + target.name);
+
+            if(!target.type.Equals("equipment") && !target.type.Equals("model"))
+            {
+                this.selectId = target.id;
+            }
         }
-       
+    }
+
+    public void OnMouseClick(UIBranchButton target)
+    {
+        Debug.Log(target.name  + ":"+ target.id + ":"+ target.type);
+        DOVirtual.DelayedCall(0.3f, () => {
+
+            if (selectId.Equals(target.id) && !target.type.Equals("equipment") &&
+            !target.type.Equals("model") && !target.transform.GetComponent<Toggle>().isOn)
+            {
+                Debug.Log("还原");
+                SubsystemMsg.AllRestore();
+                return;
+            }
+        });
+        
     }
 
     public void BranchRootHideAllChilds()

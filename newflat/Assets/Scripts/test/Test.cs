@@ -104,6 +104,11 @@ public class Test : MonoBehaviour {
         //        gs.SetSelectObject(transform);
         //    }
         //}
+
+        //if(Input.GetKeyDown(KeyCode.A))
+        //{
+
+        //}
     }
 
     private void CreateTreeData()
@@ -115,7 +120,7 @@ public class Test : MonoBehaviour {
             SubSystemItem ssi = new SubSystemItem();
             ssi.name = "button1" + i;
             ssi.id = "id1" + i;
-            ssi.type = "0";
+            ssi.type = "01";
 
             List<SubSystemItem> twoList = new List<SubSystemItem>();
             for (int k= 0;k < 8;k++)
@@ -123,7 +128,7 @@ public class Test : MonoBehaviour {
                 SubSystemItem ssi2 = new SubSystemItem();
                 ssi2.name = "button2" + i;
                 ssi2.id = "id" + i;
-                ssi2.type = "0";
+                ssi2.type = "model";
                 twoList.Add(ssi2);
 
                 if(k%2==0)
@@ -135,7 +140,7 @@ public class Test : MonoBehaviour {
                         SubSystemItem ssi3 = new SubSystemItem();
                         ssi3.name = "button3" + i;
                         ssi3.id = "id" + i;
-                        ssi3.type = "0";
+                        ssi3.type = "equipment";
                         threeList.Add(ssi3);
                     }
                     ssi2.childs = threeList;

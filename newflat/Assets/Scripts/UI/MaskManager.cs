@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+///用来遮罩的画布
+/// </summary>
 public class MaskManager : MonoSingleton<MaskManager> {
 
-    // Use this for initialization
-
+  
     private GameObject mask;
 
     public void Show()

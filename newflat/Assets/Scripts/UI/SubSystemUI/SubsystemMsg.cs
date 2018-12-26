@@ -89,7 +89,7 @@ public static class SubsystemMsg {
 
     }
 
-    private static void AllRestore()
+    public static void AllRestore()
     {
         BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
         foreach (BaseEquipmentControl be in equipments)
