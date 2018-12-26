@@ -128,7 +128,7 @@ public class TreeManager : MonoBehaviour
             if (selectId.Equals(target.id) && !target.type.Equals("equipment") &&
             !target.type.Equals("model") && !target.transform.GetComponent<Toggle>().isOn)
             {
-                Debug.Log("还原");
+                //Debug.Log("还原");
                 SubsystemMsg.AllRestore();
                 return;
             }
