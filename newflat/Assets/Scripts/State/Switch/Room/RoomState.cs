@@ -25,7 +25,7 @@ namespace State
             log.Debug("RoomState OnInit");
     	}
 
-		protected override void OnLoadResouceFinish()
+		protected override void OnLoadSceneResouceFinish()
 		{
             
             log.Debug("RoomState OnLoadResouce finish");

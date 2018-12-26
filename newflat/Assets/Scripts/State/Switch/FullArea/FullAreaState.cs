@@ -41,7 +41,7 @@ namespace State
             //    log.Debug("GetCameraView  isError");
             //});
         }
-        protected override void OnLoadResouceFinish()
+        protected override void OnLoadSceneResouceFinish()
 		{
             
             Debug.Log ("area OnLoadResouce finish");

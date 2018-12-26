@@ -36,7 +36,7 @@ namespace State
 		{
 			OnInit ();
 			OnFadeOut (()=> {
-                LoadResouce();
+                LoadSceneResouce();
             });
             
 		}
@@ -52,7 +52,7 @@ namespace State
             eventSystem.enabled = isEnable;
         }
 
-        protected void LoadResouce()
+        protected void LoadSceneResouce()
         {
             log.Debug("strat load resouce");
             curentDataList = SceneData.GetCurrentData();
@@ -64,13 +64,13 @@ namespace State
             {
                 DownLoader.Instance.StartSceneDownLoad(result.ToList<Object3dItem>(), () =>
                 {
-                    OnLoadResouceFinish();
+                    OnLoadSceneResouceFinish();
                 });
             }
             //不加载资源
             else
             {
-                OnLoadResouceFinish();
+                OnLoadSceneResouceFinish();
             }
 
           // });
@@ -93,7 +93,7 @@ namespace State
             });
         }
 
-        protected virtual void OnLoadResouceFinish()
+        protected virtual void OnLoadSceneResouceFinish()
         {
 
         }

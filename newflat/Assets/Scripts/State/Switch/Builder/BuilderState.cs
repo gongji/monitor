@@ -25,7 +25,7 @@ namespace State
             Camera.main.transform.position += Camera.main.transform.position + Vector3.right * 10000;
         }
 
-        protected override void OnLoadResouceFinish()
+        protected override void OnLoadSceneResouceFinish()
 		{
             Debug.Log ("BuilderState OnLoadResouce finish");
 

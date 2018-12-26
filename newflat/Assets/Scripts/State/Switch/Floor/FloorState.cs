@@ -25,7 +25,7 @@ namespace State
             base.OnInit();
             log.Debug("FloorState OnInit");
     	}
-		protected override void OnLoadResouceFinish()
+		protected override void OnLoadSceneResouceFinish()
 		{
            
             log.Debug("FloorState OnLoadResouce finish");
