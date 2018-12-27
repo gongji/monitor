@@ -13,6 +13,9 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
 
     protected GameObject equipmentIconObject;
 
+    //测点快捷菜单
+    protected GameObject testPointMenu = null;
+
     /// <summary>
     /// 
     /// </summary>
@@ -20,7 +23,7 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
     protected void Init(string iconName)
     {
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
-        equipmentIconObject = TransformControlUtility.CreateItem("IconPrefeb/"+ iconName, UIUtility.GetRootCanvas());
+        equipmentIconObject = TransformControlUtility.CreateItem("equipment/IconPrefeb/" + iconName, UIUtility.GetRootCanvas().Find("equipmentIcon"));
         EquipmentIcon ei = equipmentIconObject.GetComponent<EquipmentIcon>();
         if (!ei)
         {
@@ -36,9 +39,6 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         isAlarm = true;
         UpdateShow();
     }
-
-
-
 
     public virtual void CancleAlarm() {
         if(!isAlarm)
@@ -224,6 +224,14 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
             meshRender.GetComponent<MeshRenderer>().sharedMaterial = wireframe;
         }
         isMerialChange = true;
+    }
+
+    public void DestoryTestPointMenu()
+    {
+        if(testPointMenu!=null)
+        {
+            GameObject.DestroyImmediate(testPointMenu);
+        }
     }
    
 }

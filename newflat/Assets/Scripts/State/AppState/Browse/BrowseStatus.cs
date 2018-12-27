@@ -24,17 +24,28 @@ public class BrowseStatus : AppBaseState
     }
 
     private static float maxDistance = 1.0f;
+    private BaseEquipmentControl clickSelectEquipment;
     public override void Update()
     {
         base.Update();
      
         checkSelectEquipment = CheckClickEquipment(ref hitTransform);
-        if(checkSelectEquipment && hitTransform.Equals(MouseCheck.clickHitTransform))
+       
+
+        if (checkSelectEquipment && hitTransform.Equals(MouseCheck.clickHitTransform))
         {
-            BaseEquipmentControl bec = checkSelectEquipment.transform.GetComponent<BaseEquipmentControl>();
-            if(bec!=null)
+           
+            if(clickSelectEquipment!=null)
             {
-                bec.OnMouseClick();
+
+                clickSelectEquipment.DestoryTestPointMenu();
+            }
+            clickSelectEquipment = checkSelectEquipment.transform.GetComponent<BaseEquipmentControl>();
+            if(clickSelectEquipment != null)
+            {
+
+                clickSelectEquipment.OnMouseClick();
+                return;
             }
            
         }
@@ -45,6 +56,12 @@ public class BrowseStatus : AppBaseState
             {
                 return;
             }
+
+            if (clickSelectEquipment != null)
+            {
+                clickSelectEquipment.DestoryTestPointMenu();
+            }
+
             Vector3 hitInfoPoint = MouseCheck.clickHitPoint;
             float distance = Vector3.Distance(Camera.main.transform.position, hitInfoPoint);
             Vector3 from = Camera.main.transform.position;

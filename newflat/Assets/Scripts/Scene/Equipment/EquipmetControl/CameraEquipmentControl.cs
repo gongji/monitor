@@ -12,12 +12,20 @@ public class CameraEquipmentControl : BaseEquipmentControl
 
     private void OnDisable()
     {
-        equipmentIconObject.SetActive(false);
+        if(equipmentIconObject)
+        {
+            equipmentIconObject.SetActive(false);
+        }
+        
     }
 
     private void OnEnable()
     {
-        equipmentIconObject.SetActive(true);
+        if(equipmentIconObject)
+        {
+            equipmentIconObject.SetActive(true);
+        }
+        
     }
     public override void Alarm()
     {

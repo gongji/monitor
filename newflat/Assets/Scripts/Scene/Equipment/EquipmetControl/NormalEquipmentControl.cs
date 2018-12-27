@@ -10,8 +10,6 @@ public class NormalEquipmentControl :BaseEquipmentControl {
 
     private ILog log = LogManagers.GetLogger("NormalEquipmentControl");
     private GameObject equipmentTips;
-
-   // public bool isUpdate = true;
  
     void Start () {
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
@@ -31,6 +29,10 @@ public class NormalEquipmentControl :BaseEquipmentControl {
 	void Update () {
 
 
+        if(testPointMenu!=null)
+        {
+            testPointMenu.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(transform.position, Camera.main);
+        }
         return;
         if (!isShowTips)
         {
@@ -114,6 +116,10 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         //}
         equipmentTips.SetActive(true);
         equipmentTips.transform.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(GetBoxTopPostion(), Camera.main);
+        equipmentTips.transform.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 15);
+
+
+
     }
 
     public void OnMouseExit()
@@ -142,8 +148,30 @@ public class NormalEquipmentControl :BaseEquipmentControl {
     }
 
     public override void OnMouseClick() {
-        ShowTestPoint.Show(equipmentItem.name, equipmentItem.id);
+        TestPointProxy.IsExistContronTest(equipmentItem.id, (result) => {
+
+            if (result.Equals("0"))
+            {
+
+            }
+            else
+            {
+                ShowTestPoint.Show(equipmentItem.name, equipmentItem.id);
+            }
+
+        }, () => {
+
+            testPointMenu =  TransformControlUtility.CreateItem("equipment/EquipmentShowMenu", UIUtility.GetRootCanvas());
+            testPointMenu.GetComponent<EquipmentShowMenu>().equipmentId = equipmentItem.id;
+            testPointMenu.GetComponent<EquipmentShowMenu>().equipmentName = equipmentItem.name;
+        });
+       
     }
-    
+
+    private void OnDisable()
+    {
+        DestoryTestPointMenu();
+    }
+
 
 }

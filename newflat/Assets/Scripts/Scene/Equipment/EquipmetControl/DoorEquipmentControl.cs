@@ -17,11 +17,19 @@ public class DoorEquipmentControl : NormalEquipmentControl {
 
     private void OnDisable()
     {
-        equipmentIconObject.SetActive(false);
+        if(equipmentIconObject!=null)
+        {
+            equipmentIconObject.SetActive(false);
+        }
+        
     }
 
     private void OnEnable()
     {
-        equipmentIconObject.SetActive(true);
+        if(equipmentIconObject!=null)
+        {
+            equipmentIconObject.SetActive(true);
+        }
+       
     }
 }

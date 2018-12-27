@@ -7,7 +7,6 @@ using DG.Tweening;
 
 public sealed class ShowTestPoint
 {
-
     private static GameObject Init()
     {
         GameObject grid = GameObject.Instantiate(Resources.Load<GameObject>("Grid/TestPointCenter"));
@@ -46,41 +45,50 @@ public sealed class ShowTestPoint
         //listView.DefaultHeadingTextColor = Color.red;
     }
     private static GameObject grid;
-    public static void Show(string name,string id)
+    public static void Show(string equipmentName,string id)
     {
-
-        
         TestPointProxy.GetTestPointData(id, (result) =>
         {
+            Create(equipmentName, result);
 
-            MaskManager.Instance.Show();
-            //实例化
-            grid = Init();
-            grid.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
-            CreateTitle(name);
-            ListView listView = grid.GetComponentInChildren<ListView>();
-            listView.ColumnClick += OnColumnClick;
-            //增加列
-            AddColumns(listView);
-            SetColumWidth(listView);
-            SetStyle(listView);
-            //listView.SuspendLayout();
-            //{
-            //    listView.Items.Clear();
-            //}
-            //listView.ResumeLayout();
-            //设置值
-            foreach (EquipmentTestPoint item in result)
-            {
-                string[] subItemTexts = new string[] { item.name, item.value, item.unit };
-                ListViewItem _item = new ListViewItem(subItemTexts);
-                listView.Items.Add(_item);
-            }
-            HideHorizontalScrollBar();
-            listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
-            grid.transform.DOScale(Vector3.one, 0.5f);
+
+        },()=> {
+
+        Create(equipmentName, new List<EquipmentTestPoint>());
         });
 
+    }
+
+
+
+    private static void Create(string equipmentName,List<EquipmentTestPoint> dataSource)
+    {
+        MaskManager.Instance.Show();
+        //实例化
+        grid = Init();
+        grid.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
+        CreateTitle(equipmentName);
+        ListView listView = grid.GetComponentInChildren<ListView>();
+        listView.ColumnClick += OnColumnClick;
+        //增加列
+        AddColumns(listView);
+        SetColumWidth(listView);
+        SetStyle(listView);
+        //listView.SuspendLayout();
+        //{
+        //    listView.Items.Clear();
+        //}
+        //listView.ResumeLayout();
+        //设置值
+        foreach (EquipmentTestPoint item in dataSource)
+        {
+            string[] subItemTexts = new string[] { item.name, item.value, item.unit };
+            ListViewItem _item = new ListViewItem(subItemTexts);
+            listView.Items.Add(_item);
+        }
+        HideHorizontalScrollBar();
+        listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
+        grid.transform.DOScale(Vector3.one, 0.5f);
     }
 
     /// <summary>

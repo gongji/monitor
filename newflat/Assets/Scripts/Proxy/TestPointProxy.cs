@@ -14,7 +14,7 @@ public sealed class TestPointProxy
    /// </summary>
    /// <param name="id"></param>
    /// <param name="callBack"></param>
-    public static void GetTestPointData(string id,System.Action<List<EquipmentTestPoint>> callBack)
+    public static void GetTestPointData(string id,System.Action<List<EquipmentTestPoint>> callBack, System.Action failCallBack)
     {
         string url = Config.parse("requestAddress") + "/GetTestPointData";
 
@@ -28,7 +28,10 @@ public sealed class TestPointProxy
 
           }, (a) =>
           {
-
+              if(failCallBack!=null)
+              {
+                  failCallBack.Invoke();
+              }
               log.Error("http reqeust error GetTestPointData:url=" + url);
 
               log.Error("http reqeust error GetTestPointData:" + a.ToString());
@@ -40,7 +43,7 @@ public sealed class TestPointProxy
    /// <summary>
    /// 获取控制点列表
    /// </summary>
-    public static void GetControlPointList(string id,System.Action<string> successCallBack)
+    public static void GetControlPointList(string id,System.Action<string> successCallBack, System.Action failCallBack)
     {
         string url = Config.parse("requestAddress") + "/GetControlPointList";
 
@@ -48,14 +51,42 @@ public sealed class TestPointProxy
 
           HttpRequest.GetRequest(url, (result) => {
 
-             
-
           }, (a) =>
           {
+              if (failCallBack != null)
+              {
+                  failCallBack.Invoke();
+              }
 
               log.Error("http reqeust error GetControlPointList:url=" + url);
 
               log.Error("http reqeust error GetControlPointList:" + a.ToString());
+
+          }));
+    }
+
+    /// <summary>
+    /// 查询一个设备是否选在控制点
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="success"></param>
+    public static void IsExistContronTest(string id,System.Action<string> success, System.Action failCallBack)
+    {
+        string url = Config.parse("requestAddress") + "/IsExistContronTest?id=" +id;
+
+        HttpRequestSingle.Instance.StartCoroutine(
+
+          HttpRequest.GetRequest(url, (result) => {
+
+              success.Invoke(result);
+
+          }, (a) =>
+          {
+
+              failCallBack.Invoke();
+              log.Error("http reqeust error IsExistContronTest:url=" + url);
+
+              log.Error("http reqeust error IsExistContronTest:" + a.ToString());
 
           }));
     }

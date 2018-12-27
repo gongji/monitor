@@ -43,12 +43,15 @@ public sealed class SetControlPoint
         //listView.DefaultHeadingTextColor = Color.red;
     }
     private static GameObject grid;
-    public static void Show(string name,string id)
+    public static void Show(string equipmentName,string id)
     {
         TestPointProxy.GetControlPointList(id, (result) =>
         {
             List<EquipmentControlPoint> ecps = Utils.CollectionsConvert.ToObject<List<EquipmentControlPoint>>(result);
-            SetDataSouce(ecps);
+            SetDataSouce(ecps, equipmentName);
+        },()=> {
+
+            SetDataSouce(new List<EquipmentControlPoint>(), equipmentName);
         });
     }
 
