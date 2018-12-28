@@ -7,6 +7,8 @@ public class AlarmEventItem  {
     //设备id
     public string id;
 
+    public string name;
+
     public string content;
 
     public string dateTime;

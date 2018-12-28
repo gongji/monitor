@@ -15,52 +15,92 @@ public  class ShowAlarmEvent :MonoBehaviour
 
 
     public Transform horScrollBar;
-    private void Start()
-    {
-        Show();
-    }
+    //private void Start()
+    //{
+    //    Show();
+    //}
 
-    private static void SetStyle(ListView listView)
+    private  void SetStyle(ListView listView)
     {
         //listView.DefaultHeadingTextColor = Color.red;
     }
-    
-    public  void Show()
-    {
 
+    private  bool isInit = false;
+    private   void Init()
+    {
         CreateTitle(name);
         ListView listView = transform.GetComponentInChildren<ListView>();
         listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(605, 290);
         listView.ColumnClick += OnColumnClick;
         listView.ItemBecameVisible += this.OnItemBecameVisible;
         listView.ItemBecameInvisible += this.OnItemBecameInvisible;
-
-
         //增加列
         AddColumns(listView);
         SetColumWidth(listView);
         SetStyle(listView);
+        horScrollBar.gameObject.SetActive(false);
+        listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
+    }
+    
+    public   void Show()
+    {
+
+        if(!isInit)
+        {
+            Init();
+        }
+        
         //listView.SuspendLayout();
         //{
         //    listView.Items.Clear();
         //}
         //listView.ResumeLayout();
-        for (int   i = 0;i<10;i++)
-        {
-            string locateid = i + "locateid";
-            string confirmId = i + "confirmId";
-            string[] subItemTexts = new string[] { "ups"+i, "通讯中断无法连接", "2018-09-09 11:12:11" , "配电房1f101" ,"",""};
-            ListViewItem _item = new ListViewItem(subItemTexts);
-            ItemData item = new ItemData();
-            item.locateId = locateid;
-            item.confirmId = confirmId;
-            _item.Tag = item;
-            listView.Items.Add(_item);
-        }
-        horScrollBar.gameObject.SetActive(false);
-        listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
+        //for (int   i = 0;i<10;i++)
+        //{
+        //    string locateid = i + "locateid";
+        //    string confirmId = i + "confirmId";
+        //    string[] subItemTexts = new string[] { "ups"+i, "通讯中断无法连接", "2018-09-09 11:12:11" , "配电房1f101" ,"",""};
+        //    ListViewItem _item = new ListViewItem(subItemTexts);
+        //    ItemData item = new ItemData();
+        //    item.locateId = locateid;
+        //    item.confirmId = confirmId;
+        //    _item.Tag = item;
+        //    listView.Items.Add(_item);
+        //}
+       
     }
 
+    /// <summary>
+    /// 插入事件到表格最前列
+    /// </summary>
+    /// <param name="aei"></param>
+    private void AddEvent(AlarmEventItem aei)
+    {
+        transform.GetComponentInChildren<ListView>().Items.Insert(0, CreateItem(aei));
+    }
+
+    /// <summary>
+    /// 创建行数据
+    /// </summary>
+    /// <param name="aei"></param>
+    /// <returns></returns>
+    private ListViewItem CreateItem(AlarmEventItem aei)
+    {
+        string[] subItemTexts = new string[] { aei.name, aei.content, aei.dateTime, aei.station};
+        ListViewItem _item = new ListViewItem(subItemTexts);
+        ItemData item = new ItemData();
+        item.locateId = aei.id;
+        item.confirmId = aei.id;
+        _item.Tag = item;
+
+        return _item;
+    }
+
+
+    /// <summary>
+    /// 创建确认和定位的按钮
+    /// </summary>
+    /// <param name="item"></param>
     private void OnItemBecameVisible(ListViewItem item)
     {
         ItemData itemData = item.Tag as ItemData;
@@ -69,7 +109,7 @@ public  class ShowAlarmEvent :MonoBehaviour
         confirmItem.CustomControl = confirmButton.transform as RectTransform;
         confirmButton.GetComponent<Button>().onClick.AddListener(delegate ()
         {
-            ConfirmEquipment(itemData.confirmId);
+            ConfirmEquipment(itemData.confirmId, item);
         });
 
         // Create locate 按钮
@@ -80,20 +120,24 @@ public  class ShowAlarmEvent :MonoBehaviour
         {
             LocateEquipment(itemData.locateId);
         });
-
-        
-
     }
 
-
+    /// <summary>
+    /// 定位
+    /// </summary>
+    /// <param name="locateid"></param>
     private void LocateEquipment(string locateid)
     {
         Debug.Log(locateid);
     }
 
-    private void ConfirmEquipment(string confirmId)
+    /// <summary>
+    /// 确认
+    /// </summary>
+    /// <param name="confirmId"></param>
+    private void ConfirmEquipment(string confirmId, ListViewItem item)
     {
-        Debug.Log(confirmId);
+        transform.GetComponentInChildren<ListView>().Items.Remove(item);
     }
 
     private void OnItemBecameInvisible(ListViewItem item)
@@ -120,7 +164,7 @@ public  class ShowAlarmEvent :MonoBehaviour
         title.GetComponentInChildren<Text>().text =" 报警实时信息";
     }
 
-    private static void SetColumWidth(ListView ListView)
+    private  void SetColumWidth(ListView ListView)
     {
         ListView.Columns[0].Width = 100;
         ListView.Columns[1].Width = 150;
@@ -130,7 +174,7 @@ public  class ShowAlarmEvent :MonoBehaviour
         ListView.Columns[5].Width = 50;
     }
 
-    private static void AddColumns(ListView ListView)
+    private  void AddColumns(ListView ListView)
     {
         ListView.SuspendLayout();
         {
@@ -143,14 +187,14 @@ public  class ShowAlarmEvent :MonoBehaviour
         }
         ListView.ResumeLayout();
     }
-    private static void AddColumnHeader(ListView ListView, string title)
+    private  void AddColumnHeader(ListView ListView, string title)
     {
         ColumnHeader columnHeader = new ColumnHeader();
         columnHeader.Text = title;
         ListView.Columns.Add(columnHeader);
     }
-    private static bool clickingAColumnSorts = true;
-    private static void OnColumnClick(object sender, ListView.ColumnClickEventArgs e)
+    private  bool clickingAColumnSorts = true;
+    private  void OnColumnClick(object sender, ListView.ColumnClickEventArgs e)
     {
         if (clickingAColumnSorts)
         {
