@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public  class ShowAlarmEvent :MonoBehaviour
+public  class ShowAlarmEvent :MonoSingleton<ShowAlarmEvent>
 {
 
     class ItemData
@@ -42,12 +42,23 @@ public  class ShowAlarmEvent :MonoBehaviour
         listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
     }
     
-    public   void Show()
+    public  void Show(List<AlarmEventItem> ecs)
     {
-
         if(!isInit)
         {
             Init();
+            isInit = true;
+
+            for (int i=0;i< ecs.Count;i++)
+            {
+
+                transform.GetComponentInChildren<ListView>().Items.Add(CreateItem(ecs[i]));
+            }
+        }
+        else
+        {
+
+            AddEvent(ecs[0]);
         }
         
         //listView.SuspendLayout();

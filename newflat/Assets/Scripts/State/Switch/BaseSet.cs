@@ -75,8 +75,6 @@ public abstract class BaseSet
     }
 
     
-
-
     public virtual void Enter(List<Object3dItem> currentData, System.Action callBack) {
         this.currentlist = currentData;
         if (AppInfo.Platform == BRPlatform.Browser )
@@ -93,9 +91,10 @@ public abstract class BaseSet
     //不带动画，直接退出
     public virtual void Exit(string nextid) {
         //EnableOrDisableCamera(false);
-        TipsMgr.Instance.DeleteTips();
+       // TipsMgr.Instance.DeleteTips();
         ShowOrHideScene(false);
         SubsystemMsg.Delete();
+        EventMgr.Instance.SendEvent(EventName.DeleteObject, null);
     }
 
     protected Quaternion cameraRoation = Quaternion.identity;

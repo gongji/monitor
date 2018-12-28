@@ -9,6 +9,8 @@ public class EventName
 
     public static string FloorExpand = "FloorExpand";
 
-   
+    public static string DeleteObject = "DeleteObject";
+
+
 
 }

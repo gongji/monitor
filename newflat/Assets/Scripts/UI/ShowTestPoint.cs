@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public sealed class ShowTestPoint
+public  class ShowTestPoint:MonoSingleton<ShowTestPoint>,IEventListener
 {
-    private static GameObject Init()
+    private  GameObject Init()
     {
         GameObject grid = GameObject.Instantiate(Resources.Load<GameObject>("Grid/TestPointCenter"));
         grid.transform.SetParent(UIUtility.GetRootCanvas());
@@ -21,10 +21,10 @@ public sealed class ShowTestPoint
     }
 
 
-    private static string HorizontalScrollBarName = "HorizontalScrollBar";
+    private  string HorizontalScrollBarName = "HorizontalScrollBar";
 
    
-    private static void HideHorizontalScrollBar()
+    private  void HideHorizontalScrollBar()
     {
         if(grid!=null)
         {
@@ -40,12 +40,12 @@ public sealed class ShowTestPoint
         }
         
     }
-    private static void SetStyle(ListView listView)
+    private  void SetStyle(ListView listView)
     {
         //listView.DefaultHeadingTextColor = Color.red;
     }
     private static GameObject grid;
-    public static void Show(string equipmentName,string id)
+    public  void Show(string equipmentName,string id)
     {
         TestPointProxy.GetTestPointData(id, (result) =>
         {
@@ -56,13 +56,11 @@ public sealed class ShowTestPoint
 
         Create(equipmentName, new List<EquipmentTestPoint>());
         });
-
     }
 
-
-
-    private static void Create(string equipmentName,List<EquipmentTestPoint> dataSource)
+    private  void Create(string equipmentName,List<EquipmentTestPoint> dataSource)
     {
+        EventMgr.Instance.AddListener(this, EventName.DeleteObject);
         MaskManager.Instance.Show();
         //实例化
         grid = Init();
@@ -95,20 +93,20 @@ public sealed class ShowTestPoint
     /// 显示标题
     /// </summary>
     /// <param name="titleName"></param>
-    private static void CreateTitle(string titleName)
+    private  void CreateTitle(string titleName)
     {
         Transform title = grid.transform.Find("Title");
         title.GetComponentInChildren<Text>().text ="  "+ titleName + "测点信息";
     }
 
-    private static void SetColumWidth(ListView ListView)
+    private  void SetColumWidth(ListView ListView)
     {
         ListView.Columns[0].Width = 300;
         ListView.Columns[1].Width = 100;
         ListView.Columns[2].Width = 100;
     }
 
-    private static void AddColumns(ListView ListView)
+    private  void AddColumns(ListView ListView)
     {
         ListView.SuspendLayout();
         {
@@ -118,14 +116,14 @@ public sealed class ShowTestPoint
         }
         ListView.ResumeLayout();
     }
-    private static void AddColumnHeader(ListView ListView, string title)
+    private  void AddColumnHeader(ListView ListView, string title)
     {
         ColumnHeader columnHeader = new ColumnHeader();
         columnHeader.Text = title;
         ListView.Columns.Add(columnHeader);
     }
-    private static bool clickingAColumnSorts = true;
-    private static void OnColumnClick(object sender, ListView.ColumnClickEventArgs e)
+    private  bool clickingAColumnSorts = true;
+    private  void OnColumnClick(object sender, ListView.ColumnClickEventArgs e)
     {
         if (clickingAColumnSorts)
         {
@@ -134,9 +132,6 @@ public sealed class ShowTestPoint
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private class ListViewItemComparer : IComparer
     {
         private int columnIndex = 0;
@@ -160,22 +155,36 @@ public sealed class ShowTestPoint
         }
     }
 
-    public static void DestryGrid()
+    public  void DestryGrid()
     {
         if(grid!=null)
         {
             GameObject.Destroy(grid);
         }
         MaskManager.Instance.Hide();
-        
+
+        EventMgr.Instance.RemoveListener(this, EventName.DeleteObject);
+
     }
 
-    public static void CloseWindow()
+    public  void CloseWindow()
     {
         grid.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
         grid.transform.DOScale(Vector3.zero, 0.5f).OnComplete(()=> {
             DestryGrid();
 
         });
+    }
+
+    public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+       // throw new System.NotImplementedException();
+        if(eventName.Equals(EventName.DeleteObject))
+        {
+            DestryGrid();
+
+        }
+
+        return true;
     }
 }

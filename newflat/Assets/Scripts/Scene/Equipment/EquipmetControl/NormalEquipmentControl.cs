@@ -156,7 +156,7 @@ public class NormalEquipmentControl :BaseEquipmentControl {
             }
             else
             {
-                ShowTestPoint.Show(equipmentItem.name, equipmentItem.id);
+                ShowTestPoint.Instance.Show(equipmentItem.name, equipmentItem.id);
             }
 
         }, () => {

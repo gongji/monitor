@@ -19,7 +19,7 @@ public class EquipmentShowMenu : MonoBehaviour {
     {
         transform.DOScale(Vector3.zero, scaleTime).OnComplete(()=> {
 
-            ShowTestPoint.Show(equipmentName, equipmentId);
+            ShowTestPoint.Instance.Show(equipmentName, equipmentId);
             GameObject.Destroy(gameObject, 0.1f);
         });
        
@@ -29,7 +29,7 @@ public class EquipmentShowMenu : MonoBehaviour {
     {
         transform.DOScale(Vector3.zero, scaleTime).OnComplete(() => {
            
-            SetControlPoint.Show(equipmentName, equipmentId);
+            SetControlPoint.Instance.Show(equipmentName, equipmentId);
             GameObject.Destroy(gameObject, 0.1f);
         });
     }

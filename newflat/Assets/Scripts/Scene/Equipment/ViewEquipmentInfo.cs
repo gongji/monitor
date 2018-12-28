@@ -31,7 +31,7 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
         CreateEquipment(EquipmentId);
         
         //显示测点
-        ShowTestPoint.Show(currentEquipment.GetComponent<BaseEquipmentControl>().equipmentItem.name,EquipmentId);
+        ShowTestPoint.Instance.Show(currentEquipment.GetComponent<BaseEquipmentControl>().equipmentItem.name,EquipmentId);
 
 
     }
@@ -165,7 +165,7 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
             selectEffection.SetActive(false);
         }
 
-        ShowTestPoint.DestryGrid();
+        ShowTestPoint.Instance.DestryGrid();
     }
     /// <summary>
     /// 直接显示

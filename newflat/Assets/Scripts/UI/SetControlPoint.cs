@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
-public sealed class SetControlPoint
+public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
 {
-    private static GameObject Init()
+    private  GameObject Init()
     {
         GameObject grid = GameObject.Instantiate(Resources.Load<GameObject>("Grid/Control/ControlPoint"));
         grid.transform.SetParent(UIUtility.GetRootCanvas());
@@ -21,8 +21,8 @@ public sealed class SetControlPoint
         return grid;
     }
     
-    private static string HorizontalScrollBarName = "HorizontalScrollBar";
-    private static void HideHorizontalScrollBar()
+    private  string HorizontalScrollBarName = "HorizontalScrollBar";
+    private  void HideHorizontalScrollBar()
     {
         if(grid!=null)
         {
@@ -38,12 +38,12 @@ public sealed class SetControlPoint
         }
         
     }
-    private static void SetStyle(ListView listView)
+    private  void SetStyle(ListView listView)
     {
         //listView.DefaultHeadingTextColor = Color.red;
     }
-    private static GameObject grid;
-    public static void Show(string equipmentName,string id)
+    private  GameObject grid;
+    public  void Show(string equipmentName,string id)
     {
         TestPointProxy.GetControlPointList(id, (result) =>
         {
@@ -55,11 +55,12 @@ public sealed class SetControlPoint
         });
     }
 
-    private static ListView listView = null;
+    private  ListView listView = null;
 
-    private static bool isShow = false;
-    public static void SetDataSouce(List<EquipmentControlPoint> ecps,string equipmentName ="设备")
+    private  bool isShow = false;
+    public  void SetDataSouce(List<EquipmentControlPoint> ecps,string equipmentName ="设备")
     {
+        EventMgr.Instance.AddListener(this, EventName.DeleteObject);
         if(isShow)
         {
             return;
@@ -72,20 +73,21 @@ public sealed class SetControlPoint
         listView = grid.GetComponentInChildren<ListView>();
         listView.ItemBecameVisible += OnItemBecameVisible;
         listView.ItemBecameInvisible += OnItemBecameInvisible;
-        listView.ColumnClick += OnColumnClick;
         //增加列
         AddColumns(listView);
         SetColumWidth(listView);
         SetStyle(listView);
-        //listView.SuspendLayout();
-        //{
-        //    listView.Items.Clear();
-        //}
-        //listView.ResumeLayout();
         //设置值
-        foreach (EquipmentControlPoint item in ecps)
+        //foreach (EquipmentControlPoint item in ecps)
+        //{
+        //    string[] subItemTexts = new string[] { "23", item.name, item.describe, item.name, "12" };
+        //    ListViewItem _item = new ListViewItem(subItemTexts);
+        //    listView.Items.Add(_item);
+        //}
+        
+        foreach(EquipmentControlPoint ecp in ecps)
         {
-            string[] subItemTexts = new string[] {"23", item.name, item.describe, item.name,"12" };
+            string[] subItemTexts = new string[] { ecp.id, ecp.name, ecp.describe, "" };
             ListViewItem _item = new ListViewItem(subItemTexts);
             listView.Items.Add(_item);
         }
@@ -100,13 +102,13 @@ public sealed class SetControlPoint
     /// 显示标题
     /// </summary>
     /// <param name="titleName"></param>
-    private  static void CreateTitle(string titleName)
+    private   void CreateTitle(string titleName)
     {
         Transform title = grid.transform.Find("Title");
         title.GetComponentInChildren<Text>().text ="  "+ titleName + "控制点设置";
     }
 
-    private static void SetColumWidth(ListView ListView)
+    private  void SetColumWidth(ListView ListView)
     {
         ListView.Columns[0].Width = 50;
         ListView.Columns[1].Width = 50;
@@ -114,7 +116,7 @@ public sealed class SetControlPoint
         ListView.Columns[3].Width = 200;
     }
 
-    private static void AddColumns(ListView ListView)
+    private  void AddColumns(ListView ListView)
     {
         ListView.SuspendLayout();
         {
@@ -126,7 +128,7 @@ public sealed class SetControlPoint
         ListView.ResumeLayout();
     }
 
-    private static void OnItemBecameVisible(ListViewItem item)
+    private  void OnItemBecameVisible(ListViewItem item)
     {
         var confirmItem = item.SubItems[0];
         GameObject Check = GameObject.Instantiate(Resources.Load("Grid/Control/Check")) as GameObject;
@@ -140,7 +142,7 @@ public sealed class SetControlPoint
     }
 
 
-    private static void OnItemBecameInvisible(ListViewItem item)
+    private  void OnItemBecameInvisible(ListViewItem item)
     {
         var Check = item.SubItems[0];
         GameObject CheckItemGameObject = Check.CustomControl.gameObject;
@@ -156,7 +158,7 @@ public sealed class SetControlPoint
     /// <summary>
     /// 获取数据
     /// </summary>
-    public static void GetSelectData()
+    public  void GetSelectData()
     {
         ListView.ListViewItemCollection list = listView.Items;
         Debug.Log(list.Count);
@@ -176,69 +178,46 @@ public sealed class SetControlPoint
     }
 
 
-    private static void AddColumnHeader(ListView ListView, string title)
+    private  void AddColumnHeader(ListView ListView, string title)
     {
         ColumnHeader columnHeader = new ColumnHeader();
         columnHeader.Text = title;
         ListView.Columns.Add(columnHeader);
     }
-    private static bool clickingAColumnSorts = true;
-    private static void OnColumnClick(object sender, ListView.ColumnClickEventArgs e)
-    {
-        if (clickingAColumnSorts)
-        {
-            ListView listView = (ListView)sender;
-            listView.ListViewItemSorter = new ListViewItemComparer(e.Column);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private class ListViewItemComparer : IComparer
-    {
-        private int columnIndex = 0;
-
-        public ListViewItemComparer()
-        {
-        }
-
-        public ListViewItemComparer(int columnIndex)
-        {
-            this.columnIndex = columnIndex;
-        }
-
-        public int Compare(object object1, object object2)
-        {
-            ListViewItem listViewItem1 = object1 as ListViewItem;
-            ListViewItem listViewItem2 = object2 as ListViewItem;
-            string text1 = listViewItem1.SubItems[this.columnIndex].Text;
-            string text2 = listViewItem2.SubItems[this.columnIndex].Text;
-            return string.Compare(text1, text2);
-        }
-    }
-
-    public static void DestryGrid()
+    private  bool clickingAColumnSorts = true;
+    
+    public  void DestryGrid()
     {
         if(grid!=null)
         {
             GameObject.Destroy(grid);
         }
         MaskManager.Instance.Hide();
+        EventMgr.Instance.RemoveListener(this, EventName.DeleteObject);
         
     }
 
-    public static void CloseWindow()
+    public  void CloseWindow()
     {
         grid.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
         grid.transform.DOScale(Vector3.zero, 0.5f).OnComplete(()=> {
             listView.ItemBecameVisible -= OnItemBecameVisible;
             listView.ItemBecameInvisible -= OnItemBecameInvisible;
-            listView.ColumnClick -= OnColumnClick;
+          
             DestryGrid();
             isShow = false;
 
 
         });
+    }
+
+    bool IEventListener.HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+        //throw new System.NotImplementedException();
+        if(eventName.Equals(EventName.DeleteObject))
+        {
+            DestryGrid();
+        }
+        return true;
     }
 }

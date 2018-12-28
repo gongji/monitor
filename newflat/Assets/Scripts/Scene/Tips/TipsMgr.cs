@@ -5,10 +5,9 @@ using DataModel;
 /// <summary>
 ///// 三维字模型管理，使用前需要初始化
 /// </summary>
-public class TipsMgr : MonoSingleton<TipsMgr> {
+public class TipsMgr : MonoSingleton<TipsMgr>,IEventListener {
     
-   
-
+  
     /// <summary>
     /// 初始化管理类
     /// </summary>
@@ -20,6 +19,7 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
     private List<Transform> tipsList = new List<Transform>();
     public void CreateTips(GameObject collider, Object3dItem object3dItem,Transform parent,Vector3 minScale,Vector3 maxScale)
     {
+        EventMgr.Instance.AddListener(this, EventName.DeleteObject);
         if (collider != null)
         {
             FlyTextMeshModel tmm = collider.GetComponent<FlyTextMeshModel>();
@@ -51,7 +51,7 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
         }
     }
 
-    public void DeleteTips()
+    private void DeleteTips()
     {
         foreach(Transform tips in tipsList)
         {
@@ -63,6 +63,8 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
         }
         tipsList.Clear();
         View2dTextManager.Instance.Delete3dText();
+
+        EventMgr.Instance.RemoveListener(this, EventName.DeleteObject);
     }
 
     private bool isVisible = true;
@@ -96,5 +98,16 @@ public class TipsMgr : MonoSingleton<TipsMgr> {
             
         }
     }
-   
+
+    public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+        //throw new System.NotImplementedException();
+
+        if (eventName.Equals(EventName.DeleteObject))
+        {
+            DeleteTips();
+        }
+
+        return true;
+    }
 }

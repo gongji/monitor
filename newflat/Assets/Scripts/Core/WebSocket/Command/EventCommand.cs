@@ -22,6 +22,10 @@ public class EventCommand : ICommand
     {
         
         List<AlarmEventItem> list = Utils.CollectionsConvert.ToObject<List<AlarmEventItem>>(data);
+        if(list.Count>0)
+        {
+            ShowAlarmEvent.Instance.Show(list);
+        }
 
         throw new System.NotImplementedException();
     }
