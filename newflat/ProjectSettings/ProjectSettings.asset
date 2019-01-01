@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: web
-  productName: "\u4E09\u7EF4\u53EF\u89C6\u5316\u667A\u6167\u5E73\u53F0"
+  productName: "\u4E09\u7EF4\u53EF\u89C6\u5316\u76D1\u63A7\u5E73\u53F0"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -565,7 +565,7 @@ PlayerSettings:
   webGLDebugSymbols: 1
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: PROJECT:myTemplate
+  webGLTemplate: PROJECT:myTemplate1
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 2
