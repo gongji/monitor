@@ -131,7 +131,10 @@ public class EquipmentBatchCopy : MonoBehaviour {
             }
 
             float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-            coloneEquipment.transform.localEulerAngles = new Vector3(0, angle+90, 0);
+          //  coloneEquipment.transform.localEulerAngles = new Vector3(0, angle+90, 0);
+            Vector3 localEulerAngles = new Vector3(0, angle + 90, 0);
+            coloneEquipment.transform.localEulerAngles = new Vector3(FormatUtil.FloatFomart(localEulerAngles.x, 1), 
+                FormatUtil.FloatFomart(localEulerAngles.y, 1), FormatUtil.FloatFomart(localEulerAngles.z, 1));
             gs.Add(coloneEquipment);
 
         }
@@ -151,7 +154,7 @@ public class EquipmentBatchCopy : MonoBehaviour {
     {
         if(gs!=null && gs.Count>0)
         {
-            Debug.Log("增加了："+ gs.Count);
+           // Debug.Log("增加了："+ gs.Count);
             foreach(GameObject temp  in gs)
             {
                 Object3DElement.AddNewItem(temp.GetComponent<Object3DElement>());

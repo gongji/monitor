@@ -76,18 +76,16 @@ public class FormatUtil {
 
     public static void FormatEquipmentData(EquipmentItem item)
     {
-        item.x = FormatUtil.FloatFomart(item.x, 5);
-        item.y = FormatUtil.FloatFomart(item.y, 5);
-        item.z = FormatUtil.FloatFomart(item.z, 5);
+        item.x = FloatFomart(item.x, 5);
+        item.y = FloatFomart(item.y, 5);
+        item.z = FloatFomart(item.z, 5);
+        item.rotationX = FloatFomart(item.rotationX, 4);
+        item.rotationY = FloatFomart(item.rotationY, 4);
+        item.rotationZ = FloatFomart(item.rotationZ, 4);
+        item.scaleX = FloatFomart(item.scaleX, 4);
+        item.scaleY = FloatFomart(item.scaleY, 4);
 
-        item.rotationX = FormatUtil.FloatFomart(item.rotationX, 1);
-        item.rotationY = FormatUtil.FloatFomart(item.rotationY, 1);
-        item.rotationZ = FormatUtil.FloatFomart(item.rotationZ, 1);
-
-        item.scaleX = FormatUtil.FloatFomart(item.scaleX, 4);
-        item.scaleY = FormatUtil.FloatFomart(item.scaleY, 4);
-
-        item.scaleZ = FormatUtil.FloatFomart(item.scaleZ, 4);
+        item.scaleZ = FloatFomart(item.scaleZ, 4);
     }
 
 
