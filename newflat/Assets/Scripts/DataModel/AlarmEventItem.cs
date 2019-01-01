@@ -13,6 +13,10 @@ public class AlarmEventItem  {
 
     public string dateTime;
 
+    //用于定位
+    public string sceneId;
+
+    //地点的名字
     public string stationName;
 
     public string level = "0";

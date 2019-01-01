@@ -107,7 +107,8 @@ namespace Battlehub.UIControls
             {
                 case (DataModel.Type.Area):
                 {
-                    Main.instance.stateMachineManager.SwitchStatus<AreaState>(string.Empty);
+                        string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName);
+                        Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneid);
                     break;
                 }
                 case (DataModel.Type.Builder):

@@ -87,9 +87,12 @@ public class TreeManager : MonoBehaviour
 
 
 
-    private string selectId = "";
+    private string selectOnelevel = "";
+    private string equipmentId = "";
     public void OnBranchButtonChangeValue(object param)
     {
+
+       
         UIBranchButton target = (UIBranchButton)param;
         if (target.transform.GetComponent<Toggle>().isOn)
         {
@@ -103,6 +106,7 @@ public class TreeManager : MonoBehaviour
                     string sceneid = item.GetComponent<Object3DElement>().equipmentData.sceneId;
                     //Debug.Log(sceneid);
                     Main.instance.stateMachineManager.LocateEquipment(target.id, sceneid);
+                    equipmentId = target.id;
                 }
 
             }
@@ -115,21 +119,38 @@ public class TreeManager : MonoBehaviour
 
             if(!target.type.Equals("equipment") && !target.type.Equals("model"))
             {
-                this.selectId = target.id;
+                this.selectOnelevel = target.id;
+            }
+        }
+    }
+
+    private void CancelEquipmentLocate()
+    {
+
+        if(!string.IsNullOrEmpty(equipmentId))
+        {
+            GameObject eGameObject = EquipmentData.FindGameObjectById(equipmentId);
+
+            if(eGameObject!=null)
+            {
+                eGameObject.GetComponent<BaseEquipmentControl>().CancelEquipment();
+                Main.instance.stateMachineManager.StateReset();
             }
         }
     }
 
     public void OnMouseClick(UIBranchButton target)
     {
+   
         Debug.Log(target.name  + ":"+ target.id + ":"+ target.type);
         DOVirtual.DelayedCall(0.3f, () => {
 
-            if (selectId.Equals(target.id) && !target.type.Equals("equipment") &&
+            if (selectOnelevel.Equals(target.id) && !target.type.Equals("equipment") &&
             !target.type.Equals("model") && !target.transform.GetComponent<Toggle>().isOn)
             {
                 //Debug.Log("还原");
-                SubsystemMsg.AllRestore();
+                SubsystemMsg.AllMaterialRestore();
+                CancelEquipmentLocate();
                 return;
             }
         });

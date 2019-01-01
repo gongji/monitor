@@ -48,7 +48,7 @@ public static class SubsystemMsg {
         if(systemUI!=null)
         {
             GameObject.DestroyImmediate(systemUI);
-            AllRestore();
+            AllMaterialRestore();
             subSystemItem = null;
             ids.Clear();
         }
@@ -89,7 +89,7 @@ public static class SubsystemMsg {
 
     }
 
-    public static void AllRestore()
+    public static void AllMaterialRestore()
     {
         BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
         foreach (BaseEquipmentControl be in equipments)

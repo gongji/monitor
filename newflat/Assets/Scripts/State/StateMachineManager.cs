@@ -79,6 +79,7 @@ namespace State
         /// <param name="FloorGroup">切换楼层的时候，组编号</param>
         public void SwitchStatus<T>(string nextSceneid,System.Action enterCallBack =null, int builderFloorGroup = 0,string fullAreaBuiderId = "") where T : IState, new()
         {
+           
            System.Type type = typeof(T);
 
             IState nextState;
@@ -132,62 +133,65 @@ namespace State
             this.currentSceneId = nextSceneid;
             this.currentBuilderFloorGroup = builderFloorGroup;
 
-
-
         }
         /// <summary>
         /// 定位设备
         /// </summary>
         private string currentEquipmentid = "-1";
-        public void LocateEquipment(string id,string parentid)
+        
+
+        public void StateReset()
         {
-            if(id.Equals(currentEquipmentid))
+            currentEquipmentid = "-1";
+        }
+        public void LocateEquipment(string equipmentId,string sceneId)
+        {
+            if(equipmentId.Equals(currentEquipmentid))
             {
-                log.Debug("equipment is same" + "id="+id);
+                log.Debug("equipment is same" + "id="+ equipmentId);
                 return;
             }
-            System.Type type = SceneData.GetCurrentState(parentid);
-            BaseState bs = null;
-           // Debug.Log(type.Name.ToString());
-            //Debug.Log(mCurrentState.GetType().ToString());
-            if (mCurrentState!=null)
+            DataModel.Type type = SceneData.FindObjUtilityect3dItemById(sceneId.Trim()).type;
+            if (mCurrentState!=null && mCurrentState.GetType()!=null)
             {
-                Debug.Log(mCurrentState.GetType().ToString());
+                //Debug.Log(mCurrentState.GetType().ToString());
             }
-
-            if (mCurrentState != null && (mCurrentState.GetType().ToString().Contains(type.Name.ToString()))) 
+            BaseState bs = null;
+            if (mCurrentState != null && SceneContext.currentSceneData!=null && 
+                (SceneContext.currentSceneData.id.Equals(sceneId.Trim()))) 
             {
+               // Debug.Log(SceneContext.currentSceneData.id);
                 bs = mCurrentState as BaseState;
-                bs.LocateEquipment(id);
+                bs.LocateEquipment(equipmentId);
             }
             else
             {
-                switch (type.Name.ToString())
+                switch (type)
                 {
-                    case "AreaState":
+                    case DataModel.Type.Area:
                         {
 
-                            SwitchStatus<AreaState>(parentid, () => {
+                            SwitchStatus<AreaState>(sceneId, () => {
                                 bs = mCurrentState as BaseState;
-                                bs.LocateEquipment(id);
+                                bs.LocateEquipment(equipmentId);
                             });
                             break;
                         }
 
                         
-                    case "FloorState":
+                    case DataModel.Type.Floor:
                         {
-                            SwitchStatus<FloorState>(parentid, () => {
+                            SwitchStatus<FloorState>(sceneId, () => {
                                 bs = mCurrentState as BaseState;
-                                bs.LocateEquipment(id);
+                                bs.LocateEquipment(equipmentId);
                             });
                             break;
                         }
-                    case "RoomState":
+                    case DataModel.Type.Room:
                         {
-                            SwitchStatus<RoomState>(parentid, () => {
+                            SwitchStatus<RoomState>(sceneId, () => {
                                 bs = mCurrentState as BaseState;
-                                bs.LocateEquipment(id);
+                                bs.LocateEquipment(equipmentId);
                             });
                             break;
                         }
@@ -196,7 +200,7 @@ namespace State
                 }
             }
 
-            currentEquipmentid = id;
+            currentEquipmentid = equipmentId;
 
 
         }

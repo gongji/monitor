@@ -35,6 +35,8 @@ public  class ShowAlarmEvent :MonoBehaviour
     }
    
     private  bool isInit = false;
+
+    private Color dgColor = Color.white;
     private   void Init()
     {
         
@@ -50,13 +52,14 @@ public  class ShowAlarmEvent :MonoBehaviour
         SetStyle(listView);
         horScrollBar.gameObject.SetActive(false);
         listView.GetComponent<Image>().color = listView.DefaultHeadingBackgroundColor;
+        dgColor = listView.DefaultHeadingBackgroundColor;
     }
     
     public  void Show(AlarmEventItem aei)
     {
         transform.GetComponentInChildren<ListView>().Items.Insert(0, CreateItem(aei));
 
-
+        transform.GetComponentInChildren<ListView>().GetComponent<Image>().color = dgColor;
         //listView.SuspendLayout();
         //{
         //    listView.Items.Clear();
@@ -85,31 +88,28 @@ public  class ShowAlarmEvent :MonoBehaviour
     /// <returns></returns>
     private ListViewItem CreateItem(AlarmEventItem aei)
     {
-        string[] subItemTexts = new string[] { aei.name, aei.content, aei.dateTime, aei.stationName};
+        string[] subItemTexts = new string[] { aei.name,  aei.dateTime, aei.stationName,aei.content, aei.id, aei.id,aei.eventId};
         ListViewItem _item = new ListViewItem(subItemTexts);
-        EventItemData item = new EventItemData();
-        item.equipmentid = aei.id;
-        item.eventId = aei.eventId;
-        _item.Tag = item;
+        _item.Tag = aei;
 
         return _item;
     }
 
-
+    #region AddRemoveItem Event
     /// <summary>
     /// 创建确认和定位的按钮
     /// </summary>
     /// <param name="item"></param>
     private void OnItemBecameVisible(ListViewItem item)
     {
-        Debug.Log("增加确认按钮");
-        EventItemData itemData = item.Tag as EventItemData;
+        // Debug.Log("增加确认按钮");
+        AlarmEventItem itemData = item.Tag as AlarmEventItem;
         var confirmItem = item.SubItems[4];
         GameObject confirmButton = GameObject.Instantiate(Resources.Load("UI/Alarm/confirm")) as GameObject;
         confirmItem.CustomControl = confirmButton.transform as RectTransform;
         confirmButton.GetComponent<Button>().onClick.AddListener(delegate ()
         {
-            ConfirmEquipment(itemData.eventId, item);
+            ConfirmEquipment(itemData, item);
         });
 
         // Create locate 按钮
@@ -118,33 +118,19 @@ public  class ShowAlarmEvent :MonoBehaviour
         locateItem.CustomControl = locateButton.transform as RectTransform;
         locateButton.GetComponent<Button>().onClick.AddListener(delegate ()
         {
-            LocateEquipment(itemData.equipmentid);
+            LocateEquipment(itemData);
         });
-    }
 
-    /// <summary>
-    /// 定位
-    /// </summary>
-    /// <param name="locateid"></param>
-    private void LocateEquipment(string locateid)
-    {
-       // Debug.Log(locateid);
-    }
+        // 详情按钮
+        var detailItem = item.SubItems[6];
+        GameObject detailButton = GameObject.Instantiate(Resources.Load("UI/Alarm/detail")) as GameObject;
+        detailButton.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 30);
+        detailItem.CustomControl = detailButton.transform as RectTransform;
+        detailButton.GetComponent<Button>().onClick.AddListener(delegate ()
+        {
+            DetailEvent(itemData);
+        });
 
-    /// <summary>
-    /// 确认id
-    /// </summary>
-    /// <param name="confirmId"></param>
-    private void ConfirmEquipment(string confirmId, ListViewItem item)
-    {
-        transform.GetComponentInChildren<ListView>().Items.Remove(item);
-
-        Dictionary<string, string> sendDic = new Dictionary<string, string>();
-        sendDic.Add("eventId", confirmId);
-        sendDic.Add("userName", "admin");
-        sendDic.Add("time",TimeUtility.GetCurrenDate());
-        string json = Utils.CollectionsConvert.ToJSON(sendDic);
-        WebsocjetService.Instance.SendData(json);
     }
 
     private void OnItemBecameInvisible(ListViewItem item)
@@ -156,29 +142,77 @@ public  class ShowAlarmEvent :MonoBehaviour
         var confirmItem = item.SubItems[5];
         GameObject confirmItemGameObject = confirmItem.CustomControl.gameObject;
 
+        var detailItem = item.SubItems[6];
+        GameObject detailItemGameObject = detailItem.CustomControl.gameObject;
+
         GameObject.Destroy(locateItemGameObject);
         GameObject.Destroy(confirmItemGameObject);
+        GameObject.Destroy(detailItemGameObject);
     }
+    #endregion
+
+
+    #region Button Event
+    /// <summary>
+    /// 定位
+    /// </summary>
+    /// <param name="locateid"></param>
+    private void LocateEquipment(AlarmEventItem itemData)
+    {
+        if(itemData!=null && !string.IsNullOrEmpty(itemData.id) && !string.IsNullOrEmpty(itemData.sceneId))
+        {
+            Main.instance.stateMachineManager.LocateEquipment(itemData.id, itemData.sceneId);
+        }
+    }
+
+    /// <summary>
+    /// 确认事件
+    /// </summary>
+    /// <param name="confirmId"></param>
+    private void ConfirmEquipment(AlarmEventItem itemData, ListViewItem item)
+    {
+        
+        List<string> list = new List<string>();
+        list.Add(itemData.key);
+        list.Add(itemData.eventId);
+        list.Add(itemData.dateTime);
+        list.Add("admin");
+        list.Add("admin");
+        list.Add("25");
+   
+        string sendData = Utils.StrUtil.ConnetString(list, "|");
+        WebsocjetService.Instance.SendData(sendData);
+
+        transform.GetComponentInChildren<ListView>().Items.Remove(item);
+    }
+
+    private void DetailEvent(AlarmEventItem itemData)
+    {
+        Debug.Log("详情：" + itemData.id);
+    }
+
+    #endregion
 
 
     /// <summary>
     /// 显示标题
     /// </summary>
     /// <param name="titleName"></param>
-    private  void CreateTitle(string titleName)
+    private void CreateTitle(string titleName)
     {
         Transform title = transform.Find("Title");
-        title.GetComponentInChildren<Text>().text =" 报警实时信息";
+        title.GetComponentInChildren<Text>().text =" 报警事件";
     }
 
     private  void SetColumWidth(ListView ListView)
     {
-        ListView.Columns[0].Width = 100;
-        ListView.Columns[1].Width = 150;
-        ListView.Columns[2].Width = 150;
-        ListView.Columns[3].Width = 100;
+        ListView.Columns[0].Width = 70;
+        ListView.Columns[1].Width = 130;
+        ListView.Columns[2].Width = 100;
+        ListView.Columns[3].Width = 150;
         ListView.Columns[4].Width = 50;
         ListView.Columns[5].Width = 50;
+        ListView.Columns[6].Width = 50;
     }
 
     private  void AddColumns(ListView ListView)
@@ -186,11 +220,12 @@ public  class ShowAlarmEvent :MonoBehaviour
         ListView.SuspendLayout();
         {
             AddColumnHeader(ListView, "设备名称");
-            AddColumnHeader(ListView, "报警内容");
             AddColumnHeader(ListView, "时间");
             AddColumnHeader(ListView, "地点");
+            AddColumnHeader(ListView, "报警内容");
             AddColumnHeader(ListView, "确认");
             AddColumnHeader(ListView, "定位");
+            AddColumnHeader(ListView, "详情");
         }
         ListView.ResumeLayout();
     }

@@ -207,7 +207,8 @@ public class BrowserToolBar : MonoBehaviour {
         else
         {
             fullArea.GetComponentInChildren<Text>().text = "全景模式";
-            Main.instance.stateMachineManager.SwitchStatus<AreaState>(string.Empty);
+            string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
+            Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
         }
 
         isFullModeAreaMode = !isFullModeAreaMode;
