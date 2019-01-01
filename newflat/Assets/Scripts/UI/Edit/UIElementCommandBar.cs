@@ -102,11 +102,13 @@ public sealed class UIElementCommandBar : MonoBehaviour
     /// <param name="g"></param>
     public void EditClick(GameObject g)
     {
-        //
+        //门
         if(selectingObjectTransform.GetComponent<Object3DElement>().type == Type.De_Door)
         {
          
             SaveEquipmentData.SaveDoor(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData);
+           
+
         }
         else
         {
@@ -182,6 +184,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
         isHandlingMouseDrag = false;
         currentOperation = Operation.None;
         transform.localScale = Vector3.zero;
+        ButttonStateReset();
 
 
     }
@@ -214,25 +217,56 @@ public sealed class UIElementCommandBar : MonoBehaviour
 
         if (AppInfo.currentView == ViewType.View3D)
         {
-            moveYButton.GetComponent<Button>().enabled = true;
-            //  edit.GetComponent<Button>().enabled = true;
-            edit.GetComponent<EventTrigger>().enabled = true;
-            locate.GetComponent<EventTrigger>().enabled = true;
-
-
-            moveYButton.GetComponent<Image>().color = Color.white;
-            locate.GetComponent<Image>().color = new Color32(0, 152, 255, 255);
-            edit.GetComponent<Image>().color = new Color32(0,152,255,255);
+            SetShortButttonState(true);
         }
         else
         {
-            moveYButton.GetComponent<Button>().enabled = false;
-            edit.GetComponent<EventTrigger>().enabled = false;
-            locate.GetComponent<EventTrigger>().enabled = false;
-            moveYButton.GetComponent<Image>().color = Color.gray;
-            edit.GetComponent<Image>().color = Color.gray;
-            locate.GetComponent<Image>().color = Color.gray;
+            SetShortButttonState(false);
         }
+    }
+
+    /// <summary>
+    /// 这只快捷按钮的状态
+    /// </summary>
+    private void SetShortButttonState(bool isEnable)
+    {
+        moveYButton.GetComponent<Button>().enabled = isEnable;
+        //  edit.GetComponent<Button>().enabled = true;
+        edit.GetComponent<EventTrigger>().enabled = isEnable;
+        locate.GetComponent<EventTrigger>().enabled = isEnable;
+        locate.interactable = isEnable;
+        moveYButton.interactable = isEnable;
+        edit.interactable = isEnable;
+
+        //if (isEnable)
+        //{
+        //    moveYButton.GetComponent<Image>().color = Color.white;
+        //    edit.GetComponent<Image>().color = new Color32(0, 152, 255, 255);
+        //}
+        //else
+        //{
+        //    moveYButton.GetComponent<Image>().color = Color.gray;
+        //    edit.GetComponent<Image>().color = Color.gray;
+           
+        //}
+    }
+
+    private void SetDoorButtonState(bool isEnable)
+    {
+        delete.interactable = isEnable;
+        copy.interactable = isEnable;
+        mulkCopy.interactable = isEnable;
+        delete.GetComponent<EventTrigger>().enabled = isEnable;
+        copy.GetComponent<EventTrigger>().enabled = isEnable;
+        mulkCopy.GetComponent<EventTrigger>().enabled = isEnable;
+       
+
+    }
+
+    private void ButttonStateReset()
+    {
+        SetDoorButtonState(true);
+        SetShortButttonState(true);
     }
 
     public void HideOther(string name)
@@ -302,6 +336,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
         if (isDoor)
         {
             edit.GetComponentInChildren<TextMeshProUGUI>().text = "保存";
+            SetDoorButtonState(false);
         }
         else
         {

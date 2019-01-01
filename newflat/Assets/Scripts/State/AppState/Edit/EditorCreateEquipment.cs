@@ -49,10 +49,6 @@ public sealed class EditorCreateEquipment
         DOVirtual.DelayedCall(1.0f, () => {
             PropertySet.instance.UpdateData(equipment3DElement.equipmentData);
         });
-       
-        
-
-
     }
 
     /// <summary>
