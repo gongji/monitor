@@ -11,7 +11,7 @@ public class NormalEquipmentControl :BaseEquipmentControl {
     private ILog log = LogManagers.GetLogger("NormalEquipmentControl");
     private GameObject equipmentTips;
  
-    void Start () {
+    void  Awake () {
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
         Transform t = GameObject.Find("Canvas/equipment").transform;
         equipmentTips = TransformControlUtility.CreateItem("Tips/EquipmentTips", t);

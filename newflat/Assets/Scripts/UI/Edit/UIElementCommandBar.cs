@@ -78,8 +78,12 @@ public sealed class UIElementCommandBar : MonoBehaviour
 
     public void CopyClick(GameObject g)
     {
+      
+        if(selectingObjectTransform!=null && !string.IsNullOrEmpty(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData.modelId))
+        {
+            EquipmentBatchCopy.CopySinlgeEquipment(selectingObjectTransform);
+        }
         Hide();
-        
     }
     //批量复制
     public void MulkCopyClick(GameObject g)
@@ -193,12 +197,9 @@ public sealed class UIElementCommandBar : MonoBehaviour
 
     public void Hide()
     {
-       
         EquipmentUIControl.instance.ShowModelList(true);
         transform.DOScale(0.0f, showTime);
         selectingObjectTransform = null;
-
-
     }
 
     

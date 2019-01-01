@@ -447,9 +447,9 @@ MonoBehaviour:
   DefaultColumnHeaderHeight: 40
   DefaultItemBackgroundColor: {r: 0.101960786, g: 0.13333334, b: 0.14117648, a: 1}
   DefaultItemTextColor: {r: 1, g: 1, b: 1, a: 1}
-  DefaultSelectedItemColor: {r: 0.6509804, g: 0.6156863, b: 0.6156863, a: 1}
+  DefaultSelectedItemColor: {r: 0.6509804, g: 0.6156863, b: 0.6156863, a: 0.3137255}
   DefaultChangeTextColorOnSelection: 0
-  DefaultSelectedItemTextColor: {r: 0.6509804, g: 0.6156863, b: 0.6156863, a: 1}
+  DefaultSelectedItemTextColor: {r: 0.6509804, g: 0.6156863, b: 0.6156863, a: 0.3137255}
   DefaultItemFont: {fileID: 12800000, guid: 9ad499c407c098f42b4df43e4eecb084, type: 3}
   DefaultItemFontSize: 12
   DefaultItemFontStyle: 0

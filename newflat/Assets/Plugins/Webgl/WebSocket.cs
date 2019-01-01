@@ -117,7 +117,7 @@ public class WebSocket
 		m_Socket.ConnectAsync();
 		while (!m_IsConnected && m_Error == null)
 			yield return 0;
-	}
+    }
 
 	public void Send(byte[] buffer)
 	{

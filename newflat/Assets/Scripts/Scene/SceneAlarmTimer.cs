@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 定时请求报警数据
+/// </summary>
 public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
 
     private int time = 5;

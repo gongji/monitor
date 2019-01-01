@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DataModel;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,18 +13,26 @@ public class EquipmentBatchCopy : MonoBehaviour {
     //间隙宽度
     private float spaceWidth = 0.001f;
 
+    private Vector3 defaultEulerAngles = Vector3.zero;
+
     private void Awake()
     {
         target = gameObject.transform;
+        defaultEulerAngles = target.localEulerAngles;
     }
 
     void Start () {
 
         equipmnetWidth = target.GetComponent<BoxCollider>().bounds.size.x;
+       
 	}
-    public bool isCreate = false;
+    private bool isCreate = false;
 
    
+    public void SetCreateState()
+    {
+        isCreate = true;
+    }
     void Update() {
        
         if (isCreate)
@@ -46,7 +55,15 @@ public class EquipmentBatchCopy : MonoBehaviour {
             }
             Vector3 mouseTargetPostion = GetDrawPoint();
             Create(mouseTargetPostion);
+        }
 
+        //取消键
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.None;
+            DeleteList();
+            target.localEulerAngles = defaultEulerAngles;
+            GameObject.Destroy(this);
         }
 	}
     private Vector3 lastMousePosition = Vector3.zero;
@@ -130,6 +147,18 @@ public class EquipmentBatchCopy : MonoBehaviour {
         gs.Clear();
     }
 
+    private void OnDestroy()
+    {
+        if(gs!=null && gs.Count>0)
+        {
+            Debug.Log("增加了："+ gs.Count);
+            foreach(GameObject temp  in gs)
+            {
+                Object3DElement.AddNewItem(temp.GetComponent<Object3DElement>());
+            }
+        }
+    }
+
     private Vector3 GetDrawPoint()
     {
        
@@ -158,4 +187,25 @@ public class EquipmentBatchCopy : MonoBehaviour {
 
         return mousePotion;
     }
+
+    /// <summary>
+    /// 复制单个设备
+    /// </summary>
+    /// <param name="sourceEquipment"></param>
+    public static void CopySinlgeEquipment(Transform  sourceEquipment)
+    {
+        GameObject coloneEquipment = GameObject.Instantiate(sourceEquipment.gameObject);
+        coloneEquipment.name = "colone_" + sourceEquipment.name;
+        coloneEquipment.transform.parent = sourceEquipment.parent;
+        coloneEquipment.transform.localScale = sourceEquipment.localScale;
+        coloneEquipment.transform.localRotation = sourceEquipment.localRotation;
+        Vector3 boundSize = sourceEquipment.GetComponent<BoxCollider>().bounds.size;
+        coloneEquipment.transform.position = sourceEquipment.transform.position + sourceEquipment.right * (boundSize.x);
+        coloneEquipment.GetComponent<Object3DElement>().equipmentData.name = coloneEquipment.name;
+       
+        Object3DElement.AddNewItem(coloneEquipment.GetComponent<Object3DElement>());
+    }
+
+
+
 }

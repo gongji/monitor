@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using DG.Tweening;
 
 public class WebsocjetService : MonoSingleton<WebsocjetService> {
 
@@ -21,9 +22,21 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
       
     }
 
-    public IEnumerator StartWebSocket()
+
+    public void ConnetWebsokcet()
+    {
+        Debug.Log("开始连接");
+        StopAllCoroutines();
+        if(ws!=null)
+        {
+            ws.Close();
+        }
+        StartCoroutine(StartWebSocket());
+    }
+    private IEnumerator StartWebSocket()
     {
         string websoketurl = Config.parse("websoketurl");
+       // websoketurl = url;
         if (string.IsNullOrEmpty(websoketurl))
         {
             websoketurl = url;
@@ -46,6 +59,9 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
             if (ws.error != null)
             {
                 Debug.LogError("Error: " + ws.error);
+              
+                ConnetWebsokcet();
+              
                 break;
             }
             //Debug.Log("123");
@@ -58,7 +74,7 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
     {
         if (ws != null)
         {
-            Debug.Log(sendData);
+           
             ws.SendString(sendData);
         }
 
@@ -74,30 +90,31 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
        // Debug.Log("11111111111");
         MessageContent messageContent = CollectionsConvert.ToObject<MessageContent>(data);
         Debug.Log(messageContent);
-        commandsUtils.Exec(messageContent);
+        if(messageContent!=null)
+        {
+            commandsUtils.Exec(messageContent);
+        }
+        
     }
 
-    //private void Update()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        SendData(GetTestData());
-    //    }
-    //}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GetTestData();
+        }
+       // GetTestData();
+    }
 
-    //private string GetTestData()
-    //{
-    //    MessageContent mc = new MessageContent();
-    //    Dictionary<string, object> data = new Dictionary<string, object>();
-    //    data.Add("id","123456");
-    //    data.Add("state", "alarm");
-    //    mc.data = data;
-    //    mc.methodName = "alarm";
-    //   return  CollectionsConvert.ToJSON(mc);
+    private  int i =0;
+    private void GetTestData()
+    {
+        i++;
+        SendData("123" +i);
 
 
-    //}
+    }
 
-    
+
 }
 

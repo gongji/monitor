@@ -16,6 +16,7 @@ public class OperateTips : MonoBehaviour {
     void Start () {
         instance = this;
 
+        gameObject.AddComponent<TextBgJust>();
         transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, yValue - 100.0f);
         MoveShow();
 

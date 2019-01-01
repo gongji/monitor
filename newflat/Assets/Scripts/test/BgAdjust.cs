@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class BgAdjust : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
 	// Update is called once per frame
 	void Update () {
        Vector3 size =   GetComponentInParent<BoxCollider>().size;

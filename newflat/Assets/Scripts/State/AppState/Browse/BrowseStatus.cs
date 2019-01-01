@@ -16,7 +16,7 @@ public class BrowseStatus : AppBaseState
     public override void Init()
     {
         BrowserUI.Create();
-        Main.instance.StartCoroutine(WebsocjetService.Instance.StartWebSocket());
+        WebsocjetService.Instance.ConnetWebsokcet();
         
         WenshiduTimer.Instance.StartTimer();
 

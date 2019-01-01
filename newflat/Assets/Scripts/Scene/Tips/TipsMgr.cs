@@ -19,6 +19,7 @@ public class TipsMgr : MonoSingleton<TipsMgr>,IEventListener {
     private List<Transform> tipsList = new List<Transform>();
     public void CreateTips(GameObject collider, Object3dItem object3dItem,Transform parent,Vector3 minScale,Vector3 maxScale)
     {
+        EventMgr.Instance.RemoveListener(this, EventName.DeleteObject);
         EventMgr.Instance.AddListener(this, EventName.DeleteObject);
         if (collider != null)
         {

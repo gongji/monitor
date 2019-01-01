@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 背景随着文本大小适配
+/// </summary>
 public class TextBgJust : MonoBehaviour {
-
-    // Use this for initialization
-
     private RectTransform recTransform;
     private Text text;
     void Start () {

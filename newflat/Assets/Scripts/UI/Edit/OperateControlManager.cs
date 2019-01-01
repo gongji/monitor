@@ -65,7 +65,7 @@ public class OperateControlManager : MonoSingleton<OperateControlManager> {
 
         }else if(operateTips != null && currentState == EquipmentEditState.BulkCopy)
         {
-            operateTips.SetShowText("shift水平垂直复制，滚轴+左ctrl调整距离");
+            operateTips.SetShowText("shift水平垂直复制，滚轴+左ctrl调整距离,ESC键取消操作。");
         }
 
 
@@ -85,7 +85,7 @@ public class OperateControlManager : MonoSingleton<OperateControlManager> {
         }
 
         ebc = equipment.gameObject.AddComponent<EquipmentBatchCopy>();
-        ebc.isCreate = true;
+        ebc.SetCreateState();
     }
 }
 
