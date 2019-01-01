@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraEquipmentControl : BaseEquipmentControl
 {
 
-    private void Start()
+    private void Awake()
     {
         Init("camera");
     }

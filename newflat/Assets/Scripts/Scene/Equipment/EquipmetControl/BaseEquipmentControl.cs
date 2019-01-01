@@ -59,6 +59,13 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         isSelect = true;
         UpdateShow();
 
+        string equipmentId = equipmentItem.id;
+
+        if(string.IsNullOrEmpty(equipmentId))
+        {
+            equipmentId = GetComponent<Object3DElement>().equipmentData.id;
+        }
+      //  Debug.Log("equipmentId="+ equipmentId);
         CameraViewData.GetCurrentEquipmentCameraView((result) =>
         {
             Vector3 targetPostion = Vector3.zero;
@@ -67,28 +74,43 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
             {
                 targetPostion = new Vector3(result.x, result.y, result.z);
                 eulerAngles = new Vector3(result.rotationX, result.rotationY, result.rotationZ);
+                CameraAnimation.CameraMove(Camera.main, targetPostion, eulerAngles, 1.0f, null);
             }
             else
             {
-                BoxCollider collider = transform.GetComponentInChildren<BoxCollider>();
-
-                Vector3 upPostion = transform.position + transform.up * collider.bounds.size.y * 1.5f;
-
-                // Vector3 targetPostion = upPostion + transform.forward * collider.bounds.size.z * 2.0f;
-                targetPostion = upPostion + transform.forward * collider.bounds.size.z * 4.0f;
-                Vector3 center = transform.position + transform.up * collider.bounds.size.y * 0.5f;
-                Vector3 dir = center - targetPostion;
-                Quaternion quaternion = Quaternion.LookRotation(dir, transform.up);
-                eulerAngles = quaternion.eulerAngles;
+                SetDefaultWatchPoint();
             }
 
-            CameraAnimation.CameraMove(Camera.main, targetPostion, eulerAngles, 1.0f, null);
-        }, equipmentItem.id);
+           
+        }, equipmentId, (error)=> {
+
+            SetDefaultWatchPoint();
+        });
       
         //Camera.main.transform.position = targetPostion;
         //Camera.main.transform.localRotation = quaternion;
        // SelectEffection();
        // LocateBack.instance.Show();
+    }
+
+    //设置默认观察点
+    private void SetDefaultWatchPoint()
+    {
+        Vector3 targetPostion = Vector3.zero;
+        Vector3 eulerAngles = Vector3.zero;
+
+        BoxCollider collider = transform.GetComponentInChildren<BoxCollider>();
+
+        Vector3 upPostion = transform.position + transform.up * collider.bounds.size.y * 1.5f;
+
+        // Vector3 targetPostion = upPostion + transform.forward * collider.bounds.size.z * 2.0f;
+        targetPostion = upPostion + transform.forward * collider.bounds.size.z * 4.0f;
+        Vector3 center = transform.position + transform.up * collider.bounds.size.y * 0.5f;
+        Vector3 dir = center - targetPostion;
+        Quaternion quaternion = Quaternion.LookRotation(dir, transform.up);
+        eulerAngles = quaternion.eulerAngles;
+
+        CameraAnimation.CameraMove(Camera.main, targetPostion, eulerAngles, 1.0f, null);
     }
 
    

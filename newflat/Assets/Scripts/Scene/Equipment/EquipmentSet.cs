@@ -15,11 +15,15 @@ public sealed class EquipmentSet  {
     /// <summary>
     /// 创建当前场景的设备
     /// </summary>
-    public static void CreateEquipment()
+    public static void CreateEquipment(System.Action createCallBack)
     {
         //查询当前的数据库
         EquipmentData.SearchCurrentEquipmentDataDownModel(() => {
             StartCreateEquipment();
+            if(createCallBack!=null)
+            {
+                createCallBack.Invoke();
+            }
         });
        
     }

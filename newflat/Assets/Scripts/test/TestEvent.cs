@@ -30,9 +30,9 @@ public class TestEvent : MonoBehaviour {
         {
              
             AlarmEventItem aei = new AlarmEventItem();
-            aei.id = "9";
+            aei.id = "6";
             aei.eventId = "344";
-            aei.sceneId = "231";
+            aei.sceneId = "242";
             aei.content="发生了报警";
             aei.dateTime = "2019-01-01 07:11:11";
             aei.level = "0";
@@ -54,8 +54,8 @@ public class TestEvent : MonoBehaviour {
         {
 
             AlarmEventItem aei = new AlarmEventItem();
-            aei.id = "18";
-            aei.sceneId = "230";
+            aei.id = "10";
+            aei.sceneId = "231";
             aei.eventId = "344_1";
             aei.content = "发生了报警_1";
             aei.dateTime = "2019-01-01 08:11:11";

@@ -10,7 +10,7 @@ public class DoorEquipmentControl : NormalEquipmentControl {
 
     private ILog log = LogManagers.GetLogger("DoorEquipmentControl");
 
-    private void Start()
+    private void Awake()
     {
         Init("door");
     }

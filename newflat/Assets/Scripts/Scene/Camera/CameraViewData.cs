@@ -59,7 +59,7 @@ public sealed class CameraViewData
 
 
 
-        }, equipmentId);
+        }, equipmentId,null);
        
        
     }
@@ -136,14 +136,15 @@ public sealed class CameraViewData
         CallProxyGetViewData(sql, callBack);
     }
 
-    public static void GetCurrentEquipmentCameraView(System.Action<CameraViewItem> callBack,string equipmentId)
+    public static void GetCurrentEquipmentCameraView(System.Action<CameraViewItem> sucessCallBack,string equipmentId,System.Action<string> errorCallBack)
     {
         string sql = "equipId = " + equipmentId + " and (sceneId is null or sceneId = -1)";
-        CallProxyGetViewData(sql, callBack);
+        CallProxyGetViewData(sql, sucessCallBack, errorCallBack);
     }
 
-    public static void CallProxyGetViewData(string sql, System.Action<CameraViewItem> callBack)
+    public static void CallProxyGetViewData(string sql, System.Action<CameraViewItem> callBack,System.Action<string > errorCallBack=null)
     {
+       // Debug.Log("sql="+ sql);
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("result", sql); ;
 
@@ -164,7 +165,7 @@ public sealed class CameraViewData
                 callBack.Invoke(resultCameraViewItem);
             }
 
-        }, (error) => { });
+        }, errorCallBack);
     }
 
 }

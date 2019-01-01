@@ -13,7 +13,7 @@ public sealed class CameraViewProxy  {
     /// </summary>
     /// <param name="sql">"equipId = 12"</param>
     /// <param name="callBack"></param>
-    public static void GetCameraView(Dictionary<string,string> sqlPostData, System.Action<string> sucesscallBack, System.Action<string> ErrorCallBack)
+    public static void GetCameraView(Dictionary<string,string> sqlPostData, System.Action<string> sucesscallBack, System.Action<string> errorCallBack)
     {
         string url = Config.parse("requestAddress") + "/queryWatch";
 
@@ -26,6 +26,10 @@ public sealed class CameraViewProxy  {
               log.Error("http reqeust error queryWatch:url =" + url);
 
               log.Error("http reqeust error queryWatch:" + error.ToString());
+              if(errorCallBack != null)
+              {
+                  errorCallBack.Invoke(error.ToString());
+              }
 
           }));
 

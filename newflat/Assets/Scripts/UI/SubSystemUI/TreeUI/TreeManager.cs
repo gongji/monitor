@@ -142,7 +142,7 @@ public class TreeManager : MonoBehaviour
     public void OnMouseClick(UIBranchButton target)
     {
    
-        Debug.Log(target.name  + ":"+ target.id + ":"+ target.type);
+       // Debug.Log(target.name  + ":"+ target.id + ":"+ target.type);
         DOVirtual.DelayedCall(0.3f, () => {
 
             if (selectOnelevel.Equals(target.id) && !target.type.Equals("equipment") &&

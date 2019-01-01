@@ -82,14 +82,16 @@ namespace State
         protected void InitSet()
         {
             baseSet.Enter(curentDataList, () => {
+                EquipmentSet.CreateEquipment(()=> {
+                    EnableEventSystem(true);
+                    if (enterCallBack != null)
+                    {
+                        enterCallBack.Invoke();
 
-                EnableEventSystem(true);
-                EquipmentSet.CreateEquipment();
-                if (enterCallBack != null)
-                {
-                    enterCallBack.Invoke();
-                    
-                }
+                    }
+
+                });
+                
             });
         }
 
