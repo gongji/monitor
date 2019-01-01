@@ -231,24 +231,11 @@ public sealed class UIElementCommandBar : MonoBehaviour
     private void SetShortButttonState(bool isEnable)
     {
         moveYButton.GetComponent<Button>().enabled = isEnable;
-        //  edit.GetComponent<Button>().enabled = true;
         edit.GetComponent<EventTrigger>().enabled = isEnable;
         locate.GetComponent<EventTrigger>().enabled = isEnable;
         locate.interactable = isEnable;
         moveYButton.interactable = isEnable;
         edit.interactable = isEnable;
-
-        //if (isEnable)
-        //{
-        //    moveYButton.GetComponent<Image>().color = Color.white;
-        //    edit.GetComponent<Image>().color = new Color32(0, 152, 255, 255);
-        //}
-        //else
-        //{
-        //    moveYButton.GetComponent<Image>().color = Color.gray;
-        //    edit.GetComponent<Image>().color = Color.gray;
-           
-        //}
     }
 
     private void SetDoorButtonState(bool isEnable)
@@ -262,7 +249,9 @@ public sealed class UIElementCommandBar : MonoBehaviour
        
 
     }
-
+    /// <summary>
+    /// 复位按钮的状态
+    /// </summary>
     private void ButttonStateReset()
     {
         SetDoorButtonState(true);
