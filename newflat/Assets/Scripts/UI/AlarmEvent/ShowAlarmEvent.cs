@@ -189,6 +189,10 @@ public  class ShowAlarmEvent :MonoBehaviour
     private void DetailEvent(AlarmEventItem itemData)
     {
         Debug.Log("详情：" + itemData.id);
+
+       GameObject detaillUI = TransformControlUtility.CreateItem("UI/Alarm/AlarmDetail",UIUtility.GetRootCanvas());
+       AlarmDetailShow ads =  detaillUI.AddComponent<AlarmDetailShow>();
+       ads.Show(itemData);
     }
 
     #endregion

@@ -35,7 +35,7 @@ public class TestEvent : MonoBehaviour {
             aei.sceneId = "242";
             aei.content="发生了报警";
             aei.dateTime = "2019-01-01 07:11:11";
-            aei.level = "0";
+            aei.level = "一级";
             aei.eventId = "123456789";
             aei.pointName = "A1";
             aei.sceneName = "sceneName";
