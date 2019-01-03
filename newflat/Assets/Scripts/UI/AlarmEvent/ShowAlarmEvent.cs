@@ -165,13 +165,21 @@ public  class ShowAlarmEvent :MonoBehaviour
         }
     }
 
+    private ListViewItem item = null;
     /// <summary>
     /// 确认事件
     /// </summary>
     /// <param name="confirmId"></param>
     private void ConfirmEquipment(AlarmEventItem itemData, ListViewItem item)
     {
+        GameObject detaillUI = TransformControlUtility.CreateItem("UI/Alarm/AlarmDetail", UIUtility.GetRootCanvas());
         
+       
+        this.item = item;
+    }
+
+    public void SetConfirmEquipment(AlarmEventItem itemData)
+    {
         List<string> list = new List<string>();
         list.Add(itemData.key);
         list.Add(itemData.eventId);
@@ -179,19 +187,25 @@ public  class ShowAlarmEvent :MonoBehaviour
         list.Add("admin");
         list.Add("admin");
         list.Add("25");
-   
+
         string sendData = Utils.StrUtil.ConnetString(list, "|");
         WebsocjetService.Instance.SendData(sendData);
 
-        transform.GetComponentInChildren<ListView>().Items.Remove(item);
+        if(item!=null)
+        {
+            transform.GetComponentInChildren<ListView>().Items.Remove(item);
+        }
+       
+        item = null;
+
     }
 
     private void DetailEvent(AlarmEventItem itemData)
     {
         Debug.Log("详情：" + itemData.id);
 
-       GameObject detaillUI = TransformControlUtility.CreateItem("UI/Alarm/AlarmDetail",UIUtility.GetRootCanvas());
-       AlarmDetailShow ads =  detaillUI.AddComponent<AlarmDetailShow>();
+       GameObject detaillUI = TransformControlUtility.CreateItem("UI/Alarm/AlarmEventDetail", UIUtility.GetRootCanvas());
+       AlarmEventWindowBase ads =  detaillUI.AddComponent<AlarmEventDetailShow>();
        ads.Show(itemData);
     }
 
@@ -249,6 +263,7 @@ public  class ShowAlarmEvent :MonoBehaviour
         }
     }
 
+  
     /// <summary>
     /// 
     /// </summary>

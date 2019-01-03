@@ -7,6 +7,6 @@ public class BomSlider : MonoBehaviour {
 
     public void Change()
     {
-        Debug.Log(GetComponent<Slider>().value);
+       // Debug.Log(GetComponent<Slider>().value);
     }
 }

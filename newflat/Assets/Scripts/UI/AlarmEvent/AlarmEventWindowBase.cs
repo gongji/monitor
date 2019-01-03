@@ -5,22 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using animation;
 
-public  class AlarmDetailShow:MonoBehaviour  {
+public  class AlarmEventWindowBase : MonoBehaviour  {
 
-    private void Start()
-    {
-        
-        foreach(Button buttton in GetComponentsInChildren<Button>())
-        {
-            buttton.onClick.AddListener(() =>
-            {
-                Hide();
-            });
-        }
-    }
-    private UICenterScaleBig uiCenterScaleBig = null;
+   
+    protected UICenterScaleBig uiCenterScaleBig = null;
+
+    protected AlarmEventItem aei;
     public void Show(AlarmEventItem aei)
-    { 
+    {
+        this.aei = aei;
         uiCenterScaleBig = new UICenterScaleBig(gameObject,0.5f);
         uiCenterScaleBig.EnterAnimation(()=> {
             System.Type type = aei.GetType();
@@ -38,7 +31,7 @@ public  class AlarmDetailShow:MonoBehaviour  {
        
 
     }
-    private void SetValue(string fieldName,string fieldValue)
+    protected void SetValue(string fieldName,string fieldValue)
     {
 
         foreach(Text text in GetComponentsInChildren<Text>())
