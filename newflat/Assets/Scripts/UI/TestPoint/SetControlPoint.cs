@@ -47,18 +47,18 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     {
         TestPointProxy.GetControlPointList(id, (result) =>
         {
-            List<EquipmentControlPoint> ecps = Utils.CollectionsConvert.ToObject<List<EquipmentControlPoint>>(result);
+            List<EquipmentControlPointItem> ecps = Utils.CollectionsConvert.ToObject<List<EquipmentControlPointItem>>(result);
             SetDataSouce(ecps, equipmentName);
         },()=> {
 
-            SetDataSouce(new List<EquipmentControlPoint>(), equipmentName);
+            SetDataSouce(new List<EquipmentControlPointItem>(), equipmentName);
         });
     }
 
     private  ListView listView = null;
 
     private  bool isShow = false;
-    public  void SetDataSouce(List<EquipmentControlPoint> ecps,string equipmentName ="设备")
+    public  void SetDataSouce(List<EquipmentControlPointItem> ecps,string equipmentName ="设备")
     {
         EventMgr.Instance.AddListener(this, EventName.DeleteObject);
         if(isShow)
@@ -85,7 +85,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         //    listView.Items.Add(_item);
         //}
         
-        foreach(EquipmentControlPoint ecp in ecps)
+        foreach(EquipmentControlPointItem ecp in ecps)
         {
             string[] subItemTexts = new string[] { ecp.id, ecp.name, ecp.describe, "" };
             ListViewItem _item = new ListViewItem(subItemTexts);

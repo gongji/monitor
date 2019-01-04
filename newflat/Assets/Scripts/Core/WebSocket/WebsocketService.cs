@@ -18,8 +18,6 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
         commandsUtils = new CommandsUtils();
         List<ICommand> loaderList = CommandLoader.Load();
         commandsUtils.RegCommands(loaderList);
-
-      
     }
 
 
