@@ -35,12 +35,12 @@ public class WenshiduTimer : MonoSingleton<WenshiduTimer>,ITimer {
     {
         while(true)
         {
-            UpdateData();
+            DoTimer();
             yield return new WaitForSeconds(time);
         }
     }
 
-    private void UpdateData()
+    public void DoTimer()
     {
         WenShiduDataUpdate[]  wenshidus =  GameObject.FindObjectsOfType<WenShiduDataUpdate>();
         if(wenshidus.Length>0)

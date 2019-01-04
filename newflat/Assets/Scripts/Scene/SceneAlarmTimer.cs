@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using State;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,13 +37,19 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
     {
         while (true)
         {
-            UpdateData();
+            DoTimer();
             yield return new WaitForSeconds(time);
         }
     }
 
-    private void UpdateData()
+    public void DoTimer()
     {
-       
+        IState istate = Main.instance.stateMachineManager.mCurrentState;
+
+        SceneAlarmBase[] sceneAlarmBases = GameObject.FindObjectsOfType<SceneAlarmBase>();
+        if (!(istate is FullAreaState))
+        {
+
+        }
     }
 }

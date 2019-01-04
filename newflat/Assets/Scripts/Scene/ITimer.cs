@@ -8,6 +8,8 @@ using UnityEngine;
 
      void StopTimer();
 
+    void DoTimer();
+
     int Time
     {
         get;

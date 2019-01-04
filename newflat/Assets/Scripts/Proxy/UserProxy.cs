@@ -14,16 +14,16 @@ public class UserProxy  {
     /// <param name="builderid"></param>
     public static void GetRepairUserList(System.Action<string> callBack)
     {
-        string url = Config.parse("requestAddress") + "/GetRepairUserList?id";
+        string url = Config.parse("requestAddress") + "/user/getRepairUser";
 
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.GetRequest(url, callBack, (error) =>
           {
 
-              log.Error("http reqeust error GetRepairUserList:url=" + url);
+              log.Error("http reqeust error getRepairUser:url=" + url);
 
-              log.Error("http reqeust error GetRepairUserList:" + error.ToString());
+              log.Error("http reqeust error getRepairUser:" + error.ToString());
 
           }));
     }

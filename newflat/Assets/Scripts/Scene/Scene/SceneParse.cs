@@ -64,6 +64,7 @@ public static class SceneParse  {
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Floor;
+            gs[0].AddComponent<FloorSceneAlarm>();
 
         }
         //房间
@@ -71,12 +72,14 @@ public static class SceneParse  {
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Room;
+            gs[0].AddComponent<RoomSceneAlarm>();
         }
         //建筑外构
         else if(wqRegex.IsMatch(endStr) && gs.Count == 1)
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
             object3DElement.type = Type.Builder;
+            AddWqAlarmObjectScripts(flooRegex, gs[0].transform);
         }
         //门的场景
         else if(fjRegex.IsMatch(endStr) && gs.Count == 1 && sceneName.Contains(Constant.Door))
@@ -137,6 +140,7 @@ public static class SceneParse  {
                     {
                         SetBoxDisable(roomcolliderGameObject);
                     }
+                    roomt.gameObject.AddComponent<RoomSceneAlarm>();
                 }
                
 
@@ -215,9 +219,20 @@ public static class SceneParse  {
         }
     }
 
-    private static void AddAlarmObjectScripts(string MatchStr,Transform parent)
+    private static void AddWqAlarmObjectScripts(Regex flooRegex, Transform parent)
     {
+    
+        foreach (Transform child in parent)
+        {
+            string[] names = child.name.ToLower().Split('_');
+            string endStr = names[names.Length - 1].ToLower().Trim();
+            if(flooRegex.IsMatch(endStr))
+            {
+                child.gameObject.AddComponent<WqSceneAlarm>();
+            }
 
+
+        }
     }
 
     

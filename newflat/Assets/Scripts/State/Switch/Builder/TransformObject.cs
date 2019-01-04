@@ -12,14 +12,6 @@ public class TransformObject : MonoBehaviour {
         defaultRotaion = transform.eulerAngles;
         defaultPostion = transform.position;
     }
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void OnEnable()
     {
@@ -30,5 +22,10 @@ public class TransformObject : MonoBehaviour {
     {
          transform.eulerAngles = defaultRotaion ;
          transform.position = defaultPostion;
+    }
+
+    private void OnDisable()
+    {
+        Reset();
     }
 }

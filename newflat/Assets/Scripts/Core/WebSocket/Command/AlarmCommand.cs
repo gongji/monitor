@@ -1,4 +1,5 @@
-﻿using Core.Server.Command;
+﻿using Core.Common.Logging;
+using Core.Server.Command;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,9 @@ using UnityEngine;
 [SCommand]
 public class AlarmCommand : ICommand
 {
+    private static ILog log = LogManagers.GetLogger("AlarmCommand");
+
+
     public string Name
     {
         get
@@ -21,8 +25,17 @@ public class AlarmCommand : ICommand
     public object ExecuteCommand(string data)
     {
         
-        List<EquipmentAlarm> list = Utils.CollectionsConvert.ToObject<List<EquipmentAlarm>>(data);
+        EquipmentAlarm equipmentAlarm = Utils.CollectionsConvert.ToObject<EquipmentAlarm>(data);
+        Dictionary<string, GameObject>  dic = EquipmentData.GetAllEquipmentData;
+        if(dic.ContainsKey(equipmentAlarm.id))
+        {
+            dic[equipmentAlarm.id].GetComponent<BaseEquipmentControl>().Alarm();
+        }
+        else
+        {
+            log.Debug(equipmentAlarm.id + "is not find");
+        }
 
-        throw new System.NotImplementedException();
+        return null;
     }
 }

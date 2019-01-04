@@ -24,6 +24,8 @@ public class BrowserToolBar : MonoBehaviour {
 
     private Transform cameraMode;
 
+    private Transform bim;
+
     public static BrowserToolBar instance;
 
     private Transform mainCamera;
@@ -59,6 +61,11 @@ public class BrowserToolBar : MonoBehaviour {
         buttonList.Add(cameraMode);
         builderSwitch = transform.Find("builderSwitch");
         buttonList.Add(builderSwitch);
+
+        bim = transform.Find("bim");
+        buttonList.Add(bim);
+
+
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
 
         TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
@@ -107,6 +114,8 @@ public class BrowserToolBar : MonoBehaviour {
             guanxian.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
+            bim.gameObject.SetActive(false);
+
         }
         else if (mCurrentState is RoomState)
         {
@@ -115,6 +124,7 @@ public class BrowserToolBar : MonoBehaviour {
             guanxian.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
+            bim.gameObject.SetActive(false);
         }
 
         else if (mCurrentState is BuilderState)
@@ -126,11 +136,13 @@ public class BrowserToolBar : MonoBehaviour {
             fullArea.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
+            bim.gameObject.SetActive(false);
         }
         else if (mCurrentState is FloorState)
         {
             fullArea.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
+           
 
         }
         else if (mCurrentState is FullAreaState)
@@ -142,6 +154,7 @@ public class BrowserToolBar : MonoBehaviour {
             tips.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
+            bim.gameObject.SetActive(false);
         }
     }
 

@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 获取维修人列表
+/// </summary>
 public class UserListUI : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-
- 
-    }
 
     private List<UserItem> userList;
     public void InitData(List<UserItem> userList)
@@ -25,7 +22,7 @@ public class UserListUI : MonoBehaviour {
         }
     }
 
-    private string selectUserId = string.Empty; 
+    private string selectUserId = "testPerson"; 
 
     public string SelectUserId
     {

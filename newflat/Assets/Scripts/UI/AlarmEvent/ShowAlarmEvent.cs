@@ -172,31 +172,45 @@ public  class ShowAlarmEvent :MonoBehaviour
     /// <param name="confirmId"></param>
     private void ConfirmEquipment(AlarmEventItem itemData, ListViewItem item)
     {
-        GameObject detaillUI = TransformControlUtility.CreateItem("UI/Alarm/AlarmDetail", UIUtility.GetRootCanvas());
-        
-       
+        GameObject detaillUI = TransformControlUtility.CreateItem("UI/Alarm/AlarmEventConfirm", UIUtility.GetRootCanvas());
+        AlarmEventConfirm acf = detaillUI.GetComponent<AlarmEventConfirm>();
+
+        if(acf==null)
+        {
+            acf = detaillUI.AddComponent <AlarmEventConfirm>();
+        }
+        acf.Show(itemData);
+
+        acf.callBack = SetConfirmEquipment;
+
         this.item = item;
     }
 
-    public void SetConfirmEquipment(AlarmEventItem itemData)
+    public void SetConfirmEquipment(AlarmEventItem itemData,string repairPerson)
     {
+        if (item != null)
+        {
+            transform.GetComponentInChildren<ListView>().Items.Remove(item);
+        }
+
+        item = null;
+
+        transform.GetComponentInChildren<ListView>().GetComponent<Image>().color = dgColor;
+
+
         List<string> list = new List<string>();
         list.Add(itemData.key);
         list.Add(itemData.eventId);
         list.Add(itemData.dateTime);
         list.Add("admin");
-        list.Add("admin");
+        list.Add(repairPerson);
         list.Add("25");
 
         string sendData = Utils.StrUtil.ConnetString(list, "|");
+        Debug.Log("sendData="+ sendData);
         WebsocjetService.Instance.SendData(sendData);
 
-        if(item!=null)
-        {
-            transform.GetComponentInChildren<ListView>().Items.Remove(item);
-        }
-       
-        item = null;
+        
 
     }
 

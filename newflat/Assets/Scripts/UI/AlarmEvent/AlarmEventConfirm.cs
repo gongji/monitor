@@ -4,6 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 using animation;
+using DG.Tweening;
 
 public  class AlarmEventConfirm: AlarmEventWindowBase
 {
@@ -11,13 +12,16 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
     private void Start()
     {
 
-        //foreach(Button buttton in GetComponentsInChildren<Button>())
-        //{
-        //    buttton.onClick.AddListener(() =>
-        //    {
-        //        Hide();
-        //    });
-        //}
+        transform.Find("Title/close").GetComponent<Button>().onClick.AddListener(() => {
+
+            Hide();
+        });
+
+        transform.Find("Confirm").GetComponent<Button>().onClick.AddListener(() => {
+
+            ConfirmButton();
+        });
+
 
         UserProxy.GetRepairUserList((result)=> {
             List<UserItem> itemList = Utils.CollectionsConvert.ToObject<List<UserItem>>(result);
@@ -30,7 +34,9 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
     {
         if(callBack!=null && aei!=null)
         {
+           
             callBack.Invoke(aei, GetComponentInChildren<UserListUI>().SelectUserId);
+            Hide();
         }
     }
  
