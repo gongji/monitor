@@ -16,7 +16,7 @@ public class RoomSceneAlarm : SceneAlarmBase
     private GameObject alarmEffection = null;
     public override void Alarm()
     {
-        if(alarmEffection!=null)
+        if(alarmEffection==null)
         {
             string url = Application.streamingAssetsPath + "/R/alarmeffection";
 

@@ -12,11 +12,11 @@ public class EquipmentAlarmProxy  {
     /// </summary>
     /// <param name="sucesscallBack"></param>
     /// <param name="postData">设备ids</param>
-    public static void GetEquipmentAlarmStateList(System.Action<string> successcallBack, string postData)
+    public static void GetEquipmentAlarmStateList(System.Action<string> successcallBack, string parameter)
     {
-        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getEquipmentAlarm?ids=" + postData;
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getEquipmentAlarm?ids=" + parameter;
 
-        Debug.Log("url="+ url);
+       // Debug.Log("url="+ url);
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, null, successcallBack, (a) =>

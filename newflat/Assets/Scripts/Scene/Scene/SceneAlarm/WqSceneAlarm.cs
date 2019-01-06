@@ -13,10 +13,19 @@ public class WqSceneAlarm : SceneAlarmBase
     public override void Alarm()
     {
         //throw new System.NotImplementedException();
+        EffectionUtility.PlayOutlineEffect(transform, Color.white, Color.red);
+
     }
 
     public override void Restore()
     {
-       // throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
+        EffectionUtility.StopOutlineEffect(transform);
+
+    }
+
+    private void OnDisable()
+    {
+        
     }
 }

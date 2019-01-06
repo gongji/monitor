@@ -115,6 +115,8 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
                     sceneAlarmBases.RemoveAt(i);
                 }
             }
+
+            return sceneAlarmBases;
         }
         //大楼
         else if(istate is BuilderState)
@@ -126,6 +128,7 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
                     sceneAlarmBases.RemoveAt(i);
                 }
             }
+            return sceneAlarmBases;
         }
 
         return null;

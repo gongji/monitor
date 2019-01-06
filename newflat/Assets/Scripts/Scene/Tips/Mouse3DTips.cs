@@ -48,7 +48,7 @@ public class Mouse3DTips : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        EffectionUtility.PlayOutlineEffect(transform,Color.blue,Color.yellow);
+        EffectionUtility.PlayOutlineEffect(transform, Color.blue,Color.yellow);
     }
 
     private void OnMouseExit()

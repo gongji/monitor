@@ -19,11 +19,9 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
         List<ICommand> loaderList = CommandLoader.Load();
         commandsUtils.RegCommands(loaderList);
     }
-
-
     public void ConnetWebsokcet()
     {
-        return;
+        //return;
         Debug.Log("开始连接");
         StopAllCoroutines();
         if(ws!=null)

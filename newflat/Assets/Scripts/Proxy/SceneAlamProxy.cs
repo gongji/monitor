@@ -12,9 +12,10 @@ public class SceneAlamProxy : MonoBehaviour {
     private static ILog log = LogManagers.GetLogger("SceneAlamProxy");
     public static void GetSceneAlarmStateList(System.Action<string> sucesscallBack, List<string> sceneids)
     {
-        string strConnect = FormatUtil.ConnetString(sceneids, ",");
+        string parameter = FormatUtil.ConnetString(sceneids, ",");
         
-        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getSceneAlarm?ids=" + strConnect;
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getSceneAlarm?ids=" + parameter;
+        
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, null, sucesscallBack, (a) =>
