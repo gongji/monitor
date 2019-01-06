@@ -44,7 +44,7 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
 
     public string GetEventContet()
     {
-        return "事件的内容";
+        return GetComponentInChildren<InputField>().text;
     }
  
 }

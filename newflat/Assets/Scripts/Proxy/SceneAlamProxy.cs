@@ -14,7 +14,7 @@ public class SceneAlamProxy : MonoBehaviour {
     {
         string strConnect = FormatUtil.ConnetString(sceneids, ",");
         
-        string url = Config.parse("requestAddress") + "/monitoringPointEditor/isSceneAlarm?ids=" + strConnect;
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getSceneAlarm?ids=" + strConnect;
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, null, sucesscallBack, (a) =>

@@ -45,7 +45,9 @@ public  class NavigationUI:MonoBehaviour
             }
             GameObject cloneObject = GameObject.Instantiate(item);
             cloneObject.SetActive(true);
-            cloneObject.transform.parent.SetParent( parent.GetComponentInChildren<VerticalLayoutGroup>().transform);
+            // cloneObject.transform.parent.SetParent( parent.GetComponentInChildren<VerticalLayoutGroup>().transform);
+            cloneObject.transform.parent = parent.GetComponentInChildren<VerticalLayoutGroup>().transform;
+
             cloneObject.transform.localScale = Vector3.one;
             cloneObject.GetComponentInChildren<Text>().text = frontname + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
             cloneObject.GetComponentInChildren<Text>().fontSize = 15;

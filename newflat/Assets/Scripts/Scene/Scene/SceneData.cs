@@ -30,7 +30,7 @@ public static class SceneData {
         Scene3dProxy.GetAll3dObjectData((result) =>
         {
 
-           Debug.Log(result);
+          // Debug.Log(result);
             object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
           
             // Debug.Log(object3dList.Count);

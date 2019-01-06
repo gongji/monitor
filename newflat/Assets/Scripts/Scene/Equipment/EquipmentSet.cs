@@ -288,7 +288,7 @@ public sealed class EquipmentSet  {
                 if(list ==null || list.Count==0)
                 {
 
-                    Debug.Log("resultPostData="+ resultPostData);
+                    Debug.Log("equipmentState is data is null="+ resultPostData);
                     return;
                 }
                 foreach(EquipmentAlarmItem dataItem in list)

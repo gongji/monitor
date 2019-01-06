@@ -240,7 +240,7 @@ public class FloorRoomSet : BaseSet
             if(root!=null && root.GetComponent<TransformObject>()!=null)
             {
                 root.GetComponent<TransformObject>().Reset();
-                root.transform.position = root.GetComponent<TransformObject>().defaultPostion + Vector3.up * offestIndex * 100;
+                //root.transform.position = root.GetComponent<TransformObject>().defaultPostion + Vector3.up * offestIndex * 100;
             }
         }
         offestIndex++;
