@@ -16,12 +16,13 @@ public sealed class TestPointProxy
    /// <param name="callBack"></param>
     public static void GetTestPointData(string id,System.Action<List<EquipmentTestPoint>> callBack, System.Action failCallBack)
     {
-        string url = Config.parse("requestAddress") + "/GetTestPointData";
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/getPushEquipmentDataList?id="+ id;
 
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.GetRequest(url, (result)=> {
 
+              Debug.Log(result);
               List<EquipmentTestPoint> equipmentTestPointList = CollectionsConvert.ToObject<List<EquipmentTestPoint>>(result);
 
               callBack.Invoke(equipmentTestPointList);
@@ -32,9 +33,9 @@ public sealed class TestPointProxy
               {
                   failCallBack.Invoke();
               }
-              log.Error("http reqeust error GetTestPointData:url=" + url);
+              log.Error("http reqeust error getPushEquipmentDataList:url=" + url);
 
-              log.Error("http reqeust error GetTestPointData:" + a.ToString());
+              log.Error("http reqeust error getPushEquipmentDataList:" + a.ToString());
 
           }));
 
@@ -45,11 +46,13 @@ public sealed class TestPointProxy
    /// </summary>
     public static void GetControlPointList(string id,System.Action<string> successCallBack, System.Action failCallBack)
     {
-        string url = Config.parse("requestAddress") + "/GetControlPointList";
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/queryControlPointByequipment?id="+ id;
 
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.GetRequest(url, (result) => {
+
+              successCallBack.Invoke(result);
 
           }, (a) =>
           {
@@ -58,9 +61,9 @@ public sealed class TestPointProxy
                   failCallBack.Invoke();
               }
 
-              log.Error("http reqeust error GetControlPointList:url=" + url);
+              log.Error("http reqeust error queryControlPointByequipment:url=" + url);
 
-              log.Error("http reqeust error GetControlPointList:" + a.ToString());
+              log.Error("http reqeust error queryControlPointByequipment:" + a.ToString());
 
           }));
     }
@@ -72,7 +75,7 @@ public sealed class TestPointProxy
     /// <param name="success"></param>
     public static void IsExistContronTest(string id,System.Action<string> success, System.Action failCallBack)
     {
-        string url = Config.parse("requestAddress") + "/IsExistContronTest?id=" +id;
+        string url = Config.parse("requestAddress") + "/monitoringPointEditor/isExitsControlPointByequipment?id=" + id;
 
         HttpRequestSingle.Instance.StartCoroutine(
 

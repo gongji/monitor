@@ -10,11 +10,26 @@ public class FloorSceneAlarm : SceneAlarmBase
     }
     public override void Alarm()
     {
-        throw new System.NotImplementedException();
+        if(isAlarm)
+        {
+            return;
+        }
+
+
+        isAlarm = true;
+        //throw new System.NotImplementedException();
     }
 
     public override void Restore()
     {
-        throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
+
+        if (!isAlarm)
+        {
+            return;
+        }
+
+        isAlarm = false;
+
     }
 }

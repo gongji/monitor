@@ -2061,7 +2061,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Admin
+  m_Text: "\u8BF7\u9009\u62E9"
 --- !u!114 &114618698077742106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2238,7 +2238,7 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Admin
+    - m_Text: "\u8BF7\u9009\u62E9"
       m_Image: {fileID: 0}
     - m_Text: Option B
       m_Image: {fileID: 0}
@@ -3724,7 +3724,7 @@ RectTransform:
   m_GameObject: {fileID: 1415469568344812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 224097566696075338}
   - {fileID: 224913129910398240}

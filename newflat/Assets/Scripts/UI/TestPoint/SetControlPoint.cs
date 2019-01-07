@@ -47,6 +47,8 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     {
         TestPointProxy.GetControlPointList(id, (result) =>
         {
+            Debug.Log(result);
+
             List<EquipmentControlPointItem> ecps = Utils.CollectionsConvert.ToObject<List<EquipmentControlPointItem>>(result);
             SetDataSouce(ecps, equipmentName);
         },()=> {
@@ -87,7 +89,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         
         foreach(EquipmentControlPointItem ecp in ecps)
         {
-            string[] subItemTexts = new string[] { ecp.id, ecp.name, ecp.describe, "" };
+            string[] subItemTexts = new string[] { ecp.number.ToString(), ecp.number.ToString(), ecp.name, ecp.number.ToString() };
             ListViewItem _item = new ListViewItem(subItemTexts);
             listView.Items.Add(_item);
         }
@@ -111,8 +113,8 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     private  void SetColumWidth(ListView ListView)
     {
         ListView.Columns[0].Width = 50;
-        ListView.Columns[1].Width = 50;
-        ListView.Columns[2].Width = 200;
+        ListView.Columns[1].Width = 100;
+        ListView.Columns[2].Width = 100;
         ListView.Columns[3].Width = 200;
     }
 
@@ -121,8 +123,8 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         ListView.SuspendLayout();
         {
             AddColumnHeader(ListView, "选择");
+            AddColumnHeader(ListView, "编号");
             AddColumnHeader(ListView, "名称");
-            AddColumnHeader(ListView, "描述");
             AddColumnHeader(ListView, "设置");
         }
         ListView.ResumeLayout();

@@ -7,9 +7,8 @@ using UnityEngine;
 /// </summary>
 public class EquipmentControlPointItem
 {
-
     //测点编号
-    public string id;
+    public string number;
 
     //名称
     public string name;
@@ -21,10 +20,10 @@ public class EquipmentControlPointItem
     public int type = 0;
 
     //type=1 枚举类型时候，显示枚举的值。
-    public string[] values;
+    public string values;
 
     //描述
-    public string[] describes;
+    public string describes;
 
     //测点单位
     public string unit;

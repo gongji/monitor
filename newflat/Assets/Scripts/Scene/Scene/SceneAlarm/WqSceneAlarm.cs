@@ -13,6 +13,11 @@ public class WqSceneAlarm : SceneAlarmBase
     public override void Alarm()
     {
         //throw new System.NotImplementedException();
+        if(isAlarm)
+        {
+            return;
+        }
+        isAlarm = true;
         EffectionUtility.PlayOutlineEffect(transform, Color.white, Color.red);
 
     }
@@ -20,6 +25,11 @@ public class WqSceneAlarm : SceneAlarmBase
     public override void Restore()
     {
         // throw new System.NotImplementedException();
+        if(!isAlarm)
+        {
+            return;
+        }
+        isAlarm = false;
         EffectionUtility.StopOutlineEffect(transform);
 
     }

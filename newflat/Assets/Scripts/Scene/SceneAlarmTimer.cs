@@ -70,6 +70,8 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
                     if(SceneData.sceneAlarmDic.ContainsKey(item.id))
                     {
                         SceneAlarmBase sab = SceneData.sceneAlarmDic[item.id];
+
+                        //Debug.Log("sceneid:"+ item.id + ":state"+ item.state);
                         if(item.state == 1)
                         {
                             sab.Alarm();

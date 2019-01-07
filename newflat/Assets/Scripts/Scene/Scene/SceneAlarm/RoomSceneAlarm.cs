@@ -16,16 +16,26 @@ public class RoomSceneAlarm : SceneAlarmBase
     private GameObject alarmEffection = null;
     public override void Alarm()
     {
-        if(alarmEffection==null)
+        if (isAlarm)
+        {
+            return;
+        }
+        if (alarmEffection == null)
         {
             string url = Application.streamingAssetsPath + "/R/alarmeffection";
 
-            ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+            ResourceUtility.Instance.GetHttpAssetBundle(url, (result) =>
+            {
 
-                alarmEffection = result.LoadAsset<GameObject>("alarmeffection");
+                alarmEffection = GameObject.Instantiate(result.LoadAsset<GameObject>("alarmeffection"));
+                alarmEffection.transform.localEulerAngles = new Vector3(0, -90, 270);
+                SetAlarmPosition();
+
             });
         }
-        
+
+        isAlarm = true;
+
 
         //throw new System.NotImplementedException();
     }
@@ -33,6 +43,13 @@ public class RoomSceneAlarm : SceneAlarmBase
     public override void Restore()
     {
         // throw new System.NotImplementedException();
+
+        if (!isAlarm)
+        {
+            return;
+        }
+
+
         DestroyAlarmObject();
     }
 
@@ -42,12 +59,13 @@ public class RoomSceneAlarm : SceneAlarmBase
         {
             GameObject.DestroyImmediate(alarmEffection);
             alarmEffection = null;
+            isAlarm = false;
         }
     }
 
     private void OnEnable()
     {
-        
+
     }
 
     private void OnDisable()
@@ -57,15 +75,15 @@ public class RoomSceneAlarm : SceneAlarmBase
 
     private void SetAlarmPosition()
     {
-        Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(sceneId);
-        if(object3dItem!=null)
+       
+        GameObject box = FindObjUtility.GetTransformChildByName(transform, Constant.ColliderName);
+        box.GetComponent<BoxCollider>().enabled = true;
+        Bounds bounds = box.GetComponent<BoxCollider>().bounds;
+        if (box != null && bounds != null)
         {
-            GameObject box =  SceneUtility.GetSceneCollider(object3dItem.number);
-            if(box!=null && box.GetComponent<BoxCollider>().bounds!=null)
-            {
-                
-            }
+            alarmEffection.transform.position = bounds.center + box.transform.up * bounds.size.y;
         }
-        
+
+        box.GetComponent<BoxCollider>().enabled = false;
     }
 }

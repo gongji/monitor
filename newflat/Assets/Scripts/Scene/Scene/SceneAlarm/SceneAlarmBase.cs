@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class SceneAlarmBase : MonoBehaviour {
 
     public string sceneId = string.Empty;
+    [SerializeField]
     protected bool isAlarm = false;
     public virtual void Alarm() {
 

@@ -13,16 +13,20 @@ public class UserListUI : MonoBehaviour {
     {
         this.userList = userList;
         GetComponent<Dropdown>().options.Clear();
-        foreach(UserItem item in userList)
+        DropDownDataItem optiondata = new DropDownDataItem();
+        optiondata.id = "";
+        optiondata.text ="请选择";
+        GetComponent<Dropdown>().options.Add(optiondata);
+        foreach (UserItem item in userList)
         {
-            DropDownDataItem optiondata = new DropDownDataItem();
-            optiondata.id = item.userid;
+             optiondata = new DropDownDataItem();
+            optiondata.id = item.useId;
             optiondata.text = item.userName;
             GetComponent<Dropdown>().options.Add(optiondata);
         }
     }
 
-    private string selectUserId = "testPerson"; 
+    private string selectUserId = ""; 
 
     public string SelectUserId
     {
@@ -34,10 +38,18 @@ public class UserListUI : MonoBehaviour {
     public void ChangeSelect()
     {
         int index = GetComponent<Dropdown>().value;
-        if(userList!=null && userList.Count>0)
+        if(index==0)
         {
-            selectUserId = userList[index].userid;
+            selectUserId = "";
+            return;
         }
+        if(userList!=null && userList.Count>1)
+        {
+           
+            selectUserId = userList[index+1].useId;
+        }
+
+        Debug.Log("selectUserId="+ selectUserId);
     }
 }
 
@@ -51,5 +63,5 @@ public class UserItem
 {
     public string userName;
 
-    public string userid;
+    public string useId;
 }

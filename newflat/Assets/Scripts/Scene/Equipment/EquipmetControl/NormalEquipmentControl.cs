@@ -150,13 +150,16 @@ public class NormalEquipmentControl :BaseEquipmentControl {
     public override void OnMouseClick() {
         TestPointProxy.IsExistContronTest(equipmentItem.id, (result) => {
 
+            //没有控制点
             if (result.Equals("0"))
             {
-
+                ShowTestPoint.Instance.Show(equipmentItem.name, equipmentItem.id);
             }
             else
             {
-                ShowTestPoint.Instance.Show(equipmentItem.name, equipmentItem.id);
+                testPointMenu = TransformControlUtility.CreateItem("equipment/EquipmentShowMenu", UIUtility.GetRootCanvas());
+                testPointMenu.GetComponent<EquipmentShowMenu>().equipmentId = equipmentItem.id;
+                testPointMenu.GetComponent<EquipmentShowMenu>().equipmentName = equipmentItem.name;
             }
 
         }, () => {
