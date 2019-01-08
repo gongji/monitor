@@ -11,7 +11,7 @@ public class EquipmentControlPointItem
     public string number;
 
     //被控制点编号
-    public string unNumber;
+    public string unnumber;
     //名称
     public string name;
 
