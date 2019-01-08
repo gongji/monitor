@@ -157,7 +157,7 @@ public sealed  class EffectionUtility  {
 
     #region mulitMaterial
 
-    public static void PlayMulitMaterialEffect(Transform selectingObjectTransform, Color fromColor, Color toColor)
+    public static void PlayMulitMaterialEffect(Transform selectingObjectTransform, Color toColor)
     {
 
         MultiMaterialTweenColor tweenColor = selectingObjectTransform.GetComponent<MultiMaterialTweenColor>();
@@ -165,7 +165,7 @@ public sealed  class EffectionUtility  {
         {
             tweenColor = selectingObjectTransform.gameObject.AddComponent<MultiMaterialTweenColor>();
         }
-        tweenColor.to = new Color32(140, 0, 0, 150);
+        tweenColor.to = toColor;
         tweenColor.style = UITweener.Style.PingPong;
         tweenColor.duration = 0.5f;
         tweenColor.Play(true);

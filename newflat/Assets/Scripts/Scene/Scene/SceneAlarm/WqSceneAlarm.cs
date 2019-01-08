@@ -18,7 +18,7 @@ public class WqSceneAlarm : SceneAlarmBase
             return;
         }
         isAlarm = true;
-        EffectionUtility.PlayOutlineEffect(transform, Color.white, Color.red);
+        EffectionUtility.PlayMulitMaterialEffect(transform, Color.red);
 
     }
 
@@ -30,7 +30,7 @@ public class WqSceneAlarm : SceneAlarmBase
             return;
         }
         isAlarm = false;
-        EffectionUtility.StopOutlineEffect(transform);
+        EffectionUtility.StopMulitMaterialEffect(transform);
 
     }
 

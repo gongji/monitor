@@ -20,7 +20,7 @@ public  class LouShuiControl : BaseEquipmentControl {
     public void LouShuiAlarm(int state, int segments)
     {
         Alarm(state);
-        SetSegmentsAlarm(segments);
+        //SetSegmentsAlarm(segments);
     }
 
     public override void CancleAlarm()
@@ -31,7 +31,8 @@ public  class LouShuiControl : BaseEquipmentControl {
 
     public override void ExeAnimation(string name, bool isExe)
     {
-       // throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
+        SetSegmentsAlarm(name, isExe);
     }
 
 
@@ -105,13 +106,44 @@ public  class LouShuiControl : BaseEquipmentControl {
 
     private Tweener tweener = null;
     private int alarmIndex = -1;
-    private void SetSegmentsAlarm(int i,bool IsExe = false)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name">index</param>
+    /// <param name="IsExe">run</param>
+    private void SetSegmentsAlarm(string name,bool IsExe = false)
     {
-        StopDotween();
-        ResetAll();
-        tweener = transform.Find(i.ToString()).GetComponent<LineRenderer>().material.DOColor(Color.red, 1.0f);
-        tweener.SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
-     
+        //StopDotween();
+        //ResetAll();
+        //tweener = transform.Find(i.ToString()).GetComponent<LineRenderer>().material.DOColor(Color.red, 1.0f);
+        //tweener.SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+        Transform target = transform.Find(name);
+        if(target != null)
+        {
+            TweenColor tweenColor = UITweener.Begin<TweenColor>(target.gameObject, 0.5f);
+          
+            if (IsExe)
+            {
+                tweenColor.style = UITweener.Style.PingPong;
+                tweenColor.from = originalColor;
+                tweenColor.to = Color.red;
+                tweenColor.Play(true);
+            }
+            else
+            {
+                tweenColor.style = UITweener.Style.Once;
+                tweenColor.from = Color.red;
+                tweenColor.to = originalColor;
+                tweenColor.Play(true);
+            }
+
+        }
+
+        
+        
+
+
+
     }
     private void StopDotween()
     {

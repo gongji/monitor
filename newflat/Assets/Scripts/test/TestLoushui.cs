@@ -21,16 +21,20 @@ public class TestLoushui : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.B))
         {
-            GetComponent<LouShuiControl>().Alarm(1);
+            GetComponent<LouShuiControl>().ExeAnimation("1", true);
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            GetComponent<LouShuiControl>().Alarm(2);
+            GetComponent<LouShuiControl>().ExeAnimation("2", true);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            GetComponent<LouShuiControl>().CancleAlarm();
+            GetComponent<LouShuiControl>().ExeAnimation("1", false);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GetComponent<LouShuiControl>().ExeAnimation("3", true);
         }
 
 
