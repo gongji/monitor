@@ -140,7 +140,7 @@ public static class SceneParse  {
                     {
                         SetBoxDisable(roomcolliderGameObject);
                     }
-                    roomt.gameObject.AddComponent<RoomSceneAlarm>();
+                    roomt.gameObject.AddComponent<FloorRoomSceneAlarm>();
                 }
                
 

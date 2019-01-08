@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 楼层房间报警处理
 /// </summary>
-public class FloorRoomAlarm : SceneAlarmBase
+public class FloorRoomSceneAlarm : SceneAlarmBase
 {
 
     private void Start()
