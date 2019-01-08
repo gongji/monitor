@@ -86,7 +86,7 @@ public  class LouShuiControl : BaseEquipmentControl {
             foreach(string str in segments)
             {
                 string[] _postions = str.Split(',');
-                
+              
                 Vector3  postion = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
                 lineRenderpostions.Add(postion);
             }

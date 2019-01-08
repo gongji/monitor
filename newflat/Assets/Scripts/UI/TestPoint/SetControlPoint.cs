@@ -89,7 +89,12 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         
         foreach(EquipmentControlPointItem ecp in ecps)
         {
-            string[] subItemTexts = new string[] { ecp.number.ToString(), ecp.number.ToString(), ecp.name, ecp.number.ToString() };
+            string note = "";
+            if(ecp.type.Equals("2"))
+            {
+                note = "范围：" + ecp.StartValue + "-" + ecp.StartValue;
+            }
+            string[] subItemTexts = new string[] { ecp.number.ToString(), ecp.number.ToString(), ecp.name, ecp.number.ToString(), note };
             ListViewItem _item = new ListViewItem(subItemTexts);
             listView.Items.Add(_item);
         }
@@ -115,7 +120,8 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         ListView.Columns[0].Width = 50;
         ListView.Columns[1].Width = 100;
         ListView.Columns[2].Width = 100;
-        ListView.Columns[3].Width = 200;
+        ListView.Columns[3].Width = 100;
+        ListView.Columns[3].Width = 100;
     }
 
     private  void AddColumns(ListView ListView)
@@ -126,6 +132,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
             AddColumnHeader(ListView, "编号");
             AddColumnHeader(ListView, "名称");
             AddColumnHeader(ListView, "设置");
+            AddColumnHeader(ListView, "描述");
         }
         ListView.ResumeLayout();
     }
