@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FlyingTextMsg : MonoBehaviour
-{
-
+{ 
     public static FlyingTextMsg instance;
     void Awake()
     {
@@ -14,16 +13,10 @@ public class FlyingTextMsg : MonoBehaviour
         // LoadFontAsset();
         LoadPrefeb();
     }
-    void Start()
-    {
-
-
-
-    }
 
     public void LoadFontAsset()
     {
-        string url = Application.streamingAssetsPath + "/Text/microsoftyaheigb";
+        string url = Application.streamingAssetsPath + "/" + PlatformMsg.instance.currentPlatform.ToString() + "/Text/microsoftyaheigb";
         ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
            
             TextAsset fontAsset = result.LoadAsset("microsoftyaheigb") as TextAsset;
@@ -50,7 +43,7 @@ public class FlyingTextMsg : MonoBehaviour
 
     public void LoadMaterial()
     {
-        string url = Application.streamingAssetsPath + "/Text/Material/text";
+        string url = Application.streamingAssetsPath + "/" + PlatformMsg.instance.currentPlatform.ToString() + "/Text/Material/text";
         ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
             Material m = result.LoadAsset("text") as Material;
             GetComponent<FlyingText>().m_defaultMaterial = m;
@@ -61,7 +54,7 @@ public class FlyingTextMsg : MonoBehaviour
 
     private void LoadPrefeb()
     {
-        string url = Application.streamingAssetsPath + "/Text/FlyingText.unity3d";
+        string url = Application.streamingAssetsPath +  "/"+ PlatformMsg.instance.currentPlatform.ToString()+ "/Text/FlyingText.unity3d";
         ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
 
             GameObject g =  (GameObject)GameObject.Instantiate(result.mainAsset);

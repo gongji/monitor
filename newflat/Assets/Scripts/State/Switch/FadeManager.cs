@@ -17,7 +17,6 @@ public class FadeManager : MonoBehaviour {
         Instance = this;
 
     }
-
     private void Start()
     {
         //string path = Application.streamingAssetsPath + "/UI/fadebg.png";
@@ -30,7 +29,7 @@ public class FadeManager : MonoBehaviour {
         DOVirtual.DelayedCall(8f, () =>
         {
             effects = new System.Collections.Generic.List<FadeEffect>();
-            string path = Application.streamingAssetsPath + "/prefeb/fade";
+            string path = Application.streamingAssetsPath + "/"+PlatformMsg.instance.currentPlatform.ToString()+ "/prefeb/fade";
             ResourceUtility.Instance.GetHttpAssetBundle(path, (bundle) => {
 
                 string[] names = bundle.GetAllAssetNames();

@@ -11,27 +11,28 @@ public class Test : MonoBehaviour {
     public Transform t1 = null;
     void Start() {
 
-  
-        List<AA> lists = new List<AA>();
 
-        AA aa = new AA("11", "12");
-        lists.Add(aa);
+        Debug.Log(PlatformMsg.instance.currentPlatform);
+        //List<AA> lists = new List<AA>();
 
-        aa = new AA("22", "23");
-        lists.Add(aa);
+        //AA aa = new AA("11", "12");
+        //lists.Add(aa);
 
-        var list = from n in lists
-        select new BB
-        {
-            BB1 = n.AA1,
-            BB2 = n.AA2
+        //aa = new AA("22", "23");
+        //lists.Add(aa);
 
-        };
+        //var list = from n in lists
+        //select new BB
+        //{
+        //    BB1 = n.AA1,
+        //    BB2 = n.AA2
 
-        foreach(var item in list)
-        {
-            Debug.Log(item.BB1);
-        }
+        //};
+
+        //foreach(var item in list)
+        //{
+        //    Debug.Log(item.BB1);
+        //}
    
 
         //List<SceneAlarmItem> sai = new List<SceneAlarmItem>();

@@ -10,6 +10,8 @@ public class EquipmentControlPointItem
     //测点编号
     public string number;
 
+    //被控制点编号
+    public string unNumber;
     //名称
     public string name;
 

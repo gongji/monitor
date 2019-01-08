@@ -22,11 +22,10 @@ public class FloorRoomSceneAlarm : SceneAlarmBase
         }
         if (alarmEffection == null)
         {
-            string url = Application.streamingAssetsPath + "/R/alarmeffection";
+            string url = Application.streamingAssetsPath + "/"+ PlatformMsg.instance.currentPlatform.ToString()+ "/R/alarmeffection";
 
             ResourceUtility.Instance.GetHttpAssetBundle(url, (result) =>
             {
-
                 alarmEffection = GameObject.Instantiate(result.LoadAsset<GameObject>("alarmeffection"));
                 alarmEffection.transform.localEulerAngles = new Vector3(0, -90, 270);
                 SetAlarmPosition();

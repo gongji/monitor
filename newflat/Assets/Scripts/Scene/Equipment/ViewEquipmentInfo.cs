@@ -98,11 +98,8 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
         {
 
             string url = string.Empty;
-#if UNITY_EDITOR
-            url = "file://" + Application.dataPath + "/StreamingAssets/R/selecteffect";
-#else
-                    url = Application.dataPath + "/StreamingAssets/R/selecteffect";
-#endif
+
+            url = Application.streamingAssetsPath + "/" + PlatformMsg.instance.currentPlatform.ToString() + "R/selecteffect";
             ResourceUtility.Instance.GetHttpAssetBundle(url, (bundle) =>
             {
                 selectEffection = GameObject.Instantiate(bundle.LoadAsset<GameObject>("selecteffect"));
