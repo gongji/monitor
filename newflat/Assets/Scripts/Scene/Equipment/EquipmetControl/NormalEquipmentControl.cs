@@ -178,6 +178,6 @@ public class NormalEquipmentControl :BaseEquipmentControl {
 
     public override void ExeAnimation(string name, bool isExe)
     {
-       // throw new System.NotImplementedException();
+        GetComponent<Animator>().SetTrigger(name);
     }
 }

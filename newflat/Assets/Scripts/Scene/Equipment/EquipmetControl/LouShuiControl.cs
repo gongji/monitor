@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public  class LouShuiControl : BaseEquipmentControl {
+public  class LouShuiControl : EquipmentChildControl
+{
 
     void Start()
     {
@@ -29,13 +30,6 @@ public  class LouShuiControl : BaseEquipmentControl {
         ResetAll();
     }
 
-    public override void ExeAnimation(string name, bool isExe)
-    {
-        // throw new System.NotImplementedException();
-        SetSegmentsAlarm(name, isExe);
-    }
-
-
     public override void OnMouseClick()
     {
        // base.OnMouseClick();
@@ -57,7 +51,6 @@ public  class LouShuiControl : BaseEquipmentControl {
     private string data;
 
     private Color color;
-    private Color originalColor = Color.white;
     /// <summary>
     /// 漏水绳的数据格式25.5，,5,5,7.8|14.1.36.9.58.7
     /// </summary>
@@ -75,8 +68,8 @@ public  class LouShuiControl : BaseEquipmentControl {
         }
        
         material = Resources.Load<Material>("equipment/linerender");
-        originalColor = material.color;
 
+        originalColor = material.color;
         string[] postions = data.Split('|');
 
         for(int i=0;i< postions.Length;i++)
@@ -106,45 +99,7 @@ public  class LouShuiControl : BaseEquipmentControl {
 
     private Tweener tweener = null;
     private int alarmIndex = -1;
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="name">index</param>
-    /// <param name="IsExe">run</param>
-    private void SetSegmentsAlarm(string name,bool IsExe = false)
-    {
-        //StopDotween();
-        //ResetAll();
-        //tweener = transform.Find(i.ToString()).GetComponent<LineRenderer>().material.DOColor(Color.red, 1.0f);
-        //tweener.SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
-        Transform target = transform.Find(name);
-        if(target != null)
-        {
-            TweenColor tweenColor = UITweener.Begin<TweenColor>(target.gameObject, 0.5f);
-          
-            if (IsExe)
-            {
-                tweenColor.style = UITweener.Style.PingPong;
-                tweenColor.from = originalColor;
-                tweenColor.to = Color.red;
-                tweenColor.Play(true);
-            }
-            else
-            {
-                tweenColor.style = UITweener.Style.Once;
-                tweenColor.from = Color.red;
-                tweenColor.to = originalColor;
-                tweenColor.Play(true);
-            }
-
-        }
-
-        
-        
-
-
-
-    }
+   
     private void StopDotween()
     {
         if(tweener!=null)
