@@ -327,16 +327,17 @@ public class CameraObjectController : MonoBehaviour
 
         if (EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())
         {
+            Disable();
             isHoverUI = true;
         }
         else
         {
+            Enable();
             isHoverUI = false;
         }
 
         if ((m_nFlags & DISENABLE_STATE) != 0)
         {
-            //Debug.Log("disable");
             return;
         }
            
@@ -346,8 +347,11 @@ public class CameraObjectController : MonoBehaviour
 
         if (!isHoverUI)
         {
+            //Debug.Log("bbbbbbbbbbbbbbbb");
             this.HandleInput();
         }
+        
+        
        
         //// 视角
         //if (input.GetViewButton())
@@ -356,11 +360,17 @@ public class CameraObjectController : MonoBehaviour
         //Move();
     }
 
-  
+
+    private bool isEnable = true;
 
     public void Enable()
     {
+        if(isEnable)
+        {
+            return;
+        }
         m_nFlags = 0;
+        isEnable = true;
     }
 
     public void SetEnable(bool isEnable)
@@ -377,8 +387,16 @@ public class CameraObjectController : MonoBehaviour
 
     public void Disable()
     {
+        if (!isEnable)
+        {
+            return;
+        }
+
         m_nFlags = 0;
         m_nFlags |= DISENABLE_STATE;
+
+        isEnable = false;
+
     }
 
     protected void HandleInput()
