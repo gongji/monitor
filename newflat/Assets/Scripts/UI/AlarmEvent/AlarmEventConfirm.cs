@@ -35,14 +35,14 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
                 return;
             }
             List<UserItem> itemList = Utils.CollectionsConvert.ToObject<List<UserItem>>(result);
-            GetComponentInChildren<UserListUI>().InitData(itemList);
+            GetComponentInChildren<DropDonwListUI>().InitData(itemList);
 
         });
     }
 
     public void ConfirmButton()
     {
-        if(string.IsNullOrEmpty(GetComponentInChildren<UserListUI>().SelectUserId))
+        if(string.IsNullOrEmpty(GetComponentInChildren<DropDonwListUI>().SelectId))
         {
             UIUtility.ShowTips("维修人不能为空");
             return;
@@ -58,7 +58,7 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
             
 
 
-            callBack.Invoke(aei, GetComponentInChildren<UserListUI>().SelectUserId, eventContent);
+            callBack.Invoke(aei, GetComponentInChildren<DropDonwListUI>().SelectId, eventContent);
             Hide();
         }
     }

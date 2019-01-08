@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 获取维修人列表
 /// </summary>
-public class UserListUI : MonoBehaviour {
+public class DropDonwListUI : MonoBehaviour {
 
     private List<UserItem> userList;
     public void InitData(List<UserItem> userList)
@@ -26,13 +26,13 @@ public class UserListUI : MonoBehaviour {
         }
     }
 
-    private string selectUserId = ""; 
+    private string selecId = ""; 
 
-    public string SelectUserId
+    public string SelectId
     {
         get
         {
-            return selectUserId;
+            return selecId;
         }
     }
     public void ChangeSelect()
@@ -40,16 +40,16 @@ public class UserListUI : MonoBehaviour {
         int index = GetComponent<Dropdown>().value;
         if(index==0)
         {
-            selectUserId = "";
+            selecId = "";
             return;
         }
         if(userList!=null && userList.Count>1)
         {
-           
-            selectUserId = userList[index+1].useId;
+
+            selecId = userList[index+1].useId;
         }
 
-        Debug.Log("selectUserId="+ selectUserId);
+        Debug.Log("selectId="+ selecId);
     }
 }
 
@@ -58,10 +58,3 @@ public class DropDownDataItem: Dropdown.OptionData
     public string id;
 }
 
-
-public class UserItem
-{
-    public string userName;
-
-    public string useId;
-}

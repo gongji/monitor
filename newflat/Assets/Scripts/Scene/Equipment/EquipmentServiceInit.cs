@@ -31,11 +31,8 @@ public sealed class EquipmentServiceInit
     /// </summary>
     private static void SetEquipmentAlarmInitState(List<string> ids)
     {
-      
-
         if (ids.Count > 0)
         {
-
             string resultPostData = FormatUtil.ConnetString(ids, ",");
 
             Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
@@ -68,11 +65,16 @@ public sealed class EquipmentServiceInit
     /// <param name="ids"></param>
     private static void SetEquipmentAnimationInitState(List<string> ids)
     {
+        Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
         if (ids.Count > 0)
         {
             EquipmentAnimationProxy.GetAlarmEquipmentList((result) => {
 
-
+                List<EquipmentAnimationItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAnimationItem>>(result);
+                foreach(EquipmentAnimationItem item in list)
+                {
+                    AnimationCommand.ExecuteAnimation(item);
+                }
 
             }, ids);
 
