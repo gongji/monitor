@@ -31,11 +31,13 @@ public class BimMsg : MonoBehaviour {
         if (GetComponent<Toggle>().isOn && !bomGameObject)
         {
             bomGameObject = TransformControlUtility.CreateItem("UI/Bom", UIUtility.GetRootCanvas());
-             Vector3 v=  GetComponent<RectTransform>().anchoredPosition3D;
-          // Vector2 uiPostion  = UIUtility.WorldToUI(transform.position, Camera.main);
-          
-            bomGameObject.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(v.x, v.y-20, v.z);
-           
+            bomGameObject.transform.SetParent(transform);
+            bomGameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -20);
+            // Vector3 v=  GetComponent<RectTransform>().anchoredPosition3D;
+            // Vector2 uiPostion  = UIUtility.WorldToUI(transform.position, Camera.main);
+
+            // bomGameObject.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(v.x, v.y-20, v.z);
+
         }
         else
         {

@@ -44,7 +44,8 @@ public static class GuanWangMsg
                 if(isShow && root.GetComponent<TransformObject>()!=null)
                 {
                     //Debug.Log("管网显示");
-                    root.transform.position = root.GetComponent<TransformObject>().defaultPostion + Vector3.up * (SceneContext.offestIndex-1) * 100;
+                    // root.transform.position = root.GetComponent<TransformObject>().defaultPostion + Vector3.up * (SceneContext.offestIndex-1) * 100;
+                    root.transform.position = root.GetComponent<TransformObject>().defaultPostion;
                 }
             }
 
