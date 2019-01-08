@@ -3,27 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// 获取维修人列表
-/// </summary>
 public class DropDonwListUI : MonoBehaviour {
 
-    private List<UserItem> userList;
-    public void InitData(List<UserItem> userList)
+    private List<DropDownItem> dropDownList;
+    public void InitData(List<DropDownItem> dropDownList)
     {
-        this.userList = userList;
+        this.dropDownList = dropDownList;
         GetComponent<Dropdown>().options.Clear();
         DropDownDataItem optiondata = new DropDownDataItem();
         optiondata.id = "";
         optiondata.text ="请选择";
         GetComponent<Dropdown>().options.Add(optiondata);
-        foreach (UserItem item in userList)
+        foreach (DropDownItem item in dropDownList)
         {
              optiondata = new DropDownDataItem();
-            optiondata.id = item.useId;
-            optiondata.text = item.userName;
+            optiondata.id = item.id;
+            optiondata.text = item.name;
             GetComponent<Dropdown>().options.Add(optiondata);
         }
+        dropDownList.Insert(0, null);
     }
 
     private string selecId = ""; 
@@ -38,18 +36,20 @@ public class DropDonwListUI : MonoBehaviour {
     public void ChangeSelect()
     {
         int index = GetComponent<Dropdown>().value;
+        //Debug.Log("index="+ index);
         if(index==0)
         {
+           // Debug.Log("select");
             selecId = "";
             return;
         }
-        if(userList!=null && userList.Count>1)
+        if(dropDownList != null && dropDownList.Count>1)
         {
 
-            selecId = userList[index+1].useId;
+            selecId = dropDownList[index].id;
         }
 
-        Debug.Log("selectId="+ selecId);
+      //  Debug.Log("selectId="+ selecId);
     }
 }
 

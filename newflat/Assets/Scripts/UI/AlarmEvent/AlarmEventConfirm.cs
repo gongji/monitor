@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using animation;
 using DG.Tweening;
 using Core.Common.Logging;
+using System.Linq;
 
 public  class AlarmEventConfirm: AlarmEventWindowBase
 {
@@ -35,7 +36,17 @@ public  class AlarmEventConfirm: AlarmEventWindowBase
                 return;
             }
             List<UserItem> itemList = Utils.CollectionsConvert.ToObject<List<UserItem>>(result);
-            GetComponentInChildren<DropDonwListUI>().InitData(itemList);
+
+            var dropItemList = from n in itemList
+                           select new DropDownItem
+                           {
+                               id = n.useId,
+                               name = n.userName
+
+                           };
+
+           
+            GetComponentInChildren<DropDonwListUI>().InitData(dropItemList.ToList<DropDownItem>());
 
         });
     }

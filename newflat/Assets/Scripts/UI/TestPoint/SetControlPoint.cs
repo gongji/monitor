@@ -11,6 +11,9 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     private  GameObject Init()
     {
         GameObject grid = GameObject.Instantiate(Resources.Load<GameObject>("Grid/Control/ControlPoint"));
+
+        grid.transform.Find("Set").GetComponent<Button>().onClick.AddListener(SubmitSetData);
+        grid.transform.Find("Title/close").GetComponent<Button>().onClick.AddListener(CloseWindow);
         grid.transform.SetParent(UIUtility.GetRootCanvas());
         grid.transform.localScale = Vector3.zero;
         grid.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
@@ -20,8 +23,9 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
 
         return grid;
     }
-    
-    private  string HorizontalScrollBarName = "HorizontalScrollBar";
+
+   
+    private string HorizontalScrollBarName = "HorizontalScrollBar";
     private  void HideHorizontalScrollBar()
     {
         if(grid!=null)
@@ -70,7 +74,6 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         MaskManager.Instance.Show();
         //实例化
         grid = Init();
-        grid.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
         CreateTitle(equipmentName);
         listView = grid.GetComponentInChildren<ListView>();
         listView.ItemBecameVisible += OnItemBecameVisible;
@@ -90,12 +93,13 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         foreach(EquipmentControlPointItem ecp in ecps)
         {
             string note = "";
-            if(ecp.type.Equals("2"))
+            if(ecp.type==2)
             {
-                note = "范围：" + ecp.StartValue + "-" + ecp.StartValue;
+                note = "范围：" + ecp.StartValue + "-" + ecp.endValue;
             }
-            string[] subItemTexts = new string[] { ecp.number.ToString(), ecp.number.ToString(), ecp.name, ecp.number.ToString(), note };
+            string[] subItemTexts = new string[] { ecp.number.ToString(), ecp.name, ecp.number.ToString(),note, "" };
             ListViewItem _item = new ListViewItem(subItemTexts);
+            _item.Tag = ecp;
             listView.Items.Add(_item);
         }
         HideHorizontalScrollBar();
@@ -121,7 +125,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         ListView.Columns[1].Width = 100;
         ListView.Columns[2].Width = 100;
         ListView.Columns[3].Width = 100;
-        ListView.Columns[3].Width = 100;
+        ListView.Columns[4].Width = 145;
     }
 
     private  void AddColumns(ListView ListView)
@@ -129,10 +133,10 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         ListView.SuspendLayout();
         {
             AddColumnHeader(ListView, "选择");
-            AddColumnHeader(ListView, "编号");
             AddColumnHeader(ListView, "名称");
-            AddColumnHeader(ListView, "设置");
+            AddColumnHeader(ListView, "编号");
             AddColumnHeader(ListView, "描述");
+            AddColumnHeader(ListView, "设置");
         }
         ListView.ResumeLayout();
     }
@@ -142,12 +146,52 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         var confirmItem = item.SubItems[0];
         GameObject Check = GameObject.Instantiate(Resources.Load("Grid/Control/Check")) as GameObject;
         confirmItem.CustomControl = Check.transform as RectTransform;
-        
-        //Create locate 按钮
-        var input = item.SubItems[3];
-        GameObject inputButton = GameObject.Instantiate(Resources.Load("Grid/Control/Input")) as GameObject;
-        input.CustomControl = inputButton.transform as RectTransform;
+
+        var setUI = item.SubItems[4];
+        EquipmentControlPointItem ecp = item.Tag as EquipmentControlPointItem;
+        GameObject target = null;
+        //输入型
+        if(ecp.type != 1)
+        {
+            target = GameObject.Instantiate(Resources.Load("Grid/Control/Input")) as GameObject;
+            //字符串
+            if(ecp.type == 0)
+            {
+                target.GetComponent<TMPro.TMP_InputField>().characterValidation = TMP_InputField.CharacterValidation.Name;
+            }
+            else
+            {
+                target.GetComponent<TMPro.TMP_InputField>().characterValidation = TMP_InputField.CharacterValidation.Decimal;
+            }
+           
+        }
+        //枚举类型
+        else
+        {
+            target = GameObject.Instantiate(Resources.Load("UI/DropDownList")) as GameObject;
+            SetDropDownListDataSource(target.GetComponent<DropDonwListUI>(), ecp);
+        }
        
+        setUI.CustomControl = target.transform as RectTransform;
+       
+    }
+
+    private void SetDropDownListDataSource(DropDonwListUI dorpUI, EquipmentControlPointItem ecp)
+    {
+        string values = ecp.values;
+        string[] valueArray = ecp.values.Split(',');
+        string describe = ecp.describes;
+
+        string[] describeArray = ecp.describes.Split(',');
+        List<DropDownItem> dropDownList = new List<DropDownItem>();
+        for(int i=0;i< valueArray.Length;i++)
+        {
+            DropDownItem item = new DropDownItem();
+            item.id = valueArray[i];
+            item.name = describeArray[i];
+            dropDownList.Add(item);
+        }
+        dorpUI.InitData(dropDownList);
     }
 
 
@@ -157,7 +201,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         GameObject CheckItemGameObject = Check.CustomControl.gameObject;
 
 
-        var inputItem = item.SubItems[3];
+        var inputItem = item.SubItems[4];
         GameObject inputItemGameObject = inputItem.CustomControl.gameObject;
 
         GameObject.Destroy(CheckItemGameObject);
@@ -165,12 +209,14 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     }
 
     /// <summary>
-    /// 获取数据
+    /// S0-C0-E0-S0-VA | S0-C0-E0-R0 & aaaaa & 度 & admin & 2019-01-08 11:11:11
     /// </summary>
-    public  void GetSelectData()
+    public void SubmitSetData()
     {
         ListView.ListViewItemCollection list = listView.Items;
-        Debug.Log(list.Count);
+
+
+        List<string> result = new List<string>();
         for(int i=0;i< list.Count;i++)
         {
             ListViewItem item = list[i];
@@ -178,14 +224,64 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
             GameObject CheckItemGameObject = Check.CustomControl.gameObject;
             if (CheckItemGameObject.GetComponent<Toggle>().isOn)
             {
-                var input = item.SubItems[3];
-                GameObject inputItemGameObject = input.CustomControl.gameObject;
-                string content = inputItemGameObject.GetComponent<TMP_InputField>().text;
-                //Debug.Log(content);
+                var setUI = item.SubItems[4];
+                GameObject inputItemGameObject = setUI.CustomControl.gameObject;
+                EquipmentControlPointItem ecp = item.Tag as EquipmentControlPointItem;
+                string inputValue = string.Empty;
+                //输入型
+                if(ecp.type!=1)
+                {
+                    inputValue = inputItemGameObject.GetComponent<TMP_InputField>().text;
+
+                    if(string.IsNullOrEmpty(inputValue))
+                    {
+                        continue;
+                    }
+                    //数据范围检测
+                    if(ecp.type ==2)
+                    {
+                        bool isCheck = CheckRange(inputValue, ecp.StartValue, ecp.endValue);
+                        if (!isCheck)
+                        {
+                            continue;
+                        }
+                    }
+                }
+                //枚举类型
+                else
+                {
+                    inputValue = inputItemGameObject.GetComponent<DropDonwListUI>().SelectId;
+                    //please select
+                    if (string.IsNullOrEmpty(inputValue))
+                    {
+                        continue;
+                    }
+
+
+                }
+
+               
+                string str = ecp.number + "|" + ecp.unnumber + "&" + inputValue + "& " + ecp.unit + "&" + "admin" + "&" + TimeUtility.FormatCurrentDate();
+                Debug.Log(str);
+                result.Add(str);
             }
         }
+
+        ///Debug.Log(FormatUtil.ConnetString(result,","));
+        WebsocjetService.Instance.SendData(FormatUtil.ConnetString(result, ","));
     }
 
+
+    private bool CheckRange(string inputValue,float minValue, float maxValue)
+    {
+        if(float.Parse( inputValue)>= minValue && float.Parse(inputValue) <= maxValue)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
 
     private  void AddColumnHeader(ListView ListView, string title)
     {
@@ -222,7 +318,6 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
 
     bool IEventListener.HandleEvent(string eventName, IDictionary<string, object> dictionary)
     {
-        //throw new System.NotImplementedException();
         if(eventName.Equals(EventName.DeleteObject))
         {
             DestryGrid();

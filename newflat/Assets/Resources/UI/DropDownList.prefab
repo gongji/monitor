@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 114122997549872758}
   - component: {fileID: 114785981098968370}
   m_Layer: 5
-  m_Name: UserList
+  m_Name: DropDownList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

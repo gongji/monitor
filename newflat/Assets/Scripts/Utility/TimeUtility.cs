@@ -199,13 +199,13 @@ public class TimeUtility
     }
 
     /// <summary>
-    /// 格式化为年-月-日
+    /// 格式化当前的日期
     /// </summary>
     /// <param name="stamp"></param>
     /// <returns></returns>
-    public static string formatDate(string stamp)
+    public static string FormatCurrentDate()
     {
-        DateTime time = StampToTime(stamp);
+        DateTime time = System.DateTime.Now;
 
         return time.Year.ToString() + "-" +
              time.Month.ToString() + "-" +
