@@ -8,8 +8,10 @@ public  class LouShuiControl : BaseEquipmentControl {
 
     void Start()
     {
-        equipmentItem = GetComponent<Object3DElement>().equipmentData;
-        
+        if(GetComponent<Object3DElement>()!=null)
+        {
+            equipmentItem = GetComponent<Object3DElement>().equipmentData;
+        }
     }
     public override void Alarm(int state=0)
     {
@@ -66,28 +68,32 @@ public  class LouShuiControl : BaseEquipmentControl {
         {
             loushuiLine = Resources.Load("equipment/loushui");
         }
-
+       
         material = Resources.Load<Material>("equipment/linerender");
         originalColor = material.color;
 
         string[] postions = data.Split('|');
 
-        for(int i=1;i< postions.Length;i++)
+        for(int i=0;i< postions.Length;i++)
         {
             GameObject lineRender = (GameObject)GameObject.Instantiate(loushuiLine);
             lineRender.GetComponent<LineRenderer>().startWidth = 0.1f;
             lineRender.GetComponent<LineRenderer>().endWidth = 0.1f;
             lineRender.GetComponent<LineRenderer>().useWorldSpace = false;
-            string[] _postions = postions[i - 1].Split(',');
+            string[] segments = postions[i].Split('&');
+
+            List<Vector3> lineRenderpostions = new List<Vector3>();
+            foreach(string str in segments)
+            {
+                string[] _postions = str.Split(',');
+                
+                Vector3  postion = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
+                lineRenderpostions.Add(postion);
+            }
             lineRender.transform.SetParent(transform);
-            lineRender.name = i.ToString();
-            Vector3 preVerctor3 = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
-
-            _postions = postions[i ].Split(',');
-
-            Vector3 currentVerctor3 = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
-            Vector3[] vs = new Vector3[2] { preVerctor3 , currentVerctor3 };
-            lineRender.GetComponent<LineRenderer>().SetPositions(vs);
+            lineRender.name = (i+1).ToString();
+            lineRender.GetComponent<LineRenderer>().positionCount = lineRenderpostions.Count;
+            lineRender.GetComponent<LineRenderer>().SetPositions(lineRenderpostions.ToArray());
             Material m = GameObject.Instantiate<Material>(material);
             lineRender.GetComponent<LineRenderer>().material = m;
         }

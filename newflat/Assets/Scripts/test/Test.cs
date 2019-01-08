@@ -7,13 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class Test : MonoBehaviour {
-
-    // Use this for initialization
     [SerializeField]
     public Transform t1 = null;
     void Start() {
 
-
+  
         List<AA> lists = new List<AA>();
 
         AA aa = new AA("11", "12");
