@@ -22,4 +22,18 @@ public sealed class BaseProxy {
         return postData;
     }
 
+    /// <summary>
+    /// 通过对象获取post的json字符串
+    /// </summary>
+    /// <param name="resultPostData"></param>
+    /// <returns></returns>
+    public static Dictionary<string, string> GetPostDataByObject(object resultPostData)
+    {
+        string postStr = Utils.CollectionsConvert.ToJSON(resultPostData);
+        Dictionary<string, string> postData = new Dictionary<string, string>();
+        postData.Add("result", postStr);
+
+        return postData;
+    }
+
 }

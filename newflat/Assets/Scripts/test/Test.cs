@@ -4,30 +4,68 @@ using UnityEngine.EventSystems;
 using DataModel;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Test : MonoBehaviour {
 
     // Use this for initialization
     [SerializeField]
     public Transform t1 = null;
-	 void Start () {
+    void Start() {
 
 
+        List<AA> lists = new List<AA>();
 
-        string url = Application.streamingAssetsPath + "/R/alarmeffection";
-        Debug.Log(url);
-        ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+        AA aa = new AA("11", "12");
+        lists.Add(aa);
 
-           GameObject g =   (GameObject)GameObject.Instantiate(result.LoadAsset<GameObject>("alarmeffection"));
-        });
-            //Debug.Log( Utils.StrUtil.GetNewGuid());
-            // }
-            // Debug.Log("base start");
-            //EnergyConsumptionTestData.GetTestData();
-            //Debug.Log(Camera.allCameras);
-            //foreach(Camera c in Camera.allCameras)
-            //{
-            //    Debug.Log(c.name);
+        aa = new AA("22", "23");
+        lists.Add(aa);
+
+        var list = from n in lists
+        select new BB
+        {
+            BB1 = n.AA1,
+            BB2 = n.AA2
+
+        };
+
+        foreach(var item in list)
+        {
+            Debug.Log(item.BB1);
+        }
+   
+
+        //List<SceneAlarmItem> sai = new List<SceneAlarmItem>();
+        //SceneAlarmItem temp1 = new SceneAlarmItem();
+        //temp1.number = "room1";
+        //temp1.id = "1";
+
+        //sai.Add(temp1);
+
+        //temp1 = new SceneAlarmItem();
+        //temp1.number = "room2";
+        //temp1.id = "2";
+
+        //sai.Add(temp1);
+
+        // Debug.Log(  Utils.CollectionsConvert.ToJSON(  BaseProxy.GetPostDataByObject(sai)));
+
+
+        //string url = Application.streamingAssetsPath + "/R/alarmeffection";
+        //Debug.Log(url);
+        //ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+
+        //   GameObject g =   (GameObject)GameObject.Instantiate(result.LoadAsset<GameObject>("alarmeffection"));
+        //});
+        //Debug.Log( Utils.StrUtil.GetNewGuid());
+        // }
+        // Debug.Log("base start");
+        //EnergyConsumptionTestData.GetTestData();
+        //Debug.Log(Camera.allCameras);
+        //foreach(Camera c in Camera.allCameras)
+        //{
+        //    Debug.Log(c.name);
 
         //}
 
@@ -164,7 +202,54 @@ public class Test : MonoBehaviour {
     //    GetComponent<TreeManager>().Init(ss);
     }
 
-   
+
+    private void OnMouseDown()
+    {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("点击ui上");
+            return;
+        }
+        Debug.Log("OnMouseDown");
+    }
 
 
+    private void OnMouseUp()
+    {
+        Debug.Log("OnMouseUp");
+    }
+
+
+
+}
+
+public class AA
+{
+    public string AA1;
+
+    public string AA2;
+
+    public AA(string AA1,string AA2)
+    {
+        this.AA1 = AA1;
+        this.AA2 = AA2;
+    }
+}
+
+public class BB
+{
+    public string BB1;
+
+    public string BB2;
+
+    public BB(string BB1,string BB2)
+    {
+        this.BB1 = BB1;
+        this.BB2 = BB2;
+    }
+
+    public BB()
+    {
+
+    }
 }

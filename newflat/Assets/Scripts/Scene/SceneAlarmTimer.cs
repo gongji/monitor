@@ -47,18 +47,8 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
         List<SceneAlarmBase> list = GetCurrrentAlarmScene();
         if(list != null && list.Count>0)
         {
-            List<string> sceneids = new List<string>();
-            foreach(SceneAlarmBase item in list)
+            if(list.Count==0)
             {
-                if(!string.IsNullOrEmpty(item.sceneId))
-                {
-                    sceneids.Add(item.sceneId);
-                }
-                
-            }
-            if(sceneids.Count==0)
-            {
-
                 return;
             }
             SceneAlamProxy.GetSceneAlarmStateList((success) => {
@@ -69,7 +59,7 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
                 {
                     if(SceneData.sceneAlarmDic.ContainsKey(item.id))
                     {
-                        SceneAlarmBase sab = SceneData.sceneAlarmDic[item.id];
+                        SceneAlarmBase sab = SceneData.sceneAlarmDic[item.number + "_"+ item.id];
 
                         //Debug.Log("sceneid:"+ item.id + ":state"+ item.state);
                         if(item.state == 1)
@@ -82,7 +72,7 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
                         }
                     }
                 }
-            }, sceneids);
+            }, list);
 
 
         }

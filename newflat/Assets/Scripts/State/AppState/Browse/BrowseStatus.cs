@@ -20,7 +20,7 @@ public class BrowseStatus : AppBaseState
         
         WenshiduTimer.Instance.StartTimer();
 
-        SceneAlarmTimer.Instance.StartTimer();
+      //  SceneAlarmTimer.Instance.StartTimer();
 
         //TreeViewControl.Instance.SetBrowserData();
     }

@@ -84,6 +84,7 @@ namespace State
             baseSet.Enter(curentDataList, () => {
                 EquipmentSet.CreateEquipment(()=> {
                     EnableEventSystem(true);
+                    SceneAlarmTimer.Instance.StartTimer();
                     if (enterCallBack != null)
                     {
                         enterCallBack.Invoke();
@@ -111,6 +112,8 @@ namespace State
             }
             EnableEventSystem(false);
             EquipmentData.SetAllEquipmentParentEmpty();
+            SceneAlarmTimer.Instance.StopTimer();
+
         }
 
 

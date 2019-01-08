@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class SceneAlarmBase : MonoBehaviour {
 
     public string sceneId = string.Empty;
+    public string number = string.Empty;
     [SerializeField]
     protected bool isAlarm = false;
     public virtual void Alarm() {
@@ -17,6 +18,9 @@ public abstract class SceneAlarmBase : MonoBehaviour {
 
     protected void Init()
     {
+        System.Type t = this.GetType();
+        string claasName = t.Name;
+        number = claasName;
         if (GetComponent<Object3DElement>() != null)
         {
             sceneId = GetComponent<Object3DElement>().sceneId;
@@ -25,9 +29,16 @@ public abstract class SceneAlarmBase : MonoBehaviour {
         {
             sceneId = SceneData.GetIdByNumber(transform.name);
         }
-        SceneData.sceneAlarmDic.Add(sceneId, this);
+        SceneData.sceneAlarmDic.Add(claasName + "_"+sceneId, this);
+    }
 
-
+    protected void RemoveScene()
+    {
+        if(SceneData.sceneAlarmDic.ContainsKey(sceneId))
+        {
+            SceneData.sceneAlarmDic.Remove(sceneId);
+        }
+       
 
     }
 }
