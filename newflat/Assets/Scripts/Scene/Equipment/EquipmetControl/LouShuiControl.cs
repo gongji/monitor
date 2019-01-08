@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public  class LouShuiControl : BaseEquipmentControl {
 
-
     void Start()
     {
         if(GetComponent<Object3DElement>()!=null)
@@ -28,6 +27,11 @@ public  class LouShuiControl : BaseEquipmentControl {
     {
         base.CancleAlarm();
         ResetAll();
+    }
+
+    public override void ExeAnimation(string name, bool isExe)
+    {
+       // throw new System.NotImplementedException();
     }
 
 
@@ -101,7 +105,7 @@ public  class LouShuiControl : BaseEquipmentControl {
 
     private Tweener tweener = null;
     private int alarmIndex = -1;
-    private void SetSegmentsAlarm(int i)
+    private void SetSegmentsAlarm(int i,bool IsExe = false)
     {
         StopDotween();
         ResetAll();

@@ -8,17 +8,17 @@ using UnityEngine;
 using Utils;
 
 /// <summary>
-/// 设备创建，显示，隐藏
+/// 设备创建，显示，隐藏，browser
 /// </summary>
-public sealed class EquipmentSet  {
-
-    private static ILog log = LogManagers.GetLogger("EquipmentSet");
+public sealed class BrowserEquipmentCreate
+{
+    private static ILog log = LogManagers.GetLogger("BrowserEquipmentSet");
     /// <summary>
     /// 创建当前场景的设备
     /// </summary>
     public static void CreateEquipment(System.Action createCallBack)
     {
-        //查询当前的数据库
+        //search database
         EquipmentData.SearchCurrentEquipmentDataDownModel(() => {
             StartCreateEquipment();
             if(createCallBack!=null)
@@ -79,8 +79,8 @@ public sealed class EquipmentSet  {
         }
 
         SetCurrentEquipmentShow();
-        //设备
-        SetEquipmentAlarmInitState();
+
+        EquipmentServiceInit.Init(gs);
     }
 
     private static void SetEquipmentLayerAndScripts(GameObject equipment,EquipmentItem equipmentItem, 
@@ -255,55 +255,7 @@ public sealed class EquipmentSet  {
     }
 
 
-    /// <summary>
-    /// 设置设备的报警初始状态
-    /// </summary>
-    public static void SetEquipmentAlarmInitState()
-    {
-        if(gs.Count==0)
-        {
-
-            return;
-        }
-        List<string> ids =new List<string>();
-        foreach(GameObject child in gs)
-        {
-            string id = child.GetComponent<Object3DElement>().equipmentData.id;
-            if(!string.IsNullOrEmpty(id))
-            {
-                ids.Add(child.GetComponent<Object3DElement>().equipmentData.id);
-            }
-           
-        }
-       
-        if(ids.Count>0)
-        {
-          
-            string resultPostData = FormatUtil.ConnetString(ids, ",");
-
-            Dictionary<string, GameObject> equipmentDic =  EquipmentData.GetAllEquipmentData;
-            EquipmentAlarmProxy.GetEquipmentAlarmStateList((result) =>
-            {
-                List<EquipmentAlarmItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAlarmItem>>(result);
-                if(list ==null || list.Count==0)
-                {
-
-                    Debug.Log("equipmentState is data is null="+ resultPostData);
-                    return;
-                }
-                foreach(EquipmentAlarmItem dataItem in list)
-                {
-                    if(equipmentDic.ContainsKey(dataItem.id))
-                    {
-                        AlarmCommand.StartDoAlarmEquipment(dataItem, equipmentDic[dataItem.id]);
-                    }
-                }
-            }
-            , resultPostData);
-        }
-
-        gs.Clear();
-    }
+    
    
 
 }

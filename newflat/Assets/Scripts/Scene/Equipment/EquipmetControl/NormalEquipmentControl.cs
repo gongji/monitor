@@ -176,5 +176,8 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         DestoryTestPointMenu();
     }
 
-
+    public override void ExeAnimation(string name, bool isExe)
+    {
+       // throw new System.NotImplementedException();
+    }
 }

@@ -82,7 +82,7 @@ namespace State
         protected void InitSet()
         {
             baseSet.Enter(curentDataList, () => {
-                EquipmentSet.CreateEquipment(()=> {
+                BrowserEquipmentCreate.CreateEquipment(()=> {
                     EnableEventSystem(true);
                     SceneAlarmTimer.Instance.StartTimer();
                     if (enterCallBack != null)
@@ -103,7 +103,7 @@ namespace State
 
         protected virtual void OnExitFront()
         {
-            EquipmentSet.HideCurrentEquipmentTips();
+            BrowserEquipmentCreate.HideCurrentEquipmentTips();
             ViewEquipmentInfo.Instance.RemoveAllResouce();
             DisableCamera();
             if(baseEquipmentControl!=null)

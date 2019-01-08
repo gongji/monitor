@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WenShiduEquipmentControl : BaseEquipmentControl
 {
-
     private void Start()
     {
         gameObject.AddComponent<WenShiduDataUpdate>();
@@ -35,5 +34,10 @@ public class WenShiduEquipmentControl : BaseEquipmentControl
     public override void CancelEquipment()
     {
         base.CancelEquipment();
+    }
+
+    public override void ExeAnimation(string name, bool isExe)
+    {
+        // throw new System.NotImplementedException();
     }
 }

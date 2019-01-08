@@ -151,5 +151,38 @@ public sealed  class EffectionUtility  {
     }
 
 
-    # endregion
+    #endregion
+
+
+
+    #region mulitMaterial
+
+    public static void PlayMulitMaterialEffect(Transform selectingObjectTransform, Color fromColor, Color toColor)
+    {
+
+        MultiMaterialTweenColor tweenColor = selectingObjectTransform.GetComponent<MultiMaterialTweenColor>();
+        if (tweenColor == null)
+        {
+            tweenColor = selectingObjectTransform.gameObject.AddComponent<MultiMaterialTweenColor>();
+        }
+        tweenColor.to = new Color32(140, 0, 0, 150);
+        tweenColor.style = UITweener.Style.PingPong;
+        tweenColor.duration = 0.5f;
+        tweenColor.Play(true);
+
+    }
+
+
+    public static void StopMulitMaterialEffect(Transform selectingObjectTransform)
+    {
+        MultiMaterialTweenColor tweenColor = selectingObjectTransform.GetComponent<MultiMaterialTweenColor>();
+        if (tweenColor != null)
+        {
+            tweenColor.style = UITweener.Style.Once;
+            tweenColor.duration = 0.1f;
+            tweenColor.Play(false);
+        }
+           
+    }
+    #endregion
 }

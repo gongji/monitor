@@ -31,6 +31,8 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         }
         ei.equipmentObject = gameObject;
     }
+
+    public abstract void ExeAnimation(string name,bool isExe);
     private int state = 0;
     public virtual void Alarm(int state=0){
 
@@ -190,18 +192,30 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         CancelEffection(selectArrow);
         CancelEffection(alarmArrow);
 
-        if (isSelect)
+        if(isAlarm)
         {
-            
-            CreateSelectEffection();
+            CreateAlarmEffection();
         }
         else
         {
-            if(isAlarm)
+            if(isSelect)
             {
-                CreateAlarmEffection();
+                CreateSelectEffection();
             }
         }
+
+        //if (isSelect)
+        //{
+            
+        //    CreateSelectEffection();
+        //}
+        //else
+        //{
+        //    if(isAlarm)
+        //    {
+        //        CreateAlarmEffection();
+        //    }
+        //}
     }
 
     protected void InitMaterial()

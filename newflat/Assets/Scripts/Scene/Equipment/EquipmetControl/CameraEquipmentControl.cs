@@ -19,6 +19,11 @@ public class CameraEquipmentControl : BaseEquipmentControl
         
     }
 
+    public  override void ExeAnimation(string name, bool isExe)
+    {
+        
+    }
+
     private void OnEnable()
     {
         if(equipmentIconObject)

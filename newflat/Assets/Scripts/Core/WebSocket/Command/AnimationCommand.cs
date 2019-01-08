@@ -20,7 +20,7 @@ public class AnimationCommand : ICommand
     public object ExecuteCommand(string data)
     {
         
-        List<EquipmentAnimation> list = Utils.CollectionsConvert.ToObject<List<EquipmentAnimation>>(data);
+        EquipmentAnimationItem item = Utils.CollectionsConvert.ToObject<EquipmentAnimationItem>(data);
 
         throw new System.NotImplementedException();
     }
