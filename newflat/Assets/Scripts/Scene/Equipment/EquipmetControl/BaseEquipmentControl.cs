@@ -146,7 +146,8 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
             alarmArrow.transform.position = transform.position +
                 Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
             alarmArrow.transform.SetParent(transform.parent);
-
+            AlarmTestPointShow aep = alarmArrow.gameObject.AddComponent<AlarmTestPointShow>();
+            aep.equipmentid = equipmentItem.id;
             EffectionUtility.PlayDotweenAphlaFlash(gameObject, Color.red, "_Color");
         }
        
