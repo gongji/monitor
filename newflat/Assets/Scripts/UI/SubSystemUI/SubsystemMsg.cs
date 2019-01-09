@@ -62,7 +62,7 @@ public static class SubsystemMsg {
         // Debug.Log("id="+id);
         if (wireframeM == null)
         {
-            wireframeM = Resources.Load<Material>("Material/wireframe");
+            wireframeM = Resources.Load<Material>("Material/xray");
         }
         BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
         foreach (BaseEquipmentControl be in equipments)

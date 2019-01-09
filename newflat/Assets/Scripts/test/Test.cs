@@ -12,7 +12,14 @@ public class Test : MonoBehaviour {
     void Start() {
 
 
-        Debug.Log(PlatformMsg.instance.currentPlatform);
+        // Debug.Log(PlatformMsg.instance.currentPlatform);
+        //string names = "123";
+        //string[] nameArray = names.Split(',');
+        //Debug.Log(nameArray.Length);
+        //Debug.Log(nameArray[0]);
+
+
+
         //List<AA> lists = new List<AA>();
 
         //AA aa = new AA("11", "12");
@@ -33,7 +40,7 @@ public class Test : MonoBehaviour {
         //{
         //    Debug.Log(item.BB1);
         //}
-   
+
 
         //List<SceneAlarmItem> sai = new List<SceneAlarmItem>();
         //SceneAlarmItem temp1 = new SceneAlarmItem();

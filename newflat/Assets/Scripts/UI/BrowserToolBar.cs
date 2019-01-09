@@ -142,8 +142,6 @@ public class BrowserToolBar : MonoBehaviour {
         {
             fullArea.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
-           
-
         }
         else if (mCurrentState is FullAreaState)
         {
@@ -156,6 +154,10 @@ public class BrowserToolBar : MonoBehaviour {
             builderSwitch.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
         }
+
+        //temp Disable
+        qiangti.gameObject.SetActive(false);
+        viewSwitch.gameObject.SetActive(false);
     }
 
     public void Switch2DButtonControl()

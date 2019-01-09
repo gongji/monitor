@@ -7,9 +7,8 @@ public class EquipmentTestPoint  {
     public string number;
     //测点名称
     public string name;
-
     public string value;
-
-
     public string unit;
+    //状态
+    public int state;
 }
