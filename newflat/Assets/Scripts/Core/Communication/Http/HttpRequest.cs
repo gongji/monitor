@@ -122,7 +122,11 @@ public static class HttpRequest  {
 
         if (www.isNetworkError || www.isHttpError)
         {
-            errorCallBack.Invoke(www.error);
+            if(errorCallBack!=null)
+            {
+                errorCallBack.Invoke(www.error);
+            }
+           
         }
         else
         {

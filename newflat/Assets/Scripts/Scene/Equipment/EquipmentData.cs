@@ -68,7 +68,7 @@ public sealed class EquipmentData {
         string sql = GetEquipmentSqlByParent();
         if(string.IsNullOrEmpty(sql))
         {
-
+            callBack.Invoke();
             return;
         }
         Dictionary<string, string> dic = new Dictionary<string, string>();
@@ -76,11 +76,11 @@ public sealed class EquipmentData {
 
         Equipment3dProxy.SearchEquipmentData((result) =>
         {
-        if (string.IsNullOrEmpty(result) && callBack != null)
-        {
-            callBack.Invoke();
-            return;
-        }
+            if (string.IsNullOrEmpty(result) && callBack != null)
+            {
+                callBack.Invoke();
+                return;
+             }
            // Debug.Log(result);
             currentEquipmentData = CollectionsConvert.ToObject<List<EquipmentItem>>(result);
 
@@ -103,7 +103,7 @@ public sealed class EquipmentData {
                     callBack.Invoke();
                 }
             }
-        }, dic);
+        }, dic,null);
     }
     /// <summary>
     /// 通过父节点得到设备查询的sql语句 

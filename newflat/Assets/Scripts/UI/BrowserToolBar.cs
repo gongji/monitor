@@ -157,7 +157,7 @@ public class BrowserToolBar : MonoBehaviour {
 
         //temp Disable
         qiangti.gameObject.SetActive(false);
-        viewSwitch.gameObject.SetActive(false);
+       // viewSwitch.gameObject.SetActive(false);
     }
 
     public void Switch2DButtonControl()

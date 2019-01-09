@@ -127,11 +127,14 @@ public class FloorRoomSet : BaseSet
     /// <param name="currentData"></param>
     protected void CreateNavigation(Object3dItem currentData, string frontname,string backName)
     {
-        Transform canvas = GameObject.Find("Canvas").transform;
+        Transform canvas = UIUtility.GetRootCanvas();
         NavigationUI fnui = canvas.GetComponentInChildren<NavigationUI>();
         if (fnui != null)
         {
-            return;
+            
+            GameObject.DestroyImmediate(fnui.gameObject);
+            GameObject.Destroy(fnui);
+           
         }
         navigationUI = TransformControlUtility.CreateItem("TextNavigation", GameObject.Find("Canvas").transform);
         navigationUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;

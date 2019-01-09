@@ -147,5 +147,10 @@ public class MouseCheck : MonoBehaviour
             clickHitTransform = hit.transform;
             clickHitPoint = hit.point;
         }
+        else
+        {
+            clickHitTransform = null;
+            clickHitPoint = Vector3.zero;
+        }
     }
 }

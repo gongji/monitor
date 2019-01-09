@@ -63,14 +63,22 @@ public static class SceneParse  {
         if (flooRegex.IsMatch(endStr) && gs.Count == 1)
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
-            object3DElement.type = Type.Floor;
-            gs[0].AddComponent<FloorSceneAlarm>();
-
+            if (gs[0].name.ToLower().Contains(Constant.JiDian.ToLower()))
+            {
+                object3DElement.type = Type.JiDian;
+            }
+            else
+            {
+                object3DElement.type = Type.Floor;
+                gs[0].AddComponent<FloorSceneAlarm>();
+                AddBimScript(gs[0].transform);
+            }
         }
         //房间
         else if(fjRegex.IsMatch(endStr)  && gs.Count == 1 && !sceneName.Contains(Constant.Door))
         {
             object3DElement = gs[0].AddComponent<Object3DElement>();
+            
             object3DElement.type = Type.Room;
             gs[0].AddComponent<RoomSceneAlarm>();
         }
@@ -234,6 +242,19 @@ public static class SceneParse  {
 
 
         //}
+    }
+
+    private static void AddBimScript(Transform t)
+    {
+        Transform bim = t.Find("bim");
+        if(bim!=null)
+        {
+            foreach (Transform child in bim)
+            {
+                child.gameObject.AddComponent<BimMouse>();
+            }
+        }
+        
     }
 
     

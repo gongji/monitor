@@ -21,7 +21,7 @@ public static class Equipment3dProxy
     /// "parentsId in(107) or parentsId is null";
     /// 
     /// </param>
-    public static void SearchEquipmentData(System.Action<string> sucesscallBack,Dictionary<string, string> postData)
+    public static void SearchEquipmentData(System.Action<string> sucesscallBack,Dictionary<string, string> postData, System.Action<string> errorCallBack)
     {
         string url = Config.parse("requestAddress") + "/searchEquipment";
 
@@ -30,7 +30,10 @@ public static class Equipment3dProxy
 
           HttpRequest.WWWPostRequest(url, postData, sucesscallBack, (error) =>
           {
-
+              if(errorCallBack!=null)
+              {
+                  errorCallBack.Invoke(error.ToString());
+              }
               log.Error("http reqeust error searchEquipment:url=" + url);
 
               log.Error("http reqeust error searchEquipment:" + error.ToString());

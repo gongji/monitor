@@ -28,6 +28,7 @@ namespace DataModel
         Floor,
         Room,
         RoomDoor,
+        JiDian,
         De_Normal,
         De_Camera,
         De_LouShui,

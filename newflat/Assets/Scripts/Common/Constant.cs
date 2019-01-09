@@ -17,7 +17,7 @@ public static class Constant  {
 
     public static int DefaultLayer = 0;
 
-    public static string GuanDao = "guandao";
+    public static string JiDian = "jidian";
     public static string Door = "door";
     public static string DX = "dx";
     public static string Equipment_Prefix = "De_";

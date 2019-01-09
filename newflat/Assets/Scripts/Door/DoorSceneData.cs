@@ -24,7 +24,7 @@ public class DoorSceneData : MonoBehaviour {
             }
             
 
-        }, dic);
+        }, dic,null);
     }
 
     private void SetDoorData(List<EquipmentItem> list)

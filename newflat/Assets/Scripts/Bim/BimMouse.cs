@@ -6,14 +6,29 @@ using UnityEngine.UI;
 
 public class BimMouse : MonoBehaviour {
 
+    public Vector3 defaultPostion = Vector3.zero;
+    private void Awake()
+    {
+        defaultPostion = transform.position;
+    }
+
+    private void OnDisable()
+    {
+        Reset();
+    }
+
+    public void Reset()
+    {
+        transform.position = defaultPostion;
+    }
     public void OnMouseDown()
     {
+        if(ui!=null || !BimMsg.instacne.isSelected)
+        {
+            return;
+        }
         BimProxy.GetBimData((result) => {
-
-
             DoData(result);
-
-
         }, transform.name, (error) => {
 
             DoData(TestBim.CreateData());
@@ -53,6 +68,7 @@ public class BimMouse : MonoBehaviour {
                 if(ui!=null)
                 {
                     GameObject.DestroyImmediate(ui);
+                    ui = null;
                 }
                 
             });

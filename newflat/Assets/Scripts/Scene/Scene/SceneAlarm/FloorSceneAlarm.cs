@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class FloorSceneAlarm : SceneAlarmBase
 {
+
+    private Transform wqQiang = null;
     private void Start()
     { 
         Init();
+        wqQiang = transform.Find("qt/qt_wq");
     }
     public override void Alarm()
     {
@@ -15,8 +18,10 @@ public class FloorSceneAlarm : SceneAlarmBase
             return;
         }
 
-
+        EffectionUtility.PlayMulitMaterialEffect(wqQiang, Color.red);
         isAlarm = true;
+       
+
         //throw new System.NotImplementedException();
     }
 
@@ -28,7 +33,7 @@ public class FloorSceneAlarm : SceneAlarmBase
         {
             return;
         }
-
+        EffectionUtility.StopMulitMaterialEffect (wqQiang);
         isAlarm = false;
 
     }

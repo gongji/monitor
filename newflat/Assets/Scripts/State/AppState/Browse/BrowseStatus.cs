@@ -52,7 +52,7 @@ public class BrowseStatus : AppBaseState
            
         }
 
-        if(MouseCheck.DOUBLE_CLICK)
+        if(MouseCheck.DOUBLE_CLICK && MouseCheck.clickHitTransform!=null)
         {
             if(Camera.main.GetComponent<CameraRotatoAround>()!=null || AppInfo.currentView == ViewType.View2D)
             {

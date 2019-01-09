@@ -258,7 +258,7 @@ public static class SceneData {
         IEnumerable<Object3dItem> roomResult =
               from object3dItem in object3dList
                   //不包含管网
-              where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.GuanDao)
+              where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.JiDian)
               select object3dItem;
 
 
@@ -284,7 +284,7 @@ public static class SceneData {
         IEnumerable<Object3dItem> floorResult =
                 from object3dItem in object3dList
                     //不包含管网
-                where object3dItem.id.Equals(currentid) && !object3dItem.number.Contains(Constant.GuanDao)
+                where object3dItem.id.Equals(currentid) && !object3dItem.number.Contains(Constant.JiDian)
                 select object3dItem;
 
 
@@ -334,7 +334,7 @@ public static class SceneData {
         IEnumerable<Object3dItem> floorResult =
               from object3dItem in object3dList
                   //不包含管网
-              where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.GuanDao) 
+              where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.JiDian) 
               orderby object3dItem.number ascending
               select object3dItem;
 
@@ -357,7 +357,7 @@ public static class SceneData {
            
             IEnumerable<Object3dItem> roomList =
               from object3dItem in object3dList
-              where object3dItem.number.Split('_').Length ==5 && object3dItem.number.StartsWith(floor.number) && !object3dItem.number.Contains(Constant.GuanDao)
+              where object3dItem.number.Split('_').Length ==5 && object3dItem.number.StartsWith(floor.number) && !object3dItem.number.Contains(Constant.JiDian)
               select object3dItem;
 
             result.AddRange(roomList);
@@ -563,7 +563,7 @@ public static class SceneData {
 
             IEnumerable<Object3dItem> result =
              from object3dItem in object3dList
-             where object3dItem.parentsId.Equals(parentid) && object3dItem.number.Contains(Constant.GuanDao) && object3dItem.number.EndsWith(endNumber)
+             where object3dItem.parentsId.Equals(parentid) && object3dItem.number.Contains(Constant.JiDian) && object3dItem.number.EndsWith(endNumber)
              select object3dItem;
 
             //foreach(Object3dItem temp in result)
@@ -589,7 +589,7 @@ public static class SceneData {
         IEnumerable<Object3dItem> floorResult =
              from object3dItem in object3dList
                  //不包含管网
-             where ((object3dItem.parentsId.Equals(builderid) && !object3dItem.number.Contains(Constant.GuanDao)))
+             where ((object3dItem.parentsId.Equals(builderid) && !object3dItem.number.Contains(Constant.JiDian)))
              select object3dItem;
 
 
