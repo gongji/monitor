@@ -125,6 +125,7 @@ public class BrowserToolBar : MonoBehaviour {
             builderSwitch.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
+            cameraMode.gameObject.SetActive(false);
         }
 
         else if (mCurrentState is BuilderState)
