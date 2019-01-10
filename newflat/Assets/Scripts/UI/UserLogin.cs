@@ -30,6 +30,9 @@ public class UserLogin : MonoBehaviour {
 
     public void Reset()
     {
+        
+        userName.text = "";
+        password.text = "";
         Debug.Log("Reset");
     }
 
