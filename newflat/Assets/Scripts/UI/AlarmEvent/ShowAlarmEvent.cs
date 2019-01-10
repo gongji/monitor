@@ -65,7 +65,7 @@ public  class ShowAlarmEvent :MonoBehaviour
     private void PlayAlarmSound()
     {
         SoundUtilty.StopSound();
-        string url = Application.streamingAssetsPath + "/Sound/alarm";
+        string url = Application.streamingAssetsPath + "/Sound/alarm.mp3";
         SoundUtilty.PlayServerSound(url, false);
     }
 

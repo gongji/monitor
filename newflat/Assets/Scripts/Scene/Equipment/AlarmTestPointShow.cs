@@ -13,10 +13,16 @@ public class AlarmTestPointShow : MonoBehaviour {
         if(!string.IsNullOrEmpty(equipmentid))
         {
             EquipmentAlarmProxy.GetAlarmPointTestList((result) => {
+                if(string.IsNullOrEmpty(result))
+                {
+
+                    Debug.Log(equipmentid  +":alarm testPoint data is null" );
+                    return;
+                }
                 List<EquipmentTestPoint> list = Utils.CollectionsConvert.ToObject<List<EquipmentTestPoint>>(result);
 
                 string url = "Grid/TestPointCenter";
-                int[] colums = new int[] { 100, 200, 197 };
+                int[] colums = new int[] { 100, 250, 247 };
                 string[] titles = new string[] { "测点", "名称", "状态" };
 
                 List<List<string>> resultData = new List<List<string>>();
@@ -30,7 +36,7 @@ public class AlarmTestPointShow : MonoBehaviour {
                 }
               
                
-                GridMsg.Instance.Show<NormalGrid>(url, 500, 290, equipmentName + "报警详细信息", "Title/close", colums, titles, resultData);
+                GridMsg.Instance.Show<NormalGrid>(url, 600, 290, equipmentName + "报警详细信息", "Title/close", colums, titles, resultData);
             }, equipmentid);
         }
         
