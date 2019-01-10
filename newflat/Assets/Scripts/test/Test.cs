@@ -12,6 +12,7 @@ public class Test : MonoBehaviour {
     void Start() {
 
 
+        SoundUtilty.PlayServerSound(Application.streamingAssetsPath + "/Sound/alarm.mp3");
         // Debug.Log(PlatformMsg.instance.currentPlatform);
         //string names = "123";
         //string[] nameArray = names.Split(',');
