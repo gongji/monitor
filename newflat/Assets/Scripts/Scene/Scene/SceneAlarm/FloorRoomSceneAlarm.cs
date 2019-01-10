@@ -22,7 +22,7 @@ public class FloorRoomSceneAlarm : SceneAlarmBase
         }
         if (alarmEffection == null)
         {
-            string url = Application.streamingAssetsPath + "/"+ PlatformMsg.instance.currentPlatform.ToString()+ "/R/alarmeffection";
+            string url = Application.streamingAssetsPath + "/R/"+ PlatformMsg.instance.currentPlatform.ToString()+ "/alarmeffection";
 
             ResourceUtility.Instance.GetHttpAssetBundle(url, (result) =>
             {
@@ -47,12 +47,10 @@ public class FloorRoomSceneAlarm : SceneAlarmBase
         {
             return;
         }
-
-
         DestroyAlarmObject();
     }
 
-    private void DestroyAlarmObject()
+    protected void DestroyAlarmObject()
     {
         if (alarmEffection != null)
         {

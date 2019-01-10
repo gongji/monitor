@@ -53,11 +53,12 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
             }
             SceneAlamProxy.GetSceneAlarmStateList((success) => {
 
+               // Debug.Log(success);
                 List<SceneAlarmItem> sceneAlarmItems = Utils.CollectionsConvert.ToObject<List<SceneAlarmItem>>(success);
 
                 foreach(SceneAlarmItem item in sceneAlarmItems)
                 {
-                    if(SceneData.sceneAlarmDic.ContainsKey(item.id))
+                    if(SceneData.sceneAlarmDic.ContainsKey(item.number + "_" + item.id))
                     {
                         SceneAlarmBase sab = SceneData.sceneAlarmDic[item.number + "_"+ item.id];
 

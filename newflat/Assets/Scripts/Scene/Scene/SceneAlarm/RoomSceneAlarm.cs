@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 房间报警
 /// </summary>
-public class RoomSceneAlarm : SceneAlarmBase
+public class RoomSceneAlarm : FloorRoomSceneAlarm
 {
     private void Start()
     {
@@ -22,4 +22,11 @@ public class RoomSceneAlarm : SceneAlarmBase
     {
         base.Restore();
     }
+
+    private void OnDisable()
+    {
+        DestroyAlarmObject();
+    }
+
+   
 }

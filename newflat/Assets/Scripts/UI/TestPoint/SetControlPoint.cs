@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using TMPro;
 
 public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
 {
@@ -19,7 +18,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         grid.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         grid.transform.localRotation = Quaternion.identity;
         ListView listView = grid.GetComponentInChildren<ListView>();
-        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 290);
+        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 290);
 
         return grid;
     }
@@ -51,7 +50,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     {
         TestPointProxy.GetControlPointList(id, (result) =>
         {
-            Debug.Log(result);
+           // Debug.Log(result);
 
             List<EquipmentControlPointItem> ecps = Utils.CollectionsConvert.ToObject<List<EquipmentControlPointItem>>(result);
             SetDataSouce(ecps, equipmentName);
@@ -122,9 +121,9 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     private  void SetColumWidth(ListView ListView)
     {
         ListView.Columns[0].Width = 50;
-        ListView.Columns[1].Width = 100;
-        ListView.Columns[2].Width = 100;
-        ListView.Columns[3].Width = 100;
+        ListView.Columns[1].Width = 130;
+        ListView.Columns[2].Width = 130;
+        ListView.Columns[3].Width = 140;
         ListView.Columns[4].Width = 145;
     }
 
@@ -157,11 +156,11 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
             //字符串
             if(ecp.type == 0)
             {
-                target.GetComponent<TMPro.TMP_InputField>().characterValidation = TMP_InputField.CharacterValidation.Name;
+                target.GetComponent<InputField>().characterValidation = InputField.CharacterValidation.Name;
             }
             else
             {
-                target.GetComponent<TMPro.TMP_InputField>().characterValidation = TMP_InputField.CharacterValidation.Decimal;
+                target.GetComponent<InputField>().characterValidation = InputField.CharacterValidation.Decimal;
             }
            
         }
@@ -231,7 +230,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
                 //输入型
                 if(ecp.type!=1)
                 {
-                    inputValue = inputItemGameObject.GetComponent<TMP_InputField>().text;
+                    inputValue = inputItemGameObject.GetComponent<InputField>().text;
 
                     if(string.IsNullOrEmpty(inputValue))
                     {

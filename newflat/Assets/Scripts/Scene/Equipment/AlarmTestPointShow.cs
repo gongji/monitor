@@ -6,6 +6,8 @@ public class AlarmTestPointShow : MonoBehaviour {
 
     public string equipmentid = string.Empty;
 
+    public string equipmentName = string.Empty;
+
     public void OnMouseDown()
     {
         if(!string.IsNullOrEmpty(equipmentid))
@@ -27,7 +29,8 @@ public class AlarmTestPointShow : MonoBehaviour {
                     resultData.Add(dataItem);
                 }
               
-                GridMsg.Instance.Show<NormalGrid>(url, 500, 290, "alarm information", "Title/close", colums, titles, resultData);
+               
+                GridMsg.Instance.Show<NormalGrid>(url, 500, 290, equipmentName + "报警详细信息", "Title/close", colums, titles, resultData);
             }, equipmentid);
         }
         

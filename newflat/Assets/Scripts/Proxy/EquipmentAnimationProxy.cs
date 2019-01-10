@@ -13,7 +13,7 @@ public class EquipmentAnimationProxy
     public static void GetAlarmEquipmentList(System.Action<string> sucesscallBack, List<string> idsList)
     {
         string ids = FormatUtil.ConnetString(idsList, ",");
-        string url = Config.parse("requestAddress") + "/GetAnimationEquipmentList?ids="+ ids;
+        string url = Config.parse("requestAddress") + "monitoringPointEditor/getEquipmentAnimation?ids=" + ids;
 
         HttpRequestSingle.Instance.StartCoroutine(
 

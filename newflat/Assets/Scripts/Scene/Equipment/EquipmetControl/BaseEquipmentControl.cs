@@ -148,6 +148,7 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
             alarmArrow.transform.SetParent(transform.parent);
             AlarmTestPointShow aep = alarmArrow.gameObject.AddComponent<AlarmTestPointShow>();
             aep.equipmentid = equipmentItem.id;
+            aep.equipmentName = equipmentItem.name;
             EffectionUtility.PlayDotweenAphlaFlash(gameObject, Color.red, "_Color");
         }
        

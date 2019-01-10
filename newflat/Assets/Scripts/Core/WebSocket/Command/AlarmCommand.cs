@@ -48,7 +48,7 @@ public class AlarmCommand : ICommand
     public static void  StartDoAlarmEquipment(EquipmentAlarmItem equipmentAlarm, GameObject equipmentObject)
     {
 
-        Debug.Log("开始处理报警："+ equipmentAlarm.state + ":"+ equipmentAlarm.id);
+       // Debug.Log("开始处理报警："+ equipmentAlarm.state + ":"+ equipmentAlarm.id);
         if (equipmentAlarm.state == 4)
         {
             equipmentObject.GetComponent<BaseEquipmentControl>().CancleAlarm();

@@ -15,7 +15,7 @@ public  class ShowTestPoint:MonoSingleton<ShowTestPoint>,IEventListener
         grid.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         grid.transform.localRotation = Quaternion.identity;
         ListView listView = grid.GetComponentInChildren<ListView>();
-        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 290);
+        listView.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 290);
         
         return grid;
     }
@@ -102,8 +102,8 @@ public  class ShowTestPoint:MonoSingleton<ShowTestPoint>,IEventListener
     private  void SetColumWidth(ListView ListView)
     {
         ListView.Columns[0].Width = 300;
-        ListView.Columns[1].Width = 100;
-        ListView.Columns[2].Width = 100;
+        ListView.Columns[1].Width = 150;
+        ListView.Columns[2].Width = 150;
     }
 
     private  void AddColumns(ListView ListView)

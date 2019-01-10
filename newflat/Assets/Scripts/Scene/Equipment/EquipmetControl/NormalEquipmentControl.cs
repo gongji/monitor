@@ -178,6 +178,11 @@ public class NormalEquipmentControl :BaseEquipmentControl {
 
     public override void ExeAnimation(string name, bool isExe)
     {
-        GetComponent<Animator>().SetTrigger(name);
+        Debug.Log("aniamton:"+ name);
+        if(GetComponent<Animator>()!=null)
+        {
+            GetComponent<Animator>().SetTrigger(name);
+        }
+      
     }
 }

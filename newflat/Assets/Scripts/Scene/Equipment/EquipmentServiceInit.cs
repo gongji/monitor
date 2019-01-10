@@ -8,7 +8,6 @@ public sealed class EquipmentServiceInit
     {
         if (gs.Count == 0)
         {
-
             return;
         }
         List<string> ids = new List<string>();
@@ -38,6 +37,8 @@ public sealed class EquipmentServiceInit
             Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
             EquipmentAlarmProxy.GetEquipmentAlarmStateList((result) =>
             {
+
+                //Debug.Log(result);
                 List<EquipmentAlarmItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAlarmItem>>(result);
                 if (list == null || list.Count == 0)
                 {
@@ -70,6 +71,7 @@ public sealed class EquipmentServiceInit
         {
             EquipmentAnimationProxy.GetAlarmEquipmentList((result) => {
 
+                //Debug.Log(result);
                 List<EquipmentAnimationItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAnimationItem>>(result);
                 foreach(EquipmentAnimationItem item in list)
                 {
