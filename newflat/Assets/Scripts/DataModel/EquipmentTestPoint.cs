@@ -10,5 +10,5 @@ public class EquipmentTestPoint  {
     public string value;
     public string unit;
     //状态
-    public int state;
+    public string state;
 }
