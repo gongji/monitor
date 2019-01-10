@@ -58,26 +58,15 @@ public  class ShowAlarmEvent :MonoBehaviour
     public  void Show(AlarmEventItem aei)
     {
         transform.GetComponentInChildren<ListView>().Items.Insert(0, CreateItem(aei));
-
         transform.GetComponentInChildren<ListView>().GetComponent<Image>().color = dgColor;
-        //listView.SuspendLayout();
-        //{
-        //    listView.Items.Clear();
-        //}
-        //listView.ResumeLayout();
-        //for (int   i = 0;i<10;i++)
-        //{
-        //    string locateid = i + "locateid";
-        //    string confirmId = i + "confirmId";
-        //    string[] subItemTexts = new string[] { "ups"+i, "通讯中断无法连接", "2018-09-09 11:12:11" , "配电房1f101" ,"",""};
-        //    ListViewItem _item = new ListViewItem(subItemTexts);
-        //    ItemData item = new ItemData();
-        //    item.locateId = locateid;
-        //    item.confirmId = confirmId;
-        //    _item.Tag = item;
-        //    listView.Items.Add(_item);
-        //}
+        PlayAlarmSound();
+    }
 
+    private void PlayAlarmSound()
+    {
+        SoundUtilty.StopSound();
+        string url = Application.streamingAssetsPath + "/Sound/alarm";
+        SoundUtilty.PlayServerSound(url, false);
     }
 
 

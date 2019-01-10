@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
 
-    private int time = 5;
+    private int time = 3;
     public int Time
     {
         get
@@ -21,7 +21,6 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
             time = value;
         }
 
-       
     }
     public void StartTimer()
     {
@@ -53,7 +52,12 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
             }
             SceneAlamProxy.GetSceneAlarmStateList((success) => {
 
-               // Debug.Log(success);
+                if(string.IsNullOrEmpty(success))
+                {
+                    Debug.Log("scene state is null");
+                    return;
+                }
+                // Debug.Log(success);
                 List<SceneAlarmItem> sceneAlarmItems = Utils.CollectionsConvert.ToObject<List<SceneAlarmItem>>(success);
 
                 foreach(SceneAlarmItem item in sceneAlarmItems)

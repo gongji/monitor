@@ -37,13 +37,17 @@ public sealed class EquipmentServiceInit
             Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
             EquipmentAlarmProxy.GetEquipmentAlarmStateList((result) =>
             {
-
-                //Debug.Log(result);
+                if(string.IsNullOrEmpty(result))
+                {
+                    Debug.Log("equipment Alarm State is null");
+                    return;
+                }
+                Debug.Log("equipment Alarm State"+result);
                 List<EquipmentAlarmItem> list = Utils.CollectionsConvert.ToObject<List<EquipmentAlarmItem>>(result);
                 if (list == null || list.Count == 0)
                 {
 
-                    Debug.Log("equipmentState is data is null=" + resultPostData);
+                   // Debug.Log("equipmentState is data is null=" + resultPostData);
                     return;
                 }
                 foreach (EquipmentAlarmItem dataItem in list)

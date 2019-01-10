@@ -1,4 +1,5 @@
-﻿using Core.Server.Command;
+﻿using Core.Common.Logging;
+using Core.Server.Command;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,9 @@ using UnityEngine;
 [SCommand]
 public class AnimationCommand : ICommand
 {
+    private static ILog log = LogManagers.GetLogger("AnimationCommand");
+
+
     public string Name
     {
         get
@@ -19,7 +23,7 @@ public class AnimationCommand : ICommand
 
     public object ExecuteCommand(string data)
     {
-        
+        //log.Debug(data);
         EquipmentAnimationItem item = Utils.CollectionsConvert.ToObject<EquipmentAnimationItem>(data);
         ExecuteAnimation(item);
         // throw new System.NotImplementedException();

@@ -24,7 +24,7 @@ public class AlarmCommand : ICommand
 
     public object ExecuteCommand(string data)
     {
-
+        log.Debug(data);
         EquipmentAlarmItem equipmentAlarm = Utils.CollectionsConvert.ToObject<EquipmentAlarmItem>(data);
         Dictionary<string, GameObject>  dic = EquipmentData.GetAllEquipmentData;
         if(dic.ContainsKey(equipmentAlarm.id))

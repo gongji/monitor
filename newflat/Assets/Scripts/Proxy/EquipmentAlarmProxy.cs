@@ -16,7 +16,7 @@ public class EquipmentAlarmProxy  {
     {
         string url = Config.parse("requestAddress") + "/monitoringPointEditor/getEquipmentAlarm?ids=" + parameter;
 
-        // Debug.Log("equipment alarm url="+ url);
+        Debug.Log("equipment alarm url="+ url);
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, null, successcallBack, (a) =>

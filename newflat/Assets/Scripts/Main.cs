@@ -57,7 +57,19 @@ public class Main : MonoBehaviour {
             {
                 stateMachineManager.SetAppState<EditStatus>();
             }
-           
+            string isLogin = Config.parse("isLogin");
+            if(isLogin.Equals("0"))
+            {
+                string url = Application.streamingAssetsPath + "/UI/" + PlatformMsg.instance.currentPlatform.ToString() + "/login";
+                ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
+
+                    GameObject login =  GameObject.Instantiate(result);
+                    login.AddComponent<UserLogin>();
+
+                  
+
+                }, "login");
+            }
             CameraInitSet.SystemInitCamera();
             Battlehub.UIControls.TreeViewControl.Instance.Init();
             ModelData.InitModelData();

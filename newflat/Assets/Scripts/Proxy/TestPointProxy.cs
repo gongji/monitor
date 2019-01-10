@@ -22,7 +22,7 @@ public sealed class TestPointProxy
 
           HttpRequest.GetRequest(url, (result)=> {
 
-              Debug.Log(result);
+              //Debug.Log(result);
               List<EquipmentTestPoint> equipmentTestPointList = CollectionsConvert.ToObject<List<EquipmentTestPoint>>(result);
 
               callBack.Invoke(equipmentTestPointList);

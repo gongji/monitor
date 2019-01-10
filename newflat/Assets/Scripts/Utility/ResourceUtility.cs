@@ -49,6 +49,11 @@ public class ResourceUtility : MonoSingleton<ResourceUtility>
         GetHttpResource(url, www => action(www.assetBundle));
     }
 
+    public void GetHttpAssetBundle(string url,Action<GameObject> action, string code)
+    {
+        GetHttpResource(url, www => action(www.assetBundle.LoadAsset<GameObject>(code)));
+    }
+
     public  void GetHttpAudio(string url,Action<AudioClip> action)
     {
         GetHttpResource(url, www => action(www.GetAudioClip()));

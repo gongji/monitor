@@ -21,6 +21,7 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
     }
     public void ConnetWebsokcet()
     {
+
         return;
         Debug.Log("开始连接");
         StopAllCoroutines();
@@ -79,14 +80,14 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
 
     private void OnMessage(string data)
     {
-        Debug.Log(data);
+      //  Debug.Log(data);
         if (data.Equals("|")  || string.IsNullOrEmpty(data.Trim()))
         {
             return;
         }
        // Debug.Log("11111111111");
         MessageContent messageContent = CollectionsConvert.ToObject<MessageContent>(data);
-        Debug.Log(messageContent);
+        //Debug.Log(messageContent);
         if(messageContent!=null)
         {
             commandsUtils.Exec(messageContent);

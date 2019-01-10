@@ -1,4 +1,5 @@
-﻿using Core.Server.Command;
+﻿using Core.Common.Logging;
+using Core.Server.Command;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,9 @@ using UnityEngine;
 /// </summary>
 [SCommand]
 public class EventCommand : ICommand
-{
+{ 
+
+    private static ILog log = LogManagers.GetLogger("EventCommand");
     public string Name
     {
         get
@@ -20,16 +23,16 @@ public class EventCommand : ICommand
     public object ExecuteCommand(string data)
     {
 
-        Debug.Log("执行："+ data);
+        //Debug.Log("执行："+ data);
         AlarmEventItem alarmEventItem = Utils.CollectionsConvert.ToObject<AlarmEventItem>(data);
         if(alarmEventItem!=null)
         {
-            Debug.Log("执行1");
+            //.Log("执行1");
             ShowAlarmEvent.instance.Show(alarmEventItem);
         }
         else
         {
-            Debug.Log("result i null"+ data);
+            Debug.Log("EventCommand result is null" + data);
         }
 
         return null;
