@@ -91,10 +91,11 @@ public abstract class BaseSet
     //不带动画，直接退出
     public virtual void Exit(string nextid) {
         //EnableOrDisableCamera(false);
-       // TipsMgr.Instance.DeleteTips();
-        ShowOrHideScene(false);
+        // TipsMgr.Instance.DeleteTips();
         SubsystemMsg.Delete();
         EventMgr.Instance.SendEvent(EventName.DeleteObject, null);
+        ShowOrHideScene(false);
+      
     }
 
     protected Quaternion cameraRoation = Quaternion.identity;

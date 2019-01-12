@@ -146,7 +146,17 @@ namespace State
         }
         public void LocateEquipment(string equipmentId,string sceneId)
         {
-            if(equipmentId.Equals(currentEquipmentid))
+            
+            Object3dItem currentScene = SceneContext.currentSceneData;
+            Object3dItem locateScene = SceneData.FindObjUtilityect3dItemById(sceneId);
+            if((mCurrentState!=null && mCurrentState is FloorState) && locateScene.parentsId.Equals(currentScene.id))
+            {
+
+                sceneId = currentScene.id;
+            }
+
+
+            if (equipmentId.Equals(currentEquipmentid))
             {
                 log.Debug("equipment is same" + "id="+ equipmentId);
                 return;
