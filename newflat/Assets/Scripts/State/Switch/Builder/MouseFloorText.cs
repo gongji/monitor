@@ -52,7 +52,16 @@ public class MouseFloorText : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerDown(PointerEventData eventData)
     {
          Main.instance.stateMachineManager.SwitchStatus<FloorState>(id);
-        
+    }
+
+    IState state = null;
+    void Update()
+    {
+        state = Main.instance.stateMachineManager.mCurrentState;
+        if(!(state is BuilderState))
+        {
+            GameObject.DestroyImmediate(gameObject); ;
+        }
     }
 
     

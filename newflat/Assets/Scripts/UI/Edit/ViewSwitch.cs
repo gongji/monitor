@@ -66,7 +66,7 @@ public class ViewSwitch : MonoBehaviour {
         if (mCurrentState is AreaState)
         {
             Camera.main.orthographic = false;
-            Camera.main.transform.position = box.transform.position + Vector3.up * 100.0f;
+            Camera.main.transform.position = box.transform.position + Vector3.up * 250.0f;
             Camera.main.transform.eulerAngles = new Vector3(90, 0, 0);
 
         }
@@ -95,7 +95,6 @@ public class ViewSwitch : MonoBehaviour {
            // Debug.Log("maxWidth="+ maxWidth);
         }
         else
-
         {
             up = box.TransformDirection(Vector3.right);
             maxWidth = bounds.size.z;

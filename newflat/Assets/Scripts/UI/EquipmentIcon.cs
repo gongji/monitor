@@ -43,7 +43,17 @@ public class EquipmentIcon : MonoBehaviour ,IPointerEnterHandler, IPointerExitHa
     {
         if(equipmentObject!=null)
         {
-            transform.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(equipmentObject.transform.position, Camera.main);
+
+           bool  isVisible =   Object3dUtility.IsCameraForword2(equipmentObject, Camera.main);
+            if(isVisible)
+            {
+                transform.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(equipmentObject.transform.position, Camera.main);
+            }
+            else
+            {
+                transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(10000, 0);
+            }
+           
         }
         
     }

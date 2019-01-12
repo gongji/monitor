@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class AreaSet:BaseSet
 {
-  
     private static ILog log = LogManagers.GetLogger("AreaSet");
     #region 设置全员场景初始化
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)

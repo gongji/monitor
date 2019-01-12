@@ -162,7 +162,7 @@ public static  class Object3dUtility
     {
         //Debug.Log(gameObject.name);
         Vector3 vScreenPosition = camera.WorldToViewportPoint(gameObject.transform.position);
-        Debug.Log(vScreenPosition);
+       // Debug.Log(vScreenPosition);
         if (vScreenPosition.x < 0.0f || vScreenPosition.x > 1.0f || vScreenPosition.y < 0.0f || vScreenPosition.y > 1.0f)
         {
             return false;

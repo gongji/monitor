@@ -18,7 +18,6 @@ public class CameraViewChangeManager : MonoBehaviour {
         
         if (AppInfo.GetCurrentState is BuilderState)
         {
-
             Camera.main.orthographic =false;
             Camera.main.gameObject.GetComponent<CameraObjectController>().enabled = false;
             Camera.main.farClipPlane = 1000;
