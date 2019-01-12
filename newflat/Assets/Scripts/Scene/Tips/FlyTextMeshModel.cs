@@ -31,12 +31,27 @@ public class FlyTextMeshModel : MeshTextAbstract
     {
         if (fontModel == null)
         {
-            fontModel = FlyingText.GetObject(text);
-            AddCollider(fontModel);
+            fontModel = new GameObject();
+                
+                
+             GameObject fontObject =    FlyingText.GetObject(text);
+            //AddCollider(fontObject);
             fontModel.transform.position = postion;
             fontModel.transform.SetParent(parentBox.parent);
             fontModel.name = text;
-           if(isAddScript)
+            fontObject.transform.SetParent(fontModel.transform);
+            fontObject.transform.localPosition = Vector3.zero;
+            fontObject.transform.localRotation = Quaternion.identity;
+            fontObject.transform.localScale = Vector3.one;
+
+
+
+
+            //AddCollider(fontModel);
+            //fontModel.transform.position = postion;
+            //fontModel.transform.SetParent(parentBox.parent);
+            //fontModel.name = text;
+            if (isAddScript)
             {
                 AddScripts();
             }
@@ -52,10 +67,10 @@ public class FlyTextMeshModel : MeshTextAbstract
         if (fontModel != null)
         {
 
-            Mouse3DTips mte = fontModel.gameObject.GetComponent<Mouse3DTips>();
+            Mouse3DTips mte = fontModel.GetComponentInChildren<TextObjectData>().GetComponent<Mouse3DTips>();
             if (mte == null)
             {
-                mte = fontModel.gameObject.AddComponent<Mouse3DTips>();
+                mte = fontModel.GetComponentInChildren<TextObjectData>().gameObject.AddComponent<Mouse3DTips>();
             }
             mte.id = id;
             mte.scaleEffetion = MinLoacalScale / 2.0f;

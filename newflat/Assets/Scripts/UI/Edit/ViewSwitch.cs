@@ -22,8 +22,7 @@ public class ViewSwitch : MonoBehaviour {
      private void Switch()
     {
         is3D = !is3D;
-        
-
+       
         if(!is3D)
         {
             AppInfo.currentView = ViewType.View2D;
@@ -39,6 +38,8 @@ public class ViewSwitch : MonoBehaviour {
             GetComponentInChildren<Text>().text = "2D视角";
             Switch3D();
         }
+
+        EditToolBar.instance.SetViewButtonControl();
     }
 
     private Vector3 cameraPosition = Vector3.zero;
@@ -78,6 +79,8 @@ public class ViewSwitch : MonoBehaviour {
             box.GetComponent<BoxCollider>().enabled = flag;
         }
         //transform.position = new Vector3(box.center.x, 30, box.center.z);
+
+        CameraInitSet.UpdateCamraControlSpeed();
     }
 
     private void Set2Dview(Transform box)
@@ -117,7 +120,10 @@ public class ViewSwitch : MonoBehaviour {
             BrowserToolBar.instance.SetToolBarState();
             SubsystemMsg.Create("");
         }
-        
+        CameraInitSet.UpdateCamraControlSpeed();
+
     }
+
+  
 	
 }

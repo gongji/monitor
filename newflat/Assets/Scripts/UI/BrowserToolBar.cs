@@ -16,7 +16,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     private Transform qiangti;
 
-    private Transform guanxian;
+    private Transform jidian;
 
     private Transform fullArea;
 
@@ -51,8 +51,8 @@ public class BrowserToolBar : MonoBehaviour {
         buttonList.Add(viewSwitch);
         qiangti = transform.Find("qiangti");
         buttonList.Add(qiangti);
-        guanxian = transform.Find("guanxian");
-        buttonList.Add(guanxian);
+        jidian = transform.Find("jidian");
+        buttonList.Add(jidian);
         fullArea = transform.Find("fullArea");
         buttonList.Add(fullArea);
         tips = transform.Find("tips");
@@ -75,7 +75,7 @@ public class BrowserToolBar : MonoBehaviour {
         TransformControlUtility.AddEventToBtn(builderSwitch.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BuilderSwitch(); });
 
 
-        guanxian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(guanxian.GetComponent<Toggle>(), value));
+        jidian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(jidian.GetComponent<Toggle>(), value));
         mainCamera = Camera.main.transform;
         if(GameObject.Find("FPSController")!=null)
         {
@@ -111,7 +111,7 @@ public class BrowserToolBar : MonoBehaviour {
         if (mCurrentState is AreaState)
         {
             qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
+            jidian.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
@@ -121,7 +121,7 @@ public class BrowserToolBar : MonoBehaviour {
         {
             fullArea.gameObject.SetActive(false);
             qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
+            jidian.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
@@ -133,7 +133,7 @@ public class BrowserToolBar : MonoBehaviour {
             reset.gameObject.SetActive(false);
             viewSwitch.gameObject.SetActive(false);
             qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
+            jidian.gameObject.SetActive(false);
             fullArea.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
@@ -149,7 +149,7 @@ public class BrowserToolBar : MonoBehaviour {
             reset.gameObject.SetActive(false);
             viewSwitch.gameObject.SetActive(false);
             qiangti.gameObject.SetActive(false);
-            guanxian.gameObject.SetActive(false);
+            jidian.gameObject.SetActive(false);
             tips.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
@@ -186,12 +186,12 @@ public class BrowserToolBar : MonoBehaviour {
         guanxianSelect3d = value;
         if (value)
         {
-            GuanWangMsg.ShowGuanWangShow();
+            JiDaianMsg.ShowJiDian();
            
         }
         else
         {
-            GuanWangMsg.AllGuanWangHide();
+            JiDaianMsg.AllJiDianHide();
         }
        // Debug.Log("toggle change " + (value ? "On" : "Off"));
     }
@@ -260,7 +260,7 @@ public class BrowserToolBar : MonoBehaviour {
             firstFPSController.transform.rotation = mainCamera.transform.rotation;
             firstFPSController.gameObject.SetActive(true);
             firstCamera.enabled = true;
-            UIUtility.ShowTips("当前进入人物模式，按Q键切换键飞行模式。");
+            UIUtility.ShowTips("您已进入人物模式，按Q键切换键飞行模式。");
         }
         else
         {
@@ -292,7 +292,6 @@ public class BrowserToolBar : MonoBehaviour {
 
         dic.Clear();
 
-
         if (!isExpandbuilder)
         {
             builderSwitch.GetComponentInChildren<Text>().text = "楼层复位";
@@ -323,7 +322,6 @@ public class BrowserToolBar : MonoBehaviour {
         }
 
         //进入人物模式
-        
     }
 
     private  void OnGUI()
@@ -352,14 +350,14 @@ public class BrowserToolBar : MonoBehaviour {
     }
 
 
-    #region wangwang
+    #region jidian
     /// <param name="isShow"></param>
-    public void HideShowGuanwang(bool isShow)
+    public void HideShowJiDian(bool isShow)
     {
-        guanxian.gameObject.SetActive(isShow);
+        jidian.gameObject.SetActive(isShow);
     }
 
-    public bool GetGuanWangToggleState()
+    public bool GetJiDianToggleState()
     {
         return guanxianSelect3d;
     }

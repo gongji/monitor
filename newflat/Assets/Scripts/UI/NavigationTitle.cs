@@ -12,14 +12,29 @@ public class NavigationTitle : MonoBehaviour {
     }
 
     public void ShowTitle(string id)
-
-    { 
-
-        if(id.Equals("-1"))
+    {
+        //Debug.Log("-1");
+        string titleName = "";
+        if (id.Equals("-1"))
         {
             id = string.Empty;
+            titleName = GetName(id);
         }
-        GetComponent<TextMeshProUGUI>().text = GetName(id);
+        else
+        {
+            Object3dItem item = SceneData.FindObjUtilityect3dItemById(id);
+            if(item != null && item.number.Equals(Constant.Main_dxName))
+            {
+                id = string.Empty;
+                titleName = GetName(id);
+            }
+            else
+            {
+                titleName = GetName(id);
+            }
+            
+        }
+        GetComponent<TextMeshProUGUI>().text = titleName;
     }
 
     private string GetName(string id)

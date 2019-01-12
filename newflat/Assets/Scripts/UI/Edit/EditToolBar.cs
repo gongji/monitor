@@ -13,6 +13,12 @@ public class EditToolBar : MonoBehaviour {
 
     private Transform savelocate;
 
+    public static EditToolBar instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         save = transform.Find("Save");
@@ -27,6 +33,8 @@ public class EditToolBar : MonoBehaviour {
         {
             GameObject.DestroyImmediate(GameObject.Find("FPSController"));
         }
+
+        
     }
 
     /// <summary>
@@ -48,6 +56,21 @@ public class EditToolBar : MonoBehaviour {
     {
 
         CameraViewData.SaveSceneCameraView();
+    }
+
+    /// <summary>
+    /// 对视角的按钮进行控制
+    /// </summary>
+    public void SetViewButtonControl()
+    {
+        if(AppInfo.currentView == ViewType.View3D)
+        {
+            savelocate.gameObject.SetActive(true);
+        }
+        else
+        {
+            savelocate.gameObject.SetActive(false);
+        }
     }
 
    

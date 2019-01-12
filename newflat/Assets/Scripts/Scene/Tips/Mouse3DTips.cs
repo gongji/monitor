@@ -46,14 +46,17 @@ public class Mouse3DTips : MonoBehaviour {
     //    }
     //}
 
+    
     private void OnMouseOver()
     {
-        EffectionUtility.PlayOutlineEffect(transform, Color.blue,Color.yellow);
+       EffectionUtility.PlayOutlineEffect(transform, Color.blue,Color.yellow);
+        transform.localScale = Vector3.one * 1.3f;
     }
 
     private void OnMouseExit()
     {
         EffectionUtility.StopOutlineEffect(transform);
+        transform.localScale = Vector3.one;
     }
 
 
@@ -63,18 +66,14 @@ public class Mouse3DTips : MonoBehaviour {
     public void OnMouseDown()
     {
         IState currentstate = Main.instance.stateMachineManager.mCurrentState;
-
-        if(currentstate is AreaState && AppInfo.Platform == BRPlatform.Browser)
-        {
+        if (currentstate is AreaState && AppInfo.Platform == BRPlatform.Browser)
+        { 
             Main.instance.stateMachineManager.SwitchStatus<BuilderState>(id);
         }
         else if(currentstate is FloorState)
         {
             Main.instance.stateMachineManager.SwitchStatus<RoomState>(id);
         }
-        
-
+       
     }
-
-    
 }

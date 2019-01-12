@@ -33,7 +33,29 @@ public class BimMouse : MonoBehaviour {
 
             DoData(TestBim.CreateData());
 
+            EffectionUtility.StopOutlineEffect(transform);
+
         });
+    }
+
+    public void OnMouseOver()
+    {
+        if (ui != null || !BimMsg.instacne.isSelected)
+        {
+            return;
+        }
+
+        EffectionUtility.PlayOutlineEffect(transform, Color.yellow, Color.blue);
+    }
+
+    public void OnMouseExit()
+    {
+        if (ui != null || !BimMsg.instacne.isSelected)
+        {
+            return;
+        }
+
+        EffectionUtility.StopOutlineEffect(transform);
     }
 
     private UICenterScaleBig uiCenterScaleBig = null;

@@ -66,6 +66,7 @@ public static class SceneParse  {
             if (gs[0].name.ToLower().Contains(Constant.JiDian.ToLower()))
             {
                 object3DElement.type = Type.JiDian;
+                AddChildBimScritps(gs[0].transform);
             }
             else
             {
@@ -249,15 +250,21 @@ public static class SceneParse  {
         Transform bim = t.Find("bim");
         if(bim!=null)
         {
-            foreach (Transform child in bim)
-            {
-                child.gameObject.AddComponent<BimMouse>();
-            }
+            AddChildBimScritps(bim);
         }
         
     }
 
-    
+    private static  void AddChildBimScritps(Transform root)
+    {
+        foreach (Transform child in root)
+        {
+            child.gameObject.AddComponent<BimMouse>();
+        }
+    }
+
+
+
 
 
 

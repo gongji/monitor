@@ -19,6 +19,7 @@ public class BimDataShow : MonoBehaviour {
             GameObject titleGameObject = GameObject.Instantiate<GameObject>(bimTitlePrefeb.gameObject);
             titleGameObject.SetActive(true);
             titleGameObject.transform.SetParent(PropertyContent);
+            titleGameObject.transform.localScale = Vector3.one;
             titleGameObject.GetComponentInChildren<Text>().text = "  "+bimItem.title;
 
             string names = bimItem.name;
@@ -27,8 +28,10 @@ public class BimDataShow : MonoBehaviour {
             if(!string.IsNullOrEmpty(names))
             {
                 GameObject content = GameObject.Instantiate<GameObject>(bimContentPrefeb.gameObject);
+               
                 content.SetActive(true);
                 content.transform.SetParent(PropertyContent);
+                content.transform.localScale = Vector3.one;
 
                 string[] nameArray = names.Split(',');
                 string[] valueArray = values.Split(',');

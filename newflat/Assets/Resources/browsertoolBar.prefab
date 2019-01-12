@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 224080753965599584}
   - component: {fileID: 114630147370924610}
   m_Layer: 5
-  m_Name: guanxian
+  m_Name: jidian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -607,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fdeaeb44554c64e822c87ff4e3a3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSelected: 0
 --- !u!114 &114106667285565456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -731,7 +732,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7BA1\u7EBF"
+  m_Text: "\u673A\u7535"
 --- !u!114 &114310601552565630
 MonoBehaviour:
   m_ObjectHideFlags: 1

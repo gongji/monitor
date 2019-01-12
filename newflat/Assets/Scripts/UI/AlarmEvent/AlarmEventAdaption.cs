@@ -27,18 +27,14 @@ public class AlarmEventAdaption : MonoBehaviour {
         else
         {
             transform.parent.GetComponent<RectTransform>().DOAnchorPosY(transform.parent.GetComponent<RectTransform>().anchoredPosition.y - yValue, 1.0f);
-           
-
-
-
         }
 
         isExpand = !isExpand;
     }
     void Update () {
         size = grid.GetComponent<RectTransform>().sizeDelta;
-        GetComponent<RectTransform>().anchoredPosition = new Vector2(grid.GetComponent<RectTransform>().anchoredPosition.x, 
-            grid.GetComponent<RectTransform>().anchoredPosition.y+size.y);
+        GetComponent<RectTransform>().anchoredPosition = new Vector2(grid.GetComponent<RectTransform>().anchoredPosition.x,
+            grid.GetComponent<RectTransform>().anchoredPosition.y + size.y-3);
 
     }
 }

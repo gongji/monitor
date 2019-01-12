@@ -161,13 +161,13 @@ public class FloorRoomSet : BaseSet
     /// <param name="nextid"></param>
     /// <param name="callBack"></param>
     /// <param name="isRoom"></param>
-    protected void PullScreenCenter(string nextid,System.Action<Vector3,float> callBack,bool isRoom = false)
+    protected GameObject PullScreenCenter(string nextid,System.Action<Vector3,float> callBack,bool isRoom = false)
     {
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(nextid);
         if (object3dItem == null)
         {
             log.Debug("room is null");
-            return;
+            return null;
         }
         GameObject box = null;
         float duringTime = 1.0f;
@@ -186,7 +186,7 @@ public class FloorRoomSet : BaseSet
             else
             {
                 log.Debug("fj is null");
-                return;
+                return null;
             }
            
         }
@@ -194,11 +194,14 @@ public class FloorRoomSet : BaseSet
         if(box == null)
         {
             log.Debug("room is null");
-            return;
+            return null;
         }
         Vector3 center = box.GetComponent<BoxCollider>().bounds.center;
         CameraAnimation.RotationScreenCenter(center, duringTime, callBack);
-      
+
+        return box;
+
+
     }
     /// <summary>
     /// 创建楼层或者房间下边的地面

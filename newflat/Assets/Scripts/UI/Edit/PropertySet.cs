@@ -8,7 +8,7 @@ public class PropertySet : MonoBehaviour {
 
 
     public static PropertySet instance;
-    public TMP_InputField equipmentName;
+    public InputField equipmentName;
     public TMP_Dropdown parentObject;
     public TMP_InputField x;
     public TMP_InputField y;
@@ -61,6 +61,10 @@ public class PropertySet : MonoBehaviour {
     public  void ChangeTransform()
     {
         //Debug.Log("change");
+        if(UIElementCommandBar.instance==null)
+        {
+            return;
+        }
         Transform select =  UIElementCommandBar.instance.selectingObjectTransform;
         if(select!=null)
         {

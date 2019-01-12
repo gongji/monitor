@@ -30,20 +30,36 @@ public class FloorSet : FloorRoomSet {
         Debug.Log("exit动画");
         base.Exit(nextid, callBack);
         //GuanWangMsg.AllGuanWangHide();
-        PullScreenCenter(nextid, (centerPostion, duringTime) => {
+        GameObject box = null;
+        box =  PullScreenCenter(nextid, (centerPostion, duringTime) => {
 
-            Camera.main.transform.DOMove(centerPostion, duringTime).OnComplete(() =>
-            {
-                DOVirtual.DelayedCall(1.0f, () => {
-                    Exit(nextid);
-                    PlaneManger(null, false);
-                    if (callBack != null)
-                    {
-                        callBack.Invoke();
-                    }
-                });
+            //Camera.main.transform.DOMove(centerPostion, duringTime).OnComplete(() =>
+            //{
+            //    DOVirtual.DelayedCall(1.0f, () => {
+            //        Exit(nextid);
+            //        PlaneManger(null, false);
+            //        if (callBack != null)
+            //        {
+            //            callBack.Invoke();
+            //        }
+            //    });
                
-            });
+            //});
+
+            if(box!=null)
+            {
+                CameraInitSet.SetCameraPosition(box.transform, () => {
+
+                    DOVirtual.DelayedCall(1.0f, () => {
+                        Exit(nextid);
+                        PlaneManger(null, false);
+                        if (callBack != null)
+                        {
+                            callBack.Invoke();
+                        }
+                    });
+                });
+            }
         });
           
     }
@@ -61,17 +77,17 @@ public class FloorSet : FloorRoomSet {
         List<Object3dItem> list = SceneData.GetCurrentGuangWang();
         if(list.Count>0 && AppInfo.currentView == ViewType.View3D)
         {
-            BrowserToolBar.instance.HideShowGuanwang(true);
+            BrowserToolBar.instance.HideShowJiDian(true);
             //显示管网的模型
-            if(BrowserToolBar.instance.GetGuanWangToggleState())
+            if(BrowserToolBar.instance.GetJiDianToggleState())
             {
-                GuanWangMsg.ShowGuanWangShow();
+                JiDaianMsg.ShowJiDian();
             }
            
         }
         else
         {
-            BrowserToolBar.instance.HideShowGuanwang(false);
+            BrowserToolBar.instance.HideShowJiDian(false);
         }
         
     }
@@ -81,12 +97,12 @@ public class FloorSet : FloorRoomSet {
     /// <param name="nextid"></param>
     public override void Exit(string nextid)
     {
-        Debug.Log("exit直接");
+       // Debug.Log("exit直接");
         base.Exit(nextid);
         DeleteNavigation();
         //DeleteTips();
         DestryPlane();
-        GuanWangMsg.AllGuanWangHide();
+        JiDaianMsg.AllJiDianHide();
 
 
 

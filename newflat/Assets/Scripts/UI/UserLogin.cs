@@ -18,8 +18,11 @@ public class UserLogin : MonoBehaviour {
         transform.Find("reset").GetComponent<Button>().onClick.AddListener(Reset);
         transform.Find("submit").GetComponent<Button>().onClick.AddListener(Submit);
         messge = transform.Find("messge").GetComponent<Text>();
-        messge.enabled = false;
 
+        messge.GetComponent<Text>().font = FontResouce.Instance.font;
+        transform.Find("title").GetComponent<Text>().font = FontResouce.Instance.font;
+        password.GetComponent<InputField>().contentType = InputField.ContentType.Password;
+        messge.enabled = false;
     }
 	
     public void Submit()

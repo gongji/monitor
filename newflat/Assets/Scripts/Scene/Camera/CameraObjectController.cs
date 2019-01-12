@@ -285,22 +285,46 @@ public class CameraObjectController : MonoBehaviour
         m_speedScaleSlope = m_speedScaleSlope * scale;
     }
 
-    public void SetSpeedFloorChange()
+    public void SetSpeedFloorChange(bool is3dView = true)
     {
         m_speedScaleSlope = 0.01f;
-        m_MouseDragSpeed = 10;
+        if(is3dView)
+        {
+            m_MouseDragSpeed = 50;
+        }
+        else
+        {
+            m_MouseDragSpeed = 1000;
+        }
+       
     }
 
-    public void SetSpeedRoomChange()
+    public void SetSpeedRoomChange(bool is3dView = true)
     {
         m_speedScaleSlope = 0.002f;
-        m_MouseDragSpeed = 50;
+      
+        if(is3dView)
+        {
+            m_MouseDragSpeed = 50;
+        }
+        else
+        {
+            m_MouseDragSpeed = 500;
+        }
     }
 
-    public void SetSpeedReset()
+    public void SetSpeedReset(bool is3dView = true)
     {
         m_speedScaleSlope = 0.03f;
-        m_MouseDragSpeed = 50;
+      
+        if(is3dView)
+        {
+            m_MouseDragSpeed = 50;
+        }
+        else
+        {
+            m_MouseDragSpeed = 50;
+        }
     }
     
     public void SetCamerRotation()

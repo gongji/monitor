@@ -60,7 +60,7 @@ public class FlyingTextMsg : MonoBehaviour
     {
        
         string url = Application.streamingAssetsPath +   "/Text/"  + PlatformMsg.instance.currentPlatform.ToString() + "/FlyingText.unity3d";
-        Debug.Log(url);
+       // Debug.Log(url);
         ResourceUtility.Instance.GetHttpAssetBundle(url, (result) => {
 
             GameObject g =  (GameObject)GameObject.Instantiate(result.mainAsset);

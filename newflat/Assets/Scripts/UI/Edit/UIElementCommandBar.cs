@@ -72,8 +72,6 @@ public sealed class UIElementCommandBar : MonoBehaviour
         buttons.Add(locate);
         buttons.Add(bind);
         buttons.Add(delete);
-
-
     }
 
     public void CopyClick(GameObject g)

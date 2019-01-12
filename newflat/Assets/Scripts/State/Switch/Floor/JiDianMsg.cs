@@ -5,14 +5,14 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// 管网的处理
+/// jidian
 /// </summary>
-public static class GuanWangMsg
+public static class JiDaianMsg
 {
     private static List<Object3dItem> curentStata;
-    public static void ShowGuanWangShow()
+    public static void ShowJiDian()
     {
-       // Debug.Log("管网显示");
+      
         List<Object3dItem> guanwangs = SceneData.GetCurrentGuangWang();
         curentStata = guanwangs;
         var result = from o in guanwangs where o.isDownFinish == false select o;
@@ -57,9 +57,9 @@ public static class GuanWangMsg
     /// <summary>
     /// 隐藏当前所有的管网
     /// </summary>
-    public static void AllGuanWangHide()
+    public static void AllJiDianHide()
     {
-        Debug.Log("隐藏管网");
+       // Debug.Log("隐藏管网");
         //List<Object3dItem> guanwangs = SceneData.GetCurrentGuangWang();
         if(curentStata!=null)
         {

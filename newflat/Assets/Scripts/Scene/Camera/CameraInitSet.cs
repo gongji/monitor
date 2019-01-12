@@ -39,29 +39,40 @@ public static class CameraInitSet {
             return;
         }
 
-     
+
+        SetCameraPosition(box, callBack);
+
+    }
+
+
+    /// <summary>
+    /// by box Set camera view postion
+    /// </summary>
+    /// <param name="box"></param>
+    /// <param name="callBack"></param>
+    public static void SetCameraPosition(Transform box, System.Action callBack)
+    {
         CameraViewData.GetCurrentSceneCameraView((result) =>
         {
             CameraViewItem cameraView = result;
             if (cameraView != null)
             {
-                // Debug.Log("数据库读取");
+               
                 cameraPostion = new Vector3(cameraView.x, cameraView.y, cameraView.z);
                 cameraRoation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
             }
             else
-            {
-                // Debug.Log("本地拉取");
-
+            { 
                 CalculateCameraPostionRoation(box);
             }
 
-            CameraMove(cameraMoveTime, callBack, box);
+            CameraMove(_cameraMoveTime, callBack, box);
 
 
         });
-
     }
+
+
 
     private static void CameraMove(float cameraMoveTime, System.Action callBack, Transform box)
     {
@@ -144,8 +155,8 @@ public static class CameraInitSet {
         {
             box.GetComponent<BoxCollider>().isTrigger = true;
         }
-       
-         CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
+
+
         //CameraRotatoAround acc = Camera.main.gameObject.GetComponent<CameraRotatoAround>();
         //if(acc==null)
         //{
@@ -168,22 +179,10 @@ public static class CameraInitSet {
         //    acc.MouseScrollWheelSensitivity = 2.0f;
 
         //}
-
-        if (isEnable && coc!=null)
+        UpdateCamraControlSpeed();
+        if (isEnable && Camera.main.gameObject.GetComponent<CameraObjectController>() != null)
         {
-            IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
-            if (mCurrentState is AreaState)
-            {
-                coc.SetSpeedReset();
-            }
-            else if (mCurrentState is FloorState)
-            {
-                coc.SetSpeedFloorChange();
-            }
-            else if (mCurrentState is RoomState)
-            {
-                coc.SetSpeedRoomChange();
-            }
+          
             if (box != null)
             {
                 //Debug.Log("aaaaaaaaaa");
@@ -195,6 +194,26 @@ public static class CameraInitSet {
         }
         //coc.SetEnable(isEnable);
 
+    }
+
+    public static void UpdateCamraControlSpeed()
+    {
+        CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
+
+        bool is3DView = AppInfo.currentView == ViewType.View3D ? true : false;
+        IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
+        if (mCurrentState is AreaState)
+        {
+            coc.SetSpeedReset(is3DView);
+        }
+        else if (mCurrentState is FloorState)
+        {
+            coc.SetSpeedFloorChange(is3DView);
+        }
+        else if (mCurrentState is RoomState)
+        {
+            coc.SetSpeedRoomChange(is3DView);
+        }
     }
 
     public static void ResetCameraPostion()

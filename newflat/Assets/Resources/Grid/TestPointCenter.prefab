@@ -264,8 +264,8 @@ MonoBehaviour:
   DefaultHeadingBackgroundColor: {r: 0.101960786, g: 0.13333334, b: 0.14117648, a: 1}
   DefaultHeadingTextColor: {r: 0.9487807, g: 0.9506905, b: 0.9716981, a: 1}
   DefaultHeadingFont: {fileID: 12800000, guid: 9ad499c407c098f42b4df43e4eecb084, type: 3}
-  DefaultHeadingFontSize: 12
-  DefaultHeadingFontStyle: 1
+  DefaultHeadingFontSize: 14
+  DefaultHeadingFontStyle: 0
   DefaultShowColumnHeaders: 1
   DefaultColumnHeaderHeight: 40
   DefaultItemBackgroundColor: {r: 0.101960786, g: 0.13333334, b: 0.14117648, a: 1}
