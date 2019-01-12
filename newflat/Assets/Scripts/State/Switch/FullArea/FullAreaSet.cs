@@ -16,23 +16,34 @@ public class FullAreaSet : BaseSet
         base.Enter(currentlist, callBack);
         //SaveOrResetFloorPostion(currentlist);
         Object3dItem currentScene = SceneContext.currentSceneData;
-       SceneContext.currentSceneData = FindMapWqItem();
-       CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, ()=> {
+        foreach(Object3dItem item  in currentlist)
+        {
+            Debug.Log("number="+ item.number);
+        }
+       // Debug.Log(currentScene.number);
+        SceneContext.currentSceneData = FindMapWqItem();
+        Debug.Log(SceneContext.currentSceneData.number);
+        CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, ()=> {
 
            SetSkyEffection();
            //设置能耗展示
            SetEnergyConsumptionShow();
            CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId).name);
-           if (callBack!=null)
-           {
-               callBack.Invoke();
-           }
-
+         
            colorImageUI = TransformControlUtility.CreateItem("UI/fullAreColor", UIUtility.GetRootCanvas());
-           colorImageUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+           colorImageUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40.0f);
+           colorImageUI.name = "colorImage";
+
+            Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId);
+           CreateNavigation(currentWq, null, "返回");
+
+            if (callBack != null)
+            {
+                callBack.Invoke();
+            }
 
 
-       });
+        });
     }
 
 
@@ -100,6 +111,36 @@ public class FullAreaSet : BaseSet
 
         SwitchCamera(floorList);
         CreateFloorTips(floorList);
+    }
+
+    protected override void CreateNavigation(Object3dItem currentData, string frontname, string backName)
+    {
+        base.CreateNavigation(currentData, frontname, backName);
+       // string parentid = currentData.parentsId;
+        List<Object3dItem> wqList = SceneData.GetAllWq();
+        Object3dItem tempWqItem = null;
+        for (int i=0;i< wqList.Count;i++)
+        {
+           if(wqList[i].id.Equals(SceneContext.buiderId))
+            {
+                tempWqItem = wqList[i];
+                wqList.RemoveAt(i);
+                break;
+            }
+        }
+        if(tempWqItem!=null)
+        {
+            wqList.Insert(0, tempWqItem);
+        }
+       
+
+       // Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
+        if (fnu!=null)
+        {
+            fnu.CreateFloorRoomNavagitionList(wqList, navigationUI.transform, currentData, frontname, backName,true);
+        }
+        
+       
     }
 
     /// <summary>

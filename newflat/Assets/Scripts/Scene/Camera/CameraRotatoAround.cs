@@ -78,7 +78,11 @@ public class CameraRotatoAround : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameObject.DestroyImmediate(cube.gameObject);
+        if(cube!=null)
+        {
+            GameObject.DestroyImmediate(cube.gameObject);
+        }
+       
     }
 
     public void SetRotation()

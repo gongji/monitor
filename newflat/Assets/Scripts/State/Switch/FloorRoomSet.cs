@@ -120,25 +120,14 @@ public class FloorRoomSet : BaseSet
     }
 
 
-    private GameObject navigationUI = null;
+ 
     /// <summary>
     /// 创建UI导航
     /// </summary>
     /// <param name="currentData"></param>
-    protected void CreateNavigation(Object3dItem currentData, string frontname,string backName)
+    protected override void CreateNavigation(Object3dItem currentData, string frontname,string backName)
     {
-        Transform canvas = UIUtility.GetRootCanvas();
-        NavigationUI fnui = canvas.GetComponentInChildren<NavigationUI>();
-        if (fnui != null)
-        {
-            
-            GameObject.DestroyImmediate(fnui.gameObject);
-            GameObject.Destroy(fnui);
-           
-        }
-        navigationUI = TransformControlUtility.CreateItem("TextNavigation", GameObject.Find("Canvas").transform);
-        navigationUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        NavigationUI fnu = navigationUI.GetComponent<NavigationUI>();
+        base.CreateNavigation(currentData, frontname, backName);
         string parentid = currentData.parentsId;
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
         if (object3dItem.childs != null && (object3dItem.childs.Count > 0))

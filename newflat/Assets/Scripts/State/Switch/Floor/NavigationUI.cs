@@ -33,7 +33,8 @@ public  class NavigationUI:MonoBehaviour
     /// <param name="currentData"></param>
     /// <param name="frontname">下边按钮的前缀</param>
     /// <param name="backName">第一个按钮的名字</param>
-    public void CreateFloorRoomNavagitionList(List<Object3dItem> DataSouce,Transform parent, Object3dItem currentData, string frontname,string backName)
+    public void CreateFloorRoomNavagitionList(List<Object3dItem> DataSouce,Transform parent, Object3dItem currentData, 
+        string frontname,string backName,bool isFullArea =false)
     {
         this.id = currentData.id;
         backButton.GetComponentInChildren<Text>().text = backName;
@@ -50,7 +51,15 @@ public  class NavigationUI:MonoBehaviour
             cloneObject.transform.SetParent(_parent);
 
             cloneObject.transform.localScale = Vector3.one;
-            cloneObject.GetComponentInChildren<Text>().text = frontname + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
+            if(!isFullArea)
+            {
+                cloneObject.GetComponentInChildren<Text>().text = frontname + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
+            }
+            else
+            {
+                cloneObject.GetComponentInChildren<Text>().text = object3dItem.name;
+            }
+           
             cloneObject.GetComponentInChildren<Text>().fontSize = 15;
             cloneObject.name = object3dItem.id;
             if(object3dItem.id.Equals(currentData.id))
@@ -189,7 +198,7 @@ public  class NavigationUI:MonoBehaviour
         {
             Main.instance.stateMachineManager.SwitchStatus<FloorState>(parentObject.id);
         }
-        else if(currentstate is BuilderState)
+        else if(currentstate is BuilderState || currentstate is FullAreaState)
         {
             Main.instance.stateMachineManager.SwitchStatus<AreaState>("");
         }

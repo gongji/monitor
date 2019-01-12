@@ -18,7 +18,7 @@ public class FloorSet : FloorRoomSet {
         SetFloorRoomOffestPostion(currentDataList);
         OnInit(currentDataList, callBack,"F","返回");
         //设置管网按钮是否可见
-        SetGuanwamgButttonVisible();
+        SetJiDianButttonVisible();
     }
     /// <summary>
     /// 退出带动画，进入房间
@@ -67,7 +67,7 @@ public class FloorSet : FloorRoomSet {
     /// <summary>
     /// 设置管网的按钮是否可见,并显示管网
     /// </summary>
-    private void SetGuanwamgButttonVisible()
+    private void SetJiDianButttonVisible()
     {
         if(BrowserToolBar.instance==null)
         {

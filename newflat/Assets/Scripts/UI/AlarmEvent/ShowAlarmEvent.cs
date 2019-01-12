@@ -239,7 +239,7 @@ public  class ShowAlarmEvent :MonoBehaviour
     {
         ListView.SuspendLayout();
         {
-            AddColumnHeader(ListView, "设备名称");
+            AddColumnHeader(ListView, "名称");
             AddColumnHeader(ListView, "时间");
             AddColumnHeader(ListView, "地点");
             AddColumnHeader(ListView, "报警内容");

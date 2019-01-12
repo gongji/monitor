@@ -19,6 +19,7 @@ public class AreaSet:BaseSet
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
 
         SubsystemMsg.Create(sceneid);
+        BrowserToolBar.instance.FullAreaButtonReset();
     }
    
     public void InitCameraPostion(System.Action callBack)

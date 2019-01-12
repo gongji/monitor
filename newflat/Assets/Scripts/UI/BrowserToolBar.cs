@@ -230,6 +230,13 @@ public class BrowserToolBar : MonoBehaviour {
         isFullModeAreaMode = !isFullModeAreaMode;
     }
 
+    public void FullAreaButtonReset()
+    {
+        fullArea.GetComponentInChildren<Text>().text = "全景模式";
+        isFullModeAreaMode = false;
+    }
+    
+
 
     private bool isFlyCameraMode = true;
     public bool IsFlyCameraMode

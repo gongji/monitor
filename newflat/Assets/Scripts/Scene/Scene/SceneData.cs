@@ -311,7 +311,6 @@ public static class SceneData {
         string firstName = builderItem.number.Split('_')[0];
         IEnumerable<Object3dItem> fullresult =
              from object3dItem in object3dList
-                 //不包含管网
              where object3dItem.number.Equals(Constant.SkyboxName) || (object3dItem.number.StartsWith(firstName)  && object3dItem.number.EndsWith(Constant.MapName.ToString()))
              select object3dItem;
 

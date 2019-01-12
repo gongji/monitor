@@ -137,6 +137,23 @@ public abstract class BaseSet
         // Camera.main.GetComponent<PostProcessVolume>().sharedProfile = cameraGameObject.GetComponent<PostProcessVolume>().sharedProfile;
 
     }
+    protected GameObject navigationUI = null;
+    protected NavigationUI fnu = null;
+    protected  virtual void CreateNavigation(Object3dItem currentData, string frontname, string backName)
+    {
+        Transform canvas = UIUtility.GetRootCanvas();
+        NavigationUI fnui = canvas.GetComponentInChildren<NavigationUI>();
+        if (fnui != null)
+        {
+
+            GameObject.DestroyImmediate(fnui.gameObject);
+            GameObject.Destroy(fnui);
+
+        }
+        navigationUI = TransformControlUtility.CreateItem("TextNavigation", GameObject.Find("Canvas").transform);
+        navigationUI.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        fnu = navigationUI.GetComponent<NavigationUI>();
+    }
 
 
 

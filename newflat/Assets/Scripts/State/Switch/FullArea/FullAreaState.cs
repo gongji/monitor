@@ -19,10 +19,7 @@ namespace State
 			this.currentId =id;
             this.enterCallBack = callBack;
             OnEnter ();
-
 		}
-
-     
     	protected override void OnInit()
     	{
             base.OnInit();
@@ -51,8 +48,6 @@ namespace State
                 baseSet = new FullAreaSet();
             }
             InitSet();
-
-
         }
 
 
