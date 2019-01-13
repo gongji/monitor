@@ -228,7 +228,6 @@ public sealed class UIElementCommandBar : MonoBehaviour
     /// </summary>
     private void SetShortButttonState(bool isEnable)
     {
-        moveYButton.GetComponent<Button>().enabled = isEnable;
         edit.GetComponent<EventTrigger>().enabled = isEnable;
         locate.GetComponent<EventTrigger>().enabled = isEnable;
         locate.interactable = isEnable;

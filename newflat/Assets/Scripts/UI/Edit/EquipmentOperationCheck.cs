@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -19,7 +20,7 @@ public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointe
     void Update()
     {
 
-        if (isDown)
+        if (isDown && GetComponent<Button>().interactable)
         {
             
             HandleMouseDown(transform.name);
@@ -30,21 +31,29 @@ public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointe
     public void OnPointerDown(PointerEventData eventData)
 
     { 
-        Debug.Log("OnPointerDown");
 
-        uiElementCommandBar.HideOther(transform.name);
-        HandleMouseDown(transform.name);
-        isDown = true;
+       if(GetComponent<Button>().interactable) 
+       {
+            Debug.Log("OnPointerDown");
+
+            uiElementCommandBar.HideOther(transform.name);
+            HandleMouseDown(transform.name);
+             isDown = true;
+       }
+        
 
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-
-        Debug.Log("OnPointerUp");
-        HandleMouseUp();
-        uiElementCommandBar.ShowAll();
-        isDown = false;
+        if(GetComponent<Button>().interactable) 
+       {
+            Debug.Log("OnPointerUp");
+            HandleMouseUp();
+            uiElementCommandBar.ShowAll();
+             isDown = false;
+       }
+       
     }
    
     private Operation currentOperation;
@@ -52,8 +61,6 @@ public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointe
     private Vector3 mousePosition;
     private Vector3 offsetClick;
     public GameObject rotationPoint;
-
-
 
     public void HandleMouseDown(string ButtonName)
     {
