@@ -26,8 +26,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     private Transform bim;
 
-    public static BrowserToolBar instance;
-
+     private Transform TemptureClound;
     private Transform mainCamera;
     private Transform firstFPSController;
     private Camera firstCamera;
@@ -35,6 +34,8 @@ public class BrowserToolBar : MonoBehaviour {
     protected Texture2D m_FirstPersonIcon = null;
 
     private Transform builderSwitch = null;
+
+     public static BrowserToolBar instance;
 
     private void Awake()
     {
@@ -46,26 +47,25 @@ public class BrowserToolBar : MonoBehaviour {
     private void Start()
     {
         reset = transform.Find("reset");
-        buttonList.Add(reset);
+       
         viewSwitch = transform.Find("viewSwitch");
-        buttonList.Add(viewSwitch);
+       
         qiangti = transform.Find("qiangti");
-        buttonList.Add(qiangti);
+      
         jidian = transform.Find("jidian");
-        buttonList.Add(jidian);
+       
         fullArea = transform.Find("fullArea");
-        buttonList.Add(fullArea);
+      
         tips = transform.Find("tips");
-        buttonList.Add(tips);
+        
         cameraMode = transform.Find("cameraMode");
-        buttonList.Add(cameraMode);
+        
         builderSwitch = transform.Find("builderSwitch");
-        buttonList.Add(builderSwitch);
-
+       
         bim = transform.Find("bim");
-        buttonList.Add(bim);
-
-
+       
+        TemptureClound = transform.Find("TemptureClound");
+    
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
 
         TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
@@ -84,6 +84,11 @@ public class BrowserToolBar : MonoBehaviour {
             firstFPSController.gameObject.SetActive(false);
         }
         m_FirstPersonIcon = Resources.Load("UI/frist_target") as Texture2D;
+
+        foreach(Transform child in transform)
+        {
+            buttonList.Add(child);
+        }
 
     }
 
@@ -115,6 +120,7 @@ public class BrowserToolBar : MonoBehaviour {
             tips.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
+            TemptureClound.gameObject.SetActive(false);
 
         }
         else if (mCurrentState is RoomState)
@@ -126,6 +132,7 @@ public class BrowserToolBar : MonoBehaviour {
             tips.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
+             TemptureClound.gameObject.SetActive(false);
         }
 
         else if (mCurrentState is BuilderState)
@@ -138,6 +145,7 @@ public class BrowserToolBar : MonoBehaviour {
             tips.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
+             TemptureClound.gameObject.SetActive(false);
         }
         else if (mCurrentState is FloorState)
         {
@@ -154,6 +162,7 @@ public class BrowserToolBar : MonoBehaviour {
             cameraMode.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
+             TemptureClound.gameObject.SetActive(false);
         }
 
         //temp Disable
