@@ -21,6 +21,7 @@ public class ControlTest : MonoBehaviour {
         //{
         //    SetControlPoint.GetSelectData();
         //}
+      
     }
 
     private void ShowControlTest()

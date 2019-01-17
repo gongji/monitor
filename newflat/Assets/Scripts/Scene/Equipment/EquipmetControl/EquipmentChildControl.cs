@@ -10,6 +10,8 @@ public class EquipmentChildControl : BaseEquipmentControl
     public override void ExeAnimation(string name, bool isExe)
     {
         SetChildAlarm(name, isExe);
+
+        
     }
 
     /// <summary>
@@ -19,6 +21,7 @@ public class EquipmentChildControl : BaseEquipmentControl
     /// <param name="IsExe">run</param>
     private void SetChildAlarm(string name, bool IsExe = false)
     {
+        
         //StopDotween();
         //ResetAll();
         //tweener = transform.Find(i.ToString()).GetComponent<LineRenderer>().material.DOColor(Color.red, 1.0f);
