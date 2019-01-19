@@ -21,7 +21,7 @@ public static class HttpRequest  {
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
           //  Debug.Log("url="+ url);
-
+           
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
@@ -49,7 +49,7 @@ public static class HttpRequest  {
     public static IEnumerator GetWWWRequest(string url, System.Action<string> sucessCallBack, System.Action<string> errorCallBack)
     {
         WWW www = new WWW(url);
-
+      
         yield return www;
 
         if(!string.IsNullOrEmpty(www.error))
@@ -81,6 +81,7 @@ public static class HttpRequest  {
 			www.uploadHandler = (UploadHandler)new UploadHandlerRaw(bytes);
 			www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer ();
 			www.SetRequestHeader ("Content-Type", "application/json");
+            www.SetRequestHeader("Access-Control-Allow-Origin","*");
 			yield return www.SendWebRequest();
             if (www.error != null) {
 				errorCallBack.Invoke (www.error);
@@ -118,6 +119,7 @@ public static class HttpRequest  {
        
       
         UnityWebRequest www = UnityWebRequest.Post(url, form);
+        
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)

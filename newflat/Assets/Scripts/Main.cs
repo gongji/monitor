@@ -65,7 +65,6 @@ public class Main : MonoBehaviour {
 
             //FlyingTextMsg.instance.LoadFontAsset();
             FontResouce.Instance.Init();
-            SceneJump.JumpFirstPage();
             string isLogin = Config.parse("isLogin");
             if (isLogin.Equals("0"))
             {

@@ -35,6 +35,7 @@ public class UserLogin : MonoBehaviour {
             //成功
             if(userItem!=null)
             {
+                SceneJump.JumpFirstPage();
                 GameObject.Destroy(gameObject);
             }
             else
@@ -42,8 +43,11 @@ public class UserLogin : MonoBehaviour {
                 messge.enabled = true;
             }
 
+             
+
         },(error)=> {
             GameObject.Destroy(gameObject);
+             SceneJump.JumpFirstPage();
 
         }, _userName, _password);
        
