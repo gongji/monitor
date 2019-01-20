@@ -14,7 +14,7 @@ public class TestLoushui : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-        if(Input.GetKeyDown(KeyCode.A))
+       /*  if(Input.GetKeyDown(KeyCode.A))
         {
             GetComponent<LouShuiControl>().CreateLouShui(loushuiData);
         }
@@ -35,7 +35,7 @@ public class TestLoushui : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.E))
         {
             GetComponent<LouShuiControl>().ExeAnimation("3", true);
-        }
+        } */
 
 
     }

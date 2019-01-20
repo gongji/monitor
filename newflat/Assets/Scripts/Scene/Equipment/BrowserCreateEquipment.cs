@@ -60,7 +60,7 @@ public sealed class BrowserCreateEquipment
                 equipment = GameObject.Instantiate(modelPrefebDic[equipmentItem.modelId]);
                 SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
 
-                if (type == DataModel.Type.De_ItEquipment && !string.IsNullOrEmpty(equipmentItem.parentsId))
+                if (type == DataModel.Type.De_It && !string.IsNullOrEmpty(equipmentItem.parentsId))
                 {
 
                     SetItEquipmentProperty(equipmentItem, equipment);
@@ -77,7 +77,7 @@ public sealed class BrowserCreateEquipment
                 equipment = new GameObject();
                 SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
 
-                LouShuiControl loushui =  equipment.GetComponent<LouShuiControl>();
+                LouShuiEquipmentControl loushui =  equipment.GetComponent<LouShuiEquipmentControl>();
                 equipment.name = equipmentItem.name;
                 if (loushui!=null)
                 {
@@ -140,35 +140,10 @@ public sealed class BrowserCreateEquipment
 
     private  static void AddControlScripts(DataModel.Type type,GameObject equipment)
     {
-        
-        if (type == DataModel.Type.De_Door)
-        {
-            equipment.AddComponent<DoorEquipmentControl>();
-        }
-        //漏水绳
-        else if (type == DataModel.Type.De_LouShui)
-        {
-            equipment.AddComponent<LouShuiControl>();
-        }
-        else if(type == DataModel.Type.De_Normal)
-        {
-            equipment.AddComponent<NormalEquipmentControl>();
-        }
-        else if (type == DataModel.Type.De_WenShidu)
-        {
-            equipment.AddComponent<WenShiduEquipmentControl>();
-        }
-        else if(type == DataModel.Type.De_Camera)
-        {
-            equipment.AddComponent<CameraEquipmentControl>();
-        }
-        else if (type == DataModel.Type.De_JiGui)
-        {
-            equipment.AddComponent<JiGuiControl>();
-        }else if(type == DataModel.Type.De_ItEquipment)
-        {
-            equipment.AddComponent<ITEquipmentControl>();
-        }
+        string[] names =equipment.transform.GetChild(0).name.Split('_');
+         var t =  System.Type.GetType(names[0]+"EquipmentControl");
+		 equipment.AddComponent(t);
+
     }
     /// <summary>
     /// 隐藏设备标签

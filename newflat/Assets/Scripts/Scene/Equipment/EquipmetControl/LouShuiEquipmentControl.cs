@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public  class LouShuiControl : EquipmentChildControl
+public  class LouShuiEquipmentControl : ChildEquipmentControl
 {
 
     void Start()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JiGuiControl : NormalEquipmentControl {
+public class JiGuiEquipmentControl : NormalEquipmentControl {
 
     private bool isLoad = false;
 
@@ -23,8 +23,6 @@ public class JiGuiControl : NormalEquipmentControl {
 
             LoadChildEquipment loadChildEquipment = gameObject.AddComponent<LoadChildEquipment>();
             loadChildEquipment.StartLoad(equipmentItem.id,()=> {
-
-               
 
             });
         }

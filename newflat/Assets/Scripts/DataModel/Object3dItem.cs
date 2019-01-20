@@ -35,7 +35,7 @@ namespace DataModel
         De_WenShidu,
         De_Door,
         De_JiGui,
-        De_ItEquipment
+        De_It
 
     }
 }

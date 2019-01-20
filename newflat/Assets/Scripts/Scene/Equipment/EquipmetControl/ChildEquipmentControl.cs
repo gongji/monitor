@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentChildControl : BaseEquipmentControl
+public class ChildEquipmentControl : BaseEquipmentControl
 {
     protected Color originalColor = Color.white;
 

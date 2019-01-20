@@ -58,7 +58,7 @@ public class AlarmCommand : ICommand
            // Debug.Log("开始报警");
             if(equipmentObject.GetComponent<Object3DElement>().type == DataModel.Type.De_LouShui)
             {
-                equipmentObject.GetComponent<LouShuiControl>().LouShuiAlarm(equipmentAlarm.state, equipmentAlarm.segments);
+                equipmentObject.GetComponent<LouShuiEquipmentControl>().LouShuiAlarm(equipmentAlarm.state, equipmentAlarm.segments);
             }
             else
             {
