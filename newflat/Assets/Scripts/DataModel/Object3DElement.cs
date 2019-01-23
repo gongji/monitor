@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Object3DElement : MonoBehaviour {
 
-
-
     private Dictionary<MeshRenderer, List<Material>> materialDic = new Dictionary<MeshRenderer, List<Material>>();
     private void sta()
     {

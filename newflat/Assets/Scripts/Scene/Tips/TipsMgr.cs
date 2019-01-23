@@ -42,7 +42,7 @@ public class TipsMgr : MonoSingleton<TipsMgr>,IEventListener {
             tmm.MaxLocalScale = maxScale;
             //Debug.Log(boudns.center + Vector3.up * boudns.size.y);
            // Debug.Log(parent.name);
-           Transform tips =   tmm.Create(object3dItem.name, boudns.center + Vector3.up * boudns.size.y, parent);
+           Transform tips =   tmm.Create(object3dItem.name, boudns.center + Vector3.up * boudns.size.y/2.0f, parent);
             tipsList.Add(tips);
             bc.enabled = isActive;
             //处理2d标签

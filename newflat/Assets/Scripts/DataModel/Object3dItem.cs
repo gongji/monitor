@@ -35,7 +35,9 @@ namespace DataModel
         De_WenShidu,
         De_Door,
         De_JiGui,
-        De_It
+        De_It,
+        //空调机组
+        De_Child
 
     }
 }

@@ -96,7 +96,7 @@ public static class CameraInitSet {
 
     private static void CalculateCameraPostionRoation(Transform box)
     {
-        if(!box)
+        if(!box ||box.GetComponent<BoxCollider>()==null)
         {
             return;
         }

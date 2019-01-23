@@ -23,6 +23,8 @@ public static class Constant  {
     public static string Equipment_Prefix = "De_";
     public static string MapName = "map";
 
+    public static string FullName = "full";
+
     public static string Person_Point = "person_point";
 
     public const float EPSILON_E1 = 0.1f;

@@ -28,7 +28,7 @@ public class FloorRoomSet : BaseSet
         SwitchBG(false);
         this.currentObject = SceneContext.currentSceneData;
         Transform box = SceneUtility.GetSceneCollider(currentObject.number).transform;
-        PlaneManger(box, true);
+       // PlaneManger(box, true);
         CameraInitSet.StartSet(currentObject.id, box.transform, 0.5f, () =>
         {
             CreateTips(currentObject);
@@ -199,7 +199,7 @@ public class FloorRoomSet : BaseSet
     protected void PlaneManger(Transform box, bool isEnter)
     {
         DestryPlane();
-        if (isEnter)
+        if (isEnter&&box!=null &&  box.GetComponent<BoxCollider>()!=null)
         {
             bool isEnable = box.GetComponent<BoxCollider>().enabled;
             plane = GameObject.Instantiate(Resources.Load<GameObject>("Other/dimian"));

@@ -30,7 +30,7 @@ public static class SceneData {
         Scene3dProxy.GetAll3dObjectData((result) =>
         {
 
-             Debug.Log(result);
+            // Debug.Log(result);
             object3dList = CollectionsConvert.ToObject<List<Object3dItem>>(result);
           
             // Debug.Log(object3dList.Count);
@@ -239,10 +239,10 @@ public static class SceneData {
     /// <returns></returns>
     public static List<Object3dItem> GetObject3dItemByParent(string parentid)
     {
-
         IEnumerable<Object3dItem> result =
               from object3dItem in object3dList
-              where object3dItem.parentsId.Equals(parentid) && (!object3dItem.number.EndsWith(Constant.MapName.ToLower()))
+              where object3dItem.parentsId.Equals(parentid) && !object3dItem.number.EndsWith(Constant.MapName.ToLower())
+               && !object3dItem.number.EndsWith(Constant.FullName.ToLower())
               select object3dItem;
         return result.ToList<Object3dItem>();
     }

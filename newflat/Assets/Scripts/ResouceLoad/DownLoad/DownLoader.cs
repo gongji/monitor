@@ -36,7 +36,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
         foreach (Object3dItem object3dItem in scenelist)
         {
         
-            SceneDownloadTask sceneDownloadTask3 = new SceneDownloadTask(object3dItem.id, object3dItem.path);
+            SceneDownloadTask sceneDownloadTask3 = new SceneDownloadTask(object3dItem.id.ToString(), object3dItem.path);
 
             taskQueue.Add(sceneDownloadTask3);
         }

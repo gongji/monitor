@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UserLogin : MonoBehaviour {
 
@@ -23,31 +24,40 @@ public class UserLogin : MonoBehaviour {
         transform.Find("title").GetComponent<Text>().font = FontResouce.Instance.font;
         password.GetComponent<InputField>().contentType = InputField.ContentType.Password;
         messge.enabled = false;
+        
     }
 	
+    void Start()
+    {
+        userName.ActivateInputField();
+    }
     public void Submit()
     {
         //  Debug.Log("Submit");
         string _userName = userName.text.Trim();
         string _password = password.text.Trim();
-        UserProxy.WebUserLogin((result) => {
+        if(string.IsNullOrEmpty(_userName) || string.IsNullOrEmpty(_password))
+        {
+            ShowErrorMessage("用户名或密码不能为空");
+            return ;
+        }
+        UserProxy.PcUserLogin((result) => {
             UserItem userItem = Utils.CollectionsConvert.ToObject<UserItem>(result);
             //成功
-            if(userItem!=null)
+            if(userItem!=null && userItem.state == 1)
             {
                 SceneJump.JumpFirstPage();
                 GameObject.Destroy(gameObject);
             }
             else
             {
-                messge.enabled = true;
+                ShowErrorMessage("账号错误，请检查后重试");
             }
 
-             
-
         },(error)=> {
-            GameObject.Destroy(gameObject);
-             SceneJump.JumpFirstPage();
+           
+           ShowErrorMessage("服务器位未知错误！");
+            
 
         }, _userName, _password);
        
@@ -55,7 +65,13 @@ public class UserLogin : MonoBehaviour {
 
     private void ShowErrorMessage(string content)
     {
+        messge.text = content;
+        messge.enabled = true;
 
+        DOVirtual.DelayedCall(3.0f,()=>{
+            messge.enabled = false;
+
+        });
     }
 
     public void Reset()
