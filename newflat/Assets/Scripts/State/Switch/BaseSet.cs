@@ -38,18 +38,18 @@ public abstract class BaseSet
         foreach (Object3dItem item in currentlist)
         {
            // Debug.Log("item.number="+ item.number);
-            if(!item.number.EndsWith(Constant.DX))
-            {
-                GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);
-                if (root != null)
-                {
-                    root.SetActive(isShow);
-                }
-            }
-            else
-            {
+           // if(!item.number.EndsWith(Constant.DX))
+           // {
+              //  GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);
+              //  if (root != null)
+              //  {
+                    //root.SetActive(isShow);
+              //  }
+           // }
+          //  else
+           // {
                 SceneUtility.SetRootGameObjects(item.number, isShow);
-            }
+           // }
            
         }
     }
@@ -95,6 +95,7 @@ public abstract class BaseSet
         SubsystemMsg.Delete();
         EventMgr.Instance.SendEvent(EventName.DeleteObject, null);
         ShowOrHideScene(false);
+        BimMsg.instacne.Reset();
       
     }
 

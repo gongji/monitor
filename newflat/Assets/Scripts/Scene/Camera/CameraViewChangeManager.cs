@@ -10,7 +10,7 @@ public class CameraViewChangeManager : MonoBehaviour {
 
 	void Update () {
       
-        if(Camera.main.gameObject.GetComponent<CameraObjectController>()==null)
+        if(Camera.main!=null && Camera.main.gameObject.GetComponent<CameraObjectController>()==null)
         {
             return;
         }

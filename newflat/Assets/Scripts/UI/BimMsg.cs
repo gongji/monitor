@@ -28,12 +28,21 @@ public class BimMsg : MonoBehaviour {
        
     }
 
+    public void Reset()
+    {
+        if(bomGameObject!=null && bomGameObject.GetComponentInChildren<Slider>()!=null)
+        {
+            bomGameObject.GetComponentInChildren<Slider>().value = 0;
+        }
+        
+    }
+
     private void SplitBim(float sliderChange)
     {
       //  Debug.Log("123");
         BimMouse[] bimMouse = GameObject.FindObjectsOfType<BimMouse>();
 
-        BomSeparate.UpdatePostion(sliderChange, bimMouse, SceneContext.sceneBox.GetComponent<BoxCollider>().bounds.center);
+        BomSeparate.UpdatePostion(sliderChange*5.0f, bimMouse, SceneContext.sceneBox.GetComponent<BoxCollider>().bounds.center);
           
     }
 
@@ -50,6 +59,7 @@ public class BimMsg : MonoBehaviour {
             bomGameObject.transform.SetParent(transform);
             bomGameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -20);
             bomGameObject.GetComponentInChildren<Slider>().onValueChanged.AddListener(SplitBim);
+            bomGameObject.GetComponentInChildren<Slider>().value = 0;
             // Vector3 v=  GetComponent<RectTransform>().anchoredPosition3D;
             // Vector2 uiPostion  = UIUtility.WorldToUI(transform.position, Camera.main);
             // bomGameObject.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(v.x, v.y-20, v.z);

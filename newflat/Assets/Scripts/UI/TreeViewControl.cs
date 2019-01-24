@@ -77,8 +77,16 @@ namespace Battlehub.UIControls
             //Debug.Log(object3dItem.name);
             if(object3dItem.childs!=null && object3dItem.childs.Count>0)
             {
-                e.Children = object3dItem.childs;
+                e.Children = OrderByName(object3dItem.childs);
             }
+        }
+
+
+        private List<Object3dItem>  OrderByName(List<Object3dItem> childs)
+        {
+            var result = childs.OrderBy(a => a.sortIndex);
+
+            return result.ToList<Object3dItem>();
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedArgs e)

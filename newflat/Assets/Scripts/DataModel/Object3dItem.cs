@@ -18,6 +18,8 @@ namespace DataModel
         public string parentsId;
 
         public string path;
+
+        public int sortIndex = 0;
     }
 
     public enum Type

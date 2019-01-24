@@ -37,6 +37,7 @@ public static class SceneParse  {
     {
         List<GameObject> gs = SceneUtility.GetRootGameObjects(sceneName);
 
+        GameObject sceneRoot = null;
         //移除隐藏的节点
         foreach (GameObject item in gs)
         {
@@ -46,6 +47,7 @@ public static class SceneParse  {
             }
             if (sceneName.Equals(item.name))
             {
+                sceneRoot = item;
                 item.AddComponent<TransformObject>();
             }
         }
@@ -60,46 +62,46 @@ public static class SceneParse  {
 
         Object3DElement object3DElement = null;
         //楼层
-        if (flooRegex.IsMatch(endStr) && gs.Count == 1)
+        if (flooRegex.IsMatch(endStr))
         {
-            object3DElement = gs[0].AddComponent<Object3DElement>();
-            if (gs[0].name.ToLower().Contains(Constant.JiDian.ToLower()))
+            object3DElement = sceneRoot.AddComponent<Object3DElement>();
+            if (sceneRoot.name.ToLower().Contains(Constant.JiDian.ToLower()))
             {
                 object3DElement.type = Type.JiDian;
-                AddChildBimScritps(gs[0].transform);
+                AddChildBimScritps(sceneRoot.transform);
             }
             else
             {
                 object3DElement.type = Type.Floor;
-                gs[0].AddComponent<FloorSceneAlarm>();
-                AddBimScript(gs[0].transform);
+                sceneRoot.AddComponent<FloorSceneAlarm>();
+                AddBimScript(sceneRoot.transform);
             }
         }
         //房间
-        else if(fjRegex.IsMatch(endStr)  && gs.Count == 1 && !sceneName.Contains(Constant.Door))
+        else if(fjRegex.IsMatch(endStr)  && !sceneName.Contains(Constant.Door))
         {
-            object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement = sceneRoot.AddComponent<Object3DElement>();
             
             object3DElement.type = Type.Room;
-            gs[0].AddComponent<RoomSceneAlarm>();
+            sceneRoot.AddComponent<RoomSceneAlarm>();
         }
         //建筑外构
-        else if(wqRegex.IsMatch(endStr) && gs.Count == 1)
+        else if(wqRegex.IsMatch(endStr))
         {
-            object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.Builder;
-            AddWqAlarmObjectScripts(flooRegex, gs[0].transform);
+            AddWqAlarmObjectScripts(flooRegex, sceneRoot.transform);
         }
         //门的场景
-        else if(fjRegex.IsMatch(endStr) && gs.Count == 1 && sceneName.Contains(Constant.Door))
+        else if(fjRegex.IsMatch(endStr) &&  sceneName.Contains(Constant.Door))
         {
-            object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.RoomDoor;
-            gs[0].AddComponent<DoorSceneData>();
+            sceneRoot.AddComponent<DoorSceneData>();
         //地形
         }else if(sceneName.Equals(Constant.Main_dxName.ToLower()))
         {
-            object3DElement = gs[0].AddComponent<Object3DElement>();
+            object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.Area;
         }
         if(object3DElement!=null)
@@ -115,11 +117,14 @@ public static class SceneParse  {
 
         foreach (GameObject item in gs)
         {
-            
+            if(item.GetComponent<Light>()!=null)
+            {
+                continue;
+            }
             //处理地形的碰撞器
             if (item.name.ToLower().Contains(Constant.ColliderName.ToLower()))
             {
-                SetBoxDisable(item.gameObject);
+                SetBoxColliderAndSetLayer(item.gameObject);
             }
             else
             {
@@ -129,7 +134,7 @@ public static class SceneParse  {
             GameObject colliderGameObject = FindObjUtility.GetTransformChildByName(item.transform, Constant.ColliderName);
             if (colliderGameObject != null)
             {
-                SetBoxDisable(colliderGameObject);
+                SetBoxColliderAndSetLayer(colliderGameObject);
             }
             //处理楼层下的房间
             List<Transform> roomts = FindObjUtility.FindRoom(item.transform);
@@ -147,7 +152,7 @@ public static class SceneParse  {
                     GameObject roomcolliderGameObject = FindObjUtility.GetTransformChildByName(roomt.transform, Constant.ColliderName);
                     if (roomcolliderGameObject != null)
                     {
-                        SetBoxDisable(roomcolliderGameObject);
+                        SetBoxColliderAndSetLayer(roomcolliderGameObject);
                     }
                     roomt.gameObject.AddComponent<FloorRoomSceneAlarm>();
                 }
@@ -179,15 +184,19 @@ public static class SceneParse  {
         }
     }
 
-    private static void SetBoxDisable(GameObject box)
+    private static void SetBoxColliderAndSetLayer(GameObject box)
     {
         Object3dUtility.SetLayerValue(LayerMask.NameToLayer("box"), box);
-
-        //BoxCollider bc = box.GetComponent<BoxCollider>();
-        //if (bc != null)
-        //{
-        //    bc.enabled = false;
-        //}
+        MeshCollider collider = box.GetComponent<MeshCollider>();
+        if(collider!=null)
+        {
+            GameObject.DestroyImmediate(collider);
+        }
+        BoxCollider bc = box.GetComponent<BoxCollider>();
+        if (bc == null)
+        {
+           box.gameObject.AddComponent<BoxCollider>();
+        }
 
     }
 
@@ -247,10 +256,26 @@ public static class SceneParse  {
 
     private static void AddBimScript(Transform t)
     {
-        Transform bim = t.Find("bim");
-        if(bim!=null)
+       // Transform bim = t.Find("bim");
+       // if(bim!=null)
+       // {
+            //AddChildBimScritps(bim);
+       // }
+
+        foreach(Transform tempT in t)
         {
-            AddChildBimScritps(bim);
+            //door
+            if(tempT.name.ToLower().Equals(Constant.Door))
+            {
+                AddChildBimScritps(tempT);
+            }
+            else if(tempT.name.ToLower().Equals(Constant.Qiang.ToLower()))
+            {
+                foreach(Transform  qiangItem in tempT)
+                {
+                    AddChildBimScritps(qiangItem);
+                }
+            }
         }
         
     }
@@ -259,7 +284,11 @@ public static class SceneParse  {
     {
         foreach (Transform child in root)
         {
-            child.gameObject.AddComponent<BimMouse>();
+            if(child.GetComponent<MeshRenderer>()!=null)
+            {
+                child.gameObject.AddComponent<BimMouse>();
+            }
+            
         }
     }
 

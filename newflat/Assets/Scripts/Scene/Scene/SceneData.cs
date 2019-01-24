@@ -67,6 +67,13 @@ public static class SceneData {
             {
                 ParseDataToDic(object3dItem.childs);
             }
+            //sort use
+            if(object3dItem.type == DataModel.Type.Floor)
+            {
+                string[]  strs =object3dItem.number.Split('_') ;
+                string floorindex=  strs[strs.Length-1].Substring(1);
+                object3dItem.sortIndex = int.Parse(floorindex);
+            }
         }
     }
     /// <summary>
@@ -218,7 +225,7 @@ public static class SceneData {
             currentobject3dList = GetBuilderObject3dItem(id, FloorGroup);
         }
         //全景
-        else if (type.Name.Equals(typeof(FullAreaState).Name))
+        else if (type.Name.Equals(typeof(ColorAreaState).Name))
         {
             currentobject3dList  = GetFullAreaObject3dItem(id, buiderId);
         }
@@ -334,7 +341,7 @@ public static class SceneData {
               from object3dItem in object3dList
                   //不包含管网
               where object3dItem.parentsId.Equals(currentid) && !object3dItem.number.Contains(Constant.JiDian) 
-              orderby object3dItem.number ascending
+              orderby object3dItem.sortIndex ascending
               select object3dItem;
 
         //按照范围过滤
@@ -351,7 +358,7 @@ public static class SceneData {
         //楼层下的门禁和管网
         List<Object3dItem> result = new List<Object3dItem>();
         //查找门禁
-        foreach (Object3dItem floor in floorResult)
+        foreach (Object3dItem floor in floorFiter)
         {
            
             IEnumerable<Object3dItem> roomList =

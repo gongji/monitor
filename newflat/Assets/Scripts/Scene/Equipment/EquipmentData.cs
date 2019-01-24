@@ -124,7 +124,7 @@ public sealed class EquipmentData {
         List<Object3dItem> list = new List<Object3dItem>();
         string sql = "";
         //全景模式不需要得到设备
-        if(curerState is FullAreaState)
+        if(curerState is ColorAreaState)
         {
             sql =  "";
         }

@@ -93,7 +93,7 @@ public class SceneAlarmTimer :MonoSingleton<SceneAlarmTimer>,ITimer {
         List<SceneAlarmBase> sceneAlarmBases = new List<SceneAlarmBase>(GameObject.FindObjectsOfType<SceneAlarmBase>()); ;
 
         //全景
-        if(istate is FullAreaState)
+        if(istate is ColorAreaState)
         {
             return null;
         }

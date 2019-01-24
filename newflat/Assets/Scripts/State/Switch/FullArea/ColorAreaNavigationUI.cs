@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class FullAreaNavigationUI : NavigationUIBase
+public class ColorAreaNavigationUI : NavigationUIBase
 {
     public  void CreateNavigateUI(List<Transform> currentData)
     {

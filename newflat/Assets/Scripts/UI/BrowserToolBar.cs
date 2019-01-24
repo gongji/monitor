@@ -28,7 +28,7 @@ public class BrowserToolBar : MonoBehaviour {
 
      private Transform TemptureClound;
     private Transform mainCamera;
-    private Transform firstFPSController;
+    private Transform fpsController;
     private Camera firstCamera;
 
     protected Texture2D m_FirstPersonIcon = null;
@@ -77,11 +77,11 @@ public class BrowserToolBar : MonoBehaviour {
 
         jidian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(jidian.GetComponent<Toggle>(), value));
         mainCamera = Camera.main.transform;
-        if(GameObject.Find("FPSController")!=null)
+        if(GameObject.Find("thirdPerson") !=null)
         {
-            firstFPSController = GameObject.Find("FPSController").transform;
-            firstCamera = firstFPSController.GetComponentInChildren<Camera>(true);
-            firstFPSController.gameObject.SetActive(false);
+            fpsController = GameObject.Find("thirdPerson").transform;
+            firstCamera = fpsController.GetComponentInChildren<Camera>(true);
+            fpsController.gameObject.SetActive(false);
         }
         m_FirstPersonIcon = Resources.Load("UI/frist_target") as Texture2D;
 
@@ -152,7 +152,7 @@ public class BrowserToolBar : MonoBehaviour {
             fullArea.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
         }
-        else if (mCurrentState is FullAreaState)
+        else if (mCurrentState is ColorAreaState)
         {
             reset.gameObject.SetActive(false);
             viewSwitch.gameObject.SetActive(false);
@@ -227,7 +227,7 @@ public class BrowserToolBar : MonoBehaviour {
         {
             fullArea.GetComponentInChildren<Text>().text = "退出全景";
             //外构的id暂时写死
-            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1",null,0,"241");
+            Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>("-1",null,0,"94");
         }
         else
         {
@@ -266,15 +266,15 @@ public class BrowserToolBar : MonoBehaviour {
             GameObject point = ManyouMsg.GetManYouPoint();
             if(point==null)
             {
-                firstFPSController.transform.position = mainCamera.transform.position - Vector3.up * 0.6f;
+                fpsController.transform.position = mainCamera.transform.position - Vector3.up * 0.6f;
             }
             else
             {
-                firstFPSController.transform.position = point.transform.position;
+                fpsController.transform.position = point.transform.position;
             }
-           
-            firstFPSController.transform.rotation = mainCamera.transform.rotation;
-            firstFPSController.gameObject.SetActive(true);
+
+            fpsController.transform.rotation = mainCamera.transform.rotation;
+            fpsController.gameObject.SetActive(true);
             firstCamera.enabled = true;
             UIUtility.ShowTips("您已进入人物模式，按Q键切换键飞行模式。");
         }
@@ -283,8 +283,8 @@ public class BrowserToolBar : MonoBehaviour {
             cameraMode.GetComponentInChildren<Text>().text = "飞行模式";
             mainCamera.transform.position = firstCamera.transform.position;
             mainCamera.transform.rotation = firstCamera.transform.rotation;
-            mainCamera.gameObject.SetActive(true);
-            firstFPSController.gameObject.SetActive(false);
+           // mainCamera.gameObject.SetActive(true);
+            fpsController.gameObject.SetActive(false);
         }
 
         isFlyCameraMode = !isFlyCameraMode;
@@ -342,6 +342,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     private  void OnGUI()
     {
+        return;
         if (!isFlyCameraMode)
         {
             Cursor.visible = false;

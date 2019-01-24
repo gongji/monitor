@@ -14,7 +14,7 @@ public static class CaluteCameraRangeHeight  {
     {
         IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
         //园区和全景模式
-        if (mCurrentState is AreaState || mCurrentState is FullAreaState)
+        if (mCurrentState is AreaState || mCurrentState is ColorAreaState)
         {
 
             List<Object3dItem> list =  SceneData.GetAllWq();

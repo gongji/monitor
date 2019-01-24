@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using System.Linq;
 
 public class FloorRoomSet : BaseSet
 {
@@ -122,7 +123,7 @@ public class FloorRoomSet : BaseSet
 
  
     /// <summary>
-    /// 创建UI导航
+    /// create floor ui navigation
     /// </summary>
     /// <param name="currentData"></param>
     protected override void CreateNavigation(Object3dItem currentData, string frontname,string backName)
@@ -132,8 +133,23 @@ public class FloorRoomSet : BaseSet
         Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
         if (object3dItem.childs != null && (object3dItem.childs.Count > 0))
         {
-            fnu.CreateFloorRoomNavagitionList(object3dItem.childs, navigationUI.transform, currentData, frontname, backName);
+            
+            fnu.CreateFloorRoomNavagitionList(GetRangeList(object3dItem.childs, currentData), navigationUI.transform, currentData, frontname, backName);
         }
+    }
+
+
+    private List<Object3dItem>  GetRangeList(List<Object3dItem> items,Object3dItem currentData)
+    {
+        int maxIndex = currentData.sortIndex + 3;
+        int minIndex = currentData.sortIndex -3;
+
+         IEnumerable<Object3dItem> result =
+              from object3dItem in items 
+              where object3dItem.sortIndex>=minIndex && object3dItem.sortIndex<=maxIndex 
+              orderby object3dItem.sortIndex ascending 
+              select object3dItem;
+        return result.ToList<Object3dItem>();
     }
 
     protected void DeleteNavigation()
@@ -145,7 +161,7 @@ public class FloorRoomSet : BaseSet
     }
 
     /// <summary>
-    /// 退出前，将下一个对象的目标点拉到屏幕中心
+    /// 退出前，camera move screenCenter
     /// </summary>
     /// <param name="nextid"></param>
     /// <param name="callBack"></param>

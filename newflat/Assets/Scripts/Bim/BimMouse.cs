@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BimMouse : MonoBehaviour {
@@ -23,6 +24,11 @@ public class BimMouse : MonoBehaviour {
     }
     public void OnMouseDown()
     {
+        if(EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if(ui!=null || !BimMsg.instacne.isSelected)
         {
             return;
@@ -40,6 +46,11 @@ public class BimMouse : MonoBehaviour {
 
     public void OnMouseOver()
     {
+        if (EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (ui != null || !BimMsg.instacne.isSelected)
         {
             return;
@@ -50,6 +61,11 @@ public class BimMouse : MonoBehaviour {
 
     public void OnMouseExit()
     {
+        if (EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (ui != null || !BimMsg.instacne.isSelected)
         {
             return;

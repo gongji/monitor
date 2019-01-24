@@ -19,7 +19,7 @@ public static  class CameraMsg  {
         }
         else
         {
-            return GameObject.Find("FPSController").GetComponentInChildren<Camera>();
+            return GameObject.Find("thirdPerson").GetComponentInChildren<Camera>();
         }
     }
 }

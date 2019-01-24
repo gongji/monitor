@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using  System.Linq;
 
-public class FullAreaSet : BaseSet
+public class ColorAreaSet : BaseSet
 {
-    private static ILog log = LogManagers.GetLogger("FullAreaSet");
+    private static ILog log = LogManagers.GetLogger("ColorAreaSet");
     private GameObject colorImageUI;
     #region 设置全员场景初始化
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
@@ -59,7 +59,7 @@ public class FullAreaSet : BaseSet
             uiTempObject = new GameObject();
         }
 
-        FullAreaNavigationUI fnu = uiTempObject.AddComponent<FullAreaNavigationUI>();
+        ColorAreaNavigationUI fnu = uiTempObject.AddComponent<ColorAreaNavigationUI>();
         fnu.CreateNavigateUI(floorList);
     }
     /// <summary>
@@ -272,7 +272,7 @@ public class FullAreaSet : BaseSet
 
         if(uiTempObject)
         {
-            uiTempObject.GetComponent<FullAreaNavigationUI>().DeleteAllUI();
+            uiTempObject.GetComponent<ColorAreaNavigationUI>().DeleteAllUI();
             GameObject.DestroyImmediate(uiTempObject);
         }
         

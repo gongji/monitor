@@ -21,7 +21,8 @@ public   class BuiderNavigationUI: NavigationUIBase
             GameObject navaUI = TransformControlUtility.CreateItem("Text", canvas.transform);
             navaUIList.Add(navaUI);
 
-            navaUI.name = "F" + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
+           // navaUI.name = "F" + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
+           navaUI.name = "F" + object3dItem.sortIndex;
             navaUI.GetComponentInChildren<TextMeshProUGUI>().text = navaUI.name;
 
             MouseFloorText floorText = navaUI.gameObject.AddComponent<MouseFloorText>();

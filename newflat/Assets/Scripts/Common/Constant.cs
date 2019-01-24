@@ -27,6 +27,7 @@ public static class Constant  {
 
     public static string Person_Point = "person_point";
 
+    public static string Qiang = "qiang";
     public const float EPSILON_E1 = 0.1f;
     public const float EPSILON_E2 = 0.01f;
     public const float EPSILON_E3 = 0.001f;

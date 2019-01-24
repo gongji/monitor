@@ -135,6 +135,12 @@ public static class SceneUtility
 
             foreach (GameObject _g in gameObjectQuery)
             {
+                if(_g.GetComponent<Light>()!=null)
+                {
+                    continue;
+                }
+            
+
                 return _g;
             }
             return null;
@@ -209,6 +215,10 @@ public static class SceneUtility
 
             foreach (GameObject _g in gameObjectQuery)
             {
+                if(_g.GetComponent<Light>()!=null)
+                {
+                    continue;
+                }
                 return _g;
             }
             return null;

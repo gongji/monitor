@@ -75,11 +75,12 @@ public class AreaSet:BaseSet
 
 
 
-    #region 退出场景的逻辑处理
+    #region exit 
     public override void Exit(string nextid, System.Action callBack)
     {
 
         base.Exit(nextid, callBack);
+        //find wq camera
         GameObject cameraObject = SceneParse.FindWQMoveCamera(nextid);
         if (cameraObject != null)
         {
@@ -95,6 +96,14 @@ public class AreaSet:BaseSet
                 });
 
             });
+        }
+        else
+        {
+            if (callBack != null)
+            {
+                callBack.Invoke();
+            }
+            Exit(nextid);
         }
     }
    

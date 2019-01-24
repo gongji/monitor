@@ -8,9 +8,9 @@ using Core.Common.Logging;
 
 namespace State
 {
-	public class FullAreaState : BaseState,IState {
+	public class ColorAreaState : BaseState,IState {
 
-        private ILog log = LogManagers.GetLogger("FullAreaState");
+        private ILog log = LogManagers.GetLogger("ColorAreaState");
 
         #region enter
         public void Enter(string id, System.Action callBack)
@@ -45,7 +45,7 @@ namespace State
 
             if (baseSet == null)
             {
-                baseSet = new FullAreaSet();
+                baseSet = new ColorAreaSet();
             }
             InitSet();
         }

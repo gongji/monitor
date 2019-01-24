@@ -15,6 +15,10 @@ public class NavigationUIBase : MonoBehaviour {
                 Vector3[] vs = Object3dUtility.GetBoxColliderVertex(dic[ui]);
 
                 Vector3 uiPostion = GetMaxXValue(vs);
+                if(ui==null)
+                {
+                   yield break;
+                }
                 ui.GetComponent<RectTransform>().anchoredPosition = uiPostion;
             }
             yield return 0;

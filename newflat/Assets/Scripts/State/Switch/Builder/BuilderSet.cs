@@ -15,7 +15,7 @@ public class BuilderSet: BaseSet,IEventListener
     private List<Object3dItem> currentfloorData;
 
     private List<Object3dItem> originalData;
-    private float yoffest = 1.0f;
+    private float yoffest = 2.5f;
 
     private GameObject navigationUI;
 
