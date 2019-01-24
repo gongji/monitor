@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// MonoBegaviour 单例
+/// MonoBegaviour single
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T> {

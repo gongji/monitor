@@ -5,16 +5,16 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// 平台
+/// platForm
 /// </summary>
 public enum BRPlatform
 {
     /// <summary>
-    /// 编辑器模式
+    /// edit mode
     /// </summary>
     Editor,
     /// <summary>
-    /// 浏览模式
+    /// brwser mode
     /// </summary>
     Browser,
     None
@@ -26,17 +26,14 @@ public enum ViewType
     View2D
 
 }
-/// <summary>
-/// 管理应用全局信息
-/// 1.部分信息由本地csv,xml控制
-/// 2.部分信息由类封装
-/// </summary>
+
+
 public static class AppInfo
 {
     private static ILog log = LogManagers.GetLogger("AppInfo");
 
     /// <summary>
-    /// 当前平台
+    /// current platform
     /// </summary>
     public static BRPlatform Platform
     { get
@@ -58,9 +55,7 @@ public static class AppInfo
     }
 
    
-    /// <summary>
-    /// 获取当前的状态
-    /// </summary>
+
     public static IState GetCurrentState
     {
         get

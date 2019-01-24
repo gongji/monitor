@@ -47,7 +47,7 @@ static public class Config
             string[] lines = content.Split('\n');
             GetTextInfo(dictionary, lines);
           
-            Debug.Log("config文件从服务器读取成功");
+            Debug.Log("config server success");
             //WebPlayerMgr.Instance.SetIpAndPort();
             calllBack();
         }

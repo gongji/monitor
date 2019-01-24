@@ -20,17 +20,17 @@ public class Main : MonoBehaviour {
         gameObject.AddComponent<CameraViewChangeManager>();
         gameObject.AddComponent<PlatformMsg>();
         gameObject.AddComponent<EffectionResouceLoader>();
-        //加载配置文件
+        //load config
         Config.Startload(this,
             ()=>{
 
-                //查询场景是否有变化
+                //check scene change
                 SceneData.IsExistNewScene((result) => {
 
-                    //无新的场景
+                    //no change
                     if(!result)
                     {
-                        //初始化场景数据
+                        //int scene data
                         Init();
                     }
 

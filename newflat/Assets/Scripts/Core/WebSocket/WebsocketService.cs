@@ -21,7 +21,7 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
     }
     public void ConnetWebsokcet()
     {
-        Debug.Log("开始连接");
+        Debug.Log("start connnet websocket server");
         StopAllCoroutines();
         if(ws!=null)
         {
@@ -37,7 +37,7 @@ public class WebsocjetService : MonoSingleton<WebsocjetService> {
         {
             websoketurl = url;
         }
-        Debug.Log(websoketurl);
+        Debug.Log("connecting ..."+ websoketurl);
         ws = new WebSocket(new Uri(websoketurl));
         yield return StartCoroutine(ws.Connect());
         ws.SendString("Hi");

@@ -13,7 +13,7 @@ public class AlarmEventItem  {
 
     public string dateTime;
 
-    //用于定位
+    //user locate
     public string sceneId;
 
     //地点的名字

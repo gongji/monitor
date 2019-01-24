@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// 类单例模板
+/// single  templet
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class Singleton <T> where T : class, new(){

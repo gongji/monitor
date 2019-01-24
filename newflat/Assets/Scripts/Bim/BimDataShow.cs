@@ -13,7 +13,7 @@ public class BimDataShow : MonoBehaviour {
 
     public void  Show(List<BimItem> propertyList, List<BimItem> typeList)
     {
-        //属性
+        //property
         foreach(BimItem bimItem in propertyList)
         {
             GameObject titleGameObject = GameObject.Instantiate<GameObject>(bimTitlePrefeb.gameObject);
