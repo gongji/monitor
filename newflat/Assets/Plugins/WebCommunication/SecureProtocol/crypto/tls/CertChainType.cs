@@ -1,0 +1,36 @@
+/*
+
+
+
+
+
+
+
+
+daily assets update for try.
+
+U should buy the asset from home store if u use it in your project!
+*/
+
+#if !BESTHTTP_DISABLE_ALTERNATE_SSL && (!UNITY_WEBGL || UNITY_EDITOR)
+
+using System;
+
+namespace Org.BouncyCastle.Crypto.Tls
+{
+    /*
+     * RFC 3546 3.3.
+     */
+    public abstract class CertChainType
+    {
+        public const byte individual_certs = 0;
+        public const byte pkipath = 1;
+
+        public static bool IsValid(byte certChainType)
+        {
+            return certChainType >= individual_certs && certChainType <= pkipath;
+        }
+    }
+}
+
+#endif

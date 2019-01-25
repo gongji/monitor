@@ -12,7 +12,9 @@ public class TestColor : MonoBehaviour {
 
         //Tweener tweener = GetComponent<MeshRenderer>().material.DOColor(Color.red, "_EmissionColor", 1.0f);
         //tweener.SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
-        bec = GetComponent<BaseEquipmentControl>();
+        //bec = GetComponent<BaseEquipmentControl>();
+
+        WebSocketService.Instance.StartSocket();
 
     }
 	
@@ -21,22 +23,23 @@ public class TestColor : MonoBehaviour {
 		
         if(Input.GetKeyDown(KeyCode.A))
         {
-            bec.Alarm();
+            // bec.Alarm();
+            WebSocketService.Instance.SendData("你好");
         }
 
         if(Input.GetKeyDown(KeyCode.B))
         {
-            bec.CancleAlarm();
+            //bec.CancleAlarm();
         }
 
         if(Input.GetKeyDown(KeyCode.C))
         {
-            bec.SelectEquipment();
+           // bec.SelectEquipment();
         }
 
         if(Input.GetKeyDown(KeyCode.D))
         {
-            bec.CancelEquipment();
+           // bec.CancelEquipment();
         }
 	}
 }

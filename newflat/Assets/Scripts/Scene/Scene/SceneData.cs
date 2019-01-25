@@ -188,12 +188,12 @@ public static class SceneData {
         SceneContext.buiderId = buiderId;
         System.Type type = typeof(T);
 
-        //园区
+        //area
         if (type.Name.Equals(typeof(AreaState).Name))
         {
             currentobject3dList = GetObject3dItemByParent("0");
 
-            //将main_dx设置最前
+            //将main_dx set first
             Object3dItem maindx = null;
             for(int i=0;i< currentobject3dList.Count;i++)
             {
@@ -209,25 +209,30 @@ public static class SceneData {
             currentobject3dList.Insert(0, maindx);
 
         }
-        //房间
+        //room 
         else if (type.Name.Equals(typeof(RoomState).Name))
         {
             currentobject3dList = GetRoomObject3dItem(id);
         }
-        //楼层
+        //floor
         else if (type.Name.Equals(typeof(FloorState).Name))
         {
             currentobject3dList = GetFloorObject3dItem(id);
         }
-        //建筑
+        //builder
         else if (type.Name.Equals(typeof(BuilderState).Name))
         {
             currentobject3dList = GetBuilderObject3dItem(id, FloorGroup);
         }
-        //全景
+        //color
         else if (type.Name.Equals(typeof(ColorAreaState).Name))
         {
-            currentobject3dList  = GetFullAreaObject3dItem(id, buiderId);
+            currentobject3dList  = GetColorAreaObject3dItem(id, buiderId, Constant.MapName.ToString());
+        }
+        //full
+        else if(type.Name.Equals(typeof(FullAreaState).Name))
+        {
+            currentobject3dList = GetColorAreaObject3dItem(id, buiderId, Constant.FullName.ToString());
         }
 
         //打印输出的场景信息
@@ -306,19 +311,19 @@ public static class SceneData {
 
 
     /// <summary>
-    /// 全景模式
+    /// color  and  full
     /// </summary>
     /// <param name="currentid">当前为-1</param>
     /// <param name="buiderId">建筑id</param>
     /// <returns></returns>
-    public static List<Object3dItem> GetFullAreaObject3dItem(string currentid, string buiderId)
+    public static List<Object3dItem> GetColorAreaObject3dItem(string currentid, string buiderId,string identification)
     {
 
         Object3dItem builderItem = FindObjUtilityect3dItemById(buiderId);
         string firstName = builderItem.number.Split('_')[0];
         IEnumerable<Object3dItem> fullresult =
              from object3dItem in object3dList
-             where object3dItem.number.Equals(Constant.SkyboxName) || (object3dItem.number.StartsWith(firstName)  && object3dItem.number.EndsWith(Constant.MapName.ToString()))
+             where object3dItem.number.Equals(Constant.SkyboxName) || (object3dItem.number.StartsWith(firstName)  && object3dItem.number.EndsWith(identification))
              select object3dItem;
 
 
@@ -327,13 +332,15 @@ public static class SceneData {
         return fullresult.ToList<Object3dItem>();
     }
 
-        /// <summary>
-        /// 建筑
-        /// </summary>
-        /// <param name="currentid"></param>
-        /// <param name="FloorGroup">当前楼层的组编号</param>
-        /// <returns></returns>
-        public static List<Object3dItem> GetBuilderObject3dItem(string currentid,int FloorGroup)
+  
+
+    /// <summary>
+    /// 建筑
+    /// </summary>
+    /// <param name="currentid"></param>
+    /// <param name="FloorGroup">当前楼层的组编号</param>
+    /// <returns></returns>
+    public static List<Object3dItem> GetBuilderObject3dItem(string currentid,int FloorGroup)
     {
 
         //楼层

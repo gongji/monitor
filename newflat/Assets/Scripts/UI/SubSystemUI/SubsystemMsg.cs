@@ -62,12 +62,12 @@ public static class SubsystemMsg {
         // Debug.Log("id="+id);
         if (wireframeM == null)
         {
-            wireframeM = Resources.Load<Material>("Material/xray");
+            wireframeM = Resources.Load<Material>("Material/wireframe");
         }
         BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
         foreach (BaseEquipmentControl be in equipments)
         {
-            be.ChangMaterial(wireframeM);
+            be.ShowWireframe(wireframeM);
         }
         subSystemItem = null;
 
@@ -81,7 +81,7 @@ public static class SubsystemMsg {
             {
                 if (EquipmentData.GetAllEquipmentData.ContainsKey(equipmentid))
                 {
-                    EquipmentData.GetAllEquipmentData[equipmentid].GetComponent<BaseEquipmentControl>().RestoreMaterial();
+                    EquipmentData.GetAllEquipmentData[equipmentid].GetComponent<BaseEquipmentControl>().CancelWireframe();
                 }
 
             }
@@ -94,7 +94,7 @@ public static class SubsystemMsg {
         BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
         foreach (BaseEquipmentControl be in equipments)
         {
-            be.RestoreMaterial();
+            be.CancelWireframe();
         }
     }
 

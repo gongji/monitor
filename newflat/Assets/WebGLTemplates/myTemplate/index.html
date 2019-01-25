@@ -14,6 +14,28 @@
         canvas.width =  document.documentElement.clientWidth;//获取body可见区域高度
 
     }
+	
+	
+	function StartWebSocket(wsUri) {
+    websocket = new WebSocket(wsUri);
+    websocket.onopen = function(evt) { onOpen(evt) };
+    websocket.onclose = function(evt) { onClose(evt) };
+    websocket.onmessage = function(evt) { onMessage(evt) };
+    websocket.onerror = function(evt) { onError(evt) }; }
+ 
+	function onOpen(evt) {
+		
+	}
+	function onClose(evt) {
+		writeToScreen("<span style='color:red'>@lang('toolfk.lang_text_connect_close')</span>");
+		websocket.close();
+	}
+	function onMessage(evt) {
+		writeToScreen('<span style="color:blue">@lang('toolfk.lang_text_server_rep') '+formatDate(new Date())+'</span><br/><span class="bubble">'+ evt.data+'</span>');
+	}
+	function onError(evt) {
+		writeToScreen('<span style="color: red;">@lang('toolfk.lang_text_send_error'):</span> '+ evt.data);
+	}
 
     </script>
   </head>

@@ -264,7 +264,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         }
 
         ///Debug.Log(FormatUtil.ConnetString(result,","));
-        WebsocjetService.Instance.SendData(FormatUtil.ConnetString(result, ","));
+       // WebsocjetService.Instance.SendData(FormatUtil.ConnetString(result, ","));
         UIUtility.ShowTips("下发成功");
         CloseWindow();
        

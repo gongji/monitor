@@ -230,38 +230,62 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
         }
     }
 
-    public void RestoreMaterial()
+    public void CancelWireframe()
     {
-        if (materialDic == null || !isMerialChange)
-        {
-            //Debug.Log("材质未恢复");
-            return;
-        }
+        //if (materialDic == null || !isMerialChange)
+        //{
+        //    //Debug.Log("材质未恢复");
+        //    return;
+        //}
 
-        foreach (MeshRenderer meshRender in materialDic.Keys)
+        //foreach (MeshRenderer meshRender in materialDic.Keys)
+        //{
+        //    meshRender.GetComponent<MeshRenderer>().materials = materialDic[meshRender];
+        //}
+        if(virtualFrameGame!=null)
         {
-            meshRender.GetComponent<MeshRenderer>().materials = materialDic[meshRender];
+            GameObject.DestroyImmediate(virtualFrameGame);
         }
-        isMerialChange = false;
+        new List<MeshRenderer>(GetComponentsInChildren<MeshRenderer>(true)).ForEach((x) => {
+
+            x.enabled = true;
+        });
+
+        virtualFrameGame = null;
+
+
+       // isMerialChange = false;
     }
 
     private void OnDisable()
     {
-        RestoreMaterial();
+        // RestoreMaterial();
+        CancelWireframe();
     }
 
-    private bool isMerialChange = false;
-    public void ChangMaterial(Material wireframe)
+  //  private bool isMe = false;
+
+    private GameObject virtualFrameGame = null;
+    public void ShowWireframe(Material wireframe)
     {
-        if(materialDic==null)
+        //if(materialDic==null)
+        //{
+        //    return;
+        //}
+        //foreach (MeshRenderer meshRender in materialDic.Keys)
+        //{
+        //    meshRender.GetComponent<MeshRenderer>().sharedMaterial = wireframe;
+        //}
+        if(virtualFrameGame!=null)
         {
             return;
         }
-        foreach (MeshRenderer meshRender in materialDic.Keys)
-        {
-            meshRender.GetComponent<MeshRenderer>().sharedMaterial = wireframe;
-        }
-        isMerialChange = true;
+        virtualFrameGame = VirtualFrameEquipment.Create(transform, wireframe);
+        new List<MeshRenderer>(GetComponentsInChildren<MeshRenderer>()).ForEach((x) => {
+
+            x.enabled = false;
+        });
+       // isMerialChange = true;
     }
 
     public void DestoryTestPointMenu()

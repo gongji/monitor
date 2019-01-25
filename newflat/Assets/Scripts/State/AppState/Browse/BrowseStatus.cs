@@ -19,7 +19,8 @@ public class BrowseStatus : AppBaseState
         
         
         WenshiduTimer.Instance.StartTimer();
-        WebsocjetService.Instance.ConnetWebsokcet();
+
+        WebSocketService.Instance.StartSocket();
 
         //  SceneAlarmTimer.Instance.StartTimer();
 

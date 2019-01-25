@@ -1,120 +1,206 @@
-var LibraryWebSockets = {
-$webSocketInstances: [],
-
-SocketCreate: function(url)
+var Lib_BEST_HTTP_WebGL_WS_Bridge =
 {
-	var str = Pointer_stringify(url);
-	var socket = {
-		socket: new WebSocket(str),
-		buffer: new Uint8Array(0),
-		error: null,
-		messages: []
-	}
+	$ws: {
+		webSocketInstances: {},
+		nextInstanceId : 1,
 
-	socket.socket.binaryType = 'arraybuffer';
+		Set : function(socket) {
+			ws.webSocketInstances[ws.nextInstanceId] = socket;
+			return ws.nextInstanceId++;
+		},
 
-	socket.socket.onmessage = function (e) {
-		// Todo: handle other data types?
-		if (e.data instanceof Blob)
+		Get : function(id) {
+			return ws.webSocketInstances[id];
+		},
+
+		Remove: function(id) {
+			delete ws.webSocketInstances[id];
+		},
+
+		_callOnClose: function(onClose, id, code, reason)
 		{
-			var reader = new FileReader();
-			reader.addEventListener("loadend", function() {
-				var array = new Uint8Array(reader.result);
-				socket.messages.push(array);
-			});
-			reader.readAsArrayBuffer(e.data);
+			//var buffer = _malloc(reason.length + 1);
+			//writeStringToMemory(reason, buffer);
+			
+			var returnStr = reason;
+			var bufferSize = lengthBytesUTF8(returnStr) + 1;
+			var buffer = _malloc(bufferSize);
+			stringToUTF8(returnStr, buffer, bufferSize);
+				 
+			Runtime.dynCall('viii', onClose, [id, code, buffer]);
+			_free(buffer);
+		},
+
+		_callOnError: function(errCallback, id, reason)
+		{
+			//var buffer = _malloc(reason.length + 1);
+			//writeStringToMemory(reason, buffer);
+			var returnStr = reason;
+			var bufferSize = lengthBytesUTF8(returnStr) + 1;
+			var buffer = _malloc(bufferSize);
+			stringToUTF8(returnStr, buffer, bufferSize);
+			
+			Runtime.dynCall('vii', errCallback, [id, buffer]);
+			_free(buffer);
 		}
-		else if (e.data instanceof ArrayBuffer)
-		{
-			var array = new Uint8Array(e.data);
-			socket.messages.push(array);
-		}
-	};
+	},
 
-	socket.socket.onclose = function (e) {
-		if (e.code != 1000)
+	WS_Create: function(url, protocol, onOpen, onText, onBinary, onError, onClose)
+	{
+		var urlStr = encodeURI(Pointer_stringify(url)).replace(/\+/g, '%2B');
+		var proto = Pointer_stringify(protocol);
+
+		console.log('WS_Create(' + urlStr + ', "' + proto + '")');
+
+		var socket = {
+			onError: onError,
+			onClose: onClose
+		};
+
+		if (proto == '')
+			socket.socketImpl = new WebSocket(urlStr);
+		else
+			socket.socketImpl = new WebSocket(urlStr, [proto]);
+
+		var id = ws.nextInstanceId;
+		socket.socketImpl.binaryType = "arraybuffer";
+
+		socket.socketImpl.onopen = function(e) {
+			console.log(id + ' WS_Create - onOpen');
+
+			Runtime.dynCall('vi', onOpen, [id]);
+		};
+
+		socket.socketImpl.onmessage = function (e)
 		{
-			if (e.reason != null && e.reason.length > 0)
-				socket.error = e.reason;
-			else
+			// Binary?
+			if (e.data instanceof ArrayBuffer)
 			{
-				switch (e.code)
+				var byteArray = new Uint8Array(e.data);
+				var buffer = _malloc(byteArray.length);
+				HEAPU8.set(byteArray, buffer);
+
+				Runtime.dynCall('viii', onBinary, [id, buffer, byteArray.length]);
+
+				_free(buffer);
+			}
+			else // Text
+			{
+				//var buffer = _malloc(e.data.length + 1);
+				//stringToUTF8(e.data, buffer);
+				
+				 var returnStr = e.data;
+				 var bufferSize = lengthBytesUTF8(returnStr) + 1;
+				 var buffer = _malloc(bufferSize);
+				 stringToUTF8(returnStr, buffer, bufferSize);
+	
+				Runtime.dynCall('vii', onText, [id, buffer]);
+				_free(buffer);
+			}
+		};
+
+		socket.socketImpl.onerror = function (e)
+		{
+			console.log(id + ' WS_Create - onError');
+
+			// Do not call this, onClose will be called with an apropriate error code and reason
+			//ws._callOnError(onError, id, "Unknown error.");
+		};
+
+		socket.socketImpl.onclose = function (e) {
+			console.log(id + ' WS_Create - onClose ' + e.code + ' ' + e.reason);
+
+			if (e.code != 1000)
+			{
+				if (e.reason != null && e.reason.length > 0)
+					ws._callOnError(onError, id, e.reason);
+				else
 				{
-					case 1001: 
-						socket.error = "Endpoint going away.";
-						break;
-					case 1002: 
-						socket.error = "Protocol error.";
-						break;
-					case 1003: 
-						socket.error = "Unsupported message.";
-						break;
-					case 1005: 
-						socket.error = "No status.";
-						break;
-					case 1006: 
-						socket.error = "Abnormal disconnection.";
-						break;
-					case 1009: 
-						socket.error = "Data frame too large.";
-						break;
-					default:
-						socket.error = "Error "+e.code;
+					switch (e.code)
+					{
+						case 1001: ws._callOnError(onError, id, "Endpoint going away.");
+							break;
+						case 1002: ws._callOnError(onError, id, "Protocol error.");
+							break;
+						case 1003: ws._callOnError(onError, id, "Unsupported message.");
+							break;
+						case 1005: ws._callOnError(onError, id, "No status.");
+							break;
+						case 1006: ws._callOnError(onError, id, "Abnormal disconnection.");
+							break;
+						case 1009: ws._callOnError(onError, id, "Data frame too large.");
+							break;
+						default: ws._callOnError(onError, id, "Error " + e.code);
+					}
 				}
 			}
+			else
+				ws._callOnClose(onClose, id, e.code, e.reason);
+		};
+
+		return ws.Set(socket);
+	},
+
+	WS_GetState: function (id)
+	{
+		var socket = ws.Get(id);
+		
+		return socket.socketImpl.readyState;
+	},
+
+	WS_Send_String: function (id, str)
+	{
+		console.log(id + ' WS_Send_String');
+
+		var socket = ws.Get(id);
+		var str = Pointer_stringify(str);
+
+		try
+		{
+			socket.socketImpl.send(str);
 		}
+		catch(e) {
+			ws._callOnError(socket.onError, id, ' ' + e.name + ': ' + e.message);
+		}
+
+		return socket.socketImpl.bufferedAmount;
+	},
+
+	WS_Send_Binary: function(id, ptr, pos, length)
+	{
+		console.log(id + ' WS_Send_Binary');
+
+		var socket = ws.Get(id);
+
+		try
+		{
+      var buff = HEAPU8.subarray(ptr + pos, ptr + pos + length);
+			socket.socketImpl.send(buff /*HEAPU8.buffer.slice(ptr + pos, ptr + pos + length)*/);
+		}
+		catch(e) {
+			ws._callOnError(socket.onError, id, ' ' + e.name + ': ' + e.message);
+		}
+
+		return socket.socketImpl.bufferedAmount;
+	},
+
+	WS_Close: function (id, code, reason)
+	{
+		var socket = ws.Get(id);
+		var reasonStr = Pointer_stringify(reason);
+
+		console.log(id + ' WS_Close(' + code + ', ' + reasonStr + ')');
+
+		socket.socketImpl.close(/*ulong*/code, reasonStr);
+	},
+
+	WS_Release: function(id)
+	{
+		console.log(id + ' WS_Release');
+
+		ws.Remove(id);
 	}
-	var instance = webSocketInstances.push(socket) - 1;
-	return instance;
-},
-
-SocketState: function (socketInstance)
-{
-	var socket = webSocketInstances[socketInstance];
-	return socket.socket.readyState;
-},
-
-SocketError: function (socketInstance, ptr, bufsize)
-{
- 	var socket = webSocketInstances[socketInstance];
- 	if (socket.error == null)
- 		return 0;
-    var str = socket.error.slice(0, Math.max(0, bufsize - 1));
-    writeStringToMemory(str, ptr, false);
-	return 1;
-},
-
-SocketSend: function (socketInstance, ptr, length)
-{
-	var socket = webSocketInstances[socketInstance];
-	socket.socket.send (HEAPU8.buffer.slice(ptr, ptr+length));
-},
-
-SocketRecvLength: function(socketInstance)
-{
-	var socket = webSocketInstances[socketInstance];
-	if (socket.messages.length == 0)
-		return 0;
-	return socket.messages[0].length;
-},
-
-SocketRecv: function (socketInstance, ptr, length)
-{
-	var socket = webSocketInstances[socketInstance];
-	if (socket.messages.length == 0)
-		return 0;
-	if (socket.messages[0].length > length)
-		return 0;
-	HEAPU8.set(socket.messages[0], ptr);
-	socket.messages = socket.messages.slice(1);
-},
-
-SocketClose: function (socketInstance)
-{
-	var socket = webSocketInstances[socketInstance];
-	socket.socket.close();
-}
 };
 
-autoAddDeps(LibraryWebSockets, '$webSocketInstances');
-mergeInto(LibraryManager.library, LibraryWebSockets);
+autoAddDeps(Lib_BEST_HTTP_WebGL_WS_Bridge, '$ws');
+mergeInto(LibraryManager.library, Lib_BEST_HTTP_WebGL_WS_Bridge);

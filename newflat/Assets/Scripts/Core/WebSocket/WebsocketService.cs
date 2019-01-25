@@ -1,117 +1,106 @@
-﻿using Br.Core.Server;
+﻿using BestHTTP.WebSocket;
+using Br.Core.Server;
 using Core.Server.Command;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
-using DG.Tweening;
 
-public class WebsocjetService : MonoSingleton<WebsocjetService> {
+public class WebSocketService:MonoSingleton<WebSocketService>  {
 
-    private string url = "ws://echo.websocket.org";
-    private WebSocket ws = null;
+    // Use this for initialization
+
+    private WebSocket webSocket;
+
+    private string address = "ws://123.207.167.163:9010/ajaxchattest";
+
     private CommandsUtils commandsUtils;
 
-    private void Start()
+
+    private void Init()
     {
         commandsUtils = new CommandsUtils();
         List<ICommand> loaderList = CommandLoader.Load();
         commandsUtils.RegCommands(loaderList);
     }
-    public void ConnetWebsokcet()
-    {
-        Debug.Log("start connnet websocket server");
-        StopAllCoroutines();
-        if(ws!=null)
-        {
-            ws.Close();
-        }
-        StartCoroutine(StartWebSocket());
-    }
-    private IEnumerator StartWebSocket()
-    {
-        string websoketurl = Config.parse("websoketurl");
-       // websoketurl = url;
-        if (string.IsNullOrEmpty(websoketurl))
-        {
-            websoketurl = url;
-        }
-        Debug.Log("connecting ..."+ websoketurl);
-        ws = new WebSocket(new Uri(websoketurl));
-        yield return StartCoroutine(ws.Connect());
-        ws.SendString("Hi");
-        int i = 0;
-        while (true)
-        {
 
-            string reply = ws.RecvString();
-            if (reply != null)
-            {
-                Debug.Log("Received: " + reply);
-                OnMessage(reply);
-                //  w.SendString( "Hi there" + i++);
-            }
-            if (ws.error != null)
-            {
-                Debug.LogError("Error: " + ws.error);
-              
-                ConnetWebsokcet();
-              
-                break;
-            }
-            //Debug.Log("123");
-            yield return 0;
-        }
-        ws.Close();
+
+    public void StartSocket()
+    {
+        Init();
+        StartConnet();
     }
 
-    public void SendData(string sendData)
-    {
-        if (ws != null)
-        {
-           
-            ws.SendString(sendData);
-        }
 
+     public void SendData(string data)
+    {
+        webSocket.Send(data);
     }
 
-    private void OnMessage(string data)
+    private void StartConnet()
     {
-      //  Debug.Log(data);
-        if (data.Equals("|")  || string.IsNullOrEmpty(data.Trim()))
+       // string websoketurl = Config.parse("websoketurl");
+       // address = websoketurl;
+
+        webSocket = new WebSocket(new Uri(address));
+        webSocket.OnOpen += OnOpen;
+        webSocket.OnMessage += OnMessageReceived;
+        webSocket.OnClosed += OnClosed;
+        webSocket.OnError += OnError;
+        webSocket.Open();
+    }
+
+    void OnOpen(WebSocket ws)
+    {
+        Debug.Log("OnOpen");
+    }
+
+    /// <summary>
+    /// Called when we received a text message from the server
+    /// </summary>
+    void OnMessageReceived(WebSocket ws, string message)
+    {
+        Debug.Log("接收："+message);
+        if (message.Equals("|") || string.IsNullOrEmpty(message.Trim()))
         {
             return;
         }
-       // Debug.Log("11111111111");
-        MessageContent messageContent = CollectionsConvert.ToObject<MessageContent>(data);
+        // Debug.Log("11111111111");
+        MessageContent messageContent = CollectionsConvert.ToObject<MessageContent>(message);
         //Debug.Log(messageContent);
-        if(messageContent!=null)
+        if (messageContent != null)
         {
-           // Debug.Log(data);
+            // Debug.Log(data);
             commandsUtils.Exec(messageContent);
         }
-        
     }
 
-    private void Update()
+    /// <summary>
+    /// Called when the web socket closed
+    /// </summary>
+    void OnClosed(WebSocket ws, UInt16 code, string message)
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GetTestData();
-        }
-       // GetTestData();
+        // Text += string.Format("-WebSocket closed! Code: {0} Message: {1}\n", code, message);
+
+        Debug.Log(message);
+        webSocket = null;
     }
 
-    private  int i =0;
-    private void GetTestData()
+    /// <summary>
+    /// Called when an error occured on client side
+    /// </summary>
+    void OnError(WebSocket ws, Exception ex)
     {
-        i++;
-        SendData("123" +i);
+        string errorMsg = string.Empty;
+#if !UNITY_WEBGL || UNITY_EDITOR
+        if (ws.InternalRequest.Response != null)
+            errorMsg = string.Format("Status Code from Server: {0} and Message: {1}", ws.InternalRequest.Response.StatusCode, ws.InternalRequest.Response.Message);
+#endif
 
+        Debug.Log(ex.Message);
 
+        webSocket = null;
+        StartConnet();
     }
-
-
 }
-
