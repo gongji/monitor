@@ -52,9 +52,8 @@ public static class SceneParse  {
             }
         }
 
-       
-        string[] names = sceneName.ToLower().Split('_');
-        string endStr = names[names.Length - 1].ToLower().Trim();
+      
+        string endStr = GetEndSpitStr(sceneName);
 
         Regex flooRegex = new Regex("f\\d");
         Regex fjRegex = new Regex("fj\\d");
@@ -187,16 +186,9 @@ public static class SceneParse  {
     private static void SetBoxColliderAndSetLayer(GameObject box)
     {
         Object3dUtility.SetLayerValue(LayerMask.NameToLayer("box"), box);
-        MeshCollider collider = box.GetComponent<MeshCollider>();
-        if(collider!=null)
-        {
-            GameObject.DestroyImmediate(collider);
-        }
-        BoxCollider bc = box.GetComponent<BoxCollider>();
-        if (bc == null)
-        {
-           box.gameObject.AddComponent<BoxCollider>();
-        }
+
+        AddBoxCollider(box);
+       
 
     }
 
@@ -206,8 +198,7 @@ public static class SceneParse  {
     /// <param name="ItemName"></param>
     private static bool IsDoor(string itemName)
     {
-        string[] names = itemName.ToLower().Split('_');
-        string endStr = names[names.Length - 1].ToLower().Trim();
+        string endStr = GetEndSpitStr(itemName);
         Regex fjRegex = new Regex("fj\\d");
         if (fjRegex.IsMatch(endStr)  && itemName.Contains(Constant.Door))
         {
@@ -222,7 +213,6 @@ public static class SceneParse  {
     /// <param name="doorRoot"></param>
     private static void AddDoorScripts(Transform  doorRoot)
     {
-       
         foreach (Transform child in doorRoot)
         {
             if(child.name.Contains(Constant.Door))
@@ -239,29 +229,60 @@ public static class SceneParse  {
 
     private static void AddWqAlarmObjectScripts(Regex flooRegex, Transform parent)
     {
-
         parent.gameObject.AddComponent<WqSceneAlarm>();
-        //foreach (Transform child in parent)
-        //{
-        //    string[] names = child.name.ToLower().Split('_');
-        //    string endStr = names[names.Length - 1].ToLower().Trim();
-        //    if(flooRegex.IsMatch(endStr))
-        //    {
-        //        child.gameObject.AddComponent<WqSceneAlarm>();
-        //    }
+      
+        //addd box scripts
+        foreach(Transform child in parent)
+        {
+            string endStr = GetEndSpitStr(child.name);
+            if(string.IsNullOrEmpty(endStr))
+            {
+                continue;
+            }
+            if(flooRegex.IsMatch(endStr))
+            {
+                GameObject box =  FindObjUtility.GetTransformChildByName(child, Constant.ColliderName);
+                
+                if(box!=null)
+                {
+                    AddBoxCollider(box);
+                    box.AddComponent<FloorBoxCollider>();
+                }
+          
+            }
+        }
+    }
 
+    private static void AddBoxCollider(GameObject box)
+    {
+        if (box.GetComponent<MeshCollider>() != null)
+        {
+            GameObject.DestroyImmediate (box.GetComponent<MeshCollider>());
+        }
 
-        //}
+        BoxCollider bc = box.GetComponent<BoxCollider>();
+        if (bc == null)
+        {
+            bc = box.gameObject.AddComponent<BoxCollider>();
+        }
+       
+        bc.isTrigger = true;
+    }
+
+    private  static string GetEndSpitStr(string str)
+    {
+        string[] names = str.ToLower().Split('_');
+        if(names.Length == 0 )
+        {
+            return "";
+        }
+        string endStr = names[names.Length - 1].ToLower().Trim();
+        return endStr;
     }
 
     private static void AddBimScript(Transform t)
     {
-       // Transform bim = t.Find("bim");
-       // if(bim!=null)
-       // {
-            //AddChildBimScritps(bim);
-       // }
-
+   
         foreach(Transform tempT in t)
         {
             //door

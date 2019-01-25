@@ -29,7 +29,6 @@ public class BrowserToolBar : MonoBehaviour {
     private Transform bim;
 
      private Transform temptureClound;
-    private Transform mainCamera;
     private Transform fpsController;
     private Camera firstCamera;
 
@@ -82,13 +81,7 @@ public class BrowserToolBar : MonoBehaviour {
 
 
         jidian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(jidian.GetComponent<Toggle>(), value));
-        mainCamera = Camera.main.transform;
-        if(GameObject.Find("thirdPerson") !=null)
-        {
-            fpsController = GameObject.Find("thirdPerson").transform;
-            firstCamera = fpsController.GetComponentInChildren<Camera>(true);
-            fpsController.gameObject.SetActive(false);
-        }
+      
         m_FirstPersonIcon = Resources.Load("UI/frist_target") as Texture2D;
 
         foreach(Transform child in transform)
@@ -286,30 +279,14 @@ public class BrowserToolBar : MonoBehaviour {
         if (isFlyCameraMode)
         {
             cameraMode.GetComponentInChildren<Text>().text = "人物模式";
-            mainCamera.gameObject.SetActive(false);
-
-            GameObject point = ManyouMsg.GetManYouPoint();
-            if(point==null)
-            {
-                fpsController.transform.position = mainCamera.transform.position - Vector3.up * 0.6f;
-            }
-            else
-            {
-                fpsController.transform.position = point.transform.position;
-            }
-
-            fpsController.transform.rotation = mainCamera.transform.rotation;
-            fpsController.gameObject.SetActive(true);
-            firstCamera.enabled = true;
+            ThirdSwitchMsg.instacne.SwitchThirdPerson();
             UIUtility.ShowTips("您已进入人物模式，按Q键切换键飞行模式。");
         }
         else
         {
             cameraMode.GetComponentInChildren<Text>().text = "飞行模式";
-            mainCamera.transform.position = firstCamera.transform.position;
-            mainCamera.transform.rotation = firstCamera.transform.rotation;
-           // mainCamera.gameObject.SetActive(true);
-            fpsController.gameObject.SetActive(false);
+            ThirdSwitchMsg.instacne.SwitchNormalCamera();
+            
         }
 
         isFlyCameraMode = !isFlyCameraMode;
