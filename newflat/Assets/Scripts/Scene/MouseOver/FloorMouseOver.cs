@@ -39,7 +39,11 @@ public class FloorMouseOver : MonoBehaviour
             floorTips.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(transform.position, Camera.main);
         }
 
-        floorTips.SetActive(isVisible);
+        if(floorTips)
+        {
+            floorTips.SetActive(isVisible);
+        }
+        
     }
      protected void OnMouseEnter()
     {

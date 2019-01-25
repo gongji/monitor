@@ -83,8 +83,17 @@ public static class SceneUtility
             }
             
         }
-       
+      
+    }
 
+    public static void RemoveScene(string sceneName)
+    {
+        Scene currentScene = SceneManager.GetSceneByName(sceneName);
+        if (currentScene.IsValid())
+        {
+            SceneManager.UnloadSceneAsync(currentScene);
+        }
+            
     }
 
     /// <returns></returns>

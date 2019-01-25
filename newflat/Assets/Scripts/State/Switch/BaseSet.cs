@@ -95,7 +95,24 @@ public abstract class BaseSet
         // TipsMgr.Instance.DeleteTips();
         SubsystemMsg.Delete();
         EventMgr.Instance.SendEvent(EventName.DeleteObject, null);
-        ShowOrHideScene(false);
+        string isSceneCache = Config.parse("isSceneCache");
+        if(isSceneCache.Equals("0"))
+        {
+            ShowOrHideScene(false);
+        }
+        else
+        {
+
+            List<Object3dItem> list = SceneData.GetDownLoadFinishScene();
+            foreach (Object3dItem o in list)
+            {
+                SceneUtility.RemoveScene(o.number);
+                o.isDownFinish = false;
+            }
+
+
+        }
+       
         if(BimMsg.instacne!=null)
         {
             BimMsg.instacne.Reset();

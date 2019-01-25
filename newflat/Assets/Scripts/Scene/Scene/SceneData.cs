@@ -659,4 +659,15 @@ public static class SceneData {
     }
 
 
+    public static List<Object3dItem> GetDownLoadFinishScene()
+    {
+        IEnumerable<Object3dItem> result =
+         from object3dItem in object3dList
+         where object3dItem.isDownFinish == true
+         select object3dItem;
+
+        return result.ToList<Object3dItem>();
+    }
+
+
 }
