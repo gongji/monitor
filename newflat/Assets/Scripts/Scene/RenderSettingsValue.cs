@@ -70,7 +70,16 @@ public class RenderSettingsValue : MonoBehaviour
         //    skybox.material = currentMat;
         //}
         //Material currentMat = SkyDataManeger.Instance.currentMode ? skyMaterial : SkyDataManeger.Instance.NightDayMat;
+        
+        Color temp = new Color(128.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f);
+        skyMaterial.SetColor("_Tint", temp);
+
+        skyMaterial.SetFloat("_Exposure", 1);
+
         RenderSettings.skybox = skyMaterial;
+
+
+
         RenderSettings.ambientMode = ambientMode;
         //if (!SkyDataManeger.Instance.currentMode)
         //{
@@ -127,6 +136,15 @@ public class RenderSettingsValue : MonoBehaviour
         }
     }
 
+
+    private float m_rotationSpeed = 1;
+    private void Update()
+    {
+       //float rotation = skyMaterial.GetFloat("_Rotation");
+       //rotation += rotation + Time.deltaTime * m_rotationSpeed;
+       //skyMaterial.SetFloat("_Rotation", rotation % 360);
+
+    }
     public static void SetNoAreaEffction()
     {
         RenderSettings.skybox = null;
