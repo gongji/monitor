@@ -128,7 +128,6 @@ public static class SceneData {
             where object3dItem.number.EndsWith(Constant.WQName)
             select object3dItem;
 
-
         return result.ToList<Object3dItem>();
     }
 

@@ -92,7 +92,9 @@ namespace State
                 nextState = new T();
                 switchStateDictionary.Add(type.Name, nextState);
             }
-            if(this.currentSceneId.Equals(nextSceneid) && this.currentBuilderFloorGroup == builderFloorGroup &&  !(nextState is RoomState))
+            if(this.currentSceneId.Equals(nextSceneid) && this.currentBuilderFloorGroup == builderFloorGroup &&  
+                
+                !(nextState is RoomState) && !(nextState is ColorAreaState) && !(nextState is FullAreaState))
             {
                 log.Debug("switch object is same");
                 return;

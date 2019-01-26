@@ -147,6 +147,14 @@ public  class NavigationUI:MonoBehaviour
         {
             Main.instance.stateMachineManager.SwitchStatus<BuilderState>(this.id,null, int.Parse(sender.name));
         }
+        else if(currentstate is ColorAreaState)
+        {
+            Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>("-1", null, 0,sender.name);
+        }
+        else if(currentstate is FullAreaState)
+        {
+            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, sender.name);
+        }
 
         
     }
@@ -198,7 +206,7 @@ public  class NavigationUI:MonoBehaviour
         {
             Main.instance.stateMachineManager.SwitchStatus<FloorState>(parentObject.id);
         }
-        else if(currentstate is BuilderState || currentstate is ColorAreaState)
+        else if(currentstate is BuilderState || currentstate is ColorAreaState || currentstate is FullAreaState)
         {
             Main.instance.stateMachineManager.SwitchStatus<AreaState>("");
         }

@@ -16,13 +16,13 @@ public class ColorAreaSet : BaseSet
         base.Enter(currentlist, callBack);
         //SaveOrResetFloorPostion(currentlist);
         Object3dItem currentScene = SceneContext.currentSceneData;
-        foreach(Object3dItem item  in currentlist)
-        {
-            Debug.Log("number="+ item.number);
-        }
+        //foreach(Object3dItem item  in currentlist)
+        //{
+        //    Debug.Log("number="+ item.number);
+        //}
        // Debug.Log(currentScene.number);
         SceneContext.currentSceneData = FindMapWqItem();
-        Debug.Log(SceneContext.currentSceneData.number);
+       // Debug.Log(SceneContext.currentSceneData.number);
         CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, ()=> {
 
            SetSkyEffection();
@@ -283,7 +283,11 @@ public class ColorAreaSet : BaseSet
         {
             GameObject.DestroyImmediate(colorImageUI);
         }
-        
+        if (navigationUI != null)
+        {
+            GameObject.Destroy(navigationUI);
+        }
+
     }
     #endregion
 }

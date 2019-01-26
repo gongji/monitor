@@ -105,17 +105,7 @@ public class FullAreaSet : BaseSet
         return null;
     }
 
-    private Transform FindMapWqTransform()
-    {
-        Object3dItem mapWqItem = FindMapWqItem();
-        GameObject g =   SceneUtility.GetGameByRootName(mapWqItem.number, mapWqItem.number);
-        if(g!=null)
-        {
-            return g.transform;
-        }
-
-        return null;
-    }
+ 
 
     private FlyTextMeshModel tmm = null;
 
@@ -124,7 +114,6 @@ public class FullAreaSet : BaseSet
     #region 退出场景的逻辑处理
     public override void Exit(string nextid, System.Action callBack)
     {
-
         base.Exit(nextid, callBack);
         
         Exit(nextid);
@@ -139,20 +128,15 @@ public class FullAreaSet : BaseSet
     {
         base.Exit(nextid);
 
-        if(uiTempObject)
-        {
-            uiTempObject.GetComponent<ColorAreaNavigationUI>().DeleteAllUI();
-            GameObject.DestroyImmediate(uiTempObject);
-        }
-        
+    
         RenderSettingsValue.SetNoAreaEffction();
         CameraInitSet.SetObjectCamera();
-
-        if(colorImageUI!=null)
+        if (navigationUI != null)
         {
-            GameObject.DestroyImmediate(colorImageUI);
+            GameObject.Destroy(navigationUI);
         }
-        
+
+
     }
     #endregion
 }

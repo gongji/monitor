@@ -45,7 +45,8 @@ namespace State
 
             if (baseSet == null)
             {
-                baseSet = new ColorAreaSet();
+                
+                baseSet = new FullAreaSet();
             }
             InitSet();
         }

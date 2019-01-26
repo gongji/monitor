@@ -75,6 +75,8 @@ public class BrowserToolBar : MonoBehaviour {
         
         TransformControlUtility.AddEventToBtn(colorArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ColorAreaButton(); });
 
+        TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
+
         TransformControlUtility.AddEventToBtn(cameraMode.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CameraModeSwitch(); });
 
         TransformControlUtility.AddEventToBtn(builderSwitch.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BuilderSwitch(); });
@@ -237,30 +239,52 @@ public class BrowserToolBar : MonoBehaviour {
         CameraInitSet.ResetCameraPostion();
     }
 
-    private bool isFullModeAreaMode = false;
+    private bool isColorModeAreaMode = false;
     private void ColorAreaButton()
     {
 
-        if(!isFullModeAreaMode)
+        if(!isColorModeAreaMode)
         {
-            colorArea.GetComponentInChildren<Text>().text = "进入园区";
-            //外构的id暂时写死
+            colorArea.GetComponentInChildren<Text>().text = "返回园区";
             Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>("-1",null,0,"94");
         }
         else
         {
-            colorArea.GetComponentInChildren<Text>().text = "能耗查看";
+            colorArea.GetComponentInChildren<Text>().text = "查看能耗";
             string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
             Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
         }
 
-        isFullModeAreaMode = !isFullModeAreaMode;
+        isColorModeAreaMode = !isColorModeAreaMode;
     }
 
-    public void FullAreaButtonReset()
+
+    private bool isFullModeAreaMod = false;
+    private void FullAreaButton()
     {
-        colorArea.GetComponentInChildren<Text>().text = "能耗查看";
-        isFullModeAreaMode = false;
+        if (!isFullModeAreaMod)
+        {
+            fullArea.GetComponentInChildren<Text>().text = "返回园区";
+            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, "94");
+        }
+        else
+        {
+            colorArea.GetComponentInChildren<Text>().text = "查看全景";
+            string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
+            Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
+        }
+
+        isFullModeAreaMod = !isFullModeAreaMod;
+    }
+
+    public void FullAndColorAreaButtonReset()
+    {
+        colorArea.GetComponentInChildren<Text>().text = "查看能耗";
+
+        colorArea.GetComponentInChildren<Text>().text = "查看全景";
+
+        isColorModeAreaMode = false;
+        isFullModeAreaMod = false;
     }
     
 

@@ -20,7 +20,7 @@ public class AreaSet:BaseSet
         if(AppInfo.Platform == BRPlatform.Browser)
         {
             SubsystemMsg.Create(sceneid);
-            BrowserToolBar.instance.FullAreaButtonReset();
+            BrowserToolBar.instance.FullAndColorAreaButtonReset();
         }
         
     }

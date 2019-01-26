@@ -21,10 +21,12 @@ public class ThirdSwitchMsg : MonoBehaviour {
     {
         thirdGameObject.gameObject.SetActive(false);
 
-        oriCamera.transform.position = thirdCamera.transform.position;
-        oriCamera.transform.rotation = thirdCamera.transform.rotation;
+        // oriCamera.transform.position = thirdCamera.transform.position;
+        // oriCamera.transform.rotation = thirdCamera.transform.rotation;
+       
         oriCamera.gameObject.SetActive(true);
-        
+        CameraInitSet.ResetCameraPostion();
+
     }
 
     public void SwitchThirdPerson()
