@@ -255,6 +255,7 @@ public static class CameraInitSet {
     /// <param name="box"></param>
     public static void SetRotationCamera(Transform  centerTransform,bool isFullArea =false)
     {
+        Debug.Log("centerTransformname="+ centerTransform.name);
         CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
         if(coc!=null)
         {

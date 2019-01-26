@@ -281,7 +281,7 @@ public class BrowserToolBar : MonoBehaviour {
     {
         colorArea.GetComponentInChildren<Text>().text = "查看能耗";
 
-        colorArea.GetComponentInChildren<Text>().text = "查看全景";
+        fullArea.GetComponentInChildren<Text>().text = "查看全景";
 
         isColorModeAreaMode = false;
         isFullModeAreaMod = false;

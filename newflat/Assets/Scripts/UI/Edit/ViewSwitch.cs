@@ -39,7 +39,11 @@ public class ViewSwitch : MonoBehaviour {
             Switch3D();
         }
 
-        EditToolBar.instance.SetViewButtonControl();
+        if(EditToolBar.instance!=null)
+        {
+            EditToolBar.instance.SetViewButtonControl();
+        }
+       
     }
 
     private Vector3 cameraPosition = Vector3.zero;
@@ -103,8 +107,8 @@ public class ViewSwitch : MonoBehaviour {
         DOVirtual.DelayedCall(0.1f, () => {
             Camera.main.orthographic = true;
             //  Debug.Log(box.transform.position + box.up * 2);
-            Camera.main.transform.position = box.transform.position + box.up * 2;
-            Camera.main.orthographicSize = maxWidth / 2 / (Screen.width * 1.0f / Screen.height * 1.0f);
+            Camera.main.transform.position = box.transform.position + box.up * 6;
+            Camera.main.orthographicSize = (maxWidth / 2 / (Screen.width * 1.0f / Screen.height * 1.0f))*1.2f;
             Quaternion rot = Quaternion.LookRotation(Vector3.down, up);
             Camera.main.transform.rotation = rot;
 

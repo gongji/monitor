@@ -28,12 +28,19 @@ public sealed class CloundMsg  {
 
 	public static void RemoveClound()
 	{
-
-		foreach(CreateClound temp in createClounds)
-		{
-			GameObject.DestroyImmediate(temp.gameObject);
-		}
-		createClounds.Clear();
+        if(createClounds!=null && createClounds.Count>0)
+        {
+            foreach (CreateClound tempClound in createClounds)
+            {
+                if(tempClound!=null)
+                {
+                    GameObject.DestroyImmediate(tempClound.gameObject);
+                }
+                
+            }
+            createClounds.Clear();
+        }
+		
 	}
 
 	private static List<CreateClound> createClounds =new List<CreateClound>();

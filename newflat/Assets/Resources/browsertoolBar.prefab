@@ -2010,7 +2010,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u80FD\u8017\u67E5\u770B"
+  m_Text: "\u67E5\u770B\u80FD\u8017"
 --- !u!114 &114923723099868416
 MonoBehaviour:
   m_ObjectHideFlags: 1

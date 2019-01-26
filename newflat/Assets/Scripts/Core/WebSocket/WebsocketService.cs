@@ -40,7 +40,7 @@ public class WebSocketService:MonoSingleton<WebSocketService>  {
 
     private void StartConnet()
     {
-       // string websoketurl = Config.parse("websoketurl");
+       string websoketurl = Config.parse("websoketurl");
        // address = websoketurl;
 
         webSocket = new WebSocket(new Uri(address));

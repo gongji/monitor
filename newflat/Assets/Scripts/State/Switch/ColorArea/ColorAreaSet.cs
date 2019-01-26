@@ -23,26 +23,24 @@ public class ColorAreaSet : BaseSet
        // Debug.Log(currentScene.number);
         SceneContext.currentSceneData = FindMapWqItem();
        // Debug.Log(SceneContext.currentSceneData.number);
-        CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, ()=> {
+        CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
 
            SetSkyEffection();
            //设置能耗展示
            SetEnergyConsumptionShow();
-           CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId).name);
+           CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId).name);
          
            colorImageUI = TransformControlUtility.CreateItem("UI/fullAreColor", UIUtility.GetRootCanvas());
            colorImageUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40.0f);
            colorImageUI.name = "colorImage";
 
-            Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId);
+            Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
            CreateNavigation(currentWq, null, "返回");
 
             if (callBack != null)
             {
                 callBack.Invoke();
             }
-
-
         });
     }
 
@@ -58,7 +56,7 @@ public class ColorAreaSet : BaseSet
         {
             uiTempObject = new GameObject();
         }
-
+        uiTempObject.name = "ColorAreaNavigationUI";
         ColorAreaNavigationUI fnu = uiTempObject.AddComponent<ColorAreaNavigationUI>();
         fnu.CreateNavigateUI(floorList);
     }
@@ -70,7 +68,7 @@ public class ColorAreaSet : BaseSet
         EnergyConsumptionProxy.GetEnergyConsumptionData((result) => {
            // List<EnergyConsumptionItem> energyData = Utils.CollectionsConvert.ToObject<List<EnergyConsumptionItem>>(result);
 
-        },SceneContext.buiderId
+        },SceneContext.areaBuiderId
         );
 
         List<EnergyConsumptionItem> energyData = EnergyConsumptionTestData.GetTestData();
@@ -118,20 +116,20 @@ public class ColorAreaSet : BaseSet
         base.CreateNavigation(currentData, frontname, backName);
        // string parentid = currentData.parentsId;
         List<Object3dItem> wqList = SceneData.GetAllWq();
-        Object3dItem tempWqItem = null;
-        for (int i=0;i< wqList.Count;i++)
-        {
-           if(wqList[i].id.Equals(SceneContext.buiderId))
-            {
-                tempWqItem = wqList[i];
-                wqList.RemoveAt(i);
-                break;
-            }
-        }
-        if(tempWqItem!=null)
-        {
-            wqList.Insert(0, tempWqItem);
-        }
+        //Object3dItem tempWqItem = null;
+        //for (int i=0;i< wqList.Count;i++)
+        //{
+        //   if(wqList[i].id.Equals(SceneContext.areaBuiderId))
+        //    {
+        //        tempWqItem = wqList[i];
+        //        wqList.RemoveAt(i);
+        //        break;
+        //    }
+        //}
+        //if(tempWqItem!=null)
+        //{
+        //    wqList.Insert(0, tempWqItem);
+        //}
        
 
        // Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
@@ -180,7 +178,7 @@ public class ColorAreaSet : BaseSet
 
         IEnumerable<Transform> result =
             from t in list
-            orderby t.name ascending
+            orderby t.name.ToLower().Contains(Constant.ColliderName.ToLower())
             select t;
 
         Transform resultTransform = result.ToList<Transform>()[0];

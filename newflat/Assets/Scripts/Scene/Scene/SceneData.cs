@@ -184,7 +184,7 @@ public static class SceneData {
 
         SceneContext.currentSceneData = FindObjUtilityect3dItemById(id);
         SceneContext.FloorGroup = FloorGroup;
-        SceneContext.buiderId = buiderId;
+        SceneContext.areaBuiderId = buiderId;
         System.Type type = typeof(T);
 
         //area

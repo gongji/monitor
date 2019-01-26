@@ -95,8 +95,10 @@ public abstract class BaseSet
         SubsystemMsg.Delete();
         EventMgr.Instance.SendEvent(EventName.DeleteObject, null);
         ShowOrHideScene(false);
-        BimMsg.instacne.Reset();
-      
+        if(BimMsg.instacne!=null)
+        {
+            BimMsg.instacne.Reset();
+        }
     }
 
     protected Quaternion cameraRoation = Quaternion.identity;

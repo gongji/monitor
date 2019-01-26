@@ -69,11 +69,20 @@ public class BuilderSet: BaseSet,IEventListener
        
         camera.transform.localRotation = Quaternion.identity;
 
-        //SwitchCameraMode(true);
-       // camera.orthographicSize = GetMaxBoxLength() / 2 / (Screen.width * 1.0f / Screen.height * 1.0f) * 2.0f;
-        camera.transform.position = CalculateCameraPostion() - (camera.transform.forward * GetMaxBoxWidth()*1.5f);
+        
 
-        camera.transform.localRotation *= Quaternion.AngleAxis(0.0f, Vector3.right);
+
+        Vector3 centerPostion = CalculateCameraPostion();
+
+        var rotation = Quaternion.LookRotation(rotationTransfrom.right);
+        camera.transform.rotation = rotation;
+
+        //SwitchCameraMode(true);
+        // camera.orthographicSize = GetMaxBoxLength() / 2 / (Screen.width * 1.0f / Screen.height * 1.0f) * 2.0f;
+        //  Debug.Log(CalculateCameraPostion());
+        camera.transform.position = CalculateCameraPostion() - (camera.transform.forward * GetMaxBoxWidth()*1.2f);
+
+      //  camera.transform.localRotation *= Quaternion.AngleAxis(0.0f, Vector3.right);
 
         //临时增加y的偏移量
 

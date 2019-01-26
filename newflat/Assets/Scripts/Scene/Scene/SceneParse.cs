@@ -52,7 +52,7 @@ public static class SceneParse  {
             }
         }
 
-      
+        HideManYouPersonObject(sceneRoot);
         string endStr = GetEndSpitStr(sceneName);
 
         Regex flooRegex = new Regex("f\\d");
@@ -309,13 +309,21 @@ public static class SceneParse  {
             {
                 child.gameObject.AddComponent<BimMouse>();
             }
-            
         }
     }
 
-
-
-
+    private static void HideManYouPersonObject(GameObject t)
+    {
+        if(t == null)
+        {
+            return;
+        }
+        GameObject item = FindObjUtility.GetTransformChildByName(t.transform, Constant.Person_Point);
+        if(item!=null && item.GetComponentInChildren<MeshRenderer>()!=null)
+        {
+            item.GetComponentInChildren<MeshRenderer>().enabled = false;
+        }
+    }
 
 
 

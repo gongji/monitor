@@ -14,23 +14,19 @@ public class FullAreaSet : BaseSet
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
         base.Enter(currentlist, callBack);
-        //SaveOrResetFloorPostion(currentlist);
         Object3dItem currentScene = SceneContext.currentSceneData;
-       // Debug.Log(currentScene.number);
-        SceneContext.currentSceneData = FindMapWqItem();
-        CameraInitSet.StartSet(SceneContext.buiderId, null, 0.5f, ()=> {
+        CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
 
            SetSkyEffection();
         
-           Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.buiderId);
+           Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
            CreateNavigation(currentWq, null, "返回");
 
+            SwitchCamera();
             if (callBack != null)
             {
                 callBack.Invoke();
             }
-
-
         });
     }
     private GameObject uiTempObject;
@@ -40,20 +36,20 @@ public class FullAreaSet : BaseSet
         base.CreateNavigation(currentData, frontname, backName);
        // string parentid = currentData.parentsId;
         List<Object3dItem> wqList = SceneData.GetAllWq();
-        Object3dItem tempWqItem = null;
-        for (int i=0;i< wqList.Count;i++)
-        {
-           if(wqList[i].id.Equals(SceneContext.buiderId))
-            {
-                tempWqItem = wqList[i];
-                wqList.RemoveAt(i);
-                break;
-            }
-        }
-        if(tempWqItem!=null)
-        {
-            wqList.Insert(0, tempWqItem);
-        }
+        //Object3dItem tempWqItem = null;
+        //for (int i=0;i< wqList.Count;i++)
+        //{
+        //   if(wqList[i].id.Equals(SceneContext.areaBuiderId))
+        //    {
+        //        tempWqItem = wqList[i];
+        //        wqList.RemoveAt(i);
+        //        break;
+        //    }
+        //}
+        //if(tempWqItem!=null)
+        //{
+        //    wqList.Insert(0, tempWqItem);
+        //}
        
 
        // Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(parentid);
@@ -61,51 +57,23 @@ public class FullAreaSet : BaseSet
         {
             fnu.CreateFloorRoomNavagitionList(wqList, navigationUI.transform, currentData, frontname, backName,true);
         }
-        
        
     }
-
- 
-
     /// <summary>
-    /// 切换为旋转相机
+    /// set rotation camera
     /// </summary>
     /// <param name="list"></param>
-    private void SwitchCamera(List<Transform> list)
+    private void SwitchCamera()
     {
-        if(list==null || list.Count == 0)
+        Object3dItem  item =  SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
+        GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);
+        GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
+        if(box!=null)
         {
-            return;
+            CameraInitSet.SetRotationCamera(box.transform, true);
         }
-
-        IEnumerable<Transform> result =
-            from t in list
-            orderby t.name ascending
-            select t;
-
-        Transform resultTransform = result.ToList<Transform>()[0];
-        //Debug.Log(resultTransform);
-        CameraInitSet.SetRotationCamera(resultTransform,true);
+       
     }
-
-    /// <summary>
-    /// 查找wq的场景
-    /// </summary>
-    /// <returns></returns>
-    private Object3dItem FindMapWqItem()
-    {
-        foreach (Object3dItem item in currentlist)
-        {
-            if (item.number.Contains(Constant.WQName))
-            {
-                return item;
-            }
-        }
-
-        return null;
-    }
-
- 
 
     private FlyTextMeshModel tmm = null;
 
@@ -122,20 +90,16 @@ public class FullAreaSet : BaseSet
             callBack.Invoke();
         }
     }
-   
-
+  
    public override void Exit(string nextid)
     {
         base.Exit(nextid);
-
-    
         RenderSettingsValue.SetNoAreaEffction();
         CameraInitSet.SetObjectCamera();
         if (navigationUI != null)
         {
             GameObject.Destroy(navigationUI);
         }
-
 
     }
     #endregion

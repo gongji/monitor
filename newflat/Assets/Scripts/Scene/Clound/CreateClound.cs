@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CreateClound : MonoBehaviour {
 
-
     public Transform[] ts;
     List<Vector4> shaderValue = new List<Vector4>();
 
@@ -50,10 +49,6 @@ public class CreateClound : MonoBehaviour {
         SetValue();
 	}
 
-    
-
-    
-
     public float width = 10.0f; 
 
      public float length = 15.0f; 
@@ -71,9 +66,6 @@ public class CreateClound : MonoBehaviour {
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshRenderer>().material = new Material(Shader.Find("Custom/TemperatureField"));
     }
-
-
-
     Vector2 ConvertLocalCoordinateToUVCoordinate(Vector3 pos, Vector3 planeCenter)
     {
        
@@ -140,14 +132,18 @@ public class CreateClound : MonoBehaviour {
     }
     private  void SetValue()
     {
-        GetComponent<MeshRenderer>().material.SetFloat("_Point1", commonValue);
-        GetComponent<MeshRenderer>().material.SetFloat("_Point2", commonValue);
-        GetComponent<MeshRenderer>().material.SetFloat("_Point3", commonValue);
-        GetComponent<MeshRenderer>().material.SetFloat("_Point4", commonValue);
+        if(shaderValue.Count>0)
+        {
+            GetComponent<MeshRenderer>().material.SetFloat("_Point1", commonValue);
+            GetComponent<MeshRenderer>().material.SetFloat("_Point2", commonValue);
+            GetComponent<MeshRenderer>().material.SetFloat("_Point3", commonValue);
+            GetComponent<MeshRenderer>().material.SetFloat("_Point4", commonValue);
 
-        GetComponent<MeshRenderer>().material.SetInt("_Points_Num", shaderValue.Count);
+            GetComponent<MeshRenderer>().material.SetInt("_Points_Num", shaderValue.Count);
 
-        GetComponent<MeshRenderer>().material.SetVectorArray("_PointsArray", shaderValue.ToArray());
+            GetComponent<MeshRenderer>().material.SetVectorArray("_PointsArray", shaderValue.ToArray());
+        }
+       
       
     }
 }

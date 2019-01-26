@@ -11,8 +11,8 @@ public sealed class SceneContext {
     public static Object3dItem currentSceneData;
 
     public static int offestIndex = 0;
-
-    public static string buiderId = "";
+    //color and full  down builder
+    public static string areaBuiderId = "";
 
     public static int FloorGroup = 0;
 

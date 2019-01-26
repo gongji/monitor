@@ -10,7 +10,7 @@ public class BimMouse : MonoBehaviour {
     public Vector3 defaultPostion = Vector3.zero;
     private void Awake()
     {
-        defaultPostion = transform.position;
+        defaultPostion = transform.localPosition;
     }
 
     private void OnDisable()
@@ -20,7 +20,7 @@ public class BimMouse : MonoBehaviour {
 
     public void Reset()
     {
-        transform.position = defaultPostion;
+        transform.localPosition = defaultPostion;
     }
     public void OnMouseDown()
     {
