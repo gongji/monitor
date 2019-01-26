@@ -13,7 +13,7 @@ public class LoadChildEquipment : MonoBehaviour {
 
             EquipmentData.DownLoadModel(equipments, () => {
 
-                BrowserCreateEquipment.StartCreateEquipment(equipments, callBack);
+                InitCreateEquipment.StartCreateEquipment(equipments, callBack);
 
             });
 

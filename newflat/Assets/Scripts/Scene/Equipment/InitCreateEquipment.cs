@@ -10,7 +10,7 @@ using Utils;
 /// <summary>
 /// 设备创建，显示，隐藏，browser
 /// </summary>
-public sealed class BrowserCreateEquipment
+public sealed class InitCreateEquipment
 {
     private static ILog log = LogManagers.GetLogger("BrowserCreateEquipment");
     /// <summary>
@@ -41,14 +41,14 @@ public sealed class BrowserCreateEquipment
 
     private static List<GameObject> gs = new List<GameObject>();
     private static float u_high = 0.04445f;
-    public static void StartCreateEquipment(List<EquipmentItem> crateEquipmentDatas,System.Action createCallBack)
+    public static void StartCreateEquipment(List<EquipmentItem> createEquipmentDatas,System.Action createCallBack)
     {
         gs.Clear();
         Dictionary<string, GameObject> modelPrefebDic = ModelData.GetmodelPrefebDic;
         //所有的设备
         Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
 
-        foreach (EquipmentItem equipmentItem in crateEquipmentDatas)
+        foreach (EquipmentItem equipmentItem in createEquipmentDatas)
         {
             DataModel.Type type = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), equipmentItem.type);
 
@@ -65,10 +65,7 @@ public sealed class BrowserCreateEquipment
 
                     SetItEquipmentProperty(equipmentItem, equipment);
                 }
-                else
-                {
-                    SetCurrentEquipmentShow();
-                }
+               
          
             }
             //创建漏水
@@ -83,18 +80,16 @@ public sealed class BrowserCreateEquipment
                 {
                     loushui.CreateLouShui(equipmentItem.loushuiPoints);
                 }
-                SetCurrentEquipmentShow();
 
-                //it equipment
             } 
             if(equipment!=null)
             {
                 gs.Add(equipment);
             }
         }
+        SetCurrentEquipmentShow();
 
-      
-        if(AppInfo.Platform == BRPlatform.Browser)
+        if (AppInfo.Platform == BRPlatform.Browser)
         {
             EquipmentServiceInit.Init(gs);
         }
@@ -140,10 +135,21 @@ public sealed class BrowserCreateEquipment
 
     private  static void AddControlScripts(DataModel.Type type,GameObject equipment)
     {
-        string[] names =equipment.transform.GetChild(0).name.Split('_');
-         var t =  System.Type.GetType(names[0]+"EquipmentControl");
-		 equipment.AddComponent(t);
-
+        string resultName = "";
+        foreach(Transform child in equipment.transform)
+        {
+            if(child.GetComponent<Camera>()!=null)
+            {
+                continue;
+            }
+            resultName = child.name;
+        }
+        if(!string.IsNullOrEmpty(resultName))
+        {
+            var t = System.Type.GetType(resultName + "EquipmentControl");
+            equipment.AddComponent(t);
+        }
+    
     }
     /// <summary>
     /// 隐藏设备标签
@@ -186,6 +192,10 @@ public sealed class BrowserCreateEquipment
                 continue;
             }
             GameObject equipment = allEquipmentDic[equipmentItem.id];
+            if(equipment.GetComponent<Object3DElement>().type == DataModel.Type.De_It)
+            {
+                continue;
+            }
             //ShowOrHideEquipment(equipment,true);
             equipment.SetActive(true);
             NormalEquipmentControl bec = equipment.GetComponent<NormalEquipmentControl>();
@@ -217,9 +227,12 @@ public sealed class BrowserCreateEquipment
                 Object3dItem parentparentObject = SceneData.FindObjUtilityect3dItemById(parentparentid);
                 GameObject parentparentRoot = SceneUtility.GetGameByRootName(parentparentObject.number, parentparentObject.number);
                 GameObject root = FindObjUtility.GetTransformChildByName(parentparentRoot.transform, parentScene.number);
-
-                GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
-                SetParent(equipment, box.transform, equipmentItem);
+                if(root!=null)
+                {
+                    GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
+                    SetParent(equipment, box.transform, equipmentItem);
+                }
+                
                
               
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JiGuiEquipmentControl : NormalEquipmentControl {
+public class JiguiEquipmentControl : NormalEquipmentControl {
 
     private bool isLoad = false;
 

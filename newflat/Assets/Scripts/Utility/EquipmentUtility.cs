@@ -13,13 +13,28 @@ public static class EquipmentUtility  {
     public static DataModel.Type GetTypeByTransform(Transform t)
     {
 
-        string name = t.GetChild(0).name;
-        foreach (string temp in Enum.GetNames(typeof(DataModel.Type)))
+        Transform result = null;
+        foreach(Transform item in t)
+        {
+            if(item.GetComponent<Camera>()!=null)
+            {
+                continue;
+            }
+            result = item;
+        }
+
+        if(!result)
+        {
+            return DataModel.Type.De_Normal;
+        }
+
+        //string name = t.GetChild(0).name;
+        foreach (string enumItem in Enum.GetNames(typeof(DataModel.Type)))
         {
 
-            if (temp.Contains(name))
+            if (enumItem.ToLower().Contains(result.name.ToLower()))
             {
-                DataModel.Type etype = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), temp, true);
+                DataModel.Type etype = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), enumItem, true);
                 return etype;
             }
         }

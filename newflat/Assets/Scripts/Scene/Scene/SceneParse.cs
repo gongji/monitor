@@ -185,7 +185,8 @@ public static class SceneParse  {
 
     private static void SetBoxColliderAndSetLayer(GameObject box)
     {
-        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("box"), box);
+        box.layer = LayerMask.NameToLayer("box");
+      //  Object3dUtility.SetLayerValue(LayerMask.NameToLayer("box"), box);
 
         AddBoxCollider(box);
        

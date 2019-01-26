@@ -18,8 +18,8 @@ public sealed class EditUI {
     /// </summary>
     private static void CreateModelListUI()
     {
-        GameObject modelList = TransformControlUtility.CreateItem("Edit/EdtiUI", UIUtility.GetRootCanvas());
-        modelList.name = "EdtiUI";
+        GameObject modelList = TransformControlUtility.CreateItem("Edit/EditUI", UIUtility.GetRootCanvas());
+        modelList.name = "EditUI";
         modelList.GetComponent<RectTransform>().anchoredPosition = new Vector2(-210.0f,-135f);
         //ShowModelList sml = modelList.GetComponent<ShowModelList>();
         //if (sml == null)
