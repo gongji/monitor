@@ -14,7 +14,7 @@ public class JiguiEquipmentControl : NormalEquipmentControl {
         }
     }
 
-    private float distance = 3.0f;
+    private float distance = 8.0f;
     private void Update()
     {
         if(Vector3.Distance(transform.position,Camera.main.transform.position)> distance && !isLoad)

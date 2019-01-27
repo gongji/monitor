@@ -18,9 +18,9 @@ public static class ITEquipment3dProxy
     /// <param name="sucesscallBack"></param>
     /// <param name="id"></param>
     /// <param name="errorCallBack"></param>
-    public static void SearchITEquipmentData(string id, System.Action<string> sucesscallBack, System.Action<string> errorCallBack)
+    public static void SearchITEquipmentData(string jiguiId, System.Action<string> sucesscallBack, System.Action<string> errorCallBack)
     {
-        string url = Config.parse("requestAddress") + "/searchITEquipment?id="+ id;
+        string url = Config.parse("requestAddress") + "/searchITEquipment?id="+ jiguiId;
         HttpRequestSingle.Instance.StartCoroutine(
 
           HttpRequest.WWWPostRequest(url, null, sucesscallBack, (error) =>

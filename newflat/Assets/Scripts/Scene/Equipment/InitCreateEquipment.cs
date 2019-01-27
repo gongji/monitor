@@ -289,15 +289,18 @@ public sealed class InitCreateEquipment
     {
         Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
         Transform jiguiTransform = equipmentDic[equipmentItem.parentsId].transform;
-        equipment.transform.SetParent(jiguiTransform);
-        equipment.transform.localScale = Vector3.one;
-        equipment.transform.localRotation = Quaternion.identity;
-        float x = jiguiTransform.localPosition.x;
-        float z = jiguiTransform.localPosition.z;
-
-        float y = u_high * equipmentItem.childPosition-1;
-        equipment.transform.localPosition = new Vector3(x, y, z);
         equipment.SetActive(true);
+        equipment.transform.SetParent(jiguiTransform);
+       // equipment.transform.localScale = Vector3.one;
+        equipment.transform.localRotation = Quaternion.identity;
+        Debug.Log(equipmentItem.childPosition);
+        float y = u_high * (equipmentItem.childPosition-1);
+        if(y<0.01f)
+        {
+            y = 0.01f;
+        }
+        equipment.transform.localPosition = new Vector3(0, y, 0);
+        
     }
 
 

@@ -77,7 +77,7 @@ public sealed class EquipmentData {
        // Debug.Log(sql);
         Equipment3dProxy.SearchEquipmentData((result) =>
         {
-            //Debug.Log(result);
+            Debug.Log(result);
             if (string.IsNullOrEmpty(result) && callBack != null)
             {
                 callBack.Invoke();
