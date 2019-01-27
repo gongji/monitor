@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using DG.Tweening;
 
 /// <summary>
 /// 设备创建，显示，隐藏，browser
@@ -75,10 +76,17 @@ public sealed class InitCreateEquipment
                 SetEquipmentLayerAndScripts(equipment, equipmentItem, equipmentDic);
 
                 LouShuiEquipmentControl loushui =  equipment.GetComponent<LouShuiEquipmentControl>();
+                if(loushui==null)
+                {
+                    loushui = equipment.AddComponent<LouShuiEquipmentControl>();
+                }
                 equipment.name = equipmentItem.name;
                 if (loushui!=null)
                 {
-                    loushui.CreateLouShui(equipmentItem.loushuiPoints);
+                    DOVirtual.DelayedCall(1.0f, () => {
+                        loushui.CreateLouShui(equipmentItem.loushuiPoints);
+                    });
+                   
                 }
 
             } 
@@ -98,6 +106,11 @@ public sealed class InitCreateEquipment
         {
             createCallBack.Invoke();
         }
+       
+    }
+
+    private void FindLouShuiBox(string sceneId)
+    {
        
     }
 

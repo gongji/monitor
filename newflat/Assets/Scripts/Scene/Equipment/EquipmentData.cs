@@ -74,8 +74,10 @@ public sealed class EquipmentData {
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("result", sql);
 
+       // Debug.Log(sql);
         Equipment3dProxy.SearchEquipmentData((result) =>
         {
+            //Debug.Log(result);
             if (string.IsNullOrEmpty(result) && callBack != null)
             {
                 callBack.Invoke();

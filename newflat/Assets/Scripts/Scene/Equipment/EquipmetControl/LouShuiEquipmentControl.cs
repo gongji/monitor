@@ -52,7 +52,7 @@ public  class LouShuiEquipmentControl : ChildEquipmentControl
 
     private Color color;
     /// <summary>
-    /// 漏水绳的数据格式25.5，,5,5,7.8|14.1.36.9.58.7
+    /// 漏水绳的数据格式-10,0,35.7&0.4,0,35.7|0.4,0,35.7&8.5,0,35.7&8.500005,0,24.2|8.500005,0,24.2&8.500005,0,10.7
     /// </summary>
     /// <param name="data"></param>
     public void CreateLouShui(string data)
@@ -75,18 +75,19 @@ public  class LouShuiEquipmentControl : ChildEquipmentControl
         for(int i=0;i< postions.Length;i++)
         {
             GameObject lineRender = (GameObject)GameObject.Instantiate(loushuiLine);
-            lineRender.GetComponent<LineRenderer>().startWidth = 0.1f;
-            lineRender.GetComponent<LineRenderer>().endWidth = 0.1f;
-            lineRender.GetComponent<LineRenderer>().useWorldSpace = false;
+            lineRender.GetComponent<LineRenderer>().startWidth = 0.04f;
+            lineRender.GetComponent<LineRenderer>().endWidth = 0.04f;
             string[] segments = postions[i].Split('&');
 
             List<Vector3> lineRenderpostions = new List<Vector3>();
             foreach(string str in segments)
             {
                 string[] _postions = str.Split(',');
-              
+             
                 Vector3  postion = new Vector3(float.Parse(_postions[0]), float.Parse(_postions[1]), float.Parse(_postions[2]));
-                lineRenderpostions.Add(postion);
+                Vector3 worldPostion = transform.parent.TransformPoint(postion);
+                worldPostion = worldPostion + Vector3.up * 0.05f;
+                lineRenderpostions.Add(worldPostion);
             }
             lineRender.transform.SetParent(transform);
             lineRender.name = (i+1).ToString();
@@ -94,6 +95,7 @@ public  class LouShuiEquipmentControl : ChildEquipmentControl
             lineRender.GetComponent<LineRenderer>().SetPositions(lineRenderpostions.ToArray());
             Material m = GameObject.Instantiate<Material>(material);
             lineRender.GetComponent<LineRenderer>().material = m;
+            lineRender.GetComponent<LineRenderer>().useWorldSpace = true;
         }
     }
 
