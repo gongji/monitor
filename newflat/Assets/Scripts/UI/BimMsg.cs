@@ -42,7 +42,7 @@ public class BimMsg : MonoBehaviour {
       //  Debug.Log("123");
         BimMouse[] bimMouse = GameObject.FindObjectsOfType<BimMouse>();
 
-        BomSeparate.UpdatePostion(sliderChange*5.0f, bimMouse, SceneContext.sceneBox.GetComponent<BoxCollider>().bounds.center);
+        BomSeparate.UpdatePostion(sliderChange, bimMouse, SceneContext.sceneBox.GetComponent<BoxCollider>().bounds.center);
           
     }
 

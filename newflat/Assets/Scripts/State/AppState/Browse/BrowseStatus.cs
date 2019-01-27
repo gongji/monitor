@@ -45,9 +45,8 @@ public class BrowseStatus : AppBaseState
                 clickSelectEquipment.DestoryTestPointMenu();
             }
             clickSelectEquipment = checkSelectEquipment.transform.GetComponent<BaseEquipmentControl>();
-            if(clickSelectEquipment != null)
+            if(clickSelectEquipment != null && !BimMsg.instacne.isSelected)
             {
-
                 clickSelectEquipment.OnMouseClick();
                 return;
             }

@@ -87,7 +87,7 @@ public class AppBaseState
     {
        
         if ((EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())|| 
-            OperateControlManager.Instance.CurrentState != OperateControlManager.EquipmentEditState.None)
+            OperateControlManager.Instance.CurrentState != OperateControlManager.EquipmentEditState.None || BimMsg.instacne.isSelected)
         {
             return;
         }

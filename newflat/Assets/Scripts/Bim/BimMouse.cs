@@ -33,6 +33,8 @@ public class BimMouse : MonoBehaviour {
         {
             return;
         }
+
+        
         BimProxy.GetBimData((result) => {
             DoData(result);
         }, transform.name, (error) => {
