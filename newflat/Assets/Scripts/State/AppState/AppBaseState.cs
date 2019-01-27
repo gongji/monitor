@@ -101,7 +101,7 @@ public class AppBaseState
             // Debug.Log(hit.transform);
             baseObject3DElement = FindObjUtility.FindEquipmentParent(hit.transform);
            
-            if (baseObject3DElement != null)
+            if (baseObject3DElement != null && !string.IsNullOrEmpty(baseObject3DElement.equipmentData.id))
             {
                 if (preObject3DElement != null)
                 {

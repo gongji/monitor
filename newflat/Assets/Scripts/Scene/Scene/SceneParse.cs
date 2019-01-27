@@ -51,7 +51,7 @@ public static class SceneParse  {
                 item.AddComponent<TransformObject>();
             }
         }
-
+       
         HideManYouPersonObject(sceneRoot);
         string endStr = GetEndSpitStr(sceneName);
 
@@ -64,6 +64,7 @@ public static class SceneParse  {
         if (flooRegex.IsMatch(endStr))
         {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
+            object3DElement.sceneId = id;
             if (sceneRoot.name.ToLower().Contains(Constant.JiDian.ToLower()))
             {
                 object3DElement.type = Type.JiDian;
@@ -73,7 +74,7 @@ public static class SceneParse  {
             {
                 object3DElement.type = Type.Floor;
                 sceneRoot.AddComponent<FloorSceneAlarm>();
-                AddBimScript(sceneRoot.transform);
+                AddBimAndDoorScript(sceneRoot.transform);
             }
         }
         //房间
@@ -96,9 +97,11 @@ public static class SceneParse  {
         {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.RoomDoor;
-            sceneRoot.AddComponent<DoorSceneData>();
+            DoorSceneData dsd =  sceneRoot.AddComponent<DoorSceneData>();
+            dsd.QueryDoorData(id);
         //地形
-        }else if(sceneName.Equals(Constant.Main_dxName.ToLower()))
+        }
+        else if(sceneName.Equals(Constant.Main_dxName.ToLower()))
         {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.Area;
@@ -112,11 +115,16 @@ public static class SceneParse  {
         {
             SceneData.gameObjectDic.Add(object3DElement.sceneId, object3DElement);
         }
-        
 
+        DoChild(gs);
+    }
+
+
+    private static  void DoChild(List<GameObject> gs)
+    {
         foreach (GameObject item in gs)
         {
-            if(item.GetComponent<Light>()!=null)
+            if (item.GetComponent<Light>() != null)
             {
                 continue;
             }
@@ -127,7 +135,17 @@ public static class SceneParse  {
             }
             else
             {
-                Object3dUtility.SetLayerValue(LayerMask.NameToLayer("scene"), item);
+                //exclude door
+                foreach (Transform child in item.transform)
+                {
+                   
+                    if(!child.name.Trim().ToLower().Equals(Constant.Door.ToLower()))
+                    {
+                        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("scene"), child.gameObject);
+                    }
+                    
+                }
+                
             }
             //处理楼层和房间的碰撞器问题
             GameObject colliderGameObject = FindObjUtility.GetTransformChildByName(item.transform, Constant.ColliderName);
@@ -137,11 +155,11 @@ public static class SceneParse  {
             }
             //处理楼层下的房间
             List<Transform> roomts = FindObjUtility.FindRoom(item.transform);
-            
-            if(roomts != null && roomts.Count>0)
-           
+            Object3DElement object3DElement = null;
+            if (roomts != null && roomts.Count > 0)
+
             {
-                foreach(Transform roomt in roomts)
+                foreach (Transform roomt in roomts)
                 {
                     object3DElement = roomt.gameObject.AddComponent<Object3DElement>();
                     object3DElement.type = Type.Room;
@@ -155,15 +173,14 @@ public static class SceneParse  {
                     }
                     roomt.gameObject.AddComponent<FloorRoomSceneAlarm>();
                 }
-               
+
 
             }
 
-            //处理门禁
+            //door scene
 
             bool isDoor = IsDoor(item.name);
-
-            if(isDoor)
+            if (isDoor)
             {
                 AddDoorScripts(item.transform);
             }
@@ -218,14 +235,33 @@ public static class SceneParse  {
         {
             if(child.name.Contains(Constant.Door))
             {
-                Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), child.gameObject);
-                Object3DElement object3DElement = child.gameObject.AddComponent<Object3DElement>();
-                object3DElement.type = Type.De_Door;
-                object3DElement.equipmentData.number = object3DElement.transform.name;
-                object3DElement.equipmentData.sceneId = doorRoot.GetComponent<Object3DElement>().sceneId;
-                object3DElement.equipmentData.type = Type.De_Door.ToString();
+                AddSingelDoorScripts(child, doorRoot);
             }
         }
+    }
+
+
+   private static void AddSingelDoorScripts(Transform door,Transform doorRoot)
+    {
+        //Debug.Log("door="+ door.name);
+        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), door.gameObject);
+        Object3DElement object3DElement = door.gameObject.AddComponent<Object3DElement>();
+        object3DElement.type = Type.De_Door;
+        object3DElement.equipmentData.number = object3DElement.transform.name;
+        object3DElement.equipmentData.name = object3DElement.transform.name;
+       // Debug.Log(doorRoot.name);
+        object3DElement.equipmentData.sceneId = doorRoot.GetComponent<Object3DElement>().sceneId;
+        object3DElement.equipmentData.type = Type.De_Door.ToString();
+        if(AppInfo.Platform == BRPlatform.Browser)
+        {
+            door.gameObject.AddComponent<DoorEquipmentControl>();
+            MeshRenderer[] mrs = door.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer mr in mrs)
+            {
+                mr.gameObject.AddComponent<DoorControl>();
+            }
+        }
+        
     }
 
     private static void AddWqAlarmObjectScripts(Regex flooRegex, Transform parent)
@@ -281,15 +317,24 @@ public static class SceneParse  {
         return endStr;
     }
 
-    private static void AddBimScript(Transform t)
+    private static void AddBimAndDoorScript(Transform t)
     {
-   
         foreach(Transform tempT in t)
         {
             //door
             if(tempT.name.ToLower().Equals(Constant.Door))
             {
+                DoorSceneData dsd = tempT.gameObject.AddComponent<DoorSceneData>();
+                dsd.QueryDoorData(tempT.parent.GetComponent<Object3DElement>().sceneId);
+
+
                 AddChildBimScritps(tempT);
+
+                foreach(Transform child in tempT)
+                {
+                   // Debug.Log(tempT.parent);
+                    AddSingelDoorScripts(child, tempT.parent);
+                }
             }
             else if(tempT.name.ToLower().Equals(Constant.Qiang.ToLower()))
             {
@@ -301,6 +346,11 @@ public static class SceneParse  {
         }
         
     }
+
+    //private static void AddDoorScripts(Transform t)
+    //{
+
+    //}
 
     private static  void AddChildBimScritps(Transform root)
     {

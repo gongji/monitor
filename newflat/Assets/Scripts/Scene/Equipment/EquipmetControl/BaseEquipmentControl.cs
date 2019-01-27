@@ -23,6 +23,10 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
     protected void Init(string iconName)
     {
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
+        if(string.IsNullOrEmpty(equipmentItem.id))
+        {
+            return;
+        }
         equipmentIconObject = TransformControlUtility.CreateItem("equipment/IconPrefeb/" + iconName, 
             UIUtility.GetRootCanvas().Find("equipmentIcon"));
         EquipmentIcon ei = equipmentIconObject.GetComponent<EquipmentIcon>();

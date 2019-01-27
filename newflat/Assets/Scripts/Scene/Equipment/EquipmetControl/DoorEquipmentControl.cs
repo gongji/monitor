@@ -15,6 +15,8 @@ public class DoorEquipmentControl : NormalEquipmentControl {
         Init("door");
     }
 
+    
+
     private void OnDisable()
     {
         if(equipmentIconObject!=null)
@@ -31,5 +33,14 @@ public class DoorEquipmentControl : NormalEquipmentControl {
             equipmentIconObject.SetActive(true);
         }
        
+    }
+
+    public override void ExeAnimation(string name, bool isExe)
+    { 
+        DoorControl[] doors = GetComponentsInChildren<DoorControl>();
+        foreach(DoorControl dc in doors)
+        {
+            dc.GetType().GetMethod(name).Invoke(dc,null);
+        }
     }
 }

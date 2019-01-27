@@ -6,13 +6,9 @@ using Utils;
 
 public class DoorSceneData : MonoBehaviour {
 
-	void Start () {
-        SearchDoorData();
-        
-    }
-    private void SearchDoorData()
+    public void QueryDoorData(string sceneId)
     {
-        string sql = "sceneId = " + GetComponent<Object3DElement>().sceneId;
+        string sql = "sceneId = " + sceneId + " and type ="+"'"+ "De_Door" +"'";
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("result", sql);
         Equipment3dProxy.SearchEquipmentData((result) =>

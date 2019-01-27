@@ -59,7 +59,7 @@ public static class SaveEquipmentData
 
         Dictionary<string, string> postData = new Dictionary<string, string>();
         string resultPostData = CollectionsConvert.ToJSON(result);
-        Debug.Log(resultPostData);
+        Debug.Log("savedata:"+resultPostData);
         postData.Add("result", resultPostData);
         Equipment3dProxy.PostEquipmentSaveData((jsonString) => {
 
@@ -156,9 +156,6 @@ public static class SaveEquipmentData
         result.Add("add", AddData);
 
         //删除的数据
-
-     
-
         result.Add("delete", "");
 
         //修改变化的
@@ -170,8 +167,14 @@ public static class SaveEquipmentData
         result.Add("update", modityData);
         Dictionary<string, string> postData = new Dictionary<string, string>();
         string resultPostData = CollectionsConvert.ToJSON(result);
+        Debug.Log("save door data:"+ resultPostData);
         postData.Add("result", resultPostData);
-        Equipment3dProxy.PostEquipmentSaveData((a) => {
+        Equipment3dProxy.PostEquipmentSaveData((jsonString) => {
+            List<EquipmentGuid> addResultData = Utils.CollectionsConvert.ParseKey<List<EquipmentGuid>>("data", jsonString);
+            if(addResultData!=null && addResultData.Count==1)
+            {
+                doorData.id = addResultData[0].id;
+            }
             MessageBox.Show("信息提示", "保存成功");
 
         }, postData);

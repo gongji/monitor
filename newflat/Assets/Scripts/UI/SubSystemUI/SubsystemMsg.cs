@@ -29,7 +29,7 @@ public static class SubsystemMsg {
                 log.Debug("sceneid="+ sceneid  + "is empty");
                 return;
             }
-            Debug.Log("resultSubSystem=" + result);
+           // Debug.Log("resultSubSystem=" + result);
 
             dataSource = Utils.CollectionsConvert.ToObject<List<SubSystemItem>>(result);
             systemUI = TransformControlUtility.CreateItem("UI/UISubSystem/SubjetSystemTree", UIUtility.GetRootCanvas());

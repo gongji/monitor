@@ -114,12 +114,13 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         //{
         //    equipmentTips.SetActive(true);
         //}
-        equipmentTips.SetActive(true);
-        equipmentTips.transform.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(GetBoxTopPostion(), Camera.main);
-        equipmentTips.transform.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 15);
-
-
-
+        if(equipmentTips!=null)
+        {
+            equipmentTips.SetActive(true);
+            equipmentTips.transform.GetComponent<RectTransform>().anchoredPosition = UIUtility.WorldToUI(GetBoxTopPostion(), Camera.main);
+            equipmentTips.transform.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 15);
+        }
+       
     }
 
     public void OnMouseExit()
@@ -131,7 +132,11 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         //{
         //    equipmentTips.SetActive(false);
         //}
-        equipmentTips.SetActive(false);
+        if(equipmentTips!=null)
+        {
+            equipmentTips.SetActive(false);
+        }
+       
     }
 
     protected bool isShowTips = true;
@@ -148,6 +153,10 @@ public class NormalEquipmentControl :BaseEquipmentControl {
     }
 
     public override void OnMouseClick() {
+        if(string.IsNullOrEmpty(equipmentItem.id))
+        {
+            return;
+        }
         TestPointProxy.IsExistContronTest(equipmentItem.id, (result) => {
 
             //没有控制点
