@@ -14,7 +14,7 @@ public class TestColor : MonoBehaviour {
         //tweener.SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
         //bec = GetComponent<BaseEquipmentControl>();
 
-        WebSocketService.Instance.StartSocket();
+        
 
     }
 	
@@ -30,6 +30,7 @@ public class TestColor : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.B))
         {
             //bec.CancleAlarm();
+            WebSocketService.Instance.StartSocket();
         }
 
         if(Input.GetKeyDown(KeyCode.C))

@@ -25,7 +25,7 @@ public abstract class MeshTextAbstract : MonoBehaviour {
     /// </summary>
     protected void LookAtCamera()
     {
-        if (fontModel != null && fontModel.GetComponentInChildren<MeshRenderer>().enabled)
+        if (fontModel != null && fontModel.GetComponentInChildren<MeshRenderer>()!=null && fontModel.GetComponentInChildren<MeshRenderer>().enabled)
         {
 
             // Object3dUtils.LookAtCamera(fontModel.gameObject,false,true,false, Camera.main);
@@ -37,9 +37,8 @@ public abstract class MeshTextAbstract : MonoBehaviour {
 
     protected void SetTextScale()
     {
-        if (fontModel != null && fontModel.GetComponentInChildren<MeshRenderer>().enabled)
+        if (fontModel != null && fontModel.GetComponentInChildren<MeshRenderer>()!=null && fontModel.GetComponentInChildren<MeshRenderer>().enabled)
         {
-
             SetScale();
         }
     }

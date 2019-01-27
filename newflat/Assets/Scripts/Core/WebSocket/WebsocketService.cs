@@ -41,9 +41,10 @@ public class WebSocketService:MonoSingleton<WebSocketService>  {
     private void StartConnet()
     {
        string websoketurl = Config.parse("websoketurl");
-       // address = websoketurl;
+        // address = websoketurl;
 
-        webSocket = new WebSocket(new Uri(address));
+        Debug.Log("webSocket url ="+ websoketurl);
+        webSocket = new WebSocket(new Uri(websoketurl));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += OnMessageReceived;
         webSocket.OnClosed += OnClosed;
@@ -53,7 +54,8 @@ public class WebSocketService:MonoSingleton<WebSocketService>  {
 
     void OnOpen(WebSocket ws)
     {
-        Debug.Log("OnOpen");
+        Debug.Log("WebSocket OnOpen");
+        SendData("hi Server");
     }
 
     /// <summary>
