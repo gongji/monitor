@@ -24,7 +24,7 @@ public  class AlarmEventWindowBase : MonoBehaviour  {
                 //Debug.Log("fieldName="+ fieldName);
                 object fieldValue = f.GetValue(aei);
                 //  Debug.Log("fieldValue="+ fieldValue);
-                SetValue(fieldName, fieldValue.ToString());
+               // SetValue(fieldName, fieldValue.ToString());
 
             }
         });
@@ -33,15 +33,18 @@ public  class AlarmEventWindowBase : MonoBehaviour  {
     }
     protected void SetValue(string fieldName,string fieldValue)
     {
-
-        foreach(Text text in GetComponentsInChildren<Text>())
-        {
-            if(text.name.Trim().ToLower().Equals(fieldName.ToLower().Trim()))
-            {
-                text.text = fieldValue;
-                break;
-            }
-        }
+        Debug.Log("1");
+        Text[] texts = GetComponentsInChildren<Text>();
+        Debug.Log("2");
+        //foreach (Text text in GetComponentsInChildren<Text>())
+        //{
+        //    Debug.Log("3");
+        //    if (text.name.Trim().ToLower().Equals(fieldName.ToLower().Trim()))
+        //    {
+        //        text.text = fieldValue;
+        //        break;
+        //    }
+        //}
     }
 
     public void Hide()

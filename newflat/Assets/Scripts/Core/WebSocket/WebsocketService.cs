@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using DG.Tweening;
 
 public class WebSocketService:MonoSingleton<WebSocketService>  {
 
@@ -29,7 +30,10 @@ public class WebSocketService:MonoSingleton<WebSocketService>  {
     public void StartSocket()
     {
         Init();
-        StartConnet();
+        DOVirtual.DelayedCall(10.0f, () => {
+            StartConnet();
+        });
+        
     }
 
 
