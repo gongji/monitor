@@ -23,7 +23,8 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
     protected void Init(string iconName)
     {
         equipmentItem = GetComponent<Object3DElement>().equipmentData;
-        equipmentIconObject = TransformControlUtility.CreateItem("equipment/IconPrefeb/" + iconName, UIUtility.GetRootCanvas().Find("equipmentIcon"));
+        equipmentIconObject = TransformControlUtility.CreateItem("equipment/IconPrefeb/" + iconName, 
+            UIUtility.GetRootCanvas().Find("equipmentIcon"));
         EquipmentIcon ei = equipmentIconObject.GetComponent<EquipmentIcon>();
         if (!ei)
         {
@@ -83,7 +84,17 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
             }
             else
             {
-                SetDefaultWatchPoint();
+                if(GetComponentInChildren<Camera>()!=null)
+                {
+                    targetPostion = GetComponentInChildren<Camera>(true).transform.position;
+                    eulerAngles = GetComponentInChildren<Camera>(true).transform.eulerAngles;
+                    CameraAnimation.CameraMove(Camera.main, targetPostion, eulerAngles, 1.0f, null);
+                }
+                else
+                {
+                    SetDefaultWatchPoint();
+                }
+               
             }
 
            
@@ -126,7 +137,7 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
     {
        
         selectArrow = TransformControlUtility.CreateItem("equipment/select", null);
-
+        selectArrow.SetActive(false);
         selectArrow.name = transform.name;
         selectArrow.transform.position = transform.position + 
             Vector3.up * GetComponentInChildren<BoxCollider>().bounds.size.y + Vector3.up * 0.05f;
@@ -219,15 +230,15 @@ public abstract class BaseEquipmentControl : MonoBehaviour {
 
     protected void InitMaterial()
     {
-        if(materialDic == null)
-        {
-            materialDic = new Dictionary<MeshRenderer, Material[]>();
-        }
-        MeshRenderer[] meshRenders = gameObject.GetComponentsInChildren<MeshRenderer>();
-        foreach(MeshRenderer meshRender in meshRenders)
-        {
-            materialDic.Add(meshRender, meshRender.materials);
-        }
+        //if(materialDic == null)
+        //{
+        //    materialDic = new Dictionary<MeshRenderer, Material[]>();
+        //}
+        //MeshRenderer[] meshRenders = gameObject.GetComponentsInChildren<MeshRenderer>();
+        //foreach(MeshRenderer meshRender in meshRenders)
+        //{
+        //    materialDic.Add(meshRender, meshRender.materials);
+        //}
     }
 
     public void CancelWireframe()

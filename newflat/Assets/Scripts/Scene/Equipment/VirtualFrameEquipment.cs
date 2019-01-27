@@ -13,9 +13,9 @@ public sealed class VirtualFrameEquipment {
 
 		Bounds b= box.bounds;
 		GameObject wireObject= GameObject.CreatePrimitive(PrimitiveType.Cube);
-		wireObject.transform.SetParent(equipment.parent);
-		wireObject.transform.localPosition= equipment.transform.localPosition;
-		wireObject.transform.localRotation = equipment.transform.localRotation;
+		wireObject.transform.SetParent(null);
+		wireObject.transform.position = equipment.transform.position + equipment.transform.up * b.size.y/2;
+		wireObject.transform.rotation = equipment.transform.rotation;
         wireObject.transform.localScale = b.size;
         wireObject.name = equipment.name + "_VirtualFrame";
         wireObject.GetComponent<MeshRenderer>().material = material;

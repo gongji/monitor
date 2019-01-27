@@ -226,15 +226,15 @@ public sealed class InitCreateEquipment
                 string parentparentid = parentScene.parentsId;
                 Object3dItem parentparentObject = SceneData.FindObjUtilityect3dItemById(parentparentid);
                 GameObject parentparentRoot = SceneUtility.GetGameByRootName(parentparentObject.number, parentparentObject.number);
-                GameObject root = FindObjUtility.GetTransformChildByName(parentparentRoot.transform, parentScene.number);
-                if(root!=null)
+                if(parentparentRoot!=null)
                 {
-                    GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
-                    SetParent(equipment, box.transform, equipmentItem);
+                    GameObject root = FindObjUtility.GetTransformChildByName(parentparentRoot.transform, parentScene.number);
+                    if (root != null)
+                    {
+                        GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
+                        SetParent(equipment, box.transform, equipmentItem);
+                    }
                 }
-                
-               
-              
             }
             
         }

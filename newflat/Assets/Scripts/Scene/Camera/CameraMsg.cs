@@ -12,8 +12,8 @@ public static  class CameraMsg  {
             return Camera.main;
         }
 
-
-        if(BrowserToolBar.instance!=null && BrowserToolBar.instance.IsFlyCameraMode)
+        
+        if(BrowserToolBar.instance!=null && ThirdSwitchMsg.instacne.IsFlyCameraMode)
         {
             return Camera.main;
         }

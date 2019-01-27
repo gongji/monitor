@@ -94,6 +94,7 @@ public class TreeManager : MonoBehaviour
 
        
         UIBranchButton target = (UIBranchButton)param;
+        //Debug.Log("OnBranchButtonClicked id:" + target.type + target.name);
         if (target.transform.GetComponent<Toggle>().isOn)
         {
            // Debug.Log("change");
@@ -110,15 +111,9 @@ public class TreeManager : MonoBehaviour
                 }
 
             }
-            else
-            {
-                SubsystemMsg.SetWireframe(target.id);
-            }
-
-            //  Debug.Log("OnBranchButtonClicked id:" + target.id + target.name);
-
             if(!target.type.Equals("equipment") && !target.type.Equals("model"))
             {
+                SubsystemMsg.SetWireframe(target.id);
                 this.selectOnelevel = target.id;
             }
         }

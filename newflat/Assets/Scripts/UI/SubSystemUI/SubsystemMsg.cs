@@ -29,7 +29,7 @@ public static class SubsystemMsg {
                 log.Debug("sceneid="+ sceneid  + "is empty");
                 return;
             }
-           // Debug.Log("resultSubSystem=" + result);
+            Debug.Log("resultSubSystem=" + result);
 
             dataSource = Utils.CollectionsConvert.ToObject<List<SubSystemItem>>(result);
             systemUI = TransformControlUtility.CreateItem("UI/UISubSystem/SubjetSystemTree", UIUtility.GetRootCanvas());
@@ -59,6 +59,7 @@ public static class SubsystemMsg {
     private static List<string> ids = new List<string>();
     public static void SetWireframe(string id)
     {
+        isSubSystemState = true;
         // Debug.Log("id="+id);
         if (wireframeM == null)
         {
@@ -89,6 +90,8 @@ public static class SubsystemMsg {
 
     }
 
+    public static bool isSubSystemState = false;
+
     public static void AllMaterialRestore()
     {
         BaseEquipmentControl[] equipments = GameObject.FindObjectsOfType<BaseEquipmentControl>();
@@ -96,6 +99,7 @@ public static class SubsystemMsg {
         {
             be.CancelWireframe();
         }
+        isSubSystemState = false;
     }
 
     private static SubSystemItem subSystemItem = null;
@@ -106,7 +110,6 @@ public static class SubsystemMsg {
    /// <returns>设备ids</returns>
     private static void GetEquipmentById(List<SubSystemItem> list,string id)
     {
-       
         if(list == null)
         {
             return ;

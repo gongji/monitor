@@ -92,6 +92,10 @@ public sealed class EquipmentData {
 
     public static  void DownLoadModel(List<EquipmentItem> currentEquipmentData,System.Action callBack)
     {
+        if(currentEquipmentData==null || currentEquipmentData.Count==0)
+        {
+            return;
+        }
         string[] modelids = GetModelList(currentEquipmentData);
         if (modelids.Length > 0)
         {
@@ -178,7 +182,7 @@ public sealed class EquipmentData {
     /// <returns></returns>
     public static string[] GetModelList(List<EquipmentItem> equipmentDataList)
     {
-
+       
         List<string> modelist = new List<string>();
         var list = equipmentDataList.GroupBy(x => new { x.modelId }).Select(group => new
         {

@@ -32,7 +32,7 @@ public class BrowserToolBar : MonoBehaviour {
     private Transform fpsController;
     private Camera firstCamera;
 
-    protected Texture2D m_FirstPersonIcon = null;
+   
 
     private Transform builderSwitch = null;
 
@@ -71,21 +71,12 @@ public class BrowserToolBar : MonoBehaviour {
 
 
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
-
-        
         TransformControlUtility.AddEventToBtn(colorArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ColorAreaButton(); });
-
         TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
-
         TransformControlUtility.AddEventToBtn(cameraMode.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CameraModeSwitch(); });
-
         TransformControlUtility.AddEventToBtn(builderSwitch.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BuilderSwitch(); });
-
-
         jidian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(jidian.GetComponent<Toggle>(), value));
       
-        m_FirstPersonIcon = Resources.Load("UI/frist_target") as Texture2D;
-
         foreach(Transform child in transform)
         {
             buttonList.Add(child);
@@ -289,31 +280,10 @@ public class BrowserToolBar : MonoBehaviour {
     
 
 
-    private bool isFlyCameraMode = true;
-    public bool IsFlyCameraMode
-    {
-        get
-
-        {
-            return isFlyCameraMode;
-        }
-    }
+   
     private void CameraModeSwitch()
     {
-        if (isFlyCameraMode)
-        {
-            cameraMode.GetComponentInChildren<Text>().text = "人物模式";
-            ThirdSwitchMsg.instacne.SwitchThirdPerson();
-            UIUtility.ShowTips("您已进入人物模式，按Q键切换键飞行模式。");
-        }
-        else
-        {
-            cameraMode.GetComponentInChildren<Text>().text = "飞行模式";
-            ThirdSwitchMsg.instacne.SwitchNormalCamera();
-            
-        }
-
-        isFlyCameraMode = !isFlyCameraMode;
+        ThirdSwitchMsg.instacne.SwitchMode(cameraMode);
     }
 
 
@@ -354,44 +324,6 @@ public class BrowserToolBar : MonoBehaviour {
         });
 
     }
-
-
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Q) && !isFlyCameraMode)
-        {
-            CameraModeSwitch();
-        }
-
-        //进入人物模式
-    }
-
-    private  void OnGUI()
-    {
-        return;
-        if (!isFlyCameraMode)
-        {
-            Cursor.visible = false;
-
-#if UNITY_EDITOR
-            int nSize = 32;
-#else
-           int nSize = Screen.width > 1920 ? (Screen.width * 32) / 1920 : 32;
-#endif
-
-
-            DrawCursor(new Vector3(Screen.width >> 1, (Screen.height + nSize) >> 1), m_FirstPersonIcon, nSize);
-        }
-        else
-        {
-            Cursor.visible = true;
-        }
-    }
-    private void DrawCursor(Vector3 mousePosition, Texture2D texture, int nIconSize)
-    {
-        GUI.DrawTexture(new Rect(mousePosition.x - (nIconSize >> 1), Screen.height - mousePosition.y - (nIconSize >> 1), nIconSize, nIconSize), texture);
-    }
-
 
     #region jidian
     /// <param name="isShow"></param>

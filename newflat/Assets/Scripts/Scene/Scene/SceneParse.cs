@@ -304,6 +304,10 @@ public static class SceneParse  {
 
     private static  void AddChildBimScritps(Transform root)
     {
+        if(AppInfo.Platform == BRPlatform.Editor)
+        {
+            return;
+        }
         foreach (Transform child in root)
         {
             if(child.GetComponent<MeshRenderer>()!=null)
@@ -320,12 +324,13 @@ public static class SceneParse  {
             return;
         }
         GameObject item = FindObjUtility.GetTransformChildByName(t.transform, Constant.Person_Point);
-        if(item!=null && item.GetComponentInChildren<MeshRenderer>()!=null)
+        if(item!=null)
         {
-            item.GetComponentInChildren<MeshRenderer>().enabled = false;
+            foreach (Transform child in item.transform)
+            {
+                GameObject.DestroyImmediate(child.gameObject);
+            }
         }
     }
-
-
 
 }

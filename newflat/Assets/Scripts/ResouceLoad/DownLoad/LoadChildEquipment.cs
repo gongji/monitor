@@ -10,12 +10,15 @@ public class LoadChildEquipment : MonoBehaviour {
         ITEquipment3dProxy.SearchITEquipmentData(equipmentId,(result)=> {
 
             List<EquipmentItem> equipments = Utils.CollectionsConvert.ToObject<List<EquipmentItem>>(result);
+            if(equipments!=null && equipments.Count>0)
+            {
+                EquipmentData.DownLoadModel(equipments, () => {
 
-            EquipmentData.DownLoadModel(equipments, () => {
+                    InitCreateEquipment.StartCreateEquipment(equipments, callBack);
 
-                InitCreateEquipment.StartCreateEquipment(equipments, callBack);
-
-            });
+                });
+            }
+           
 
 
         },null);

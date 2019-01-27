@@ -66,6 +66,11 @@ public class BrowseStatus : AppBaseState
                 clickSelectEquipment.DestoryTestPointMenu();
             }
 
+            //if(SubsystemMsg.isSubSystemState)
+            //{
+            //    SubsystemMsg.AllMaterialRestore();
+            //    return;
+            //}
             Vector3 hitInfoPoint = MouseCheck.clickHitPoint;
             float distance = Vector3.Distance(Camera.main.transform.position, hitInfoPoint);
             Vector3 from = Camera.main.transform.position;
