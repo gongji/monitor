@@ -67,8 +67,10 @@ public class Mouse3DTips : MonoBehaviour {
     {
         IState currentstate = Main.instance.stateMachineManager.mCurrentState;
         if (currentstate is AreaState && AppInfo.Platform == BRPlatform.Browser)
-        { 
-            Main.instance.stateMachineManager.SwitchStatus<BuilderState>(id);
+        {
+           
+           // Main.instance.stateMachineManager.SwitchStatus<BuilderState>(id);
+            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0,id);
         }
         else if(currentstate is FloorState)
         {

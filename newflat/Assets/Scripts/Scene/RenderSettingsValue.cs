@@ -71,10 +71,10 @@ public class RenderSettingsValue : MonoBehaviour
         //}
         //Material currentMat = SkyDataManeger.Instance.currentMode ? skyMaterial : SkyDataManeger.Instance.NightDayMat;
         
-        Color temp = new Color(128.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f);
-        skyMaterial.SetColor("_Tint", temp);
+        ////Color temp = new Color(128.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f);
+        ////skyMaterial.SetColor("_Tint", temp);
 
-        skyMaterial.SetFloat("_Exposure", 1);
+        ////skyMaterial.SetFloat("_Exposure", 1);
 
         RenderSettings.skybox = skyMaterial;
 
