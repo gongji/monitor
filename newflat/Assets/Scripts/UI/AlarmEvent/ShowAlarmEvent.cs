@@ -37,6 +37,8 @@ public  class ShowAlarmEvent :MonoBehaviour
     private  bool isInit = false;
 
     private Color dgColor = Color.white;
+
+    public static readonly int MAX_VALUE = 100;
     private   void Init()
     {
         
@@ -57,8 +59,13 @@ public  class ShowAlarmEvent :MonoBehaviour
     
     public  void Show(AlarmEventItem aei)
     {
+        if(transform.GetComponentInChildren<ListView>().Items.Count == MAX_VALUE)
+        {
+            transform.GetComponentInChildren<ListView>().Items.RemoveAt(transform.GetComponentInChildren<ListView>().Items.Count-1);
+        }
         transform.GetComponentInChildren<ListView>().Items.Insert(0, CreateItem(aei));
         transform.GetComponentInChildren<ListView>().GetComponent<Image>().color = dgColor;
+        
         PlayAlarmSound();
     }
 
