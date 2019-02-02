@@ -10,11 +10,11 @@ public class FullAreaSet : BaseSet
 {
     private static ILog log = LogManagers.GetLogger("FullAreaSet");
     private GameObject colorImageUI;
-    #region 设置全员场景初始化
+    #region 
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
         base.Enter(currentlist, callBack);
-        Object3dItem currentScene = SceneContext.currentSceneData;
+        //Object3dItem currentScene = SceneContext.currentSceneData;
         CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
 
            SetSkyEffection();

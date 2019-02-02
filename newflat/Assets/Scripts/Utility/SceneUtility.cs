@@ -12,7 +12,7 @@ public static class SceneUtility
         Scene scene = SceneManager.GetSceneByName(sceneName);
         //if (scene == null) { Debug<Seaweed>.LogError("scene is null"); return null; }
         GameObject[] roots;
-        if (scene != null && scene.IsValid())
+        if (scene.IsValid())
         {
 
             roots = scene.GetRootGameObjects();
@@ -57,7 +57,7 @@ public static class SceneUtility
     public static List<GameObject> GetRootGameObjects(string sceneName)
     {
         Scene currentScene = SceneManager.GetSceneByName(sceneName);
-        if (currentScene != null && currentScene.IsValid())
+        if (currentScene.IsValid())
         {
             GameObject[] roots = currentScene.GetRootGameObjects();
             return new List<GameObject>(roots);
@@ -74,7 +74,7 @@ public static class SceneUtility
     public static void SetRootGameObjects(string sceneName,bool isVisible)
     {
         Scene currentScene = SceneManager.GetSceneByName(sceneName);
-        if (currentScene != null && currentScene.IsValid())
+        if ( currentScene.IsValid())
         {
             GameObject[] roots = currentScene.GetRootGameObjects();
             foreach(GameObject g in roots)

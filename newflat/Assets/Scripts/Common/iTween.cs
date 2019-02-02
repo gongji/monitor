@@ -7325,7 +7325,7 @@ public class iTween : MonoBehaviour
     }
 
 
-    //��ȡLineRender��·��
+    //
     public static List<Vector3> GetLineRender(Vector3[] path)
     {
         List<Vector3> result = new List<Vector3>();

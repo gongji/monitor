@@ -246,7 +246,7 @@ public class ColorAreaSet : BaseSet
         tmm.MaxLocalScale = Vector3.one * 10;
         tmm.isAddScript = false;
 
-        Transform tips = tmm.Create(name, boudns.center + Vector3.up * boudns.size.y, collider.transform);
+        tmm.Create(name, boudns.center + Vector3.up * boudns.size.y, collider.transform);
     }
     #endregion
 

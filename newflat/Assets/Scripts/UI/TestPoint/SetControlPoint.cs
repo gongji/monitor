@@ -176,7 +176,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
 
     private void SetDropDownListDataSource(DropDonwListUI dorpUI, EquipmentControlPointItem ecp)
     {
-        string values = ecp.values;
+       // string values = ecp.values;
         string[] valueArray = ecp.values.Split(',');
         string describe = ecp.describes;
 

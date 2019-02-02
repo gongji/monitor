@@ -14,7 +14,7 @@ public class TestEvent : MonoBehaviour {
 		
         if(Input.GetKeyDown(KeyCode.A))
         {
-            Dictionary<string, string> sendDic = new Dictionary<string, string>();
+            //Dictionary<string, string> sendDic = new Dictionary<string, string>();
             //sendDic.Add("eventId", "122");
             //sendDic.Add("commitTime", "2018-12-31 20:20:20");
 

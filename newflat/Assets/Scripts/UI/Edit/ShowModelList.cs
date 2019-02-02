@@ -133,7 +133,7 @@ public class ShowModelList : MonoBehaviour {
         modelPanelColone.transform.SetSiblingIndex(secondGameObject.transform.GetSiblingIndex()+1);
       
         Transform modelItem = modelPanelColone.transform.Find("item");
-        float height = 0;
+       float height = 0;
         foreach (ModelCategory itemData in modelList)
         { 
             GameObject modelItemObject = GameObject.Instantiate<GameObject>(modelItem.gameObject);

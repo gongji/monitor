@@ -23,7 +23,7 @@ public sealed  class EffectionUtility  {
         }
 
         HighlightingSystem.Highlighter hi = selectingObjectTransform.GetComponent<HighlightingSystem.Highlighter>();
-        if (hi = null)
+        if (hi == null)
         {
             hi = selectingObjectTransform.gameObject.AddComponent<HighlightingSystem.Highlighter>();
         }

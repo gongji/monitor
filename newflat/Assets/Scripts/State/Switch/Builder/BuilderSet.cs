@@ -17,8 +17,6 @@ public class BuilderSet: BaseSet,IEventListener
     private List<Object3dItem> originalData;
     private float yoffest = 2.5f;
 
-    private GameObject navigationUI;
-
     #region 进入 逻辑
     public override void Enter(List<Object3dItem> currentData,System.Action callBack)
     {
