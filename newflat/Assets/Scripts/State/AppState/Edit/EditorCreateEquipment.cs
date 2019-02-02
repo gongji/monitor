@@ -10,7 +10,6 @@ using DG.Tweening;
 /// </summary>
 public sealed class EditorCreateEquipment
 {
-
     private static ILog log = LogManagers.GetLogger("CreateEquipment");
 
     public static void Create(GameObject modelPrefeb,Vector3 hitpostion,Transform hitTransform)

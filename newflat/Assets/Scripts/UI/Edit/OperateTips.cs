@@ -9,21 +9,19 @@ using DG.Tweening;
 /// </summary>
 public class OperateTips : MonoBehaviour {
 
-  
     public static OperateTips instance;
-
     private float yValue = 15.0f;
     void Start () {
         instance = this;
-
         gameObject.AddComponent<TextBgJust>();
         transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, yValue - 100.0f);
-        MoveShow();
+       // MoveShow();
 
     }
 
-    private void MoveShow()
+    public void Show(string text)
     {
+        GetComponentInChildren<Text>().text = text;
         transform.GetComponent<RectTransform>().DOAnchorPosY(yValue, 1.0f).OnComplete(() => {
 
            
@@ -31,16 +29,10 @@ public class OperateTips : MonoBehaviour {
     }
 	
 
-
-    public void SetShowText(string text)
-    {
-        GetComponentInChildren<Text>().text = text;
-    }
-
-    public void DestroryGameObject()
+    public void HideTips()
     {
         transform.GetComponent<RectTransform>().DOAnchorPosY(yValue-100.0f, 1.0f).OnComplete(() => {
-            GameObject.Destroy(gameObject);
+           
         }); ;
 
       

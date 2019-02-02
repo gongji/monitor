@@ -9,13 +9,10 @@ public sealed class EditUI {
         CreateModelListUI();
         CreateEditTools();
         CreateEquipmentMenu();
+        GameObject tips = TransformControlUtility.CreateItem("Edit/operateTips", UIUtility.GetRootCanvas());
+        tips.name = "tips";
     }
 
-
-
-    /// <summary>
-    /// 创建的模型列表的ui
-    /// </summary>
     private static void CreateModelListUI()
     {
         GameObject modelList = TransformControlUtility.CreateItem("Edit/EditUI", UIUtility.GetRootCanvas());
@@ -28,9 +25,7 @@ public sealed class EditUI {
         //}
     }
 
-    /// <summary>
-    /// 创建编辑器的工具栏
-    /// </summary>
+
     private static void CreateEditTools()
     {
         GameObject toolBar = TransformControlUtility.CreateItem("Edit/toolBar", UIUtility.GetRootCanvas());
@@ -45,12 +40,7 @@ public sealed class EditUI {
         toolBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
 
-
-
-    /// <summary>
-    /// 得到ui的父对象
-    /// </summary>
-    /// <returns></returns>
+   
     private static Transform GetUIParent()
     {
         Transform canvas = UIUtility.GetRootCanvas();

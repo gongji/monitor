@@ -36,6 +36,7 @@ public class EditStatus : AppBaseState
         {
             UIElementCommandBar.instance.Hide();
             OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.None;
+            ShowModelList.instance.RemoveReset();
             return;
         }
 

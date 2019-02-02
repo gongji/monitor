@@ -214,6 +214,8 @@ public class ShowModelList : MonoBehaviour {
         prefebGameObject = GameObject.Instantiate(ModelData.modelPrefebDic[mc.id]);
         prefebGameObject.name = mc.id+","+ mc.name;
         prefebGameObject.transform.localScale = Vector3.one;
+       
+        OperateTips.instance.Show("单击左键生成设备，双击左键或者按ESC键取消操作");
     }
 
 
@@ -227,7 +229,7 @@ public class ShowModelList : MonoBehaviour {
 
     private void Update()
     {
-        if(Input.GetMouseButton(1))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             RemoveReset();
         }
@@ -245,6 +247,7 @@ public class ShowModelList : MonoBehaviour {
             if (prefebGameObject != null)
             {
                 GameObject.Destroy(prefebGameObject);
+                OperateTips.instance.HideTips();
 
             }
         }

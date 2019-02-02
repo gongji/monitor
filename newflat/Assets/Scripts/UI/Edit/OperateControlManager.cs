@@ -34,7 +34,7 @@ public class OperateControlManager : MonoSingleton<OperateControlManager> {
     {
         if(operateTips)
         {
-            operateTips.DestroryGameObject();
+            operateTips.HideTips();
         }
 
         if(ebc)
@@ -44,21 +44,20 @@ public class OperateControlManager : MonoSingleton<OperateControlManager> {
 
         if(currentState != EquipmentEditState.None)
         {
-            GameObject tips = TransformControlUtility.CreateItem("Edit/operateTips", UIUtility.GetRootCanvas());
-            tips.name = "tips";
-            operateTips = tips.GetComponent<OperateTips>();
-        }else
+            operateTips = OperateTips.instance;
+        }
+        else
         {
             UIElementCommandBar.instance.DestroyGizmo();
         }
 
         if(operateTips!=null && currentState == EquipmentEditState.Edit)
         {
-            operateTips.SetShowText("快捷键：数字1位置，数字2旋转，数字3缩放。");
+            operateTips.Show("快捷键：数字1位置，数字2旋转，数字3缩放。");
 
         }else if(operateTips != null && currentState == EquipmentEditState.BulkCopy)
         {
-            operateTips.SetShowText("shift水平垂直复制，滚轴+左ctrl调整距离,ESC键取消操作。");
+            operateTips.Show("shift水平垂直复制，滚轴+左ctrl调整距离,ESC键取消操作。");
         }
     }
 
