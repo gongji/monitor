@@ -6,51 +6,7 @@ using UnityEngine.UI;
 
 public class TransformControlUtility
 {
-    /// <summary>
-    /// 隐藏所有子物体,返回bool
-    /// </summary>
-    /// <param name="_transform"></param>
-    /// <returns></returns>
-    public static bool IsHideTransformChild(Transform _transform)
-    {
-        bool _isHide = false;
-        if (_transform.childCount != 0)
-        {
-            for (int i = 0; i < _transform.childCount; i++)
-            {
-                _transform.GetChild(i).gameObject.SetActive(false);
-                if (i == _transform.childCount - 1)
-                {
-                    _isHide = true;
-                }
-            }
-        }
-        else { _isHide = true; }
-
-        return _isHide;
-    }
-    /// <summary>
-    /// 隐藏所有子物体
-    /// </summary>
-    /// <param name="_transform"></param>
-    public static void HideTransformChild(Transform _transform)
-    {
-        if (_transform.childCount != 0)
-        {
-            for (int i = 0; i < _transform.childCount; i++)
-            {
-                _transform.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// 创建物体到指定物体下,初始化transfrom
-    /// </summary>
-    /// <param name="_item"></param>
-    /// <param name="_itemParent"></param>
-    /// <returns></returns>
+   
     public static GameObject CreateItem(GameObject _item, Transform _itemParent)
     {
         GameObject item = GameObject.Instantiate(_item, _itemParent);
@@ -61,12 +17,7 @@ public class TransformControlUtility
         return item;
     }
 
-    /// <summary>
-    /// 创建物体到指定物体下,初始化transfrom
-    /// </summary>
-    /// <param name="url"></param>
-    /// <param name="_itemParent"></param>
-    /// <returns></returns>
+  
     public static GameObject CreateItem(string url, Transform _itemParent)
     {
         GameObject item = GameObject.Instantiate(Resources.Load<GameObject>(url), _itemParent);
@@ -113,11 +64,11 @@ public class TransformControlUtility
 
 
     /// <summary>
-    /// 获取3D物体的尺寸
+    /// get total size
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static Vector3 Get3DTransfromSize(GameObject obj)
+    public static Vector3 Get3DTransfromTotalSize(GameObject obj)
     {
         Vector3 size = Vector3.zero;
 
@@ -137,11 +88,7 @@ public class TransformControlUtility
         return size;
     }
 
-    /// <summary>
-    /// 获取2D物体的尺寸
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
+ 
     public static Vector2 Get2DTransfromSize(Transform rectTransform)
     {
 

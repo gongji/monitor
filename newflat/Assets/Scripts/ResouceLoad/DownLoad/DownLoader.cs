@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 下载器
+/// downLoader
 /// </summary>
 public class DownLoader:MonoSingleton<DownLoader> {
 
@@ -16,7 +16,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
     private GameObject loader = null;
     private TaskQueue taskQueue = null;
     /// <summary>
-    /// 下载场景资源
+    ///downLoad scene resouce
     /// </summary>
     /// <param name="scenelist"></param>
     /// <param name="equipmentPaths"></param>
@@ -25,14 +25,14 @@ public class DownLoader:MonoSingleton<DownLoader> {
     public void StartSceneDownLoad(List<Object3dItem> scenelist , System.Action callBack,bool isGuanWang =false)
     {
 
-        LoadLoader();
+        CreateLoaderUI();
         if (scenelist == null)
         {
             throw new System.Exception();
             
         }
         taskQueue = new TaskQueue(this);
-        //下载场景
+        
         foreach (Object3dItem object3dItem in scenelist)
         {
         
@@ -41,13 +41,13 @@ public class DownLoader:MonoSingleton<DownLoader> {
             taskQueue.Add(sceneDownloadTask3);
         }
         taskQueue.StartTask();
-        //下载完成
+ 
         taskQueue.OnFinish = () => {
            
            GameObject.Destroy(loader);
             loader = null;
             taskQueue = null;
-            //更新场景状态
+            //update scened state
 
             UpdateDownState(scenelist);
           
@@ -60,7 +60,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
     }
 
     /// <summary>
-    /// 下载模型
+    /// downLoad model
     /// </summary>
     /// <param name="models"></param>
     /// <param name="callBack"></param>
@@ -69,7 +69,6 @@ public class DownLoader:MonoSingleton<DownLoader> {
 
         taskQueue = new TaskQueue(this);
         Dictionary<string, ABModelDownloadTask> abTaskDic = new Dictionary<string, ABModelDownloadTask>();
-      // 下载设备模型和资源包
         if (modelList != null && modelList.Length > 0)
         {
             foreach (string  id in modelList)
@@ -87,13 +86,13 @@ public class DownLoader:MonoSingleton<DownLoader> {
             }
         }
         taskQueue.StartTask();
-        //下载完成
+        //finish
         taskQueue.OnFinish = () => {
 
             GameObject.Destroy(loader);
             loader = null;
 
-            //更新模型字典
+            //update
 
             ModelData.UpdateModelDic(abTaskDic);
             taskQueue = null;
@@ -112,7 +111,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
         ABModelDownloadTask abDownloadTask = new ABModelDownloadTask(mc.id, mc.path, mc.name);
         taskQueue.Add(abDownloadTask);
         taskQueue.StartTask();
-        //下载完成
+        //finish
         taskQueue.OnFinish = () =>
         {
             ModelData.UpdateModelDic(mc.id, abDownloadTask);
@@ -134,10 +133,8 @@ public class DownLoader:MonoSingleton<DownLoader> {
         }
     }
 
-    /// <summary>
-    /// 装载加载界面
-    /// </summary>
-    private void LoadLoader()
+  
+    private void CreateLoaderUI()
     {
         loader = GameObject.Instantiate(Resources.Load<GameObject>("loadingMask"));
         loader.transform.SetParent(UIUtility.GetRootCanvas());
@@ -146,7 +143,7 @@ public class DownLoader:MonoSingleton<DownLoader> {
     }
 
     /// <summary>
-    /// 下载完成更新长场景数据的状态
+    /// set state
     /// </summary>
     private void UpdateDownState(List<Object3dItem> list)
     {

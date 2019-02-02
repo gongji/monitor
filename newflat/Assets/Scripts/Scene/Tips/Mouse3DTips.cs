@@ -10,7 +10,7 @@ public class Mouse3DTips : MonoBehaviour {
     public string id = string.Empty;
 
     public Vector3 scaleEffetion = Vector3.one;
-    //缩放系数
+    //scale factor
     private float scaleIntensity = 1.3f;
     private Color originalColor = Color.white;
     private void Start()
@@ -58,10 +58,8 @@ public class Mouse3DTips : MonoBehaviour {
         EffectionUtility.StopOutlineEffect(transform);
         transform.localScale = Vector3.one;
     }
-
-
     /// <summary>
-    /// 进行定位
+    /// locate
     /// </summary>
     public void OnMouseDown()
     {

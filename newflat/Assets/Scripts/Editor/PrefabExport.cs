@@ -5,9 +5,9 @@ using UnityEditor;
 public class PrefabExport {
 
     /// <summary>
-    /// prefeb 预制物导出
+    /// prefeb 
     /// </summary>
-    [MenuItem("Tools/对象打包")]
+    [MenuItem("Tools/prefeb export")]
     public static void ExportResource()
     {
         AssetBundleBuild[] builds = new AssetBundleBuild[1];
@@ -25,9 +25,9 @@ public class PrefabExport {
     }
 
     /// <summary>
-    /// prefeb 预制物导出
+    /// prefeb 
     /// </summary>
-    [MenuItem("Tools/旧的设备打包方式")]
+    [MenuItem("Tools/old equipment export")]
     public static void ExportEquipment()
     {
         string path = EditorUtility.SaveFolderPanel("Save model", "assetbundles", "");

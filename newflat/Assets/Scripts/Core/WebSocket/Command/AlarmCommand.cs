@@ -4,9 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 设备报警
-/// </summary>
 [SCommand]
 public class AlarmCommand : ICommand
 {

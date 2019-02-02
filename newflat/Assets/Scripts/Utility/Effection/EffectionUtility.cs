@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 效果工具类
-/// </summary>
+
 public sealed  class EffectionUtility  {
 
-
     #region OutlineEffect
-    /// <summary>
-    /// 描边效果
-    /// </summary>
-    /// <param name="selectingObjectTransform"></param>
+    
     public static void PlayOutlineEffect(Transform selectingObjectTransform, Color fromColor,Color toColor)
     {
         //this.selectingObjectTransform = selectingObjectTransform;
@@ -41,13 +35,9 @@ public sealed  class EffectionUtility  {
         //flash.play(Color.blue, Color.yellow);
 
         flash.play(fromColor, toColor);
-
     }
 
-    /// <summary>
-    /// 取消描边的效果
-    /// </summary>
-    /// <param name="selectingObjectTransform"></param>
+   
     public static void StopOutlineEffect(Transform selectingObjectTransform)
     {
         if (selectingObjectTransform != null)
@@ -59,27 +49,15 @@ public sealed  class EffectionUtility  {
                 flash.stop();
             }
         }
-
-
-
         HighlightingSystem.HighlightingRenderer hr = Camera.main.GetComponent<HighlightingSystem.HighlightingRenderer>();
         if (hr)
         {
             hr.enabled = false;
         }
-
-       
-
     }
 
     #endregion
-    /// <summary>
-    /// 模糊效果
-    /// </summary>
-    /// <param name="duringTime"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+   
     public static IEnumerator BlurEffection(float duringTime,int from,int to)
     {
         float passedTime = 0;
@@ -92,7 +70,6 @@ public sealed  class EffectionUtility  {
         blur.enabled = true;
         while ((passedTime += Time.deltaTime) < duringTime)
         {
-
             float result = Mathf.Lerp(from*1.0f, to * 1.0f, passedTime / duringTime);
 
             blur.iterations = (int)result;
@@ -111,8 +88,6 @@ public sealed  class EffectionUtility  {
             afe = gameObject.AddComponent<AphlaFlashEffection>();
         }
         afe.Flash();
-
-
     }
 
     public static void StopAphlaFlash(GameObject gameObject)
@@ -123,8 +98,6 @@ public sealed  class EffectionUtility  {
             afe.StopAllTask();
         }
     }
-
-
     # endregion
 
 
@@ -137,8 +110,6 @@ public sealed  class EffectionUtility  {
             afe = gameObject.AddComponent<DoTweenAphlaFlashEffection>();
         }
         afe.Flash(color, property);
-
-
     }
 
     public static void StopDotweenAphlaFlash(GameObject gameObject)
@@ -150,10 +121,7 @@ public sealed  class EffectionUtility  {
         }
     }
 
-
     #endregion
-
-
 
     #region mulitMaterial
 
@@ -169,10 +137,7 @@ public sealed  class EffectionUtility  {
         tweenColor.style = UITweener.Style.PingPong;
         tweenColor.duration = 0.5f;
         tweenColor.Play(true);
-
     }
-
-
     public static void StopMulitMaterialEffect(Transform selectingObjectTransform)
     {
         MultiMaterialTweenColor tweenColor = selectingObjectTransform.GetComponent<MultiMaterialTweenColor>();

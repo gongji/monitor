@@ -23,7 +23,7 @@ namespace Equipment
         /// 场景打包，打包成
         /// </summary>
 
-        [MenuItem("Tools/mainscene打包")]
+        [MenuItem("Tools/mainscene ecport")]
         public static void CreateSceneALL()
         {
             //清空一下缓存  

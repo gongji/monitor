@@ -67,15 +67,13 @@ namespace State
                     OnLoadSceneResouceFinish();
                 });
             }
-            //不加载资源
+            //no resouce
             else
             {
                 OnLoadSceneResouceFinish();
             }
 
           // });
-
-
 
         }
 
@@ -133,15 +131,6 @@ namespace State
             //}
         }
 
-
-        /// <summary>
-        /// 退出
-        /// </summary>
-        /// <param name="nextState">Next state.</param>
-        /// <param name="nextid">下一个对象的标识id</param>
-        /// <param name="callBack">Call back.</param>
-        /// <param name="isTransitionFade">退出时候是否使用屏幕切换</c> is transition fade.</param>
-        /// <typeparam name="T">下一个退出的状态</typeparam>
         protected void OnExit<T>(IState  nextState,string nextid,
 			System.Action callBack,bool isTransitionFade = true)
 		{
@@ -179,7 +168,7 @@ namespace State
         public BaseEquipmentControl baseEquipmentControl = null;
         public virtual  void LocateEquipment(string id)
         {
-            log.Debug("定位设备"+id);
+            log.Debug("locate equipment"+id);
 
             if(AppInfo.currentView == ViewType.View2D)
             {

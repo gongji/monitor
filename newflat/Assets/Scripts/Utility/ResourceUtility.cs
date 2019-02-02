@@ -12,9 +12,7 @@ public class ResourceUtility : MonoSingleton<ResourceUtility>
    
     private  void GetHttpResource(string url, Action<WWW> action)
     {
-
         StartCoroutine(GetHttpResourceC(url, action));
-        
     }
         
     private  IEnumerator GetHttpResourceC(string url, Action<WWW> action)

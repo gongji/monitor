@@ -60,7 +60,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
         TransformControlUtility.AddEventToBtn(copy.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CopyClick(copy.gameObject); });
         TransformControlUtility.AddEventToBtn(mulkCopy.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { MulkCopyClick(mulkCopy.gameObject); });
         TransformControlUtility.AddEventToBtn(edit.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { EditClick(edit.gameObject); });
-        TransformControlUtility.AddEventToBtn(locate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveLocateClick(locate.gameObject); });
+        TransformControlUtility.AddEventToBtn(locate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveEquipmentLocateClick(locate.gameObject); });
         TransformControlUtility.AddEventToBtn(bind.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BindClick(bind.gameObject); });
         TransformControlUtility.AddEventToBtn(delete.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { DeleteClick(delete.gameObject); });
         buttons.Add(moveXZButton);
@@ -83,7 +83,6 @@ public sealed class UIElementCommandBar : MonoBehaviour
         }
         Hide();
     }
-    //批量复制
     public void MulkCopyClick(GameObject g)
     {
         OperateControlManager.Instance.CurrentState = OperateControlManager.EquipmentEditState.BulkCopy;
@@ -94,13 +93,10 @@ public sealed class UIElementCommandBar : MonoBehaviour
     }
 
     private gizmoScript gs = null;
-    /// <summary>
-    /// 门的话就保存，其他有模型的设备就编辑
-    /// </summary>
-    /// <param name="g"></param>
+ 
     public void EditClick(GameObject g)
     {
-        //门
+        //door
         if(selectingObjectTransform.GetComponent<Object3DElement>().type == Type.De_Door)
         {
          
@@ -136,8 +132,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
         gs = null;
     }
 
-    //保存定位点
-    public void SaveLocateClick(GameObject g)
+    public void SaveEquipmentLocateClick(GameObject g)
     {
         EquipmentItem equipmentItem = selectingObjectTransform.GetComponent<Object3DElement>().equipmentData;
         if(equipmentItem!=null)
@@ -152,14 +147,14 @@ public sealed class UIElementCommandBar : MonoBehaviour
     {
         Hide();
     }
-    //删除
+ 
     private void DeleteClick(GameObject g)
     {
         
         Object3DElement equipmentItem = selectingObjectTransform.GetComponent<Object3DElement>();
         if(selectingObjectTransform!=null)
         {
-            //不为空的话，保存数据库
+          
             if(!string.IsNullOrEmpty(equipmentItem.equipmentData.id))
             {
                 EquipmentData.RemoveDeleteEquipment(equipmentItem.equipmentData.id);
@@ -168,7 +163,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
             }
             else
             {
-                //移除新建的列表
+               
                 Object3DElement.DeleteNewItem(equipmentItem);
             }
             GameObject.Destroy(selectingObjectTransform.gameObject);
@@ -223,9 +218,6 @@ public sealed class UIElementCommandBar : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 这只快捷按钮的状态
-    /// </summary>
     private void SetShortButttonState(bool isEnable)
     {
         edit.GetComponent<EventTrigger>().enabled = isEnable;
@@ -246,9 +238,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
        
 
     }
-    /// <summary>
-    /// 复位按钮的状态
-    /// </summary>
+
     private void ButttonStateReset()
     {
         SetDoorButtonState(true);
@@ -287,10 +277,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
         Vector3 prePosition = Object3dUtility.GetMaxBounds(selectingObjectTransform).center;
         Vector3 uiPostion = UIUtility.WorldToUI(prePosition, Camera.main);
         GetComponent<RectTransform>().anchoredPosition = uiPostion;
-        
     }
-
-  
     private Vector3 selectPoint = Vector3.zero;
 
     /// 选中设备

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-/// <summary>
-/// 透明度
-/// </summary>
 public class DoTweenAphlaFlashEffection : MonoBehaviour
 {
     Renderer[] renders;

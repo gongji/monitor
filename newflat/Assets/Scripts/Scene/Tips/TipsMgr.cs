@@ -2,15 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using DataModel;
-/// <summary>
-///// 三维字模型管理，使用前需要初始化
-/// </summary>
+
 public class TipsMgr : MonoSingleton<TipsMgr>,IEventListener {
     
-  
-    /// <summary>
-    /// 初始化管理类
-    /// </summary>
+ 
     public void InitManager()
     {
        
@@ -45,10 +40,8 @@ public class TipsMgr : MonoSingleton<TipsMgr>,IEventListener {
            Transform tips =   tmm.Create(object3dItem.name, boudns.center + Vector3.up * boudns.size.y/2.0f, parent);
             tipsList.Add(tips);
             bc.enabled = isActive;
-            //处理2d标签
+            
             View2dTextManager.Instance.Create2dText(object3dItem, boudns);
-
-
         }
     }
 

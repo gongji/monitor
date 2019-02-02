@@ -14,7 +14,7 @@ public sealed class EquipmentData {
 
 
     #region allEquipmentData
-    //保存所有的设备数据
+    //save equipment all data
     private static Dictionary<string, GameObject> allEquipmentDataDic = new Dictionary<string, GameObject>();
     public static Dictionary<string, GameObject> GetAllEquipmentData
     {
@@ -31,14 +31,14 @@ public sealed class EquipmentData {
     }
 
     /// <summary>
-    /// 退出状态时候将所有对象设为null,并隐藏
+    /// 
     /// </summary>
     public static void SetAllEquipmentParentEmpty()
     {
         foreach(GameObject item in allEquipmentDataDic.Values)
         {
             Object3DElement object3DElement = item.GetComponent<Object3DElement>();
-            //只隐藏有模型的设备
+            //
             if (item.activeSelf && object3DElement!=null && object3DElement.equipmentData!=null && 
                 string.IsNullOrEmpty(object3DElement.equipmentData.modelId))
             {
@@ -50,7 +50,7 @@ public sealed class EquipmentData {
     }
 
     #endregion allEquipmentData
-    /// 当前场景对象的设备数据
+    
 
     private static List<EquipmentItem> currentEquipmentData = null;
 
@@ -117,11 +117,7 @@ public sealed class EquipmentData {
             }
         }
     }
-    /// <summary>
-    /// 通过父节点得到设备查询的sql语句 
-    /// </summary>
-    /// <param name="parentid"></param>
-    /// <param name="callBack"></param>
+  
     private static string  GetEquipmentSqlByParent()
     {
 
@@ -129,8 +125,7 @@ public sealed class EquipmentData {
         IState curerState = AppInfo.GetCurrentState;
         List<Object3dItem> list = new List<Object3dItem>();
         string sql = "";
-        //全景模式不需要得到设备
-        if(curerState is ColorAreaState)
+        if(curerState is ColorAreaState || curerState is FullAreaState)
         {
             sql =  "";
         }

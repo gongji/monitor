@@ -141,7 +141,7 @@ public static class SceneParse  {
                    
                     if(!child.name.Trim().ToLower().Equals(Constant.Door.ToLower()))
                     {
-                        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("scene"), child.gameObject);
+                        Object3dUtility.SetObjectLayer(LayerMask.NameToLayer("scene"), child.gameObject);
                     }
                     
                 }
@@ -244,7 +244,7 @@ public static class SceneParse  {
    private static void AddSingelDoorScripts(Transform door,Transform doorRoot)
     {
         //Debug.Log("door="+ door.name);
-        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), door.gameObject);
+        Object3dUtility.SetObjectLayer(LayerMask.NameToLayer("equipment"), door.gameObject);
         Object3DElement object3DElement = door.gameObject.AddComponent<Object3DElement>();
         object3DElement.type = Type.De_Door;
         object3DElement.equipmentData.number = object3DElement.transform.name;

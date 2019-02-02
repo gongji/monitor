@@ -4,30 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
-/// <summary>
-/// 保存设备的数据
-/// </summary>
 public static class SaveEquipmentData
 {
     public static void StartSave()
     {
-       
         Dictionary<string, object> result = new Dictionary<string, object>();
-
-        //新增的数据
-
         List<Object3DElement> addObject3DElements = Object3DElement.GetNewList();
         List<EquipmentItem> AddData = FormatAddEquipmentItem(addObject3DElements);
 
         result.Add("add", AddData);
-
-        //删除的数据
-
         string deleteStr = Utils.StrUtil.ConnetString(Object3DElement.GetDeleteList(), ",");
         
         result.Add("delete", deleteStr);
-
-        //修改变化的
         List<EquipmentItem> modityData = new List<EquipmentItem>();
         foreach (GameObject item in EquipmentData.GetAllEquipmentData.Values)
         {
@@ -73,28 +61,24 @@ public static class SaveEquipmentData
 
     }
 
-
-   
-
-
     /// <summary>
-    /// 更新成功后，回调同步
+    /// callback synchronization
     /// </summary>
     /// <param name="OriginalAddData"></param>
     /// <param name="addResultData"></param>
     /// <param name="modityData"></param>
-    public  static void  CallBackUpdate(List<Object3DElement> addObject3DElements, List<EquipmentGuid> addResultData, List<EquipmentItem> modityData)
+    public static void  CallBackUpdate(List<Object3DElement> addObject3DElements, List<EquipmentGuid> addResultData, List<EquipmentItem> modityData)
     {
-        //清除所有的删除
-        Object3DElement.ClearAllDelete();
         
-        //同步修改的数据
-        foreach(EquipmentItem modityItem  in modityData)
+        Object3DElement.ClearAllDelete();
+
+        //synchronization modity
+        foreach (EquipmentItem modityItem  in modityData)
         {
             GameObject eg = EquipmentData.GetAllEquipmentData[modityItem.id];
             eg.GetComponent<Object3DElement>().preEquipmentData = modityItem.Clone() as EquipmentItem;
         }
-        //处理增加
+      //add
 
         Dictionary<string, GameObject> allequipmentDic = EquipmentData.GetAllEquipmentData;
 
@@ -138,14 +122,14 @@ public static class SaveEquipmentData
     }
 
     /// <summary>
-    /// 保存门禁数据
+    /// save door
     /// </summary>
     /// <param name="doorData"></param>
     public static void SaveDoor(EquipmentItem doorData)
     {
         Dictionary<string, object> result = new Dictionary<string, object>();
 
-        //新增的数据
+        //add
         List<EquipmentItem> AddData = new List<EquipmentItem>();
 
         if (string.IsNullOrEmpty(doorData.id))
@@ -155,10 +139,10 @@ public static class SaveEquipmentData
         
         result.Add("add", AddData);
 
-        //删除的数据
+        //delete
         result.Add("delete", "");
 
-        //修改变化的
+        //modity 
         List<EquipmentItem> modityData = new List<EquipmentItem>();
         if(!string.IsNullOrEmpty(doorData.id))
         {

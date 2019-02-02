@@ -87,7 +87,7 @@ public class ThirdSwitchMsg : MonoBehaviour {
         oriCamera.gameObject.SetActive(false);
         child.SetActive(true);
 
-        GameObject point = ManyouMsg.GetManYouPoint();
+        GameObject point = ThirdManyouMsg.GetManYouPoint();
         if (point == null)
         {
             thirdGameObject.transform.position = oriCamera.transform.position - Vector3.up * 0.6f;

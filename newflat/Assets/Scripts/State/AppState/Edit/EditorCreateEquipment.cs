@@ -33,7 +33,7 @@ public sealed class EditorCreateEquipment
         Debug.Log(hitTransform.name);
         //设置父对象
         SetParent(hitTransform, hitpostion, Equipmentinstance, equipment3DElement);
-        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), Equipmentinstance);
+        Object3dUtility.SetObjectLayer(LayerMask.NameToLayer("equipment"), Equipmentinstance);
 
         //  object3DElement.equipmentData.id = Guid.NewGuid().ToString();
         string[] str = modelPrefeb.name.Split(',');

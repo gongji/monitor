@@ -64,9 +64,7 @@ public class FloorSet : FloorRoomSet {
           
     }
 
-    /// <summary>
-    /// 设置管网的按钮是否可见,并显示管网
-    /// </summary>
+    
     private void SetJiDianButttonVisible()
     {
         if(BrowserToolBar.instance==null)
@@ -78,10 +76,9 @@ public class FloorSet : FloorRoomSet {
         if(list.Count>0 && AppInfo.currentView == ViewType.View3D)
         {
             BrowserToolBar.instance.HideShowJiDian(true);
-            //显示管网的模型
             if(BrowserToolBar.instance.GetJiDianToggleState())
             {
-                JiDaianMsg.ShowJiDian();
+                MTMsg.ShowJiDian();
             }
            
         }
@@ -91,10 +88,7 @@ public class FloorSet : FloorRoomSet {
         }
         
     }
-    /// <summary>
-    /// 直接退出
-    /// </summary>
-    /// <param name="nextid"></param>
+   
     public override void Exit(string nextid)
     {
        // Debug.Log("exit直接");
@@ -102,7 +96,7 @@ public class FloorSet : FloorRoomSet {
         DeleteNavigation();
         //DeleteTips();
         DestryPlane();
-        JiDaianMsg.AllJiDianHide();
+        MTMsg.AllJiDianHide();
 
 
 

@@ -14,7 +14,6 @@ public   class BuiderNavigationUI: NavigationUIBase
         foreach (Object3dItem object3dItem in currentData)
         {
             GameObject collider = SceneUtility.GetSceneCollider(object3dItem.number);
-            //计算4个顶点
             Vector3[] vs = Object3dUtility.GetBoxColliderVertex(collider.GetComponent<BoxCollider>());
 
             Vector3 uiPostion = GetMaxXValue(vs);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// 相机的初始化设置
+/// camera init
 /// </summary>
 public static class CameraInitSet {
 
@@ -44,12 +44,6 @@ public static class CameraInitSet {
 
     }
 
-
-    /// <summary>
-    /// by box Set camera view postion
-    /// </summary>
-    /// <param name="box"></param>
-    /// <param name="callBack"></param>
     public static void SetCameraPosition(Transform box, System.Action callBack)
     {
         CameraViewData.GetCurrentSceneCameraView((result) =>
@@ -221,9 +215,7 @@ public static class CameraInitSet {
         StartSet(_sceneid, _box, _cameraMoveTime, null);
     }
 
-    /// <summary>
-    /// 系统的初始化视角
-    /// </summary>
+   
     public static void SystemInitCamera()
     {
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
@@ -239,23 +231,12 @@ public static class CameraInitSet {
                 Camera.main.transform.rotation = cameraRoation;
                 Camera.main.GetComponent<CameraObjectController>().SetCameraPostion();
             }
-            
-
-
+           
         });
-
-
-       
     }
 
-
-    /// <summary>
-    /// 设置绕中心点旋转
-    /// </summary>
-    /// <param name="box"></param>
     public static void SetRotationCamera(Transform  centerTransform,bool isFullArea =false)
     {
-        Debug.Log("centerTransformname="+ centerTransform.name);
         CameraObjectController coc = Camera.main.gameObject.GetComponent<CameraObjectController>();
         if(coc!=null)
         {

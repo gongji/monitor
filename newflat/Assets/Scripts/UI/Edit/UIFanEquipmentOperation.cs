@@ -4,6 +4,9 @@ using DataModel;
 using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// no use
+/// </summary>
 public class UIFanEquipmentOperation : MonoBehaviour
 {
     public float newAngle;

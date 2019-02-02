@@ -123,7 +123,7 @@ public static  class Object3dUtility
 
 
     /// <summary>
-    /// 3d对象Y轴始终注视相机
+    /// face camera
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="isXaxis"></param>
@@ -136,11 +136,7 @@ public static  class Object3dUtility
         obj.transform.rotation = Quaternion.LookRotation(obj.transform.position - camera.transform.position, direction);
     }
 
-    /// <summary>
-    /// 判断3d对象是否位于相机的正前方
-    /// </summary>
-    /// <param name="gameObject">3d对象</param>
-    /// <param name="camera">面向的相机</param>
+  
     public static bool IsCameraForword(GameObject gameObject, Camera camera)
     {
         Transform cameraTrans = camera.transform;
@@ -152,11 +148,7 @@ public static  class Object3dUtility
         return true;
     }
 
-    /// <summary>
-    /// 判断3d对象是否位于相机的正前方
-    /// </summary>
-    /// <param name="gameObject">3d对象</param>
-    /// <param name="camera">面向的相机</param>
+   
     public static bool IsCameraForword2(GameObject gameObject, Camera camera)
 
     {
@@ -171,11 +163,7 @@ public static  class Object3dUtility
         return true;
     }
 
-    /// <summary>
-    /// 判断3d对象是否位于相机的正前方
-    /// </summary>
-    /// <param name="gameObject">3d对象</param>
-    /// <param name="camera">面向的相机</param>
+ 
     public static bool IsCameraForword3(Vector3 _position, Camera camera)
     {
         Vector3 vScreenPosition = camera.WorldToViewportPoint(_position);
@@ -189,7 +177,7 @@ public static  class Object3dUtility
 
 
     /// <summary>
-    /// 判断target对象是否在camera的可视范围之内
+    /// IsVisible
     /// </summary>
     /// <param name="target"></param>
     /// <param name="camera"></param>
@@ -205,7 +193,7 @@ public static  class Object3dUtility
 
 
     /// <summary>
-    /// 设置3d对象随着相机的距离进行缩放
+    /// set object scale
     /// </summary>
     /// <param name="gameObject">需要缩放3d对象</param>
     /// <param name="cameraPoison">相机的位置</param>
@@ -219,10 +207,7 @@ public static  class Object3dUtility
         gameObject.transform.localScale = Vector3.Lerp(m_MinScale, m_MaxScale, fLerp);
     }
 
-
-
-    /// <summary>设置一个物体的层包含其子物体</summary>
-    public static void SetLayerValue(int layer, GameObject go, bool includingDevice = false)
+    public static void SetObjectLayer(int layer, GameObject go, bool includingDevice = false)
     {
         if (!go)
         {
@@ -238,39 +223,24 @@ public static  class Object3dUtility
        
     }
 
-    /// <summary>
-    /// 控制物体（包含子物体）的MeshRenderer显示或者隐藏
-    /// </summary>
-    /// <param name="t"></param>
-    /// <param name="isEnable"></param>
-    public static void EnbleMeshRenderer(Transform t, bool isEnable)
+    public static void SetObjectLayer(string  layerName, GameObject go, bool includingDevice = false)
     {
-        MeshRenderer[] meshs = t.GetComponentsInChildren<MeshRenderer>();
-        MeshRenderer _mesh = t.GetComponent<MeshRenderer>();
-        if (_mesh != null)
-            _mesh.enabled = isEnable;
-        for (int i = 0; i < meshs.Length; i++)
+        int layer = LayerMask.NameToLayer(layerName);
+        if (!go)
         {
-            meshs[i].enabled = isEnable;
+            return;
         }
+        Transform[] ts = go.GetComponentsInChildren<Transform>(true);
+        foreach (Transform tf in ts)
+        {
+
+            tf.gameObject.layer = layer;
+
+        }
+
     }
 
-    /// <summary>
-    /// 控制显示隐藏（包含子物体的碰撞）
-    /// </summary>
-    /// <param name="t">T.</param>
-    /// <param name="isEnable">If set to <c>true</c> is enable.</param>
-    public static void EnbleCollider(Transform t, bool isEnable)
-    {
-        Collider[] meshs = t.GetComponentsInChildren<Collider>();
-        Collider _mesh = t.GetComponent<Collider>();
-        if (_mesh != null)
-            _mesh.enabled = isEnable;
-        for (int i = 0; i < meshs.Length; i++)
-        {
-            meshs[i].enabled = isEnable;
-        }
-    }
+
 
  
     /// <summary>
@@ -311,7 +281,7 @@ public static  class Object3dUtility
     private static  Bounds maxBound;
 
     /// <summary>
-    /// >获取子节点最大的包围盒
+    /// get Max transform Bounds
     /// </summary>
     /// <param name="parentTransform"></param>
     /// <returns></returns>
@@ -373,14 +343,13 @@ public static  class Object3dUtility
 
 
     /// <summary>
-    /// 比较对象的属性是否相同。
+    /// compare property
     /// </summary>
     /// <param name="item1"></param>
     /// <param name="item2"></param>
     /// <returns></returns>
     public static bool IsCompareObjectProperty(EquipmentItem item1, EquipmentItem item2)
     {
-        
         System.Type type1 = item1.GetType();
         FieldInfo[] fieldInfos1 = type1.GetFields();
 

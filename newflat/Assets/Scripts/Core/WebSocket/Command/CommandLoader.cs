@@ -10,11 +10,6 @@ namespace Core.Server.Command
     public class CommandLoader
     {
         private static ILog log = LogManagers.GetLogger(typeof(CommandLoader).FullName);
-
-        /// <summary>
-        /// 加载命令
-        /// </summary>
-        /// <returns></returns>
         public static List<ICommand> Load()
         {
 

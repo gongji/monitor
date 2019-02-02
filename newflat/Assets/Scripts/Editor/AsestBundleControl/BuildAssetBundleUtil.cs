@@ -6,15 +6,8 @@ using System.IO;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-
-
-/// <summary>
-/// 资源打包工具
-/// </summary>
 public class BuildAssetBundleUtil
 {
-    
-
     
     /// <summary>
 

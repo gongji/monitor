@@ -25,42 +25,36 @@ public class EditToolBar : MonoBehaviour {
         viewReset = transform.Find("ViewReset");
         savelocate = transform.Find("Savelocate");
        
-        TransformControlUtility.AddEventToBtn(save.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { Save(save.gameObject);});
+        TransformControlUtility.AddEventToBtn(save.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveData(save.gameObject);});
         TransformControlUtility.AddEventToBtn(viewReset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ResetView(); });
-        TransformControlUtility.AddEventToBtn(savelocate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveLocate(); });
+        TransformControlUtility.AddEventToBtn(savelocate.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { SaveSceneLocate(); });
 
-        if (GameObject.Find("FPSController") != null)
-        {
-            GameObject.DestroyImmediate(GameObject.Find("FPSController"));
-        }
+        //if (GameObject.Find("FPSController") != null)
+        //{
+        //    GameObject.DestroyImmediate(GameObject.Find("FPSController"));
+        //}
 
         
     }
-
-    /// <summary>
-    /// 保存按钮
-    /// </summary>
     /// <param name="g"></param>
-    private void Save(GameObject g)
+    private void SaveData(GameObject g)
     {
         SaveEquipmentData.StartSave();
     }
-    //视角复位
+    //camera reset
     public void ResetView()
     {
         CameraInitSet.ResetCameraPostion();
     }
 
-    //保存定位点
-    private void SaveLocate()
+    //save locate point
+    private void SaveSceneLocate()
     {
 
         CameraViewData.SaveSceneCameraView();
     }
 
-    /// <summary>
-    /// 对视角的按钮进行控制
-    /// </summary>
+  
     public void SetViewButtonControl()
     {
         if(AppInfo.currentView == ViewType.View3D)

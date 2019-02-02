@@ -22,7 +22,6 @@ public class ColorAreaNavigationUI : NavigationUIBase
             {
                 continue;
             }
-            //计算4个顶点
             Vector3[] vs = Object3dUtility.GetBoxColliderVertex(collider.GetComponent<BoxCollider>());
 
             Vector3 uiPostion = GetMaxXValue(vs);

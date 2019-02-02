@@ -55,7 +55,7 @@ public abstract class GridBase : MonoBehaviour {
 
     public void Init(string title,Button closeButton)
     {
-        //实例化
+
         InitParameter(closeButton);
 
         SetTitle(title);
@@ -72,7 +72,7 @@ public abstract class GridBase : MonoBehaviour {
     }
 
     /// <summary>
-    /// 设置列的宽度
+    /// set colunm width
     /// </summary>
     /// <param name="widths"></param>
     public void SetColumProperty(int[] columWidths, string[] columTitles)
@@ -86,7 +86,7 @@ public abstract class GridBase : MonoBehaviour {
         }
     }
     /// <summary>
-    /// 设置列标题
+    /// set title
     /// </summary>
     /// <param name="ListView"></param>
     protected void AddColumnsTitle(string[] titles)

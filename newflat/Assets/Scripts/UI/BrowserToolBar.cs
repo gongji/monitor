@@ -31,9 +31,6 @@ public class BrowserToolBar : MonoBehaviour {
      private Transform temptureClound;
     private Transform fpsController;
     private Camera firstCamera;
-
-   
-
     private Transform builderSwitch = null;
 
      public static BrowserToolBar instance;
@@ -85,9 +82,7 @@ public class BrowserToolBar : MonoBehaviour {
     }
 
     #region toolBar control
-    /// <summary>
-    /// 设置工具条的显示隐藏
-    /// </summary>
+ 
     public void SetToolBarState()
     {
         transform.localScale = Vector3.one;
@@ -206,12 +201,12 @@ public class BrowserToolBar : MonoBehaviour {
         guanxianSelect3d = value;
         if (value)
         {
-            JiDaianMsg.ShowJiDian();
+            MTMsg.ShowJiDian();
            
         }
         else
         {
-            JiDaianMsg.AllJiDianHide();
+            MTMsg.AllJiDianHide();
         }
        // Debug.Log("toggle change " + (value ? "On" : "Off"));
     }
@@ -325,7 +320,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     }
 
-    #region jidian
+    #region MT
     /// <param name="isShow"></param>
     public void HideShowJiDian(bool isShow)
     {

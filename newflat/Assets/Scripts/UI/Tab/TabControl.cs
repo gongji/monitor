@@ -4,10 +4,6 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// Original Tab Control by Gordon Biggans (https://twitter.com/digibawb)
-/// </summary>
-
 [Serializable]
 public class TabControlEntry
 {

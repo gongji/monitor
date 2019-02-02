@@ -157,7 +157,7 @@ public class NormalEquipmentControl :BaseEquipmentControl {
         {
             return;
         }
-        TestPointProxy.IsExistContronTest(equipmentItem.id, (result) => {
+        TestPointProxy.IsExistControlTest(equipmentItem.id, (result) => {
 
             //没有控制点
             if (result.Equals("0"))

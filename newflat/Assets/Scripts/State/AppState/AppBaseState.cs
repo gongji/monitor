@@ -33,7 +33,7 @@ public class AppBaseState
 
     protected Object3DElement checkSelectEquipment;
     /// <summary>
-    /// 检测是否单击到了设备
+    /// check equipment
     /// </summary>
     /// <returns></returns>
     protected Object3DElement CheckClickEquipment(ref Transform hitTransform)
@@ -44,11 +44,11 @@ public class AppBaseState
            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            ////单击检测
+            ////click
             if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << Constant.EquipmentLayer))
 
             {
-                Debug.Log("单击的设备对象：" + hit.transform.name);
+                Debug.Log("click equipment：" + hit.transform.name);
                 hitTransform = hit.transform;
                 return FindObjUtility.FindEquipmentParent(hit.transform);
             }
@@ -65,8 +65,6 @@ public class AppBaseState
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
-            ////单击检测
             if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << Constant.SceneLayer))
 
             {
@@ -87,7 +85,7 @@ public class AppBaseState
     {
        
         if ((EventSystem.current!=null && EventSystem.current.IsPointerOverGameObject())|| 
-            OperateControlManager.Instance.CurrentState != OperateControlManager.EquipmentEditState.None || BimMsg.instacne.isSelected)
+            OperateControlManager.Instance.CurrentState != OperateControlManager.EquipmentEditState.None || (BimMsg.instacne!=null&&BimMsg.instacne.isSelected))
         {
             return;
         }
@@ -95,10 +93,9 @@ public class AppBaseState
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
-        //悬停检测
+        //mouse over
         if (Physics.Raycast(ray, out hit, float.MaxValue, (1 << Constant.EquipmentLayer)))
         {
-            // Debug.Log(hit.transform);
             baseObject3DElement = FindObjUtility.FindEquipmentParent(hit.transform);
            
             if (baseObject3DElement != null && !string.IsNullOrEmpty(baseObject3DElement.equipmentData.id))

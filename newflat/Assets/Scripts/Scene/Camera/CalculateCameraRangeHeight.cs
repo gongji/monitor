@@ -4,28 +4,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 计算相机的范围的高度,用于控制相机的范围
-/// </summary>
 public static class CaluteCameraRangeHeight  {
 
     public static float multiple = 3.0f;
     public static float GetCameraHeight()
     {
         IState mCurrentState = Main.instance.stateMachineManager.mCurrentState;
-        //园区和全景模式
+
         if (mCurrentState is AreaState || mCurrentState is ColorAreaState)
         {
 
-            List<Object3dItem> list =  SceneData.GetAllWq();
+            List<Object3dItem> list = SceneData.GetAllWq();
             return FindMaxWQ(list);
 
         }
-        //房间和楼层
-        else if(mCurrentState is FloorState || mCurrentState is RoomState)
+        else if (mCurrentState is FloorState || mCurrentState is RoomState)
         {
-            return  SceneContext.sceneBox.GetComponent<BoxCollider>().bounds.size.y * multiple;
-           
+            return SceneContext.sceneBox.GetComponent<BoxCollider>().bounds.size.y * multiple;
+
         }
         return 0.0f;
     }

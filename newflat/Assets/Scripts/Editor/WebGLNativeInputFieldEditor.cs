@@ -10,7 +10,6 @@ public class WebGLNativeInputFieldEditor : InputFieldEditor
     private SerializedProperty m_DialogOkBtn;
     private SerializedProperty m_DialogCancelBtn;
     
-
     protected override void OnEnable()
     {
         base.OnEnable();

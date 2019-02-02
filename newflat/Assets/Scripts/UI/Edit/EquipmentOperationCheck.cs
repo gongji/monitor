@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 
 /// <summary>
-/// 检测鼠标
+/// check mouse 
 /// </summary>
 public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
 
@@ -29,7 +29,6 @@ public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointe
 
     }
     public void OnPointerDown(PointerEventData eventData)
-
     { 
 
        if(GetComponent<Button>().interactable) 
@@ -74,14 +73,14 @@ public class EquipmentOperationCheck : MonoBehaviour,IPointerDownHandler,IPointe
         {
             if (ButtonName.Equals("moveXZ"))
             {
-                // 将3D视图中的上下移动变更为2D视图的前后左右移动
+              
                 MoveButtonPress();
                 currentOperation = Operation.MoveXZ; //mainCamera.isOrthoGraphic ? Operation.MoveXZ : Operation.MoveY;
 
             }
             else if (ButtonName.Equals("moveY"))
             {
-                // 将3D视图中的上下移动变更为2D视图的上下移动
+              
                 MoveButtonPress();
                 currentOperation = Operation.MoveY;
 

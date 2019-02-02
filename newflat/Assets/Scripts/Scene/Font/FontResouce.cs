@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FontResouce :MonoSingleton<FontResouce> {
+public class FontResouceMsg :MonoSingleton<FontResouceMsg> {
 
     private Font _font;
     public Font font

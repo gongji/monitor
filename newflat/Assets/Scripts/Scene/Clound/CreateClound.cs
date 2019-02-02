@@ -54,7 +54,8 @@ public class CreateClound : MonoBehaviour {
      public float length = 15.0f; 
     public void CreateMesh()
     {
-        Vector3[] newVertices = { new Vector3(-length / 2, 0, -width / 2), new Vector3(length / 2, 0, -width / 2), new Vector3(length / 2, 0, width / 2), new Vector3(-length / 2, 0, width / 2) };
+        Vector3[] newVertices = { new Vector3(-length / 2, 0, -width / 2), new Vector3(length / 2, 0, -width / 2),
+            new Vector3(length / 2, 0, width / 2), new Vector3(-length / 2, 0, width / 2) };
         Vector2[] newUV = { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector3(0, 1) };
         int[] newtriangles = { 0, 2, 1, 0, 3, 2 };
 

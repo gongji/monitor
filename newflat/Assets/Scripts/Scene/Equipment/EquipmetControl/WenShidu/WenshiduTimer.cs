@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 全局单例类，更新温湿度
+/// update data
 /// </summary>
 public class WenshiduTimer : MonoSingleton<WenshiduTimer>,ITimer {
 
@@ -45,7 +45,7 @@ public class WenshiduTimer : MonoSingleton<WenshiduTimer>,ITimer {
         WenShiduDataUpdate[]  wenshidus =  GameObject.FindObjectsOfType<WenShiduDataUpdate>();
         if(wenshidus.Length>0)
         {
-            //接口未定暂时这样写
+           
             RealTimeDataProxy.GetWenShiduList(null, (successCallBack) => {
 
                List<WenShiduItemData>  list =  Utils.CollectionsConvert.ToObject<List<WenShiduItemData>>(successCallBack);

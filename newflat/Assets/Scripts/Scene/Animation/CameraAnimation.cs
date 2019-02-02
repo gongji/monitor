@@ -5,16 +5,6 @@ using UnityEngine;
 
 public static class CameraAnimation
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="camera"></param>
-    /// <param name="targetPostion"></param>
-    /// <param name="targetRotation"></param>
-    /// <param name="duringTime"></param>
-    /// <param name="callBack"></param>
-    /// <param name="ease"></param>
     public static void CameraMove(Camera camera, Vector3 targetPostion, Vector3 targeteulerAngles, float duringTime, System.Action callBack,
         DG.Tweening.Ease ease = Ease.OutQuart)
     {
@@ -48,13 +38,6 @@ public static class CameraAnimation
         });
     }
 
-
-    /// <summary>
-    /// 将centerPostion拉到屏幕中心点，相机移动过去
-    /// </summary>
-    /// <param name="centerPostion">拉取得点</param>
-    /// <param name="duringTime"></param>
-    /// <param name="callBack"></param>
     public static void RotationScreenCenter(Vector3 centerPostion,float duringTime,System.Action<Vector3,float> callBack)
     {
         Vector3 relativePos = centerPostion - Camera.main.transform.position;

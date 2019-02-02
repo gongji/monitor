@@ -7,7 +7,6 @@ using Utils;
 
 public sealed class CameraViewData
 {
-
     public static void SaveSceneCameraView()
     {
         CameraViewItem cvt = null;

@@ -4,18 +4,9 @@ using System.Threading;
 
 namespace Br.Utils
 {
-    /// <summary>
-    /// Action同步器
-    /// <para>
-    ///     在多线程交互的情况下使方法都在主线程处理
-    ///     需要在所属MonoBehaviour的Update方法中调用Exec方法
-    /// </para>
-    /// </summary>
     public class SyncManager : ISyncManager
     {
-        /// <summary>
-        /// 队列
-        /// </summary>
+      
         private Queue<Action> queue;
         private readonly ReaderWriterLockSlim rwlock = new ReaderWriterLockSlim();
         private Action<Action> processCallback;
@@ -36,9 +27,7 @@ namespace Br.Utils
             this.processCallback = processCallback;
         }
 
-        /// <summary>
-        /// 需要在所属MonoBehaviour的Update方法中调用
-        /// </summary>
+      
         public void Exec()
         {
             int len;
@@ -52,21 +41,14 @@ namespace Br.Utils
             }
         }
 
-        /// <summary>
-        /// 增加要执行的Action
-        /// </summary>
-        /// <param name="action"></param>
+      
+    
         public void Add(Action action)
         {
             rwlock.EnterWriteLock();
             queue.Enqueue(action);
             rwlock.ExitWriteLock();
         }
-
-        /// <summary>
-        /// 增加要执行的Action
-        /// </summary>
-        /// <param name="action"></param>
         public void Close()
         {
             rwlock.EnterWriteLock();

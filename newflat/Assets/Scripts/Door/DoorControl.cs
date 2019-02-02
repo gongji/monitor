@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 门的控制
-/// </summary>
 public class DoorControl : MonoBehaviour
 {
     public enum Type

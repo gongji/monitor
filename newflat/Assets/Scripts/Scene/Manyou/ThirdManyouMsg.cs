@@ -3,12 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ManyouMsg {
+public static class ThirdManyouMsg
+{
 
-    /// <summary>
-    /// 查找漫游点
-    /// </summary>
-    /// <returns></returns>
     public static GameObject GetManYouPoint()
     {
         Object3dItem object3dItem = SceneContext.currentSceneData;

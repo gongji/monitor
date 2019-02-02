@@ -15,14 +15,14 @@ public  class GridMsg:MonoSingleton<GridMsg> {
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="url">路径</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <param name="title">标题</param>
-    /// <param name="closeButtonPath">关闭按钮路径</param>
-    /// <param name="columWidths">列宽</param>
-    /// <param name="columTitles">列标题</param>
-    /// <param name="dataSouces">数据源，二维数组</param>
+    /// <param name="url">path=</param>
+    /// <param name="width">width</param>
+    /// <param name="height">height</param>
+    /// <param name="title">title</param>
+    /// <param name="closeButtonPath">close button path</param>
+    /// <param name="columWidths">column width</param>
+    /// <param name="columTitles">column title</param>
+    /// <param name="dataSouces">datasource</param>
     public void Show<T>(string url,int width,int height,string title, string closeButtonPath, 
         int[] columWidths, string[] columTitles, List<List<string>> dataSouces) where T : GridBase
     {

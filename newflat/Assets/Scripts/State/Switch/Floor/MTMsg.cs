@@ -5,9 +5,9 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// jidian
+/// Mechatronics Technology
 /// </summary>
-public static class JiDaianMsg
+public static class MTMsg
 {
     private static List<Object3dItem> curentStata;
     public static void ShowJiDian()

@@ -5,7 +5,6 @@ using System.Collections;
 [CustomEditor(typeof(TabControl))]
 public class TabControlInspector : Editor
 {
-    
     public override void OnInspectorGUI()
     {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("panelContainer"), true);

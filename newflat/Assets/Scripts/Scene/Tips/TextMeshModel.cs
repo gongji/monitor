@@ -5,7 +5,7 @@ using System;
 using DG.Tweening;
 
 /// <summary>
-/// TextMesh文字
+/// TextMesh tips
 /// </summary>
 public class TextMeshModel : MeshTextAbstract
 {
@@ -20,14 +20,7 @@ public class TextMeshModel : MeshTextAbstract
         
     }
 
-    
    
-
-    /// <summary>
-    /// 生成的模型
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="postion"></param>
     /// <returns></returns>
     public override Transform  Create(string text,  Vector3 postion,Transform parentBox)
     {
@@ -50,23 +43,17 @@ public class TextMeshModel : MeshTextAbstract
         }
         return fontModel.transform;
 
-
-
-
     }
-
   
     private void DestroyModel()
     {
         GameObject.Destroy(fontModel);
-        
     }
 
-  
 
     public Vector3 size = Vector3.one;
     /// <summary>
-    /// 设置文本的背景大小
+    /// set bg
     /// </summary>
     private void SetTextSelfAdaption()
     {

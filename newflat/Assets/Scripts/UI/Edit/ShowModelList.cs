@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using SystemCore.Task;
-
 /// <summary>
-/// 显示模型，类别列表数据
+/// editor righttop modelList and property
 /// </summary>
 public class ShowModelList : MonoBehaviour {
 
@@ -17,7 +16,6 @@ public class ShowModelList : MonoBehaviour {
         instance = this;
     }
     void Start () {
-        //查询出所有的树状结构数据，由3d客户端完成数据的分级处理
         EditModelListData.GetModelListData((list) => {
             this.list = list;
             CreateModelList(list);
@@ -29,13 +27,9 @@ public class ShowModelList : MonoBehaviour {
     {
 
         Transform topCategory = transform.Find("1level");
-
         Transform modelList = transform.Find("2level");
-
-     
         Transform topItem = topCategory.Find("item");
        
-        ///创建一级菜单
        for (int i=0; list!=null && i < list.Count;i++)
         {
             GameObject clone = GameObject.Instantiate(topItem.gameObject);
@@ -61,12 +55,11 @@ public class ShowModelList : MonoBehaviour {
 
     private Dictionary<GameObject, List<ModelCategory>> twoLeveTypeldic = new Dictionary<GameObject, List<ModelCategory>>();
     /// <summary>
-    /// 一级的菜单选中
+    /// onelevel
     /// </summary>
     /// <param name="clickGameObject"></param>
     private void TopLevelClick(GameObject oneLevelSelectObject)
-    {
-        //一级菜单的选中
+    { 
         SetSelectTopEffection(oneLevelSelectObject.transform.parent, oneLevelSelectObject);
 
         var result = from o in list where o.id.Equals(oneLevelSelectObject.name) select o;
@@ -112,12 +105,9 @@ public class ShowModelList : MonoBehaviour {
             }
         }
     }
-
-
-    //模型和ModelCategory数据的对应关系
     private Dictionary<GameObject, ModelCategory> modelDataDic = new Dictionary<GameObject, ModelCategory>();
     /// <summary>
-    /// 二级菜单的点击
+    ///two level click
     /// </summary>
     /// <param name="secondGameObject"></param>
     private void OnSecondClick(GameObject secondGameObject)
@@ -125,9 +115,7 @@ public class ShowModelList : MonoBehaviour {
 
         List<ModelCategory> modelList = twoLeveTypeldic[secondGameObject];
         Transform model = transform.Find("2level/modelList");
-       
-        //每次创建之前先删除
-
+    
         foreach(Transform child in model.transform.parent)
         {
             if(child.name. Equals("model"))
@@ -143,14 +131,11 @@ public class ShowModelList : MonoBehaviour {
         modelPanelColone.transform.localScale = Vector3.one;
         modelPanelColone.name = "model";
         modelPanelColone.transform.SetSiblingIndex(secondGameObject.transform.GetSiblingIndex()+1);
-       
-        //行数
-
+      
         Transform modelItem = modelPanelColone.transform.Find("item");
         float height = 0;
         foreach (ModelCategory itemData in modelList)
-        {
-            //创建模型的对象
+        { 
             GameObject modelItemObject = GameObject.Instantiate<GameObject>(modelItem.gameObject);
             modelDataDic.Add(modelItemObject, itemData);
             modelItemObject.SetActive(true);
@@ -172,7 +157,7 @@ public class ShowModelList : MonoBehaviour {
     }
 
     /// <summary>
-    /// 选中一级菜单的效果
+    /// one level effection
     /// </summary>
     /// <param name="parent"></param>
     /// <param name="selectGameObject"></param>
@@ -182,7 +167,6 @@ public class ShowModelList : MonoBehaviour {
         if(outLine!=null)
         {
             GameObject.Destroy(outLine);
-
         }
         foreach (Transform child in parent)
         {
@@ -197,14 +181,11 @@ public class ShowModelList : MonoBehaviour {
 
     public GameObject prefebGameObject;
     private GameObject selectThreeGameObject;
-    /// <summary>
-    /// 三级菜单的创建
-    /// </summary>
-    /// <param name="threeItem"></param>
+ 
     public void OnThreeClick(GameObject threeItem)
     {
         selectThreeGameObject = threeItem;
-        //颜色复位
+        
         foreach (Transform child in selectThreeGameObject.transform.parent)
         {
             child.GetComponent<Image>().color = Color.white;
@@ -267,10 +248,5 @@ public class ShowModelList : MonoBehaviour {
 
             }
         }
-        
     }
-
-
-
-
 }

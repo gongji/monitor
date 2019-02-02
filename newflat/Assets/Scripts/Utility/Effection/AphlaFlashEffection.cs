@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 自发光颜色
+/// emission
 /// </summary>
 public class AphlaFlashEffection : MonoBehaviour
 {

@@ -10,18 +10,12 @@ using UnityEngine.SceneManagement;
 namespace SystemCore.Task
 {
     /// <summary>
-    /// ab模型包下载任务
+    /// ab model task
     /// </summary>
 	public class TexturelDownloadTask : TaskBase
     {
-       
-        /// <summary>
-        /// 下载路径
-        /// </summary>
         protected string _npath;
-        /// <summary>
-        /// 下载工具
-        /// </summary>
+      
         protected UnityWebRequest unityWebRequest;
         protected float _loadProgress;
         protected float _wwwProgress;
@@ -70,9 +64,6 @@ namespace SystemCore.Task
                     {
                         OnFinish();
                     }
-
-
-
                 }
             }
 

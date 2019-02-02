@@ -7,19 +7,12 @@ using DG.Tweening;
 
 public static class UIUtility
 {
-    /// <summary>
-    /// 形成精灵
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="image"></param>
-    /// <param name="m_Pivot"></param>
     public static void CreateSprite(Texture2D picv, Image image, Vector2 m_Pivot)
     {
         try
         {
-           
             Vector4 tempborder = Vector4.zero;
-            Sprite spr = Sprite.Create(picv, new Rect(0, 0, picv.width, picv.height), new Vector2(m_Pivot.x, m_Pivot.y), 100.0f, 0, SpriteMeshType.Tight, tempborder);//后面Vector2就是你Anchors的Pivot的x/y属性值
+            Sprite spr = Sprite.Create(picv, new Rect(0, 0, picv.width, picv.height), new Vector2(m_Pivot.x, m_Pivot.y), 100.0f, 0, SpriteMeshType.Tight, tempborder);
             image.sprite = spr;
         }
         catch (Exception e)
@@ -29,13 +22,7 @@ public static class UIUtility
 
     }
 
-    /// <summary>
-    /// 形成精灵
-    /// </summary>
-    /// <param name="url"></param>
-    /// <param name="image"></param>
-
-    public static void GetSpring(string url, Image image)//Application.dataPath + "/Resources/UITableComponent/wgsj_up__0_0_0_0.png"
+    public static void CreateSpriteFromResouce(string url, Image image)//Application.dataPath + "/Resources/UITableComponent/wgsj_up__0_0_0_0.png"
     {
         // if (!url.Contains(Application.dataPath)) return;
         // Debug<Seaweed>.Log(url);
@@ -65,11 +52,7 @@ public static class UIUtility
     }
 
 
-    /// <summary>
-    /// 设置瞄点位置
-    /// </summary>
-    /// <param name="pivotType"></param>
-    /// <param name="gameObject"></param>
+    
     //public static void SetPivot(PivotType pivotType, GameObject gameObject)
     //{
     //    if (pivotType == PivotType.Center)
@@ -104,10 +87,10 @@ public static class UIUtility
     //}
 
     /// <summary>
-    /// 世界坐标转UGUI Cavans局部坐标
+    /// world to ugui
     /// </summary>
-    /// <param name="worldPoint">世界坐标点</param>
-    /// <param name="canvas">对应的Canvas</param>
+    /// <param name="worldPoint">world postion</param>
+    /// <param name="canvas"></param>
     /// <returns></returns>
     public static Vector2 WorldToUI(Vector3 worldPoint, Camera objCamera)
     {
@@ -127,7 +110,7 @@ public static class UIUtility
         return screenPoint;
     }
     /// <summary>
-    /// 世屏幕坐标 Cavans局部坐标
+    /// screen to ugui
     /// </summary>
     /// <param name="worldPoint">世界坐标点</param>
     /// <param name="canvas">对应的Canvas</param>
@@ -158,16 +141,11 @@ public static class UIUtility
         if(canvas!=null)
         {
             canvas.enabled = isShow;
-
         }
 
     }
 
-    /// <summary>
-    /// 世界坐标转UI屏幕坐标
-    /// </summary>
-    /// <param name="wordPosition"></param>
-    /// <returns></returns>
+   
     public static Vector2 WordToScenePoint(Vector3 wordPosition)
     {
         CanvasScaler canvasScaler = GameObject.Find("UIFramework").gameObject.GetComponent<CanvasScaler>();
@@ -176,7 +154,8 @@ public static class UIUtility
 
         float resolutionY = canvasScaler.referenceResolution.y;
 
-        float offect = (Screen.width / canvasScaler.referenceResolution.x) * (1 - canvasScaler.matchWidthOrHeight) + (Screen.height / canvasScaler.referenceResolution.y) * canvasScaler.matchWidthOrHeight;
+        float offect = (Screen.width / canvasScaler.referenceResolution.x) * (1 - canvasScaler.matchWidthOrHeight) + 
+            (Screen.height / canvasScaler.referenceResolution.y) * canvasScaler.matchWidthOrHeight;
 
         Vector2 a = RectTransformUtility.WorldToScreenPoint(GameObject.Find("SystemUICamera").GetComponent<Camera>(), wordPosition);
 

@@ -45,11 +45,6 @@ public class UITemperature : MonoBehaviour
         LeftGo.SetActive(false);
     }
 
-    /// <summary>
-    /// 设置简拼和设备对象
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="SimpleName"></param>
     public void Show(GameObject target, string SimpleName)
     {
         this.target = target;

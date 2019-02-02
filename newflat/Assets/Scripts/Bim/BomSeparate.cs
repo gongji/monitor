@@ -4,12 +4,12 @@ using UnityEngine;
 
 public sealed class BomSeparate  {
     
-    public static void UpdatePostion(float distacne,BimMouse[] bimMouse,Vector3 centerPostion)
+    public static void UpdatePostion(float distance,BimMouse[] bimMouse,Vector3 centerPostion)
     {
        // Debug.Log(distacne);
         foreach (BimMouse item in bimMouse)
         {
-            item.transform.localPosition = item.defaultPostion +  (item.transform.GetComponent<Collider>().bounds.center - centerPostion).normalized * distacne*100;
+            item.transform.localPosition = item.defaultPostion +  (item.transform.GetComponent<Collider>().bounds.center - centerPostion).normalized * distance * 100;
         }
     }
 

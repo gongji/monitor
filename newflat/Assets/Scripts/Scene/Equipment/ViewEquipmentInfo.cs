@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 查看相机
+/// equipment zoom
 /// </summary>
 public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
 
@@ -49,7 +49,7 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
         {
             currentEquipment = EquipmentData.GetAllEquipmentData[EquipmentId];
             currentCloneEquipment = GameObject.Instantiate(currentEquipment);
-            Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipmentZoom"), currentCloneEquipment);
+            Object3dUtility.SetObjectLayer(LayerMask.NameToLayer("equipmentZoom"), currentCloneEquipment);
             currentCloneEquipment.transform.localScale = Vector3.one * 0.1f;
             currentCloneEquipment.transform.localPosition = new Vector3(0.26f, -0.04f, 2.5f);
             currentCloneEquipment.transform.eulerAngles = new Vector3(-90.0f, -0.24f, 30.0f);
@@ -59,7 +59,6 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
             {
                 GameObject.Destroy(bec);
             }
-
 
             //增加闪烁效果
             AphlaFlashEffection afe = currentEquipment.GetComponent<AphlaFlashEffection>();
@@ -90,7 +89,7 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
 
     private GameObject selectEffection = null;
     /// <summary>
-    /// 创建效果类
+    /// paritcle effection
     /// </summary>
     private void CreateEffection()
     {
@@ -104,7 +103,7 @@ public class ViewEquipmentInfo : SingletonCS<ViewEquipmentInfo> {
             {
                 selectEffection = GameObject.Instantiate(bundle.LoadAsset<GameObject>("selecteffect"));
                
-                Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipmentZoom"), selectEffection);
+                Object3dUtility.SetObjectLayer(LayerMask.NameToLayer("equipmentZoom"), selectEffection);
                 selectEffection.name = "equipmentSelect";
                 selectEffection.transform.localPosition = new Vector3(0.26f, -0.04f, 1.75f);
                 selectEffection.transform.localEulerAngles = new Vector3(10f, 0f, 0f);

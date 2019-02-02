@@ -6,9 +6,7 @@ public abstract class MeshTextAbstract : MonoBehaviour {
 
     public  string id { get; set; } 
 
-    
     public abstract Transform Create(string text, Vector3 postion, Transform parentBox);
-
 
     protected abstract void AddScripts();
 
@@ -21,7 +19,7 @@ public abstract class MeshTextAbstract : MonoBehaviour {
     protected GameObject fontModel = null;
 
     /// <summary>
-    /// 始终面向相机
+    /// face camera
     /// </summary>
     protected void LookAtCamera()
     {

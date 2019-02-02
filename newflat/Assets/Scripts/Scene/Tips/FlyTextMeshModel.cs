@@ -86,11 +86,8 @@ public class FlyTextMeshModel : MeshTextAbstract
         fontMaterial = null;
     }
 
-    
-    
-
     /// <summary>
-    /// 获取三个相量的绝对值的最小值
+    /// get min value
     /// </summary>
     /// <param name="v"></param>
     /// <returns></returns>

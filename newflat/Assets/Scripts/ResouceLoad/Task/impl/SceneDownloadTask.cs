@@ -9,18 +9,12 @@ using UnityEngine.SceneManagement;
 namespace SystemCore.Task
 {
     /// <summary>
-    /// www场景下载任务
+    /// www scene
     /// </summary>
 	public class SceneDownloadTask : TaskBase
     {
        
-        /// <summary>
-        /// 下载路径
-        /// </summary>
         protected string _npath;
-        /// <summary>
-        /// 下载工具
-        /// </summary>
         protected WWW _www;
         protected float _loadProgress;
         protected float _wwwProgress;

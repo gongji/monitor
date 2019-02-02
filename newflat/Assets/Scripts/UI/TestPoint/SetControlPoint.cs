@@ -70,17 +70,17 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
             return;
         }
         MaskManager.Instance.Show();
-        //实例化
+      
         grid = Init();
         CreateTitle(equipmentName);
         listView = grid.GetComponentInChildren<ListView>();
         listView.ItemBecameVisible += OnItemBecameVisible;
         listView.ItemBecameInvisible += OnItemBecameInvisible;
-        //增加列
+    
         AddColumns(listView);
         SetColumWidth(listView);
         SetStyle(listView);
-        //设置值
+       
         //foreach (EquipmentControlPoint item in ecps)
         //{
         //    string[] subItemTexts = new string[] { "23", item.name, item.describe, item.name, "12" };
@@ -108,7 +108,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
     }
 
     /// <summary>
-    /// 显示标题
+    /// set title
     /// </summary>
     /// <param name="titleName"></param>
     private   void CreateTitle(string titleName)
@@ -298,7 +298,6 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
         }
         MaskManager.Instance.Hide();
         EventMgr.Instance.RemoveListener(this, EventName.DeleteObject);
-        
     }
 
     public  void CloseWindow()
@@ -310,8 +309,6 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
           
             DestryGrid();
             isShow = false;
-
-
         });
     }
 

@@ -8,14 +8,12 @@ using UnityEngine;
 using Utils;
 using DG.Tweening;
 
-/// <summary>
-/// 设备创建，显示，隐藏，browser
-/// </summary>
+
 public sealed class InitCreateEquipment
 {
     private static ILog log = LogManagers.GetLogger("BrowserCreateEquipment");
     /// <summary>
-    /// 创建当前场景的设备
+    ///create currrent equipment
     /// </summary>
     public static void CreateEquipment(System.Action createCallBack)
     {
@@ -31,7 +29,7 @@ public sealed class InitCreateEquipment
 
                 return;
             }
-            log.Debug("创建设备" + currentEquipmentData.Count);
+            log.Debug("create equipment" + currentEquipmentData.Count);
 
 
             StartCreateEquipment(currentEquipmentData, createCallBack);
@@ -46,7 +44,7 @@ public sealed class InitCreateEquipment
     {
         gs.Clear();
         Dictionary<string, GameObject> modelPrefebDic = ModelData.GetmodelPrefebDic;
-        //所有的设备
+      
         Dictionary<string, GameObject> equipmentDic = EquipmentData.GetAllEquipmentData;
 
         foreach (EquipmentItem equipmentItem in createEquipmentDatas)
@@ -54,7 +52,7 @@ public sealed class InitCreateEquipment
             DataModel.Type type = (DataModel.Type)Enum.Parse(typeof(DataModel.Type), equipmentItem.type);
 
             GameObject equipment = null;
-            //创建有模型的设备
+         
             if (!string.IsNullOrEmpty(equipmentItem.modelId) && modelPrefebDic.ContainsKey(equipmentItem.modelId) && 
                 !equipmentDic.ContainsKey(equipmentItem.id))
             {
@@ -69,7 +67,7 @@ public sealed class InitCreateEquipment
                
          
             }
-            //创建漏水
+           
             else if(type == DataModel.Type.De_LouShui && !equipmentDic.ContainsKey(equipmentItem.id))
             {
                 equipment = new GameObject();
@@ -117,7 +115,7 @@ public sealed class InitCreateEquipment
     private static void SetEquipmentLayerAndScripts(GameObject equipment,EquipmentItem equipmentItem, 
         Dictionary<string, GameObject> equipmentDic)
     {
-        Object3dUtility.SetLayerValue(LayerMask.NameToLayer("equipment"), equipment);
+        Object3dUtility.SetObjectLayer(LayerMask.NameToLayer("equipment"), equipment);
         equipment.SetActive(false);
 
         AddScript(equipment, equipmentItem);
@@ -164,9 +162,7 @@ public sealed class InitCreateEquipment
         }
     
     }
-    /// <summary>
-    /// 隐藏设备标签
-    /// </summary>
+   
     public static void HideCurrentEquipmentTips()
     {
         List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
@@ -189,9 +185,6 @@ public sealed class InitCreateEquipment
         }
     }
 
-    /// <summary>
-    /// 设置当前的设备父子归属关系，并显示出来
-    /// </summary>
     private static void SetCurrentEquipmentShow()
     {
         List<EquipmentItem> currentEquipmentData = EquipmentData.GetCurrentEquipment;
@@ -217,14 +210,14 @@ public sealed class InitCreateEquipment
                 bec.SetTipsShow(true);
             }
           
-            //查找父对象
+            //find parent
             Object3dItem parentScene = SceneData.FindObjUtilityect3dItemById(equipmentItem.sceneId);
 
             Object3DElement eObject3DElement = null;
             SceneData.gameObjectDic.TryGetValue(equipmentItem.sceneId, out eObject3DElement);
            
 
-            //楼层或者房间
+            //floor or room
 
             if (eObject3DElement != null &&(eObject3DElement.type == DataModel.Type.Floor || eObject3DElement.type == DataModel.Type.Area || 
                 (eObject3DElement.type == DataModel.Type.Room && istate is RoomState)))
@@ -235,7 +228,7 @@ public sealed class InitCreateEquipment
             }
             else
             {
-                //当前为楼层或者大楼显示房间的设备
+                //builder
                 string parentparentid = parentScene.parentsId;
                 Object3dItem parentparentObject = SceneData.FindObjUtilityect3dItemById(parentparentid);
                 GameObject parentparentRoot = SceneUtility.GetGameByRootName(parentparentObject.number, parentparentObject.number);
@@ -255,7 +248,7 @@ public sealed class InitCreateEquipment
     }
 
     /// <summary>
-    /// 设置设备父对象，并隐藏碰撞器
+    /// set parent
     /// </summary>
     /// <param name="equipment"></param>
     /// <param name="rootParent"></param>
