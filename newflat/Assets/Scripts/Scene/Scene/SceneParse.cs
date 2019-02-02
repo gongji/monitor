@@ -9,14 +9,13 @@ using System.Text.RegularExpressions;
 
 public static class SceneParse  {
     /// <summary>
-    /// 通过ID查找外构下的相机位置
+    /// find camera by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static GameObject FindWQMoveCamera(string id)
+    public static GameObject FindWQMoveCamera(string sceneId)
     {
-        
-        Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(id.Trim());
+        Object3dItem object3dItem = SceneData.FindObjUtilityect3dItemById(sceneId.Trim());
         if (object3dItem != null)
         {
             GameObject rootGameObjerct = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
@@ -24,9 +23,7 @@ public static class SceneParse  {
             {
 
                 GameObject cameraGameObject = FindObjUtility.GetTransformChildByName(rootGameObjerct.transform, "camera");
-
                 return cameraGameObject;
-
             }
         }
 
@@ -38,7 +35,7 @@ public static class SceneParse  {
         List<GameObject> gs = SceneUtility.GetRootGameObjects(sceneName);
 
         GameObject sceneRoot = null;
-        //移除隐藏的节点
+        //remove 
         foreach (GameObject item in gs)
         {
             if (!item.activeSelf)
@@ -60,7 +57,7 @@ public static class SceneParse  {
         Regex wqRegex = new Regex("wq");
 
         Object3DElement object3DElement = null;
-        //楼层
+        //floor
         if (flooRegex.IsMatch(endStr))
         {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
@@ -77,7 +74,7 @@ public static class SceneParse  {
                 AddBimAndDoorScript(sceneRoot.transform);
             }
         }
-        //房间
+        //room
         else if(fjRegex.IsMatch(endStr)  && !sceneName.Contains(Constant.Door))
         {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
@@ -85,21 +82,21 @@ public static class SceneParse  {
             object3DElement.type = Type.Room;
             sceneRoot.AddComponent<RoomSceneAlarm>();
         }
-        //建筑外构
+        //wq
         else if(wqRegex.IsMatch(endStr))
         {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.Builder;
             AddWqAlarmObjectScripts(flooRegex, sceneRoot.transform);
         }
-        //门的场景
+        //door
         else if(fjRegex.IsMatch(endStr) &&  sceneName.Contains(Constant.Door))
         {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.RoomDoor;
             DoorSceneData dsd =  sceneRoot.AddComponent<DoorSceneData>();
             dsd.QueryDoorData(id);
-        //地形
+        //dx
         }
         else if(sceneName.Equals(Constant.Main_dxName.ToLower()))
         {
