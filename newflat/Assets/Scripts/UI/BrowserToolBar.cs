@@ -24,11 +24,13 @@ public class BrowserToolBar : MonoBehaviour {
 
     private Transform cameraMode;
 
-    private Transform fullArea;
+    private Transform back;
 
     private Transform bim;
 
-     private Transform temptureClound;
+    public Transform manyou;
+
+    private Transform temptureClound;
     private Transform fpsController;
     private Camera firstCamera;
     private Transform builderSwitch = null;
@@ -37,7 +39,6 @@ public class BrowserToolBar : MonoBehaviour {
 
     private void Awake()
     {
-
         instance = this;
     }
 
@@ -64,12 +65,12 @@ public class BrowserToolBar : MonoBehaviour {
 
         temptureClound = transform.Find("TemptureClound");
 
-        fullArea = transform.Find("fullArea");
+        back = transform.Find("back");
 
-
+        manyou = transform.Find("manyou");
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
         TransformControlUtility.AddEventToBtn(colorArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ColorAreaButton(); });
-        TransformControlUtility.AddEventToBtn(fullArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { FullAreaButton(); });
+        TransformControlUtility.AddEventToBtn(back.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BackAreaButton(); });
         TransformControlUtility.AddEventToBtn(cameraMode.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CameraModeSwitch(); });
         TransformControlUtility.AddEventToBtn(builderSwitch.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BuilderSwitch(); });
         jidian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(jidian.GetComponent<Toggle>(), value));
@@ -78,7 +79,6 @@ public class BrowserToolBar : MonoBehaviour {
         {
             buttonList.Add(child);
         }
-
     }
 
     #region toolBar control
@@ -108,8 +108,7 @@ public class BrowserToolBar : MonoBehaviour {
             builderSwitch.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
             temptureClound.gameObject.SetActive(false);
-            
-
+            back.gameObject.SetActive(false);
         }
         else if (mCurrentState is RoomState)
         {
@@ -121,7 +120,10 @@ public class BrowserToolBar : MonoBehaviour {
             bim.gameObject.SetActive(false);
             cameraMode.gameObject.SetActive(false);
             temptureClound.gameObject.SetActive(false);
-            fullArea.gameObject.SetActive(false);
+            // fullArea.gameObject.SetActive(false);
+            back.gameObject.SetActive(false);
+            manyou.gameObject.SetActive(false);
+            colorArea.gameObject.SetActive(false);
         }
 
         else if (mCurrentState is BuilderState)
@@ -135,13 +137,17 @@ public class BrowserToolBar : MonoBehaviour {
             cameraMode.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
             temptureClound.gameObject.SetActive(false);
-            fullArea.gameObject.SetActive(false);
+            manyou.gameObject.SetActive(false);
+            back.gameObject.SetActive(false);
+            colorArea.gameObject.SetActive(false);
         }
         else if (mCurrentState is FloorState)
         {
             colorArea.gameObject.SetActive(false);
             builderSwitch.gameObject.SetActive(false);
-            fullArea.gameObject.SetActive(false);
+            manyou.gameObject.SetActive(false);
+            back.gameObject.SetActive(false);
+            colorArea.gameObject.SetActive(false);
         }
         else if (mCurrentState is ColorAreaState)
         {
@@ -154,7 +160,9 @@ public class BrowserToolBar : MonoBehaviour {
             builderSwitch.gameObject.SetActive(false);
             bim.gameObject.SetActive(false);
             temptureClound.gameObject.SetActive(false);
-            fullArea.gameObject.SetActive(false);
+            manyou.gameObject.SetActive(false);
+            colorArea.gameObject.SetActive(false);
+
         }
         else if(mCurrentState is FullAreaState)
         {
@@ -168,12 +176,12 @@ public class BrowserToolBar : MonoBehaviour {
             bim.gameObject.SetActive(false);
             temptureClound.gameObject.SetActive(false);
             colorArea.gameObject.SetActive(false);
-            
+            manyou.gameObject.SetActive(false);
+
         }
 
         //temp Disable
         qiangti.gameObject.SetActive(false);
-       // viewSwitch.gameObject.SetActive(false);
     }
 
     public void Switch2DButtonControl()
@@ -228,46 +236,40 @@ public class BrowserToolBar : MonoBehaviour {
     private bool isColorModeAreaMode = false;
     private void ColorAreaButton()
     {
+         Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>("-1",null,0,"94");
+        
+    }
 
-        if(!isColorModeAreaMode)
-        {
-            colorArea.GetComponentInChildren<Text>().text = "返回园区";
-            Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>("-1",null,0,"94");
-        }
-        else
-        {
-            colorArea.GetComponentInChildren<Text>().text = "查看能耗";
-            string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
-            Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
-        }
-
-        isColorModeAreaMode = !isColorModeAreaMode;
+    private void BackAreaButton()
+    {
+        string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
+        Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
     }
 
 
     private bool isFullModeAreaMod = false;
-    private void FullAreaButton()
-    {
-        if (!isFullModeAreaMod)
-        {
-            fullArea.GetComponentInChildren<Text>().text = "返回园区";
-            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, "94");
-        }
-        else
-        {
-            colorArea.GetComponentInChildren<Text>().text = "查看全景";
-            string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
-            Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
-        }
+    //private void FullAreaButton()
+    //{
+    //    if (!isFullModeAreaMod)
+    //    {
+    //       // fullArea.GetComponentInChildren<Text>().text = "返回园区";
+    //        Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, "94");
+    //    }
+    //    else
+    //    {
+    //       // colorArea.GetComponentInChildren<Text>().text = "查看全景";
+    //        string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
+    //        Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
+    //    }
 
-        isFullModeAreaMod = !isFullModeAreaMod;
-    }
+    //    isFullModeAreaMod = !isFullModeAreaMod;
+    //}
 
     public void FullAndColorAreaButtonReset()
     {
         colorArea.GetComponentInChildren<Text>().text = "查看能耗";
 
-        fullArea.GetComponentInChildren<Text>().text = "查看全景";
+       // fullArea.GetComponentInChildren<Text>().text = "查看全景";
 
         isColorModeAreaMode = false;
         isFullModeAreaMod = false;

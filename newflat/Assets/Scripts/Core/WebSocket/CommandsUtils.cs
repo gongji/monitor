@@ -11,10 +11,6 @@ namespace Br.Core.Server
     class CommandsUtils
     {
         private static ILog log = LogManagers.GetLogger("CommandsUtils");
-
-        /// <summary>
-        /// 命令仓库
-        /// </summary>
         private  Dictionary <string, ICommand> commandsMap = new Dictionary<string, ICommand>();
 
         public void Add(ICommand command) {
@@ -52,7 +48,7 @@ namespace Br.Core.Server
                 }
                 else
                 {
-                    log.Warn("未找到命令[" + messageContent.action + "]");
+                    log.Warn("not find [" + messageContent.action + "]");
                 }
             }
             catch (CommandExecException commandExecException)
