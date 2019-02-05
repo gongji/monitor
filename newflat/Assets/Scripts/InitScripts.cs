@@ -28,6 +28,7 @@ public class InitScripts : MonoBehaviour {
         //FlyingTextMsg.instance.LoadFontAsset();
         FontResouceMsg.Instance.Init();
         string isLogin = Config.parse("isLogin");
+        //login
         if (isLogin.Equals("0"))
         {
             string url = Application.streamingAssetsPath + "/UI/" + PlatformMsg.instance.currentPlatform.ToString() + "/login";
@@ -40,8 +41,10 @@ public class InitScripts : MonoBehaviour {
 
             }, "login");
         }
+        //no login
         else
         {
+            GameObject.FindObjectOfType<JSCall>()._InitSceneFinish();
             UserProxy.GetLoginUser((result) => {
                 UserItem userItem = Utils.CollectionsConvert.ToObject<UserItem>(result);
                 //成功
@@ -54,6 +57,8 @@ public class InitScripts : MonoBehaviour {
 
 
             });
+
+           
         }
     }
 

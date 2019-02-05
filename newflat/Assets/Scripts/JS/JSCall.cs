@@ -15,7 +15,8 @@ public class JSCall : MonoBehaviour {
     private static extern void OpenCamera(string equipmentid );
 
 
-
+    [DllImport("__Internal")]
+    private static extern void InitSceneFinish();
 
     [DllImport("__Internal")]
     private static extern void PrintFloatArray(float[] array, int size);
@@ -71,8 +72,24 @@ public class JSCall : MonoBehaviour {
     }
 
 
-    public void openScene(string type,string scneneid)
+    /// <summary>
+    /// 只能接收一个参数
+    /// </summary>
+    /// <param name="paramater"></param>
+    public void OpenScene(string paramater)
     {
-        ExternalSceneSwitch.Instance.SwitchScene(type, scneneid);
+        string[] result = paramater.Split(',');
+        string type = result[0];
+        string sceneid = result[1];
+        Debug.Log(type +","+ sceneid);
+        ExternalSceneSwitch.Instance.SwitchScene(type, sceneid);
     }
+
+
+    public void _InitSceneFinish()
+    {
+        InitSceneFinish();
+    }
+
+
 }

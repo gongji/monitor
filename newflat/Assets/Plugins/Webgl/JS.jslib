@@ -9,6 +9,13 @@ mergeInto(LibraryManager.library, {
     OpenCamera(equipmentid);
   },
 
+
+   InitSceneFinish: function () {
+    Init3DData();
+  },
+
+
+
   SaveSwitchData: function (type, sceneid) {
     SaveSwitchData(Pointer_stringify(type),Pointer_stringify(sceneid));
   },
