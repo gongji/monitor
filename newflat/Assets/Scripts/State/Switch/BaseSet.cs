@@ -96,21 +96,15 @@ public abstract class BaseSet
         SubsystemMsg.Delete();
         EventMgr.Instance.SendEvent(EventName.DeleteObject, null);
         string isSceneCache = Config.parse("isSceneCache");
-        if(isSceneCache.Equals("0"))
+        ShowOrHideScene(false);
+        if (isSceneCache.Equals("1"))
         {
-            ShowOrHideScene(false);
-        }
-        else
-        {
-
-            List<Object3dItem> list = SceneData.GetDownLoadFinishScene();
+            List<Object3dItem> list = SceneData.GetRemoveScene();
             foreach (Object3dItem o in list)
             {
                 SceneUtility.RemoveScene(o.number);
                 o.isDownFinish = false;
             }
-
-
         }
        
         if(BimMsg.instacne!=null)
@@ -153,7 +147,7 @@ public abstract class BaseSet
             renderGameObjerct.GetComponent<RenderSettingsValue>().SetRenderSettings();
         }
 
-        GameObject cameraGameObject = SceneUtility.GetGameByComponent<Camera>(Constant.SkyboxName);
+       // GameObject cameraGameObject = SceneUtility.GetGameByComponent<Camera>(Constant.SkyboxName);
         //cameraGameObject.layer = LayerMask.NameToLayer("PostProcessing");
         // Camera.main.GetComponent<PostProcessVolume>().sharedProfile = cameraGameObject.GetComponent<PostProcessVolume>().sharedProfile;
 

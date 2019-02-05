@@ -37,4 +37,9 @@ public class FloorSceneAlarm : SceneAlarmBase
         isAlarm = false;
 
     }
+
+    private void OnDestroy()
+    {
+        RemoveDic();
+    }
 }

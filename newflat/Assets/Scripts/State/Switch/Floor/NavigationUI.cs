@@ -51,14 +51,14 @@ public  class NavigationUI:MonoBehaviour
             cloneObject.transform.SetParent(_parent);
 
             cloneObject.transform.localScale = Vector3.one;
-            if(!isFullArea)
-            {
-                cloneObject.GetComponentInChildren<Text>().text = frontname + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
-            }
-            else
-            {
-                cloneObject.GetComponentInChildren<Text>().text = object3dItem.name;
-            }
+            //if(!isFullArea)
+            //{
+            //    cloneObject.GetComponentInChildren<Text>().text = frontname + object3dItem.number.Substring(object3dItem.number.Length - 1, 1);
+            //}
+            //else
+            //{
+              cloneObject.GetComponentInChildren<Text>().text = object3dItem.name;
+           // }
            
             cloneObject.GetComponentInChildren<Text>().fontSize = 15;
             cloneObject.name = object3dItem.id;
@@ -200,7 +200,8 @@ public  class NavigationUI:MonoBehaviour
         IState currentstate = Main.instance.stateMachineManager.mCurrentState;
         if (currentstate is FloorState)
         {
-            Main.instance.stateMachineManager.SwitchStatus<BuilderState>(parentObject.id);
+            //Main.instance.stateMachineManager.SwitchStatus<BuilderState>(parentObject.id);
+            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, parentObject.id);
         }
         else if (currentstate is RoomState)
         {

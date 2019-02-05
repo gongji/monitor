@@ -19,6 +19,14 @@ public class NavigationUIBase : MonoBehaviour {
                 {
                    yield break;
                 }
+                if(uiPostion == Vector3.zero)
+                {
+                    ui.gameObject.SetActive(false);
+                }
+                else
+                {
+                    ui.gameObject.SetActive(true);
+                }
                 ui.GetComponent<RectTransform>().anchoredPosition = uiPostion;
             }
             yield return 0;

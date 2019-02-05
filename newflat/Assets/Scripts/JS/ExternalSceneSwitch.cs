@@ -32,16 +32,16 @@ public class ExternalSceneSwitch:MonoSingleton<ExternalSceneSwitch>  {
             case "5":
                 Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, sceneid);
                 break;
-
-
         }
     }
 
     //save
     public  void SaveSwitchData(string type, string sceneid)
     {
-        GameObject.FindObjectOfType<JSCall>()._SaveSwitchData(type,sceneid);
-        
+#if UNITY_WEBGL && !UNITY_EDITOR
+       // GameObject.FindObjectOfType<JSCall>()._SaveSwitchData(type,sceneid);
+#endif
+
     }
 
 }

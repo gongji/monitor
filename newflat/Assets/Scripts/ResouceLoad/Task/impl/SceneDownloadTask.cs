@@ -83,6 +83,8 @@ namespace SystemCore.Task
                     {
 
                         SceneParse.DoSceneGameObject(sceneName, _id);
+
+                        abcr.assetBundle.Unload(false);
                         _loadProgress = 1;
                         if (OnFinish != null)
                         {

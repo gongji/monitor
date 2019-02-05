@@ -207,6 +207,7 @@ public class BrowserToolBar : MonoBehaviour {
         }
        
         viewGroup.gameObject.SetActive(false);
+        cameraMode.gameObject.SetActive(false);
     }
 
     public void Switch2DButtonControl()
@@ -261,7 +262,12 @@ public class BrowserToolBar : MonoBehaviour {
     private bool isColorModeAreaMode = false;
     private void ColorAreaButton()
     {
-         Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>("-1",null,0,"94");
+        string  sceneid = SceneData.GetIdByNumber("gaoceng_wq");
+        if(!string.IsNullOrEmpty(sceneid))
+        {
+            Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>("-1", null, 0, sceneid);
+        }
+         
         
     }
 

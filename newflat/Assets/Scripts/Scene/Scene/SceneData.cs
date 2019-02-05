@@ -670,4 +670,16 @@ public static class SceneData {
     }
 
 
+
+    public static List<Object3dItem> GetRemoveScene()
+    {
+        IEnumerable<Object3dItem> result =
+         from object3dItem in object3dList
+         where (object3dItem.isDownFinish == true && (object3dItem.number.Contains(Constant.MapName) || 
+         object3dItem.number.Contains(Constant.FullName) || object3dItem.number.Contains(Constant.JiDian)))
+         select object3dItem;
+
+        return result.ToList<Object3dItem>();
+    }
+
 }

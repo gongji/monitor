@@ -259,7 +259,7 @@ public sealed class InitCreateEquipment
         Transform parent = equipment.transform.parent;
         if(rootParent!=null && rootParent.Equals(parent))
         {
-            log.Debug("parent is same");
+           // log.Debug("parent is same");
             return;
         }
         equipment.transform.SetParent(rootParent);

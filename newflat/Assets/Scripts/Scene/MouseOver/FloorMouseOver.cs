@@ -22,12 +22,16 @@ public class FloorMouseOver : MonoBehaviour
 
     private void CreateTips()
     {
-        Transform t = GameObject.Find("Canvas/floortips").transform;
-        floorTips = TransformControlUtility.CreateItem("Tips/EquipmentTips", t);
-        floorTips.name = transform.parent.name;
-        floorTips.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 30);
-        sceneid = SceneData.GetIdByNumber(transform.parent.name);
-        floorTips.GetComponentInChildren<TextMeshProUGUI>().text = SceneData.GetNameByNumber(transform.parent.name);
+        if(floorTips == null) 
+        {
+            Transform t = GameObject.Find("Canvas/floortips").transform;
+            floorTips = TransformControlUtility.CreateItem("Tips/EquipmentTips", t);
+            floorTips.name = transform.parent.name;
+            floorTips.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 30);
+            sceneid = SceneData.GetIdByNumber(transform.parent.name);
+            floorTips.GetComponentInChildren<TextMeshProUGUI>().text = SceneData.GetNameByNumber(transform.parent.name);
+        }
+       
     }
 
     private bool isVisible = false;
@@ -69,10 +73,9 @@ public class FloorMouseOver : MonoBehaviour
 
     protected void OnEnable()
     {
-        if(floorTips==null)
-        {
-            CreateTips();
-        }
+        
+         CreateTips();
+        
     }
 
 }

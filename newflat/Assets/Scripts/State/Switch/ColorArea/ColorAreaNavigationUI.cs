@@ -17,12 +17,25 @@ public class ColorAreaNavigationUI : NavigationUIBase
             {
                 continue;
             }
-            Transform collider = FindObjUtility.GetChild(child, Constant.ColliderName.ToLower());
-            if(collider==null)
+            GameObject colliderT = FindObjUtility.GetTransformChildByName(child, Constant.ColliderName.ToLower());
+            if(colliderT == null)
             {
                 continue;
             }
-            Vector3[] vs = Object3dUtility.GetBoxColliderVertex(collider.GetComponent<BoxCollider>());
+
+            MeshCollider meshCollider = colliderT.GetComponent<MeshCollider>();
+            if (meshCollider != null)
+            {
+                GameObject.DestroyImmediate(meshCollider);
+            }
+            BoxCollider boxCollider = colliderT.GetComponent<BoxCollider>();
+            if(boxCollider==null)
+            {
+                boxCollider = colliderT.gameObject.AddComponent<BoxCollider>();
+            }
+
+
+            Vector3[] vs = Object3dUtility.GetBoxColliderVertex(boxCollider);
 
             Vector3 uiPostion = GetMaxXValue(vs);
             GameObject navaUI = TransformControlUtility.CreateItem("Text", canvas.transform);
@@ -30,12 +43,13 @@ public class ColorAreaNavigationUI : NavigationUIBase
             navaUIList.Add(navaUI);
             navaUI.GetComponent<TMPro.TextMeshProUGUI>().alignment = TextAlignmentOptions.Justified;
             navaUI.GetComponent<TMPro.TextMeshProUGUI>().alignment = TextAlignmentOptions.Bottom;
+            navaUI.GetComponent<TMPro.TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
 
             string[] strs = child.name.Split('_');
             navaUI.name = strs[strs.Length - 1];
-            navaUI.GetComponentInChildren<TextMeshProUGUI>().text = navaUI.name;
+            navaUI.GetComponentInChildren<TextMeshProUGUI>().text = SceneData.GetNameByNumber(child.name);
 
-            dic.Add(navaUI, collider.GetComponent<BoxCollider>());
+            dic.Add(navaUI, boxCollider);
             navaUI.GetComponent<RectTransform>().anchoredPosition = uiPostion;
         }
 

@@ -330,7 +330,7 @@ public static class SceneParse  {
         bc.isTrigger = true;
     }
 
-    private  static string GetEndSpitStr(string str)
+    public  static string GetEndSpitStr(string str)
     {
         string[] names = str.ToLower().Split('_');
         if(names.Length == 0 )

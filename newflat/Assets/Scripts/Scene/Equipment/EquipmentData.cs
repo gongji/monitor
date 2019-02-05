@@ -37,6 +37,10 @@ public sealed class EquipmentData {
     {
         foreach(GameObject item in allEquipmentDataDic.Values)
         {
+            if(item==null)
+            {
+                continue;
+            }
             Object3DElement object3DElement = item.GetComponent<Object3DElement>();
             //
             if (item.activeSelf && object3DElement!=null && object3DElement.equipmentData!=null && 
@@ -77,7 +81,7 @@ public sealed class EquipmentData {
        // Debug.Log(sql);
         Equipment3dProxy.SearchEquipmentData((result) =>
         {
-            Debug.Log(result);
+            //Debug.Log(result);
             if (string.IsNullOrEmpty(result) && callBack != null)
             {
                 callBack.Invoke();

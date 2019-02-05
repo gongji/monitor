@@ -16,10 +16,11 @@ public abstract class SceneAlarmBase : MonoBehaviour {
         isAlarm = false;
     }
 
+    private string claasName = "";
     protected void Init()
     {
         System.Type t = this.GetType();
-        string claasName = t.Name;
+        claasName = t.Name;
         number = claasName;
         if (GetComponent<Object3DElement>() != null)
         {
@@ -30,6 +31,14 @@ public abstract class SceneAlarmBase : MonoBehaviour {
             sceneId = SceneData.GetIdByNumber(transform.name);
         }
         SceneData.sceneAlarmDic.Add(claasName + "_"+sceneId, this);
+    }
+
+    protected void RemoveDic()
+    {
+        if(SceneData.sceneAlarmDic.ContainsKey(claasName + "_" + sceneId))
+        {
+            SceneData.sceneAlarmDic.Remove(claasName + "_" + sceneId);
+        }
     }
 
     protected void RemoveScene()

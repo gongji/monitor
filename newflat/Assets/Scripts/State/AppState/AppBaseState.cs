@@ -38,22 +38,17 @@ public class AppBaseState
     /// <returns></returns>
     protected Object3DElement CheckClickEquipment(ref Transform hitTransform)
     {
-       
-        
-           
+      
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             ////click
             if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << Constant.EquipmentLayer))
 
             {
-                Debug.Log("click equipment：" + hit.transform.name);
+                //Debug.Log("click equipment：" + hit.transform.name);
                 hitTransform = hit.transform;
                 return FindObjUtility.FindEquipmentParent(hit.transform);
             }
-
-       
-
         return null;
     }
 

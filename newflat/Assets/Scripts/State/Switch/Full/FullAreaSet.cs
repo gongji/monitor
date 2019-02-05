@@ -25,7 +25,8 @@ public class FullAreaSet : FullAreaColorSet
         {
             callBack.Invoke();
         }
-        ExternalSceneSwitch.Instance.SaveSwitchData("5", SceneContext.currentSceneData.id);
+      
+        ExternalSceneSwitch.Instance.SaveSwitchData("5", SceneContext.areaBuiderId);
        
     }
     private GameObject uiTempObject;

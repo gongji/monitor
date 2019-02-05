@@ -64,6 +64,7 @@ namespace SystemCore.Task
                     AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(uwr);
                     _loadProgress = 1;
                     _data = bundle.LoadAsset<GameObject>(code);
+                    bundle.Unload(false);
                     if (OnFinish != null)
                     {
                         OnFinish();

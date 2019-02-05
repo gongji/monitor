@@ -40,7 +40,7 @@ public class NavigationTitle : MonoBehaviour {
     private string GetName(string id)
     {
         
-        string result = "当前位置：园区";
+        string result = "当前位置："+Config.parse("areaName");
         if(string.IsNullOrEmpty(id))
         {
             return result;

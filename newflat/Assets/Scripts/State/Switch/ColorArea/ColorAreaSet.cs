@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using  System.Linq;
+using System.Text.RegularExpressions;
 
 public class ColorAreaSet : FullAreaColorSet
 {
@@ -25,13 +26,12 @@ public class ColorAreaSet : FullAreaColorSet
        // Debug.Log(currentScene.number);
         SceneContext.currentSceneData = FindMapWqItem();
         TipsMgr.Instance.Create3dText(SceneData.GetAllBuilder(Constant.FullName.ToLower()));
-        // Debug.Log(SceneContext.currentSceneData.number);
-        //  CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
+      
         SetCamera();
         SetSkyEffection();
         //设置能耗展示
         SetEnergyConsumptionShow();
-        CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId).name);
+        //CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId).name);
          
         colorImageUI = TransformControlUtility.CreateItem("UI/fullAreColor", UIUtility.GetRootCanvas());
         colorImageUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40.0f);
@@ -45,7 +45,7 @@ public class ColorAreaSet : FullAreaColorSet
             callBack.Invoke();
         }
         
-        ExternalSceneSwitch.Instance.SaveSwitchData("4", SceneContext.currentSceneData.id);
+        ExternalSceneSwitch.Instance.SaveSwitchData("4", SceneContext.areaBuiderId);
         // });
     }
 
@@ -99,21 +99,42 @@ public class ColorAreaSet : FullAreaColorSet
             {
                 foreach (Transform chilid in root.transform)
                 {
-                    floorList.Add(chilid);
-                    string floorid = SceneData.GetIdByNumber(chilid.name.ToLower().Trim());
-
-                    EnergyConsumptionItem item = null;
-                    dic.TryGetValue(floorid, out item);
-                    if(item!=null)
+                    bool isfloor = IsFloor(chilid.name);
+                    if(isfloor)
                     {
-                        CreateEnergyConsumptionMaterial(item, chilid);
+                        floorList.Add(chilid);
+                        string floorid = SceneData.GetIdByNumber(chilid.name.ToLower().Trim());
+
+                        EnergyConsumptionItem item = null;
+                        dic.TryGetValue(floorid, out item);
+                        if (item != null)
+                        {
+                            CreateEnergyConsumptionMaterial(item, chilid);
+                        }
+
                     }
+                   
+                    
                 }
             }
         }
 
-        SwitchCamera(floorList);
+       // SwitchCamera(floorList);
         CreateFloorTips(floorList);
+    }
+
+
+
+    private bool IsFloor(string itemName)
+    {
+        
+        string endStr = SceneParse.GetEndSpitStr(itemName);
+        Regex flooRegex = new Regex("f\\d");
+        if (flooRegex.IsMatch(endStr))
+        {
+            return true;
+        }
+        return false;
     }
 
     protected override void CreateNavigation(Object3dItem currentData, string frontname, string backName)

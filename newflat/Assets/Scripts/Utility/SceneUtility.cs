@@ -89,6 +89,18 @@ public static class SceneUtility
     public static void RemoveScene(string sceneName)
     {
         Scene currentScene = SceneManager.GetSceneByName(sceneName);
+
+        Debug.Log("sceneName="+ sceneName);
+        GameObject root = GetGameByRootName(sceneName, sceneName);
+        if(root!=null && root.GetComponent<Object3DElement>()!=null)
+        {
+            string sceneid = root.GetComponent<Object3DElement>().sceneId;
+            if (SceneData.gameObjectDic.ContainsKey(sceneid))
+            {
+                SceneData.gameObjectDic.Remove(sceneid);
+            }
+        }
+        
         if (currentScene.IsValid())
         {
             SceneManager.UnloadSceneAsync(currentScene);

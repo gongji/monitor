@@ -100,8 +100,18 @@ namespace State
                 return;
             }
             SceneData.SetCurrentData<T>(nextSceneid, builderFloorGroup, fullAreaBuiderId);
-            //显示标题
-            NavigationTitle.instance.ShowTitle(nextSceneid);
+
+            if (nextState is FullAreaState || nextState is ColorAreaState)
+            {
+                NavigationTitle.instance.ShowTitle(fullAreaBuiderId);
+            }
+            else
+
+            {
+                NavigationTitle.instance.ShowTitle(nextSceneid);
+            }
+
+            
             //if (nextState == mCurrentState)
             //{
             //    log.Debug("Switch");

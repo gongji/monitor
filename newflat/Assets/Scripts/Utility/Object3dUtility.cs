@@ -86,15 +86,22 @@ public static  class Object3dUtility
     public static Vector3[] GetBoxColliderVertex(BoxCollider boxcollider)
 
     {
-
+        Bounds b = boxcollider.GetComponent<MeshRenderer>().bounds;
+        //Debug.Log(b.size.y / 2.0f);
         Vector3[] vertices = new Vector3[4];
         //下面4个点
-        vertices[0] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(boxcollider.size.x * 0.5f, boxcollider.center.y, boxcollider.size.z * 0.5f) );
-        vertices[1] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x * 0.5f, boxcollider.center.y, boxcollider.size.z * 0.5f) );
-        vertices[2] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x * 0.5f, boxcollider.center.y, -boxcollider.size.z * 0.5f) );
-        vertices[3] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(boxcollider.size.x * 0.5f, boxcollider.center.y, -boxcollider.size.z * 0.5f) );
+        //vertices[0] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(boxcollider.size.x * 0.5f, boxcollider.center.y , boxcollider.size.z * 0.5f) );
+        //vertices[1] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x * 0.5f, boxcollider.center.y, boxcollider.size.z * 0.5f) );
+        //vertices[2] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(-boxcollider.size.x * 0.5f, boxcollider.center.y, -boxcollider.size.z * 0.5f) );
+        //vertices[3] = boxcollider.transform.TransformPoint(boxcollider.center + new Vector3(boxcollider.size.x * 0.5f, boxcollider.center.y, -boxcollider.size.z * 0.5f) );
+
+
+        vertices[0] =  b.center + new Vector3(b.size.x * 0.5f, 0, b.size.z * 0.5f);
+        vertices[1] = b.center + new Vector3(-b.size.x * 0.5f, 0, b.size.z * 0.5f);
+        vertices[2] = b.center + new Vector3(-b.size.x * 0.5f, 0, -b.size.z * 0.5f);
+        vertices[3] = b.center + new Vector3(b.size.x * 0.5f, 0, -b.size.z * 0.5f);
         //上面4个点
-       
+
 
         return vertices;
 
