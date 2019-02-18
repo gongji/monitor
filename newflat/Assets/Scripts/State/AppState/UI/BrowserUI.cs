@@ -15,8 +15,5 @@ public sealed class BrowserUI  {
         GameObject browsertoolBar = TransformControlUtility.CreateItem("browsertoolBar", UIUtility.GetRootCanvas());
         browsertoolBar.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,-63.39f);
         browsertoolBar.transform.localScale = Vector3.zero;
-
-
-
     }
 }

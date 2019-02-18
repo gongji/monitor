@@ -30,12 +30,14 @@ public class BrowserToolBar : MonoBehaviour {
 
     public Transform manyou;
 
+    public Transform viewGroup;
+
     private Transform temptureClound;
     private Transform fpsController;
     private Camera firstCamera;
     private Transform builderSwitch = null;
 
-     public static BrowserToolBar instance;
+    public static BrowserToolBar instance;
 
     private void Awake()
     {
@@ -68,11 +70,23 @@ public class BrowserToolBar : MonoBehaviour {
         back = transform.Find("back");
 
         manyou = transform.Find("manyou");
+
+        viewGroup = transform.Find("viewGroup");
+
         TransformControlUtility.AddEventToBtn(reset.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ViewReset();});
         TransformControlUtility.AddEventToBtn(colorArea.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { ColorAreaButton(); });
         TransformControlUtility.AddEventToBtn(back.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BackAreaButton(); });
         TransformControlUtility.AddEventToBtn(cameraMode.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { CameraModeSwitch(); });
         TransformControlUtility.AddEventToBtn(builderSwitch.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => { BuilderSwitch(); });
+        TransformControlUtility.AddEventToBtn(viewGroup.gameObject, UnityEngine.EventSystems.EventTriggerType.PointerClick, (da) => {
+            List<Object3dItem> wqList = SceneData.GetAllWq();
+            if(wqList.Count >0)
+            {
+                Main.instance.stateMachineManager.SwitchStatus<BuilderState>(wqList[0].id, null, 0);
+            }
+            
+
+        });
         jidian.GetComponent<Toggle>().onValueChanged.AddListener((bool value) => OnGuanWangToggleClick(jidian.GetComponent<Toggle>(), value));
       
         foreach(Transform child in transform)
@@ -124,6 +138,7 @@ public class BrowserToolBar : MonoBehaviour {
             back.gameObject.SetActive(false);
             manyou.gameObject.SetActive(false);
             colorArea.gameObject.SetActive(false);
+            viewGroup.gameObject.SetActive(false);
         }
 
         else if (mCurrentState is BuilderState)
@@ -140,6 +155,7 @@ public class BrowserToolBar : MonoBehaviour {
             manyou.gameObject.SetActive(false);
             back.gameObject.SetActive(false);
             colorArea.gameObject.SetActive(false);
+            viewGroup.gameObject.SetActive(false);
         }
         else if (mCurrentState is FloorState)
         {
@@ -148,6 +164,7 @@ public class BrowserToolBar : MonoBehaviour {
             manyou.gameObject.SetActive(false);
             back.gameObject.SetActive(false);
             colorArea.gameObject.SetActive(false);
+            viewGroup.gameObject.SetActive(false);
         }
         else if (mCurrentState is ColorAreaState)
         {
@@ -162,6 +179,7 @@ public class BrowserToolBar : MonoBehaviour {
             temptureClound.gameObject.SetActive(false);
             manyou.gameObject.SetActive(false);
             colorArea.gameObject.SetActive(false);
+            viewGroup.gameObject.SetActive(false);
 
         }
         else if(mCurrentState is FullAreaState)
@@ -177,11 +195,13 @@ public class BrowserToolBar : MonoBehaviour {
             temptureClound.gameObject.SetActive(false);
             colorArea.gameObject.SetActive(false);
             manyou.gameObject.SetActive(false);
+            viewGroup.gameObject.SetActive(false);
 
         }
 
         //temp Disable
         qiangti.gameObject.SetActive(false);
+        viewSwitch.gameObject.SetActive(false);
     }
 
     public void Switch2DButtonControl()

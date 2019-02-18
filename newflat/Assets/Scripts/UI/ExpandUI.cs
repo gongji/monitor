@@ -27,13 +27,13 @@ public class ExpandUI : MonoBehaviour {
         {
             transform.parent.GetComponent<RectTransform>().DOAnchorPosX(transform.parent.GetComponent<RectTransform>().anchoredPosition.x + xOffersetValue, 1.0f).OnComplete(()=> {
 
-                GetComponent<Image>().sprite = defaultSprite;
+               // GetComponent<Image>().sprite = defaultSprite;
             }); 
         }
         else
         {
             transform.parent.GetComponent<RectTransform>().DOAnchorPosX(transform.parent.GetComponent<RectTransform>().anchoredPosition.x - xOffersetValue, 1.0f).OnComplete(()=>{
-                GetComponent<Image>().sprite = sprite;
+                //GetComponent<Image>().sprite = sprite;
 
             });
         }

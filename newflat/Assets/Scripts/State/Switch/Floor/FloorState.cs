@@ -46,11 +46,12 @@ namespace State
         {
             log.Debug("FloorState exit");
 
-            if ((nextState is RoomState) && Config.parse("isSceneAnimations").Equals("0"))
+            if ((nextState is RoomState) )
             {
                 OnExit<RoomState>(nextState, nextid, () => {
 
-                    OnFadeIn();
+                   
+                     OnFadeIn();
                     OnExitFront();
                     if (callBack != null)
                     {

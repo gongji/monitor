@@ -77,6 +77,7 @@ public abstract class BaseSet
     
     public virtual void Enter(List<Object3dItem> currentData, System.Action callBack) {
         this.currentlist = currentData;
+
         if (AppInfo.Platform == BRPlatform.Browser )
         {
             BrowserToolBar.instance.SetToolBarState();

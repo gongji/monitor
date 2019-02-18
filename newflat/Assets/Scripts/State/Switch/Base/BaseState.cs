@@ -137,7 +137,7 @@ namespace State
             OnExitFront();
             
 
-            if (nextState is T && AppInfo.currentView == ViewType.View3D && Config.parse("isSceneAnimations").Equals("0")) {
+            if (nextState is T && AppInfo.currentView == ViewType.View3D ) {
                 OnTransitionExit(nextState, nextid, () => {
 					//OnHide ();
 					if(isTransitionFade)

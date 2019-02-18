@@ -122,7 +122,8 @@ namespace Battlehub.UIControls
                 {
                     if(object3dItem.childs!=null  && object3dItem.childs.Count>0  && AppInfo.Platform == BRPlatform.Browser)
                     {
-                        Main.instance.stateMachineManager.SwitchStatus<BuilderState>(object3dItem.id);
+                            Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, object3dItem.id);
+                           // Main.instance.stateMachineManager.SwitchStatus<FullAreaState>(object3dItem.id);
                     }
                     else
                     {

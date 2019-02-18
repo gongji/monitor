@@ -11,6 +11,7 @@ public class AreaSet:BaseSet
     #region 设置全员场景初始化
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
+        log.Debug("AreaSet start init");
         base.Enter(currentlist, callBack);
         SetSkyEffection();
         InitCameraPostion(callBack);

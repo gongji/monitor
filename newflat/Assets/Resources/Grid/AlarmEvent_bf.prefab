@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 224595974537584868}
   - component: {fileID: 114028172317689568}
   m_Layer: 5
-  m_Name: AlarmEvent
+  m_Name: AlarmEvent_bf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

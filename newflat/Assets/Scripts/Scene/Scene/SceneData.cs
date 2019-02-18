@@ -131,6 +131,8 @@ public static class SceneData {
         return result.ToList<Object3dItem>();
     }
 
+
+
     /// <summary>
     /// 整理Tree的父子结构
     /// </summary>
@@ -628,4 +630,6 @@ public static class SceneData {
 
         return "";
     }
+
+
 }
