@@ -15,6 +15,7 @@ public class RoomSet : FloorRoomSet
         SetFloorRoomOffestPostion(currentData);
         //SetCurrentYValue(currentData);
         OnInit(currentData, callBack,"R","返回");
+        ExternalSceneSwitch.Instance.SaveSwitchData("3", SceneContext.currentSceneData.id);
     }
 
     /// <summary>

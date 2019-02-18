@@ -6,10 +6,16 @@ using System.Runtime.InteropServices;
 public class JSCall : MonoBehaviour {
 
     [DllImport("__Internal")]
-    private static extern void Hello();
+    private static extern void BindEquipment(string equipmentid);
 
     [DllImport("__Internal")]
-    private static extern void HelloString(string str);
+    private static extern void SaveSwitchData(string type, string sceneid);
+
+    [DllImport("__Internal")]
+    private static extern void OpenCamera(string equipmentid );
+
+
+
 
     [DllImport("__Internal")]
     private static extern void PrintFloatArray(float[] array, int size);
@@ -25,19 +31,48 @@ public class JSCall : MonoBehaviour {
 
     void Start()
     {
-        Hello();
+        //Hello();
 
-        HelloString("This is a string.");
+        //HelloString("This is a string.");
 
-        float[] myArray = new float[10];
-        PrintFloatArray(myArray, myArray.Length);
+        //float[] myArray = new float[10];
+        //PrintFloatArray(myArray, myArray.Length);
 
-        int result = AddNumbers(5, 7);
-        Debug.Log(result);
+        //int result = AddNumbers(5, 7);
+        //Debug.Log(result);
 
-        Debug.Log(StringReturnValueFunction());
+        //Debug.Log(StringReturnValueFunction());
 
-        var texture = new Texture2D(0, 0, TextureFormat.ARGB32, false);
-        BindWebGLTexture(texture.GetNativeTextureID());
+        //var texture = new Texture2D(0, 0, TextureFormat.ARGB32, false);
+        //BindWebGLTexture(texture.GetNativeTextureID());
+    }
+
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    _SaveSwitchData("123","scene");
+        //}
+    }
+
+    public void _SaveSwitchData(string type, string sceneid)
+    {
+        SaveSwitchData(type, sceneid);
+    }
+
+    public void _BindEquipment(string equipmentid)
+    {
+        BindEquipment(equipmentid);
+    }
+
+    public void _OpenCamera(string equipmentid)
+    {
+        OpenCamera(equipmentid);
+    }
+
+
+    public void openScene(string type,string scneneid)
+    {
+        ExternalSceneSwitch.Instance.SwitchScene(type, scneneid);
     }
 }

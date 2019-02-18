@@ -19,6 +19,7 @@ public class FloorSet : FloorRoomSet {
         OnInit(currentDataList, callBack,"F","返回");
         //设置管网按钮是否可见
         SetJiDianButttonVisible();
+        ExternalSceneSwitch.Instance.SaveSwitchData("2", SceneContext.currentSceneData.id);
     }
     /// <summary>
     /// 退出带动画，进入房间

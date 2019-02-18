@@ -4,6 +4,7 @@ using UnityEngine;
 using Battlehub.UIControls;
 using DG.Tweening;
 using State;
+using DataModel;
 
 public class BrowseStatus : AppBaseState
 {
@@ -36,7 +37,7 @@ public class BrowseStatus : AppBaseState
         checkSelectEquipment = CheckClickEquipment(ref hitTransform);
        
 
-        if (checkSelectEquipment && hitTransform.Equals(MouseCheck.clickHitTransform))
+        if (MouseCheck.CLICK && checkSelectEquipment && hitTransform.Equals(MouseCheck.clickHitTransform))
         {
            
             if(clickSelectEquipment!=null)
@@ -63,6 +64,20 @@ public class BrowseStatus : AppBaseState
             if (clickSelectEquipment != null)
             {
                 clickSelectEquipment.DestoryTestPointMenu();
+            }
+
+
+            if (checkSelectEquipment && hitTransform.Equals(MouseCheck.clickHitTransform))
+            {
+                // clickSelectEquipment = checkSelectEquipment.transform.GetComponent<BaseEquipmentControl>();
+                EquipmentItem equipmentData = checkSelectEquipment.GetComponent<Object3DElement>().equipmentData;
+                //Debug.Log(sceneid);
+                if (equipmentData != null)
+                {
+                    Main.instance.stateMachineManager.LocateEquipment(equipmentData.id, equipmentData.sceneId);
+                }
+
+                return;
             }
 
             //if(SubsystemMsg.isSubSystemState)

@@ -26,7 +26,8 @@ public class UserLogin : MonoBehaviour {
         messge.enabled = false;
         
     }
-	
+
+    public static string loginUserName = "";
     void Start()
     {
         userName.ActivateInputField();
@@ -46,6 +47,7 @@ public class UserLogin : MonoBehaviour {
             //成功
             if(userItem!=null && userItem.state == 1)
             {
+                loginUserName = userItem.useId;
                 SceneJump.JumpFirstPage();
                 GameObject.Destroy(gameObject);
             }

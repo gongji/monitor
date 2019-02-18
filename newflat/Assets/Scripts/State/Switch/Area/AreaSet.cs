@@ -22,7 +22,9 @@ public class AreaSet:BaseSet
             SubsystemMsg.Create(sceneid);
             BrowserToolBar.instance.FullAndColorAreaButtonReset();
         }
-        
+
+        ExternalSceneSwitch.Instance.SaveSwitchData("0", "0");
+
     }
    
     public void InitCameraPostion(System.Action callBack)

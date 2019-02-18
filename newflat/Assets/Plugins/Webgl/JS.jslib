@@ -1,11 +1,16 @@
 mergeInto(LibraryManager.library, {
 
-  Hello: function () {
-    window.alert("Hello, world!");
+  BindEquipment: function (equipmentid) {
+    BindEquipment(equipmentid);
+  },
+  
+  
+  OpenCamera: function (equipmentid) {
+    OpenCamera(equipmentid);
   },
 
-  HelloString: function (str) {
-    window.alert(Pointer_stringify(str));
+  SaveSwitchData: function (type, sceneid) {
+    SaveSwitchData(Pointer_stringify(type),Pointer_stringify(sceneid));
   },
 
   PrintFloatArray: function (array, size) {

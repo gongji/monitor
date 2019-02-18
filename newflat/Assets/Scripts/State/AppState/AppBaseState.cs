@@ -39,8 +39,7 @@ public class AppBaseState
     protected Object3DElement CheckClickEquipment(ref Transform hitTransform)
     {
        
-        if (MouseCheck.CLICK)
-        {
+        
            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -53,7 +52,7 @@ public class AppBaseState
                 return FindObjUtility.FindEquipmentParent(hit.transform);
             }
 
-        }
+       
 
         return null;
     }

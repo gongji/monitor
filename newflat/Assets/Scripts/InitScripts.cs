@@ -12,6 +12,10 @@ public class InitScripts : MonoBehaviour {
         gameObject.AddComponent<PlatformMsg>();
         gameObject.AddComponent<EffectionResouceLoader>();
         gameObject.AddComponent<Fps>();
+
+        GameObject g = new GameObject();
+        g.name = "jsObject";
+        g.AddComponent<JSCall>();
     }
 
     public void InitDataAndLogin()
@@ -37,7 +41,18 @@ public class InitScripts : MonoBehaviour {
         }
         else
         {
-            SceneJump.JumpFirstPage();
+            UserProxy.GetLoginUser((result) => {
+                UserItem userItem = Utils.CollectionsConvert.ToObject<UserItem>(result);
+                //成功
+                if (userItem != null)
+                {
+                    UserLogin.loginUserName = userItem.userName;
+                }
+
+            }, (error) => {
+
+
+            });
         }
     }
 

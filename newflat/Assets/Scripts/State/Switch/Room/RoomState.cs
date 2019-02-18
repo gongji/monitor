@@ -48,7 +48,7 @@ namespace State
             log.Debug("RoomState Exit");
            
           //  Debug.Log("LocateBack.instance.isLocate="+ LocateBack.instance.isLocate);
-            if ((nextState is FloorState && AppInfo.currentView == ViewType.View3D))
+            if ((nextState is FloorState && AppInfo.currentView == ViewType.View3D)&& Config.parse("isSceneAnimations").Equals("0"))
             {
                 OnExitFront();
                 OnTransitionExit(nextState, nextid, () =>

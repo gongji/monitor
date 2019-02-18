@@ -198,7 +198,8 @@ public  class ShowAlarmEvent :MonoBehaviour
         list.Add(itemData.key);
         list.Add(itemData.eventId);
         list.Add(TimeUtility.FormatCurrentDate());
-        list.Add("admin");
+       
+        list.Add(UserLogin.loginUserName);
         list.Add(eventContent);
         list.Add(repairPerson);
         list.Add("25");

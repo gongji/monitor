@@ -45,7 +45,7 @@ public class CameraEquipmentControl : BaseEquipmentControl
 
     public override void OnMouseClick()
     {
-
+        GameObject.FindObjectOfType<JSCall>()._OpenCamera(equipmentItem.id);
     }
 
     public override void SelectEquipment()

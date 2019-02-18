@@ -46,7 +46,7 @@ namespace State
         {
             log.Debug("FloorState exit");
 
-            if ((nextState is RoomState))
+            if ((nextState is RoomState) && Config.parse("isSceneAnimations").Equals("0"))
             {
                 OnExit<RoomState>(nextState, nextid, () => {
 

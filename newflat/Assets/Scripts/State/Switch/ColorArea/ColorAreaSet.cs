@@ -22,7 +22,8 @@ public class ColorAreaSet : BaseSet
         //}
        // Debug.Log(currentScene.number);
         SceneContext.currentSceneData = FindMapWqItem();
-       // Debug.Log(SceneContext.currentSceneData.number);
+        ExternalSceneSwitch.Instance.SaveSwitchData("4", SceneContext.currentSceneData.id);
+        // Debug.Log(SceneContext.currentSceneData.number);
         CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
 
            SetSkyEffection();

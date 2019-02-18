@@ -27,6 +27,7 @@ public class FullAreaSet : BaseSet
             {
                 callBack.Invoke();
             }
+            ExternalSceneSwitch.Instance.SaveSwitchData("5", SceneContext.currentSceneData.id);
         });
     }
     private GameObject uiTempObject;

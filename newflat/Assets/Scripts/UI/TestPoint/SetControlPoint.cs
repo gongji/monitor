@@ -257,7 +257,7 @@ public  class SetControlPoint:MonoSingleton<SetControlPoint>,IEventListener
                 }
 
                
-                string str = ecp.unnumber + "|" + ecp.number + "&" + inputValue + "& " + ecp.unit + "&" + "admin" + "&" + TimeUtility.FormatCurrentDate();
+                string str = ecp.unnumber + "|" + ecp.number + "&" + inputValue + "& " + ecp.unit + "&" + UserLogin.loginUserName + "&" + TimeUtility.FormatCurrentDate();
                 Debug.Log(str);
                 result.Add(str);
             }

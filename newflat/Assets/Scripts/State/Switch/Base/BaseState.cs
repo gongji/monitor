@@ -135,7 +135,9 @@ namespace State
 			System.Action callBack,bool isTransitionFade = true)
 		{
             OnExitFront();
-			if (nextState is T && AppInfo.currentView == ViewType.View3D) {
+            
+
+            if (nextState is T && AppInfo.currentView == ViewType.View3D && Config.parse("isSceneAnimations").Equals("0")) {
                 OnTransitionExit(nextState, nextid, () => {
 					//OnHide ();
 					if(isTransitionFade)

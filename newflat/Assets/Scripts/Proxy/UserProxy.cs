@@ -68,6 +68,24 @@ public class UserProxy  {
           }));
     }
 
+    public static void GetLoginUser(System.Action<string> actionCallBack, System.Action<string> errorCallBack)
+    {
+        string url = Config.parse("requestAddress") + "/getLoginUser";
+        HttpRequestSingle.Instance.StartCoroutine(
+
+        HttpRequest.GetRequest(url, actionCallBack, (error) =>
+        {
+            if (errorCallBack != null)
+            {
+                errorCallBack.Invoke(error);
+            }
+            log.Error("http reqeust error UserLogin:url=" + url);
+
+            log.Error("http reqeust error UserLogin:" + error.ToString());
+
+        }));
+    }
+
 
 
 }

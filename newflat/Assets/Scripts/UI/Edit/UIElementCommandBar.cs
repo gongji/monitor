@@ -146,6 +146,7 @@ public sealed class UIElementCommandBar : MonoBehaviour
     public void BindClick(GameObject g)
     {
         Hide();
+        GameObject.FindObjectOfType<JSCall>()._BindEquipment(selectingObjectTransform.GetComponent<Object3DElement>().equipmentData.id);
     }
  
     private void DeleteClick(GameObject g)
