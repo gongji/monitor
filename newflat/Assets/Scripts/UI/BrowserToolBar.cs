@@ -201,7 +201,12 @@ public class BrowserToolBar : MonoBehaviour {
 
         //temp Disable
         qiangti.gameObject.SetActive(false);
-        viewSwitch.gameObject.SetActive(false);
+        if(AppInfo.Platform == BRPlatform.Browser)
+        {
+            viewSwitch.gameObject.SetActive(false);
+        }
+       
+        viewGroup.gameObject.SetActive(false);
     }
 
     public void Switch2DButtonControl()

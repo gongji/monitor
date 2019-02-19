@@ -125,8 +125,13 @@ namespace State
 	        }
 	        else
 	        {
-                
-                mCurrentState.Exit(nextState, nextSceneid, ()=>{
+
+                string _nextSceneid = nextSceneid;
+                if(nextState is FullAreaState)
+                {
+                    _nextSceneid = fullAreaBuiderId;
+                }
+                mCurrentState.Exit(nextState, _nextSceneid, ()=>{
                     mCurrentState = nextState;
                     nextState.Enter(nextSceneid, enterCallBack);
                    

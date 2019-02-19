@@ -74,11 +74,17 @@ public class FadeManager : MonoBehaviour {
     }
 
     private bool isFadeInState =false;
+
+    private bool disableFade = true;
    /// <summary>
    /// 进入切屏
    /// </summary>
     public void FadeIn()
     {
+        if(disableFade)
+        {
+            return;
+        }
         UIUtility.HideShowAllUI(false);
         SwitchFadeEffect();
         fadePostProcess.FadeDown(false, null);
@@ -90,6 +96,15 @@ public class FadeManager : MonoBehaviour {
     /// </summary>
     public void FadeOut(System.Action callBack)
     {
+        if (disableFade)
+        {
+            if(callBack!=null)
+            {
+                callBack.Invoke();
+            }
+            return;
+        }
+
         if (!isFadeInState)
 		{
            

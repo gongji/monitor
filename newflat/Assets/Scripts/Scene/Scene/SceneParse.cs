@@ -103,6 +103,25 @@ public static class SceneParse  {
             object3DElement = sceneRoot.AddComponent<Object3DElement>();
             object3DElement.type = Type.Area;
         }
+        //wqfull
+        else if(sceneName.EndsWith(Constant.FullName) && !sceneName.Contains(Constant.DX.ToLower()))
+        {
+
+            foreach(Transform child in sceneRoot.transform)
+            {
+                string _endStr = GetEndSpitStr(child.name);
+                if (flooRegex.IsMatch(_endStr))
+                {
+                    child.gameObject.AddComponent<FloorSceneAlarm>();
+                    GameObject rootBox = FindObjUtility.GetTransformChildByName(child, Constant.ColliderName);
+                    if (rootBox != null)
+                    {
+                        FloorMouseOver wqMouseOver = rootBox.AddComponent<FloorMouseOver>();
+                    }
+                }
+
+            }
+        }
         if(object3DElement!=null)
         {
             object3DElement.sceneId = id;
@@ -263,10 +282,18 @@ public static class SceneParse  {
 
     private static void AddWqAlarmObjectScripts(Regex flooRegex, Transform parent)
     {
-        parent.gameObject.AddComponent<WqSceneAlarm>();
-      
+        
+        if(AppInfo.Platform == BRPlatform.Browser)
+        {
+            parent.gameObject.AddComponent<WqSceneAlarm>();
+            GameObject rootBox = FindObjUtility.GetTransformChildByName(parent, Constant.ColliderName);
+            if (rootBox != null)
+            {
+                WqMouserOver wqMouseOver = rootBox.AddComponent<WqMouserOver>();
+            }
+        }
         //addd box scripts
-        foreach(Transform child in parent)
+        foreach (Transform child in parent)
         {
             string endStr = GetEndSpitStr(child.name);
             if(string.IsNullOrEmpty(endStr))

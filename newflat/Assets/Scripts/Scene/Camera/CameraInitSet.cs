@@ -219,8 +219,8 @@ public static class CameraInitSet {
     public static void SystemInitCamera()
     {
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
-        // string   sql = "sceneId = " + sceneid + " and (equipId is null or equipId = 0)";
-        string sql = "sceneId = -1 and (equipId is null or equipId = 0)";
+         string   sql = "sceneId = " + sceneid + " and (equipId is null or equipId = 0)";
+        //string sql = "sceneId = " + sceneid +" (equipId is null or equipId = 0)";
         CameraViewData.CallProxyGetViewData(sql, (cameraView) => {
 
             if(cameraView!=null)

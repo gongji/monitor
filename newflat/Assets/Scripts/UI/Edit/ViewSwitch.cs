@@ -72,7 +72,6 @@ public class ViewSwitch : MonoBehaviour {
             Camera.main.orthographic = false;
             Camera.main.transform.position = box.transform.position + Vector3.up * 250.0f;
             Camera.main.transform.eulerAngles = new Vector3(90, 0, 0);
-
         }
         else
         { 
@@ -127,6 +126,4 @@ public class ViewSwitch : MonoBehaviour {
 
     }
 
-  
-	
 }

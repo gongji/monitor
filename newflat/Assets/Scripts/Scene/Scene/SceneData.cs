@@ -631,5 +631,21 @@ public static class SceneData {
         return "";
     }
 
+    public static string GetNameByNumber(string number)
+    {
+        IEnumerable<Object3dItem> result =
+           from object3dItem in object3dList
+           where object3dItem.number.Equals(number)
+           select object3dItem;
+
+        if (result.Count() == 1)
+        {
+            return result.ToList<Object3dItem>()[0].name;
+
+        }
+
+        return "";
+    }
+
 
 }

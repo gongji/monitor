@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using  System.Linq;
 
-public class ColorAreaSet : BaseSet
+public class ColorAreaSet : FullAreaColorSet
 {
     private static ILog log = LogManagers.GetLogger("ColorAreaSet");
     private GameObject colorImageUI;
@@ -22,27 +22,28 @@ public class ColorAreaSet : BaseSet
         //}
        // Debug.Log(currentScene.number);
         SceneContext.currentSceneData = FindMapWqItem();
-        ExternalSceneSwitch.Instance.SaveSwitchData("4", SceneContext.currentSceneData.id);
+
         // Debug.Log(SceneContext.currentSceneData.number);
-        CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
-
-           SetSkyEffection();
-           //设置能耗展示
-           SetEnergyConsumptionShow();
-           CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId).name);
+        //  CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
+        SetCamera();
+        SetSkyEffection();
+        //设置能耗展示
+        SetEnergyConsumptionShow();
+        CreateNameTip(SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId).name);
          
-           colorImageUI = TransformControlUtility.CreateItem("UI/fullAreColor", UIUtility.GetRootCanvas());
-           colorImageUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40.0f);
-           colorImageUI.name = "colorImage";
+        colorImageUI = TransformControlUtility.CreateItem("UI/fullAreColor", UIUtility.GetRootCanvas());
+        colorImageUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40.0f);
+        colorImageUI.name = "colorImage";
 
-            Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
-           CreateNavigation(currentWq, null, "返回");
+        Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
+        CreateNavigation(currentWq, null, "返回");
 
-            if (callBack != null)
-            {
-                callBack.Invoke();
-            }
-        });
+        if (callBack != null)
+        {
+            callBack.Invoke();
+        }
+        ExternalSceneSwitch.Instance.SaveSwitchData("4", SceneContext.currentSceneData.id);
+        // });
     }
 
 

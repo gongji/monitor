@@ -60,7 +60,7 @@ namespace State
         public void Exit(IState nextState, string nextid, System.Action callBack)
         {
             log.Debug("area exit");
-            OnExit<BuilderState>(nextState, nextid, () => {
+            OnExit<FullAreaState>(nextState, nextid, () => {
                 callBack.Invoke();
             });
 

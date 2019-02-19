@@ -30,7 +30,7 @@ public class ExternalSceneSwitch:MonoSingleton<ExternalSceneSwitch>  {
                 Main.instance.stateMachineManager.SwitchStatus<ColorAreaState>(sceneid);
                 break;
             case "5":
-                Main.instance.stateMachineManager.SwitchStatus<FullAreaState>(sceneid);
+                Main.instance.stateMachineManager.SwitchStatus<FullAreaState>("-1", null, 0, sceneid);
                 break;
 
 

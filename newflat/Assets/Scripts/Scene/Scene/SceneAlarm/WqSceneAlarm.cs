@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using State;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ public class WqSceneAlarm : SceneAlarmBase
         EffectionUtility.PlayMulitMaterialEffect(transform, Color.red);
 
     }
+
 
     public override void Restore()
     {

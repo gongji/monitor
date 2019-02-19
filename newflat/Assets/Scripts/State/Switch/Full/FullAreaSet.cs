@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using  System.Linq;
 
-public class FullAreaSet : BaseSet
+public class FullAreaSet : FullAreaColorSet
 {
     private static ILog log = LogManagers.GetLogger("FullAreaSet");
     private GameObject colorImageUI;
@@ -15,20 +15,18 @@ public class FullAreaSet : BaseSet
     {
         base.Enter(currentlist, callBack);
         //Object3dItem currentScene = SceneContext.currentSceneData;
-        CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
+  
+        SetSkyEffection();
+        Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
+        CreateNavigation(currentWq, null, "返回");
 
-           SetSkyEffection();
-        
-           Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
-           CreateNavigation(currentWq, null, "返回");
-
-            SwitchCamera();
-            if (callBack != null)
-            {
-                callBack.Invoke();
-            }
-            ExternalSceneSwitch.Instance.SaveSwitchData("5", SceneContext.currentSceneData.id);
-        });
+        SetCamera();
+        if (callBack != null)
+        {
+            callBack.Invoke();
+        }
+        ExternalSceneSwitch.Instance.SaveSwitchData("5", SceneContext.currentSceneData.id);
+       
     }
     private GameObject uiTempObject;
   
@@ -64,17 +62,7 @@ public class FullAreaSet : BaseSet
     /// set rotation camera
     /// </summary>
     /// <param name="list"></param>
-    private void SwitchCamera()
-    {
-        Object3dItem  item =  SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
-        GameObject root = SceneUtility.GetGameByRootName(item.number, item.number);
-        GameObject box = FindObjUtility.GetTransformChildByName(root.transform, Constant.ColliderName);
-        if(box!=null)
-        {
-            CameraInitSet.SetRotationCamera(box.transform, true);
-        }
-       
-    }
+   
 
     private FlyTextMeshModel tmm = null;
 

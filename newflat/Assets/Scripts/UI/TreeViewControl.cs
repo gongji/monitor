@@ -36,7 +36,7 @@ namespace Battlehub.UIControls
             }
 
             Object3dItem object3dItem = new Object3dItem();
-            object3dItem.name = "园区";
+            object3dItem.name = Config.parse("areaName");
             object3dItem.id = "";
             object3dItem.type = DataModel.Type.Area;
             List<Object3dItem> wqList = SceneData.GetAllWq();
