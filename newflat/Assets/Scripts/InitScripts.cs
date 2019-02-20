@@ -16,6 +16,7 @@ public class InitScripts : MonoBehaviour {
         GameObject g = new GameObject();
         g.name = "jsObject";
         g.AddComponent<JSCall>();
+        AutoClear.Instance.Clear();
     }
 
     public void InitDataAndLogin()

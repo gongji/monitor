@@ -9,12 +9,12 @@ using System.Linq;
 /// </summary>
 public static class MTMsg
 {
-    private static List<Object3dItem> curentStata;
+    private static List<Object3dItem> curentJidianData;
     public static void ShowJiDian()
     {
       
         List<Object3dItem> guanwangs = SceneData.GetCurrentGuangWang();
-        curentStata = guanwangs;
+        curentJidianData = guanwangs;
         var result = from o in guanwangs where o.isDownFinish == false select o;
 
         //需要下载
@@ -61,11 +61,17 @@ public static class MTMsg
     {
        // Debug.Log("隐藏管网");
         //List<Object3dItem> guanwangs = SceneData.GetCurrentGuangWang();
-        if(curentStata!=null)
+        if(curentJidianData != null)
         {
-            SetRootShowHide(curentStata, false);
+            SetRootShowHide(curentJidianData, false);
         }
-       
+        List<Object3dItem> list = SceneData.GetRemoveScene();
+        foreach (Object3dItem o in list)
+        {
+            SceneUtility.RemoveScene(o.number);
+            o.isDownFinish = false;
+        }
+
         //curentStata = null;
 
 

@@ -7,6 +7,7 @@ using DG.Tweening;
 using System.Text.RegularExpressions;
 using Core.Common.Logging;
 using System.Linq;
+using DG.Tweening;
 
 public class FloorSet : FloorRoomSet {
 
@@ -16,7 +17,18 @@ public class FloorSet : FloorRoomSet {
     {
         base.Enter(currentDataList, callBack);
         SetFloorRoomOffestPostion(currentDataList);
-        OnInit(currentDataList, callBack,"F","返回");
+       
+        if(BrowserToolBar.instance.GetJiDianToggleState())
+        {
+            DOVirtual.DelayedCall(4.0f, () => {
+
+                OnInit(currentDataList, callBack, "F", "返回");
+            });
+        }
+        else
+        {
+            OnInit(currentDataList, callBack, "F", "返回");
+        }
         //设置管网按钮是否可见
         SetJiDianButttonVisible();
         ExternalSceneSwitch.Instance.SaveSwitchData("2", SceneContext.currentSceneData.id);

@@ -168,7 +168,6 @@ namespace State
             Object3dItem locateScene = SceneData.FindObjUtilityect3dItemById(sceneId);
             if((mCurrentState!=null && mCurrentState is FloorState) && locateScene.parentsId.Equals(currentScene.id))
             {
-
                 sceneId = currentScene.id;
             }
 
@@ -179,10 +178,10 @@ namespace State
                 return;
             }
             DataModel.Type type = SceneData.FindObjUtilityect3dItemById(sceneId.Trim()).type;
-            if (mCurrentState!=null && mCurrentState.GetType()!=null)
-            {
-                //Debug.Log(mCurrentState.GetType().ToString());
-            }
+            //if (mCurrentState!=null && mCurrentState.GetType()!=null)
+            //{
+            //    //Debug.Log(mCurrentState.GetType().ToString());
+            //}
             BaseState bs = null;
             if (mCurrentState != null && SceneContext.currentSceneData!=null && 
                 (SceneContext.currentSceneData.id.Equals(sceneId.Trim()))) 
