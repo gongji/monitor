@@ -15,7 +15,7 @@ public class AreaSet:BaseSet
         base.Enter(currentlist, callBack);
         SetSkyEffection();
         InitCameraPostion(callBack);
-        SetTips();
+        TipsMgr.Instance.Create3dText(SceneData.GetAllWq());
         string sceneid = SceneData.GetIdByNumber(Constant.Main_dxName.ToLower());
 
         if(AppInfo.Platform == BRPlatform.Browser)
@@ -50,29 +50,7 @@ public class AreaSet:BaseSet
         }
        
     }
-    /// <summary>
-    /// 设置标签
-    /// </summary>
-    public  void SetTips()
-    {
-        
-        List<Object3dItem> wqList = SceneData.GetAllWq();
-
-        if (wqList != null && wqList.Count > 0)
-        {
-            foreach (Object3dItem object3dItem in wqList)
-            {
-                GameObject rootGameObjerct = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
-                if (rootGameObjerct != null)
-                {
-
-                    GameObject collider = FindObjUtility.GetTransformChildByName(rootGameObjerct.transform, Constant.ColliderName);
-                    TipsMgr.Instance.CreateTips(collider, object3dItem, collider.transform,Vector3.one * 5 , Vector3.one * 10);
-                }
-            }
-        }
-
-    }
+    
 
     #endregion
 

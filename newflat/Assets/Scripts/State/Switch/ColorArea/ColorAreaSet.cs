@@ -10,6 +10,8 @@ public class ColorAreaSet : FullAreaColorSet
 {
     private static ILog log = LogManagers.GetLogger("ColorAreaSet");
     private GameObject colorImageUI;
+
+    private Material material;
     #region 设置全员场景初始化
     public override void Enter(List<Object3dItem> currentlist, System. Action callBack)
     {
@@ -22,7 +24,7 @@ public class ColorAreaSet : FullAreaColorSet
         //}
        // Debug.Log(currentScene.number);
         SceneContext.currentSceneData = FindMapWqItem();
-
+        TipsMgr.Instance.Create3dText(SceneData.GetAllBuilder(Constant.FullName.ToLower()));
         // Debug.Log(SceneContext.currentSceneData.number);
         //  CameraInitSet.StartSet(SceneContext.areaBuiderId, null, 0.5f, ()=> {
         SetCamera();
@@ -42,6 +44,7 @@ public class ColorAreaSet : FullAreaColorSet
         {
             callBack.Invoke();
         }
+        
         ExternalSceneSwitch.Instance.SaveSwitchData("4", SceneContext.currentSceneData.id);
         // });
     }
@@ -143,6 +146,8 @@ public class ColorAreaSet : FullAreaColorSet
        
     }
 
+    private List<Material> mList = new List<Material>();
+    private List<Transform> floorList = new List<Transform>();
     /// <summary>
     /// 创建能耗材质
     /// </summary>
@@ -154,17 +159,25 @@ public class ColorAreaSet : FullAreaColorSet
         {
             return;
         }
-        Shader shader1 = Shader.Find("Custom/Multi-Gradient");
+        if (material == null)
+        {
+            material = Resources.Load<Material>("Material/color");
+        }
 
-        Material m = new Material(shader1);
-        m.name = t.name;
+        //Shader shader1 = Shader.Find("Custom/Multi-Gradient");
 
+        //Material m = new Material(shader1);
+        //m.name = t.name;
+        Material m = GameObject.Instantiate<Material>(material);
+        mList.Add(m);
         t.GetComponent<MeshRenderer>().material = m;
-
+        floorList.Add(t);
         Color startc = new Color32(item.startR, item.startG,item.startB, item.startA);
-        Color endc = new Color32(item.endR, item.endG, item.endB, item.endA);
-        m.SetColor("_Color1", startc);
-        m.SetColor("_Color2", endc);
+        //Color endc = new Color32(item.endR, item.endG, item.endB, item.endA);
+        //m.SetColor("_Color1", startc);
+        //m.SetColor("_Color2", endc);
+        t.GetComponent<MeshRenderer>().material.SetColor("_Color", startc);
+        
     }
 
     /// <summary>
@@ -287,6 +300,16 @@ public class ColorAreaSet : FullAreaColorSet
         {
             GameObject.Destroy(navigationUI);
         }
+        //destroy material
+        foreach(Transform t in floorList)
+        {
+            t.GetComponent<MeshRenderer>().material = null;
+        }
+        foreach(Material m in mList)
+        {
+            Resources.UnloadAsset(m);
+        }
+        Resources.UnloadUnusedAssets();
 
     }
     #endregion

@@ -115,10 +115,8 @@ public static class SceneData {
         return null;
     }
 
-
-
     /// <summary>
-    /// 得到园区所有的外构的名称列表
+    /// all wq
     /// </summary>
     /// <returns></returns>
     public static List<Object3dItem> GetAllWq()
@@ -126,6 +124,19 @@ public static class SceneData {
         IEnumerable<Object3dItem> result =
             from object3dItem in object3dList
             where object3dItem.number.EndsWith(Constant.WQName)
+            select object3dItem;
+
+        return result.ToList<Object3dItem>();
+    }
+
+    /// <summary>
+    /// color and  map wq 
+    /// </summary>
+    public static  List<Object3dItem> GetAllBuilder(string number)
+    {
+        IEnumerable<Object3dItem> result =
+            from object3dItem in object3dList
+            where object3dItem.number.EndsWith(number) && !object3dItem.number.Contains(Constant.DX)
             select object3dItem;
 
         return result.ToList<Object3dItem>();

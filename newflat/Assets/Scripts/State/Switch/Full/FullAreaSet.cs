@@ -19,7 +19,7 @@ public class FullAreaSet : FullAreaColorSet
         SetSkyEffection();
         Object3dItem currentWq = SceneData.FindObjUtilityect3dItemById(SceneContext.areaBuiderId);
         CreateNavigation(currentWq, null, "返回");
-
+        TipsMgr.Instance.Create3dText(SceneData.GetAllBuilder(Constant.FullName.ToLower()));
         SetCamera();
         if (callBack != null)
         {

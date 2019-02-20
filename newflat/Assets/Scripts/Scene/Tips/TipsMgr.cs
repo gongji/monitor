@@ -104,4 +104,23 @@ public class TipsMgr : MonoSingleton<TipsMgr>,IEventListener {
 
         return true;
     }
+
+
+
+    public void Create3dText(List<Object3dItem> data)
+    {
+        if (data != null && data.Count > 0)
+        {
+            foreach (Object3dItem object3dItem in data)
+            {
+                GameObject rootGameObjerct = SceneUtility.GetGameByRootName(object3dItem.number, object3dItem.number);
+                if (rootGameObjerct != null)
+                {
+
+                    GameObject collider = FindObjUtility.GetTransformChildByName(rootGameObjerct.transform, Constant.ColliderName);
+                    CreateTips(collider, object3dItem, collider.transform, Vector3.one * 5, Vector3.one * 10);
+                }
+            }
+        }
+    }
 }
