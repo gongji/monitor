@@ -224,15 +224,31 @@ public sealed class UIElementCommandBar : MonoBehaviour
         edit.GetComponent<EventTrigger>().enabled = isEnable;
         locate.GetComponent<EventTrigger>().enabled = isEnable;
         locate.interactable = isEnable;
-        moveYButton.interactable = isEnable;
+        if(isDoor)
+        {
+            moveYButton.interactable = false;
+        }
+        else
+        {
+            moveYButton.interactable = isEnable;
+        }
+       
         edit.interactable = isEnable;
     }
 
+    private bool isDoor = false;
     private void SetDoorButtonState(bool isEnable)
     {
+        isDoor = !isEnable;
         delete.interactable = isEnable;
         copy.interactable = isEnable;
         mulkCopy.interactable = isEnable;
+        moveYButton.interactable = isEnable;
+
+        moveXZButton.interactable = isEnable;
+
+        rotateButton.interactable = isEnable;
+
         delete.GetComponent<EventTrigger>().enabled = isEnable;
         copy.GetComponent<EventTrigger>().enabled = isEnable;
         mulkCopy.GetComponent<EventTrigger>().enabled = isEnable;

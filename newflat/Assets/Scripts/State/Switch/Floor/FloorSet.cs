@@ -18,7 +18,7 @@ public class FloorSet : FloorRoomSet {
         base.Enter(currentDataList, callBack);
         SetFloorRoomOffestPostion(currentDataList);
        
-        if(BrowserToolBar.instance.GetJiDianToggleState())
+        if(BrowserToolBar.instance!=null && BrowserToolBar.instance.GetJiDianToggleState())
         {
             DOVirtual.DelayedCall(4.0f, () => {
 

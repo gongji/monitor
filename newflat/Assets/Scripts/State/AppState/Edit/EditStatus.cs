@@ -24,7 +24,7 @@ public class EditStatus : AppBaseState
         base.Update();
         hitTransform = null;
         checkSelectEquipment = CheckClickEquipment(ref hitTransform);
-        if (checkSelectEquipment!=null && hitTransform.Equals(MouseCheck.clickHitTransform))
+        if (MouseCheck.CLICK &&  checkSelectEquipment!=null && hitTransform.Equals(MouseCheck.clickHitTransform))
         {
             Debug.Log("编辑态单击设备");
             UIElementCommandBar.instance.SelectEquipment(checkSelectEquipment.gameObject);
