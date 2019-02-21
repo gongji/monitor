@@ -23,7 +23,8 @@ public  class NavigationUI:MonoBehaviour
             ClickBack();
         });
 	}
-	
+
+    private int fontSize = 13;
     private string id  =string.Empty;
     /// <summary>
     /// 楼层和房间
@@ -38,6 +39,7 @@ public  class NavigationUI:MonoBehaviour
     {
         this.id = currentData.id;
         backButton.GetComponentInChildren<Text>().text = backName;
+        backButton.GetComponentInChildren<Text>().fontSize = fontSize;
         foreach (Object3dItem object3dItem in DataSouce)
         {
             if(object3dItem.type.ToString().StartsWith(Constant.Equipment_Prefix))
@@ -60,7 +62,7 @@ public  class NavigationUI:MonoBehaviour
               cloneObject.GetComponentInChildren<Text>().text = object3dItem.name;
            // }
            
-            cloneObject.GetComponentInChildren<Text>().fontSize = 15;
+            cloneObject.GetComponentInChildren<Text>().fontSize = fontSize;
             cloneObject.name = object3dItem.id;
             if(object3dItem.id.Equals(currentData.id))
             {
@@ -91,6 +93,7 @@ public  class NavigationUI:MonoBehaviour
     {
         this.id = builderCurrentData.id;
         backButton.GetComponentInChildren<Text>().text = "返回";
+        backButton.GetComponentInChildren<Text>().fontSize = fontSize;
         for (int i=0;i< floorIndexCount;i++)
         {
           
@@ -99,7 +102,7 @@ public  class NavigationUI:MonoBehaviour
             cloneObject.transform.parent = parent.GetComponentInChildren<VerticalLayoutGroup>().transform;
             cloneObject.transform.localScale = Vector3.one;
             cloneObject.GetComponentInChildren<Text>().text = (i + 1).ToString();
-            cloneObject.GetComponentInChildren<Text>().fontSize = 15;
+            cloneObject.GetComponentInChildren<Text>().fontSize = fontSize;
             cloneObject.name = i.ToString();
             //选中颜色
             if (i == currentIndex)
@@ -211,8 +214,14 @@ public  class NavigationUI:MonoBehaviour
         {
             Main.instance.stateMachineManager.SwitchStatus<AreaState>("");
         }
+    }
 
-        
+    private void Update()
+    {
+        if(AppInfo.Platform == BRPlatform.Browser && Input.GetKeyUp(KeyCode.Escape))
+        {
+            ClickBack();
+        }
     }
 
 }

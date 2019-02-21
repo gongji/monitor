@@ -30,7 +30,11 @@ public abstract class SceneAlarmBase : MonoBehaviour {
         {
             sceneId = SceneData.GetIdByNumber(transform.name);
         }
-        SceneData.sceneAlarmDic.Add(claasName + "_"+sceneId, this);
+        if(!string.IsNullOrEmpty(sceneId))
+        {
+            SceneData.sceneAlarmDic.Add(claasName + "_" + sceneId, this);
+        }
+       
     }
 
     protected void RemoveDic()
