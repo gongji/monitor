@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BaseMouseOver : MonoBehaviour {
 
@@ -10,12 +11,22 @@ public class BaseMouseOver : MonoBehaviour {
 
     protected void OnMouseEnter()
     {
-        EffectionUtility.PlayMulitMaterialEffect(transform.parent, Color.blue);
+        if ((EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
+        {
+            return;
+        }
+
+        EffectionUtility.PlaySinlgeMaterialEffect(transform.parent, Color.yellow);
     }
 
     protected void OnMouseExit()
     {
-        EffectionUtility.StopMulitMaterialEffect(transform.parent);
+        if ((EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
+        {
+            return;
+        }
+
+        EffectionUtility.StopSinlgeMaterialEffect(transform.parent);
     }
 
     protected void OnDisable()

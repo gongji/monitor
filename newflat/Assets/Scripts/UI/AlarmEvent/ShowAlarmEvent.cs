@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public  class ShowAlarmEvent :MonoBehaviour
 {
-
     class EventItemData
     {
         public string equipmentid;   

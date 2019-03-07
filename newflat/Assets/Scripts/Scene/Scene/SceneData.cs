@@ -239,7 +239,7 @@ public static class SceneData {
         //color
         else if (type.Name.Equals(typeof(ColorAreaState).Name))
         {
-            currentobject3dList  = GetColorAreaObject3dItem(id, buiderId, Constant.MapName.ToString());
+            currentobject3dList  = GetColorAreaObject3dItem(id, buiderId, Constant.ColorName.ToString());
         }
         //full
         else if(type.Name.Equals(typeof(FullAreaState).Name))
@@ -265,7 +265,7 @@ public static class SceneData {
     {
         IEnumerable<Object3dItem> result =
               from object3dItem in object3dList
-              where object3dItem.parentsId.Equals(parentid) && !object3dItem.number.EndsWith(Constant.MapName.ToLower())
+              where object3dItem.parentsId.Equals(parentid) && !object3dItem.number.EndsWith(Constant.ColorName.ToLower())
                && !object3dItem.number.EndsWith(Constant.FullName.ToLower())
               select object3dItem;
         return result.ToList<Object3dItem>();
@@ -675,7 +675,7 @@ public static class SceneData {
     {
         IEnumerable<Object3dItem> result =
          from object3dItem in object3dList
-         where (object3dItem.isDownFinish == true && (object3dItem.number.Contains(Constant.MapName) || 
+         where (object3dItem.isDownFinish == true && (object3dItem.number.Contains(Constant.ColorName) || 
          object3dItem.number.Contains(Constant.FullName) || object3dItem.number.Contains(Constant.JiDian)))
          select object3dItem;
 

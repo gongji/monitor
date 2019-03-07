@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using DataModel;
 
-public class NavigationTitle : MonoBehaviour {
+public class NavigationTitle : MonoBehaviour,IEventListener {
     public static NavigationTitle instance;
     void Start() {
         instance = this;
@@ -65,5 +65,12 @@ public class NavigationTitle : MonoBehaviour {
             result = result + "->" + names[i];
         }
         return result;
+    }
+
+    public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+        // throw new System.NotImplementedException();
+
+        return true;
     }
 }

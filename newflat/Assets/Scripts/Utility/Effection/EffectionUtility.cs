@@ -150,4 +150,30 @@ public sealed  class EffectionUtility  {
            
     }
     #endregion
+
+
+    #region singel Color no flash
+
+    public static void PlaySinlgeMaterialEffect(Transform selectingObjectTransform, Color toColor)
+    {
+        toColor = new Color32(6,148,255,255);
+        MouseSinlgeColorEffection mouseSinlgeColorEffection = selectingObjectTransform.GetComponent<MouseSinlgeColorEffection>();
+        if (mouseSinlgeColorEffection == null)
+        {
+            mouseSinlgeColorEffection = selectingObjectTransform.gameObject.AddComponent<MouseSinlgeColorEffection>();
+        }
+        mouseSinlgeColorEffection.SetEffection(toColor, "_Color");
+
+
+    }
+
+    public static void StopSinlgeMaterialEffect(Transform selectingObjectTransform)
+    {
+        MouseSinlgeColorEffection mouseSinlgeColorEffection = selectingObjectTransform.GetComponent<MouseSinlgeColorEffection>();
+        if (mouseSinlgeColorEffection != null)
+        {
+            mouseSinlgeColorEffection.ResetColor();
+        }
+    }
+    #endregion
 }

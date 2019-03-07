@@ -9,6 +9,8 @@ public class EventName
 
     public static string DeleteObject = "DeleteObject";
 
+    public static string HIDE_UI = "hide_ui";
+
 
 
 }

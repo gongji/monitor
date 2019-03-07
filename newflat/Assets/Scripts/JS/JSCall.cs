@@ -18,17 +18,23 @@ public class JSCall : MonoBehaviour {
     [DllImport("__Internal")]
     private static extern void InitSceneFinish();
 
-    [DllImport("__Internal")]
-    private static extern void PrintFloatArray(float[] array, int size);
+    //[DllImport("__Internal")]
+    //private static extern void PrintFloatArray(float[] array, int size);
+
+    //[DllImport("__Internal")]
+    //private static extern int AddNumbers(int x, int y);
+
+    //[DllImport("__Internal")]
+    //private static extern string StringReturnValueFunction();
+
+    //[DllImport("__Internal")]
+    //private static extern void BindWebGLTexture(int texture);
 
     [DllImport("__Internal")]
-    private static extern int AddNumbers(int x, int y);
+    private static extern void ExitFullScreen();
 
     [DllImport("__Internal")]
-    private static extern string StringReturnValueFunction();
-
-    [DllImport("__Internal")]
-    private static extern void BindWebGLTexture(int texture);
+    private static extern string GetUrl();
 
     void Start()
     {
@@ -48,6 +54,17 @@ public class JSCall : MonoBehaviour {
         //BindWebGLTexture(texture.GetNativeTextureID());
     }
 
+
+    public void _ExitFullScreen()
+    {
+
+    }
+
+    public string _GetUrl()
+    {
+        return GetUrl();
+    }
+
     private void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Y))
@@ -58,7 +75,11 @@ public class JSCall : MonoBehaviour {
 
     public void _SaveSwitchData(string type, string sceneid)
     {
-        SaveSwitchData(type, sceneid);
+        string isLogin = Config.parse("isLogin");
+        if (isLogin.Equals("1"))
+        {
+            SaveSwitchData(type, sceneid);
+        }  
     }
 
     public void _BindEquipment(string equipmentid)
@@ -81,7 +102,7 @@ public class JSCall : MonoBehaviour {
         string[] result = paramater.Split(',');
         string type = result[0];
         string sceneid = result[1];
-        Debug.Log(type +","+ sceneid);
+        //Debug.Log(type +","+ sceneid);
         ExternalSceneSwitch.Instance.SwitchScene(type, sceneid);
     }
 

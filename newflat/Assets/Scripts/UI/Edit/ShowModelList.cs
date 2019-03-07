@@ -142,11 +142,18 @@ public class ShowModelList : MonoBehaviour {
             modelItemObject.transform.SetParent(modelItem.parent);
             modelItemObject.transform.localScale = Vector3.one;
             modelItemObject.name = itemData.path;
-            modelItemObject.GetComponent<Button>().onClick.AddListener(delegate () { OnThreeClick(modelItemObject); });
+          
+            UITooltip uiToolTip =  modelItemObject.GetComponentInChildren<Button>().gameObject.AddComponent<UITooltip>();
+            uiToolTip.Init(itemData.name);
+          modelItemObject.GetComponent<Button>().onClick.AddListener(delegate () { OnThreeClick(modelItemObject); });
             string url =  itemData.icon;
             ResourceUtility.Instance.GetHttpTexture(url, (texture) => {
                 Sprite sprite = UIUtility.GetSpriteByTexture((Texture2D)texture);
-                modelItemObject.GetComponent<Image>().sprite = sprite;
+                if(modelItemObject)
+                {
+                    modelItemObject.GetComponent<Image>().sprite = sprite;
+                }
+                
             });
             height = modelItemObject.GetComponent<RectTransform>().sizeDelta.y;
         }

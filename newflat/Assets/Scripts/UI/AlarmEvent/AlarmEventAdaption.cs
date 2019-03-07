@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class AlarmEventAdaption : MonoBehaviour {
+public class AlarmEventAdaption : MonoBehaviour,IEventListener {
 
     public Transform grid;
 
@@ -36,5 +36,11 @@ public class AlarmEventAdaption : MonoBehaviour {
         GetComponent<RectTransform>().anchoredPosition = new Vector2(grid.GetComponent<RectTransform>().anchoredPosition.x,
             grid.GetComponent<RectTransform>().anchoredPosition.y + size.y-3);
 
+    }
+
+    public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+
+        return true;
     }
 }

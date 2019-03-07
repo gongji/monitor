@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class ExpandUI : MonoBehaviour {
+public class ExpandUI : MonoBehaviour,IEventListener {
 
     public Sprite sprite;
 
@@ -41,4 +41,10 @@ public class ExpandUI : MonoBehaviour {
         isExpand = !isExpand;
     }
 
+    public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+        //throw new System.NotImplementedException();
+
+        return true;
+    }
 }

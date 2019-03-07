@@ -43,11 +43,11 @@ public class Object3DElement : MonoBehaviour {
     {
         if (isSelected)
         {
-            EffectionUtility.PlayOutlineEffect(transform,Color.blue,Color.yellow);
+            EffectionUtility.PlaySinlgeMaterialEffect(transform,Color.yellow);
         }
         else
         {
-            EffectionUtility.StopOutlineEffect(transform);
+            EffectionUtility.StopSinlgeMaterialEffect(transform);
         }
     }
 

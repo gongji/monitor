@@ -10,7 +10,7 @@ using UnityEngine;
 public static class CameraInitSet {
 
     private static Vector3 cameraPostion = Vector3.zero;
-    private static Quaternion cameraRoation = Quaternion.identity;
+    private static Quaternion cameraRotation = Quaternion.identity;
 
     private static string _sceneid = string.Empty;
 
@@ -53,7 +53,7 @@ public static class CameraInitSet {
             {
                
                 cameraPostion = new Vector3(cameraView.x, cameraView.y, cameraView.z);
-                cameraRoation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
+                cameraRotation = Quaternion.Euler(cameraView.rotationX, cameraView.rotationY, cameraView.rotationZ);
             }
             else
             { 
@@ -70,7 +70,7 @@ public static class CameraInitSet {
 
     private static void CameraMove(float cameraMoveTime, System.Action callBack, Transform box)
     {
-        CameraAnimation.CameraMove(Camera.main, cameraPostion, cameraRoation.eulerAngles, cameraMoveTime, () =>
+        CameraAnimation.CameraMove(Camera.main, cameraPostion, cameraRotation.eulerAngles, cameraMoveTime, () =>
         {
             // Debug.Log(box.name);
             if(_box!=null)
@@ -134,7 +134,7 @@ public static class CameraInitSet {
             vCamera.transform.localRotation = rot;
             vCamera.transform.RotateAround(box.position, Vector3.forward, 30f);
         }
-        cameraRoation = vCamera.transform.rotation;
+        cameraRotation = vCamera.transform.rotation;
         cameraPostion = vCamera.transform.position;
         box.GetComponent<BoxCollider>().enabled = isEnable;
         // Debug.Log(cameraPostion);
@@ -281,4 +281,33 @@ public static class CameraInitSet {
         }
         
     }
+
+
+    #region CameraBack
+
+    public static bool IsBackDefaultPosition()
+    {
+        float distance = Vector3.Distance(Camera.main.transform.position, cameraPostion);
+        if(distance>0.3f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static void SetCurrentCameraPostionAndRoation(Vector3 currentPostion, Quaternion currentRotation)
+    {
+        cameraPostion = currentPostion;
+        cameraRotation = currentRotation;
+    }
+
+    public static void BackDefaultPostion()
+    {
+        CameraAnimation.CameraMove(Camera.main, cameraPostion, cameraRotation.eulerAngles, _cameraMoveTime, null);
+    }
+
+    #endregion
 }

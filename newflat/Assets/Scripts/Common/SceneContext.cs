@@ -16,4 +16,6 @@ public sealed class SceneContext {
 
     public static int FloorGroup = 0;
 
+    public static CameraViewItem CurrrentcameraView = new CameraViewItem();
+
 }

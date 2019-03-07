@@ -155,8 +155,7 @@ namespace State
         /// 定位设备
         /// </summary>
         private string currentEquipmentid = "-1";
-        
-
+       
         public void StateReset()
         {
             currentEquipmentid = "-1";
@@ -170,13 +169,11 @@ namespace State
             {
                 sceneId = currentScene.id;
             }
-
-
-            if (equipmentId.Equals(currentEquipmentid))
-            {
-                log.Debug("equipment is same" + "id="+ equipmentId);
-                return;
-            }
+            //if (equipmentId.Equals(currentEquipmentid))
+            //{
+            //    log.Debug("equipment is same" + "id="+ equipmentId);
+            //    return;
+            //}
             DataModel.Type type = SceneData.FindObjUtilityect3dItemById(sceneId.Trim()).type;
             //if (mCurrentState!=null && mCurrentState.GetType()!=null)
             //{

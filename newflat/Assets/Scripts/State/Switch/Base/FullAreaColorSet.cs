@@ -15,7 +15,7 @@ public class FullAreaColorSet : BaseSet
             // CameraInitSet.SetRotationCamera(box.transform, true);
             Camera.main.transform.position = cameraObject.transform.position;
             Camera.main.transform.rotation = cameraObject.transform.rotation;
-
+            CameraInitSet.SetCurrentCameraPostionAndRoation(cameraObject.transform.position, cameraObject.transform.rotation);
         }
 
     }

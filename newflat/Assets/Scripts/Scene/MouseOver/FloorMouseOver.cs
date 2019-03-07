@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class FloorMouseOver : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class FloorMouseOver : MonoBehaviour
 
     protected void OnMouseDown()
     {
+        if ((EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
+        {
+            return;
+        }
+
         Main.instance.stateMachineManager.SwitchStatus<FloorState>(sceneid);
     }
 
@@ -51,14 +57,18 @@ public class FloorMouseOver : MonoBehaviour
     }
      protected void OnMouseEnter()
     {
+        
+
         isVisible = true;
-        EffectionUtility.PlayMulitMaterialEffect(transform.parent, Color.blue);
+        EffectionUtility.PlaySinlgeMaterialEffect(transform.parent, Color.yellow);
     }
 
     protected void OnMouseExit()
     {
+       
+
         isVisible = false;
-        EffectionUtility.StopMulitMaterialEffect(transform.parent);
+        EffectionUtility.StopSinlgeMaterialEffect(transform.parent);
     }
 
     protected void OnDisable()

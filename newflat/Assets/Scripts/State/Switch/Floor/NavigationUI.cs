@@ -212,7 +212,7 @@ public  class NavigationUI:MonoBehaviour
         }
         else if(currentstate is BuilderState || currentstate is ColorAreaState || currentstate is FullAreaState)
         {
-            Main.instance.stateMachineManager.SwitchStatus<AreaState>("");
+            SceneJump.JumpFirstPage();
         }
     }
 
@@ -220,7 +220,15 @@ public  class NavigationUI:MonoBehaviour
     {
         if(AppInfo.Platform == BRPlatform.Browser && Input.GetKeyUp(KeyCode.Escape))
         {
-            ClickBack();
+            if(CameraInitSet.IsBackDefaultPosition())
+            {
+                CameraInitSet.BackDefaultPostion();
+            }
+            else
+            {
+                ClickBack();
+            }
+           
         }
     }
 

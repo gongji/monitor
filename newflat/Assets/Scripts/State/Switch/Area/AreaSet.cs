@@ -21,7 +21,7 @@ public class AreaSet:BaseSet
         if(AppInfo.Platform == BRPlatform.Browser)
         {
             SubsystemMsg.Create(sceneid);
-            BrowserToolBar.instance.FullAndColorAreaButtonReset();
+           // BrowserToolBar.instance.FullAndColorAreaButtonReset();
         }
 
         ExternalSceneSwitch.Instance.SaveSwitchData("0", "0");

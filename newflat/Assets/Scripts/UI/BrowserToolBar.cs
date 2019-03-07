@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BrowserToolBar : MonoBehaviour {
+public class BrowserToolBar : MonoBehaviour,IEventListener {
 
     private Transform reset;
 
@@ -273,8 +273,7 @@ public class BrowserToolBar : MonoBehaviour {
 
     private void BackAreaButton()
     {
-        string sceneId = SceneData.GetIdByNumber(Constant.Main_dxName);
-        Main.instance.stateMachineManager.SwitchStatus<AreaState>(sceneId);
+        SceneJump.JumpFirstPage();
     }
 
 
@@ -296,15 +295,15 @@ public class BrowserToolBar : MonoBehaviour {
     //    isFullModeAreaMod = !isFullModeAreaMod;
     //}
 
-    public void FullAndColorAreaButtonReset()
-    {
-        colorArea.GetComponentInChildren<Text>().text = "查看能耗";
+    //public void FullAndColorAreaButtonReset()
+    //{
+    //    colorArea.GetComponentInChildren<Text>().text = "查看能耗";
 
-       // fullArea.GetComponentInChildren<Text>().text = "查看全景";
+    //   // fullArea.GetComponentInChildren<Text>().text = "查看全景";
 
-        isColorModeAreaMode = false;
-        isFullModeAreaMod = false;
-    }
+    //    isColorModeAreaMode = false;
+    //    isFullModeAreaMod = false;
+    //}
     
 
 
@@ -364,6 +363,14 @@ public class BrowserToolBar : MonoBehaviour {
     {
         return guanxianSelect3d;
     }
-#endregion
+
+    #endregion
+
+    public bool HandleEvent(string eventName, IDictionary<string, object> dictionary)
+    {
+        //throw new NotImplementedException();
+
+        return true;
+    }
 
 }

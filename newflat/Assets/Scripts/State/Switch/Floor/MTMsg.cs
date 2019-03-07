@@ -10,7 +10,7 @@ using System.Linq;
 public static class MTMsg
 {
     private static List<Object3dItem> curentJidianData;
-    public static void ShowJiDian()
+    public static void ShowJiDian(System.Action callBack = null)
     {
       
         List<Object3dItem> guanwangs = SceneData.GetCurrentGuangWang();
@@ -22,12 +22,21 @@ public static class MTMsg
         {
             DownLoader.Instance.StartSceneDownLoad(result.ToList<Object3dItem>(), () => {
 
+                if (callBack != null)
+                {
+                    callBack.Invoke();
+                }
+
                 SetRootShowHide(guanwangs, true);
 
             }, true);
         }
         else
         {
+            if(callBack!=null)
+            {
+                callBack.Invoke();
+            }
             SetRootShowHide(guanwangs, true);
         }
     }

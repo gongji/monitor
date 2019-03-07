@@ -17,21 +17,14 @@ public class FloorSet : FloorRoomSet {
     {
         base.Enter(currentDataList, callBack);
         SetFloorRoomOffestPostion(currentDataList);
-       
-        if(BrowserToolBar.instance!=null && BrowserToolBar.instance.GetJiDianToggleState())
-        {
-            DOVirtual.DelayedCall(4.0f, () => {
-
-                OnInit(currentDataList, callBack, "F", "返回");
-            });
-        }
-        else
-        {
-            OnInit(currentDataList, callBack, "F", "返回");
-        }
+      
         //设置管网按钮是否可见
-        SetJiDianButttonVisible();
-        ExternalSceneSwitch.Instance.SaveSwitchData("2", SceneContext.currentSceneData.id);
+        SetJiDianButttonVisible(()=> {
+            OnInit(currentDataList, callBack, "F", "返回");
+            ExternalSceneSwitch.Instance.SaveSwitchData("2", SceneContext.currentSceneData.id);
+
+        });
+       
     }
     /// <summary>
     /// 退出带动画，进入房间
@@ -78,10 +71,14 @@ public class FloorSet : FloorRoomSet {
     }
 
     
-    private void SetJiDianButttonVisible()
+    private void SetJiDianButttonVisible(System.Action callBack)
     {
         if(BrowserToolBar.instance==null)
         {
+            if(callBack!=null)
+            {
+                callBack.Invoke();
+            }
             return;
         }
         
@@ -91,12 +88,23 @@ public class FloorSet : FloorRoomSet {
             BrowserToolBar.instance.HideShowJiDian(true);
             if(BrowserToolBar.instance.GetJiDianToggleState())
             {
-                MTMsg.ShowJiDian();
+                MTMsg.ShowJiDian(callBack);
+            }
+            else
+            {
+                if (callBack != null)
+                {
+                    callBack.Invoke();
+                }
             }
            
         }
         else
         {
+            if (callBack != null)
+            {
+                callBack.Invoke();
+            }
             BrowserToolBar.instance.HideShowJiDian(false);
         }
         
